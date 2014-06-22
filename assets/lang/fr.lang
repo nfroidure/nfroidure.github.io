@@ -1,0 +1,73 @@
+# Feeds
+document.links.+.type=application/rss+xml
+document.links.*.rel=alternate
+document.links.*.url=articles.rss
+document.links.*.link=Flux de mes billets (format RSS)
+document.links.*.link_tx=S'abonner
+document.links.+.type=application/atom+xml
+document.links.*.rel=alternate
+document.links.*.url=articles.atom
+document.links.*.link=Flux de mes billets (format ATOM)
+document.links.*.link_tx=S'abonner
+# Site modules
+## Book
+siteModules.book.l_href=articles-livre_javascript
+siteModules.book.l_link=Livre JavaScript
+siteModules.book.l_link_tx=Voir mon billet à propos de ce livre
+siteModules.book.l_content=Vous aimez le contenu de ce blog ? Découvrez JavaScript, un livre pour apprendre ou ré-apprendre JavaScript. 
+siteModules.book.l_img_src=/images/illustrations/livre-javascript.png
+siteModules.book.l_img_alt=Couverture du livre JavaScript, le guide complet.
+siteModules.book.l_read_href=articles-livre_javascript
+siteModules.book.l_read_link=En savoir plus
+siteModules.book.l_read_link_tx=Lire mon retour d'expérience sur la rédaction du livre JavaScript
+## Articles
+siteModules.articles.l_href=articles
+siteModules.articles.l_link=Billets piochés
+siteModules.articles.l_link_tx=Voir tous mes billets
+siteModules.articles.l_read_link=Suite du billet
+siteModules.articles.l_read_link_tx=Lire la suite de ce billet
+## About
+siteModules.about.l_link=A propos
+siteModules.about.l_href=a_propos
+siteModules.about.l_content=Je suis Nicolas Froidure, développeur web mais pas que. Sur ce site, je vous propose ma vision du développement web, de l'administration système et de la technique qui l'entoure.
+siteModules.about.l_content2=N'hésitez pas à donner votre avis ou à me contacter pour échanger plus avant sur les sujets que je traite ici.
+siteModules.about.l_img_src=/images/photo.jpg
+siteModules.about.l_img_alt=Ma photo
+siteModules.about.l_read_href=a_propos
+siteModules.about.l_read_link=En savoir plus
+siteModules.about.l_read_link_tx=En savoir plus sur moi
+## Categories
+siteModules.categories.l_link=Catégories
+## Community
+siteModules.community.l_link=Restons en contact
+siteModules.community.l_list.+.url=https://github.com/nfroidure
+siteModules.community.l_list.*.link=Github
+siteModules.community.l_list.*.link_tx=Decouvrez mon dépôt GitHub
+siteModules.community.l_list.*.class=github
+siteModules.community.l_list.+.url=http://twitter.com/nfroidure
+siteModules.community.l_list.*.link=Twitter - @nfroidure
+siteModules.community.l_list.*.link_tx=Suivez moi sur Twitter
+siteModules.community.l_list.*.class=twitter
+siteModules.community.l_list.+.url=https://plus.google.com/114540297266340224881
+siteModules.community.l_list.*.link=Google +
+siteModules.community.l_list.*.link_tx=Ajoutez-moi à vos cercles Google Plus
+siteModules.community.l_list.*.class=google
+siteModules.community.l_list.+.url=articles.atom
+siteModules.community.l_list.*.link=Flux de syndication
+siteModules.community.l_list.*.link_tx=Suivez la publication de mes billets sur mon blog
+siteModules.community.l_list.*.class=atom
+siteModules.community.l_content=Retrouvez moi sur les différents réseaux sociaux !
+## Tools
+siteModules.tools.l_link=Mes extensions
+siteModules.tools.l_list.+.url=http://kgen.elitwork.com
+siteModules.tools.l_list.*.link=KGen : Analyseur syntaxique de mots-clés permet de connaître les mots-clés considérés comme important par les moteurs de recherche sur votre site.
+siteModules.tools.l_list.*.link_tx=Télécharger KGen
+siteModules.tools.l_list.*.class=kgen
+siteModules.tools.l_list.+.url=http://bbcomposer.elitwork.com
+siteModules.tools.l_list.*.link=BBComposer : Cet éditeur permet de rédiger du contenu de haute qualité pour vos sites Internet grâce au respect de la sémantique du HTML.
+siteModules.tools.l_list.*.link_tx=Télécharger BBComposer
+siteModules.tools.l_list.*.class=bbcomposer
+siteModules.tools.l_list.+.url=http://canimage.elitwork.com
+siteModules.tools.l_list.*.link=CanImage : Editez facilement vos images avant de les ajouter à votre site Internet directement à l'intérieur de Firefox.
+siteModules.tools.l_list.*.link_tx=Télécharger CanImage
+siteModules.tools.l_list.*.class=canimage

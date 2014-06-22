@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg4066"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="Nouveau document 3">
+  <defs
+     id="defs4068">
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:collect="always"
+       id="filter4630">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.26984375"
+         id="feGaussianBlur4632" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4634"
+       id="linearGradient4640"
+       x1="831.94257"
+       y1="-54.094429"
+       x2="869.94257"
+       y2="-16.094429"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient4634">
+      <stop
+         style="stop-color:#646464;stop-opacity:1;"
+         offset="0"
+         id="stop4636" />
+      <stop
+         style="stop-color:#151515;stop-opacity:1;"
+         offset="1"
+         id="stop4638" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(1.2631579,0,0,1.2631579,-1050.8749,68.329805)"
+       y2="-16.094429"
+       x2="869.94257"
+       y1="-54.094429"
+       x1="831.94257"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4064"
+       xlink:href="#linearGradient4634"
+       inkscape:collect="always" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7"
+     inkscape:cx="24"
+     inkscape:cy="24"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="1044"
+     inkscape:window-height="608"
+     inkscape:window-x="1"
+     inkscape:window-y="94"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata4071">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="fill:url(#linearGradient4064);fill-opacity:1;stroke:none"
+       id="rect4554"
+       width="48"
+       height="48"
+       x="0"
+       y="0"
+       inkscape:export-xdpi="37.894737"
+       inkscape:export-ydpi="37.894737"
+       inkscape:export-filename="/home/nfroidure/Bureau/LocalServer/elitwork/insert/www/images/favicon.png"
+       ry="12.442696" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4580"
+       d="m 764.6875,-169.84375 0,3.375 2.6875,0 0,-3.375 -2.6875,0 z m 21.59375,6.09375 c -4.352,2e-5 -6.59075,1.81085 -6.71875,5.4375 l 2.6875,0 c 0.10666,-1.02399 0.48499,-1.78065 1.125,-2.25 0.63999,-0.49065 1.57516,-0.71874 2.8125,-0.71875 1.19466,1e-5 2.10999,0.19835 2.75,0.625 0.66132,0.42668 0.99999,1.0331 1,1.84375 l 0,0.71875 c -10e-6,0.55468 -0.18843,0.97268 -0.59375,1.25 -0.40534,0.27734 -1.14218,0.46576 -2.1875,0.59375 -0.76801,0.10668 -1.29509,0.17609 -1.59375,0.21875 -0.29867,0.0427 -0.76626,0.14334 -1.40625,0.25 -0.64001,0.10667 -1.08776,0.19592 -1.34375,0.28125 -0.256,0.064 -0.63434,0.17309 -1.125,0.34375 -0.46934,0.14934 -0.81792,0.29809 -1.03125,0.46875 -0.192,0.17067 -0.45134,0.41017 -0.75,0.6875 -0.29867,0.25601 -0.497,0.55501 -0.625,0.875 -0.10667,0.29867 -0.20583,0.62592 -0.3125,1.03125 -0.0853,0.40534 -0.125,0.85309 -0.125,1.34375 0,1.51467 0.48741,2.729 1.46875,3.625 1.00266,0.896 2.34591,1.34375 4.03125,1.34375 2.00532,0 3.89549,-0.82608 5.6875,-2.46875 0.10665,0.85333 0.38582,1.491 0.8125,1.875 0.44799,0.40533 1.08415,0.59375 1.9375,0.59375 0.46932,0 1.06582,-0.0892 1.8125,-0.28125 l 0,-2.03125 c -0.19202,0.0427 -0.37052,0.0625 -0.5625,0.0625 -0.96002,0 -1.43751,-0.40658 -1.4375,-1.28125 l 0,-9.875 c -10e-6,-1.49332 -0.5271,-2.60698 -1.59375,-3.375 -1.06668,-0.78932 -2.64943,-1.18748 -4.71875,-1.1875 z m -14.15625,0.46875 0,3.34375 3.34375,0 0,-3.34375 -3.34375,0 z m -7.40625,0.1875 0,16.78125 2.65625,0 0,-16.78125 -2.65625,0 z m 25.21875,8.28125 0,3.03125 c -10e-6,0.896 -0.4676,1.74192 -1.40625,2.53125 -0.93868,0.768 -2.15301,1.125 -3.625,1.125 -1.04534,0 -1.86151,-0.21816 -2.4375,-0.6875 -0.576,-0.46933 -0.84375,-1.14666 -0.84375,-2 0,-0.85333 0.2975,-1.49941 0.9375,-1.96875 0.63999,-0.49066 1.36691,-0.80949 2.15625,-0.9375 0.78933,-0.12799 1.71457,-0.26683 2.78125,-0.4375 1.08799,-0.17066 1.90415,-0.40024 2.4375,-0.65625 z m -17.8125,4.96875 0,3.34375 3.34375,0 0,-3.34375 -3.34375,0 z"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter4630);font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       transform="matrix(1.0899746,0,0,1.0899746,-825.62848,197.7123)" />
+    <text
+       xml:space="preserve"
+       style="font-size:34.87918472px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       x="12.140471"
+       y="38.017952"
+       id="text2857-4"
+       inkscape:export-filename="/home/nfroidure/Bureau/LocalServer/elitwork/insert/www/images/header.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2859-7"
+         x="12.140471"
+         y="38.017952"
+         style="font-size:34.87918472px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:FreeSans;-inkscape-font-specification:FreeSans">:a</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:34.87918472px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       x="5.5682564"
+       y="38.017952"
+       id="text2851-4"
+       inkscape:export-filename="/home/nfroidure/Bureau/LocalServer/elitwork/insert/www/images/header.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="5.5682564"
+         y="38.017952"
+         id="tspan2855-55">i</tspan></text>
+  </g>
+</svg>

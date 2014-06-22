@@ -1,0 +1,56 @@
+{
+  "name": "insertafter",
+  "version": "0.0.1",
+  "description": "Nicolas Froidure's homepage",
+  "main": "",
+  "scripts": {
+    "test": "node_modules/gulp/bin/gulp.js build --prod --noreq",
+    "trinity": "npm-check-updates -u && npm test && git commit package.json -m \"Dependencies update\" && git push"
+  },
+  "homepage": "http://insertafter.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nfroidure/blog"
+  },
+  "bugs": {
+    "url": "https://github.com/nfroidure/blog/issues"
+  },
+  "author": "Nicolas Froidure",
+  "devDependencies": {
+    "gulp-iconfont": "latest",
+    "gulp-less": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-jshint": "latest",
+    "gulp-concat": "latest",
+    "gulp-svgmin": "~0.4.5",
+    "gulp-clean": "latest",
+    "gulp-watch": "latest",
+    "gulp-cond": "latest",
+    "gulp-marked": "latest",
+    "gulp-mdvars": "latest",
+    "gulp-vartree": "latest",
+    "gulp-imagemin": "latest",
+    "gulp-rename": "1.2.0",
+    "gulp-livereload": "latest",
+    "gulp-streamify": "latest",
+    "gulp-autoprefixer": "0.0.7",
+    "gulp-load-plugins": "~0.5.1",
+    "gulp-util": "~2.2.14",
+    "gulp-spawn": "~0.3.0",
+    "gulp-filter": "~0.4.1",
+    "gulp": "latest",
+    "varstream": "latest",
+    "tiny-lr": "0.0.7",
+    "express": "~4.4.0",
+    "nunjucks": "~1.0.5",
+    "rimraf": "~2.2.8",
+    "open": "0.0.5",
+    "request": "~2.36.0",
+    "streamqueue": "0.1.1",
+    "plexer": "0.0.3",
+    "buildbranch": "latest",
+    "rework-rem2px": "0.0.1",
+    "gulp-rework": "^0.2.2",
+    "css-queryless": "^0.1.0"
+  }
+}

@@ -1,0 +1,67 @@
+# Feeds
+document.links.+.type=application/rss+xml
+document.links.*.rel=alternate
+document.links.*.url=blog.rss
+document.links.*.link=Blog feed ( RSS)
+document.links.*.link_tx=Suscribe
+document.links.+.type=application/atom+xml
+document.links.*.rel=alternate
+document.links.*.url=blog.atom
+document.links.*.link=Blog feed (ATOM)
+document.links.*.link_tx=Suscribe
+# Site modules
+## Articles
+siteModules.articles.l_href=blog
+siteModules.articles.l_link=Random posts
+siteModules.articles.l_link_tx=View all the blog's posts
+siteModules.articles.l_read_link=Read next
+siteModules.articles.l_read_link_tx=Read this post
+## About
+siteModules.about.l_link=About
+siteModules.about.l_href=about_me
+siteModules.about.l_content=I'm Nicolas Froidure, a french web developper. I made this blog to tell you my vision of web development under all it's aspects.
+siteModules.about.l_content2=Feel free to contact me about the subjects i'm blogging here or simply to say hello.
+siteModules.about.l_img_src=/images/photo.jpg
+siteModules.about.l_img_alt=My face
+siteModules.about.l_read_href=about_me
+siteModules.about.l_read_link=Read more
+siteModules.about.l_read_link_tx=Read more things about me
+## Categories
+siteModules.categories.l_link=Categories
+## Community
+siteModules.community.l_link=Stay in touch
+siteModules.community.l_list.+.url=https://github.com/nfroidure
+siteModules.community.l_list.*.link=Github
+siteModules.community.l_list.*.link_tx=View my code on GitHub
+siteModules.community.l_list.*.class=github
+siteModules.community.l_list.+.url=http://twitter.com/nfroidure
+siteModules.community.l_list.*.link=Twitter - @nfroidure
+siteModules.community.l_list.*.link_tx=Follow me on Twitter
+siteModules.community.l_list.*.class=twitter
+siteModules.community.l_list.+.url=https://plus.google.com/114540297266340224881
+siteModules.community.l_list.*.link=Google +
+siteModules.community.l_list.*.link_tx=Let me enter your Google Plus circles !
+siteModules.community.l_list.*.class=google
+siteModules.community.l_list.+.url=articles.atom
+siteModules.community.l_list.*.link=Blog feed
+siteModules.community.l_list.*.link_tx=Don't miss a post !
+siteModules.community.l_list.*.class=atom
+siteModules.community.l_content=Find me out on social networks !
+## Tools
+siteModules.tools.l_link=My extensions
+siteModules.tools.l_list.+.url=http://kgen.elitwork.com
+siteModules.tools.l_list.*.link=KGen : SEO extensions to find the strongest keywords of a page like Google would do.
+siteModules.tools.l_list.*.link_tx=Download KGen
+siteModules.tools.l_list.*.class=kgen
+siteModules.tools.l_list.+.url=http://bbcomposer.elitwork.com
+siteModules.tools.l_list.*.link=BBComposer : A WYSIWYG editor for multiple markup/wiki languages.
+siteModules.tools.l_list.*.link_tx=Dowload BBComposer
+siteModules.tools.l_list.*.class=bbcomposer
+siteModules.tools.l_list.+.url=http://canimage.elitwork.com
+siteModules.tools.l_list.*.link=CanImage : Edit easily images inside Firefox.
+siteModules.tools.l_list.*.link_tx=Download CanImage
+siteModules.tools.l_list.*.class=canimage
+#siteModules.tools.l_list.+.url=http://bugmeback.elitwork.com
+#siteModules.tools.l_list.*.link=BugMeBack : Strong bug report for webmasters.
+#siteModules.tools.l_list.*.link_tx=Download BugMeBack
+#siteModules.tools.l_list.*.class=bugmeback

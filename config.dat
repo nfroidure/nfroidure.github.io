@@ -1,0 +1,23 @@
+# Main configuration
+name=InsertAfter
+description=Développeur JavaScript fullstack
+domain=insertafter.com
+baseURL=http://insertafter.com
+lang=fr
+location=FR
+
+# Src directories
+src.content=./contents/pages
+^.templates=./assets/templates/html
+^.icons=./assets/icons
+^.images=./assets/images
+^.less=./assets/less
+^.js=./src
+
+# Destination directories
+build.root=./www
+^.css=./www/css
+^.fonts=./www/fonts
+^.images=./www/images
+^.frontjs=./www/js
+
