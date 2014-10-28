@@ -36,4 +36,3 @@ En revanche, j'ai
 Le seul reproche que je ferais à ce livre est qu'il ressemble parfois à une
  publicité ambulante pour les services web d'Amazon. Mais bon, c'est peu de
  choses au regard de l'apport de ce livre à mon cursus professionnel.
-
