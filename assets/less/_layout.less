@@ -10,11 +10,15 @@ div.wrapper { clear:both; float:left; width:100%; }
 	padding: @vrythm @gutter (@vrythm*1 - @border) @gutter;
 	margin: 0 0 @vrythm*2 0;
 	border-bottom: @border solid @c5;
+	& * {
+	  direction: ltr	;
+	}
 	.ia-header_title {
 		display: inline-block;
 		vertical-align: top;
-		font-size: @basefontsize*6;
+		font-size: @basefontsize*5;
 		line-height: @vrythm*5;
+		padding: 0 0 @vrythm 0;
 	}
 
 	.ia-menu {
@@ -32,12 +36,17 @@ div.wrapper { clear:both; float:left; width:100%; }
 			a {
 				text-decoration:none;
 				color: @c2;
+				&.selected:before {
+					content:'> ';
+				}
 			}
 		}
 	}
 }
 .ia-content--main {
-	width: @gutter*35; margin:0 auto;
+	max-width: @gutter*45;
+	margin:0 auto;
+	padding:0 @gutter;
 }
 .ia-footer {
 	padding: @vrythm @gutter;
