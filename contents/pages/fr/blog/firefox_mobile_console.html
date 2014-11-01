@@ -1,0 +1,40 @@
+<!--VarStream
+title=Firefox Mobile Android : Accéder aux consoles d'erreur Javascript / stderr
+description=Pour développer pour Firefox Mobile, mieux vaut avoir la console d'erreur à portée de main. Voici la méthode.
+shortTitle=Console d'erreur Fennec
+shortDesc=Voir la façon d'y accèder
+published=2012-06-18T07:49:47.000Z
+lang=fr
+location=FR
+keywords.+=JavaScript
+categories.+=.*
+-->
+
+<h2>Pour développer pour Firefox Mobile, mieux vaut avoir la console d'erreur à portée de main. Voici la méthode.</h2>
+<p>Pour développer pour Firefox Mobile, mieux vaut avoir la console d'erreur à portée
+  de main. Voici la méthode.</p>
+
+<h3>Console d'erreur</h3>
+<p>La console d'erreur générale de Firefox (sorte de flux stderr) est disponible en
+  branchant votre téléphone via USB sur votre PC. Ensuite, il suffit d'utiliser l'outil
+  adb en ligne de commande disponible dans le <abbr>itle=Software Development Toolkit]SDK</abbr>  d'Android. Cet outil permet de récupérer toutes les informations renvoyées par
+  votre appareil Android. Un petit grep permet de nous intéresser plus particulièrement
+  à Gecko.</p><pre>nfroidure@production:~/ adb logcat | grep Gecko</pre>
+<p>Pour les amateurs d'interfaces graphiques, le dossier tools contient un script nommé
+  ddms qui permet d'avoir une interface plus intuitive et de filtrer les messages
+  qui sont assez nombreux.</p>
+<h3>Console Javascript</h3>
+<p>Il semble qu'il ne soit pas possible de récupérer les messages d'erreur Javascript
+  avec adb comme ça l'est pour le navigateur par défaut des appareils Android. La
+  seule option que j'ai trouvé est de se rendre sur le panneau de gestion des préférences
+  <strong>about:config</strong> et de chercher l'option <strong>devtools.errorconsole.enabled</strong>  et de la passer à <strong>true</strong>. Profitez-en pour passer la console en
+  mode strict, ça mange pas de pain (javascript.options.strict).</p>
+<p>Une fois cette petite manipulation faîte, il suffit de se rendre sur la console en
+  utilisant la sidebar de droite (celle où il y a les boutons suivant, précédent
+  et l'étoile des marques pages), de taper la roue crantée et dans le nouvel écran,
+  choisir l'onglet avec l'insecte bien connu des développeurs.</p>
+<p>Dommage que ce soit la seule façon d'accéder aux erreurs car ça fait pas mal de manips
+  pour voir les erreurs alors qu'avec adb, il suffit d'avoir une console ouverte.
+  Vous avez d'autres astuces pour débugger sous Firefox Mobile / Fennec ?</p>
+<p>Petite mise à jour : il semble que les erreurs javascript soient bien reportées avec
+  la nouvelle version de Firefox Mobile (14).</p>

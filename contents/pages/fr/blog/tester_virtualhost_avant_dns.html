@@ -1,0 +1,37 @@
+<!--VarStream
+title=Tester un virtualhost avant de changer les DNS
+description=Quand on migre un site vers un nouveau serveur, on a besoin de tester le bon fonctionnement de ce dernier avant de mettre à jour les DNS. Petite astuce à base de telnet et openssl.
+shortTitle=Migrer un virtualhost
+shortDesc=En savoir plus sur le migration d'un hôte virtuel
+published=2012-10-18T08:29:18.000Z
+lang=fr
+location=FR
+keywords.+=JavaScript
+categories.+=.*
+-->
+
+<h2>Quand on migre un site vers un nouveau serveur, on a besoin de tester le bon fonctionnement de ce dernier avant de mettre à jour les DNS. Petite astuce à base de telnet et openssl.</h2>
+<p>Quand on migre un site vers un nouveau serveur, on a besoin de tester le bon fonctionnement
+  de ce dernier avant de mettre à jour les DNS. Petite astuce à base de telnet et
+  openssl.</p>
+
+<h3>Changement des DNS</h3>
+<p>Changer les DNS est simple. On fait pointer l'enregistrement A et l'enregistrement
+  WWW vers la nouvelle IP. Malheureusement, ceci est long.</p>
+<p>En effet, la propagation des nouveaux DNS à travers les divers cache prends de 24
+  à 48 heures.</p>
+<p>Du coup, l'opération est irréversible. Si vous vous rendez compte d'une erreur sur
+  le nouveau serveur, les personnes qui ont accédé à votre site avec les nouveaux
+  DNS sont condamnées à rester sur le nouveau serveur jusqu'à la prochaine interrogation
+  des serveurs DNS et cela peut prendre 24 heures !</p>
+<h3>Comment tester ?</h3>
+<p>Bref, il nous faut un moyen de tester le nouveau serveur avant de changer les DNS.</p>
+<p>L'idée est de faire une requête HTTP vers le nouveau serveur en simulant le fait
+  qu'on y accède à travers le nouveau domaine (ex: mondomaine.com)</p>
+<p>Cela se fait avec telnet ou netcat :
+  <p>
+    <p>On crée une connexion TCP sur le serveur HTTP vie le port 80 :</p><pre>nc ip.ip.ip.ip 80</pre>
+    <p>On fait une requête HTTP en mettant bien l'hôte dans les entêtes</p><pre>GET / HTTP/1.1<br />Host: mondomaine.com<br /><br />HTTP/1.1 200 Ok<br />...</pre>
+    <p>Ne pas oublier de faire deux retours à la ligne. Le code de réponse donne une
+      indication sur le succès ou non de la requête.</p>
+    <p>Pour tester le virtualhost en SSL, seule la ligne de création du socket change :</p><pre>openssl s_client -connect ip.ip.ip.ip:443</pre>

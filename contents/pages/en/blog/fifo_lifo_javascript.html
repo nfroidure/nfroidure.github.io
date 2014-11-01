@@ -1,0 +1,51 @@
+<!--VarStream
+title=Easily Implement Stacks (Fifo) And Queues (Lifo) With JavaScript
+description=I'm currently reviewing Javascript basis for a personnal project and it appears i often use stacks and queues implicitly. Let's make it explicit and easyer to debug/use.
+shortTitle=Stacks and queues
+shortDesc=Discover my tips to use stacks and queues well.
+published=2013-04-09T09:50:52.000Z
+lang=en
+location=US
+keywords.+=JavaScript
+categories.+=.*
+-->
+
+<h2>I'm currently reviewing Javascript basis for a personnal project and it appears i often use stacks and queues implicitly. Let's make it explicit and easyer to debug/use.</h2>
+<p>I'm currently reviewing Javascript basis for a personnal project and it appears i
+  often use stacks and queues implicitly. Let's make it explicit and easyer to debug/use.</p>
+
+<p>It's really easy to create queues (<acronym>itle=First In First Out]FIFO</acronym>)
+  by simply creating an Array and only use push and shift methods. The same for stacks
+  (<acronym>itle=Last In First Out]LIFO</acronym>) with push and pop. But when coming
+  back to the code or working together it can lead to hardly detectable bugs or unexpected
+  behaviors. That's why i decided to implement them seriously with the help of the
+  closure pattern. Let's dive in the code.</p>
+<h3>Queues : First In Firt Out</h3>
+<p>Here is the code :</p>
+<script>
+  ype = text / javascript src = https: //gist.github.com/nfroidure/5472445.js]
+</script>
+<noscript><pre>var Queue = function()<br /> {<br /> var functionSet=(function()<br /> {<br /> var _elements=[[]]; // creating a private array<br /> return [[function() // push function<br /> { return _elements.push .apply(_elements,arguments); },<br /> function() // shift function<br /> { return _elements.shift .apply(_elements,arguments); },<br /> function() { return _elements.length; },<br /> function(n) { return _elements.length=n; }]];<br /> })();<br /> this.push=functionSet[[0]];<br /> this.shift=functionSet[[1]];<br /> this.getLength=functionSet[[2]];<br /> this.setLength=functionSet[[3]];<br /> // initializing the queue with given arguments<br /> this.push.apply(this,arguments);<br /> }; </pre><pre>var q=new Queue(0,1), e;<br />q.push(2);<br />console.log(q.getLength()); // 3<br />while(undefined!==(e=q.shift()))<br /> console.log(e); // 0, 1, 2 </pre>
+</noscript>
+<p>The tip is deadly simple, we're keeping a reference to the elements in the scope
+  of our set of functions and the Queue instances expose only those functions as
+  methods. So, we're sure our queues will be used properly.</p>
+<p>If you're coding in a modern JavaScript engine you'll probably want to access the
+  queue length as a property like it's done with arrays or strings. Here is the way
+  to :</p>
+<script>
+  ype = text / javascript src = https: //gist.github.com/nfroidure/5472480.js]
+</script>
+<noscript><pre>var Queue = function() {<br /> var functionSet=(function() {<br /> var _elements=[[]]; // creating a private array<br /> return [[function() // push function<br /> { return _elements.push .apply(_elements,arguments); }, function() // shift function<br /> { return _elements.shift .apply(_elements,arguments); },<br /> function() { return _elements.length; }, function(n) { return _elements.length=n; }]];<br /> })();<br /> this.push=functionSet[[0]];<br /> this.shift=functionSet[[1]];<br /> Object.defineProperty(this,'length',{'get':functionSet[[2]],'set':functionSet[[3]]});<br /> // initializing the queue with given arguments<br /> this.push.apply(this,arguments);<br /> }; </pre>
+  <p>Our sample code becomes :</p><pre>var q=new Queue(0,1), e;<br />q.push(2);<br />console.log(q.length); // 3<br />while(undefined!==(e=q.shift()))<br /> console.log(e); // 0, 1, 2 </pre>
+</noscript>
+<h3>Stacks (Last In First Out)</h3>
+<p>Now we can simply modify the above code to also manage stacks :</p>
+<script>
+  ype = text / javascript src = https: //gist.github.com/nfroidure/5472493.js]
+</script>
+<noscript><pre>var Stack = function() {<br /> var functionSet=(function() {<br /> var _elements=[[]]; // creating a private array<br /> return [[function() // push function<br /> { return _elements.push .apply(_elements,arguments); },<br /> function() // pop function<br /> { return _elements.pop .apply(_elements,arguments); },<br /> function() { return _elements.length; },<br /> function(n) { return _elements.length=n; }]];<br /> })();<br /> this.push=functionSet[[0]];<br /> this.pop=functionSet[[1]];<br /> this.getLength=functionSet[[2]];<br /> this.setLength=functionSet[[3]];<br /> // initializing the stack with given arguments<br /> this.push.apply(this,arguments);<br /> }; </pre>
+  <p>Let's test it :</p><pre>var s=new Stack(0,1), e;<br />s.push(2);<br />console.log(s.getLength()); // 3<br />while(undefined!==(e=s.pop()))<br /> console.log(e); // 2, 1, 0</pre>
+</noscript>
+<p>As you can see JavaScript closures allows you to easily create constructors using
+  only a subset of an existing data type. Feel free to use or patch it !</p>

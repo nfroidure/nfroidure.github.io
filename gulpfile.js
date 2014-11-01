@@ -25,7 +25,7 @@ function waitEnd(total, cb, n) {
 }
 
 // Loading global options (files paths)
-var conf = VarStream.parse(Fs.readFileSync(__dirname+'/config.dat'))
+var conf = VarStream.parse(Fs.readFileSync(__dirname + '/config.dat'))
   , server
   , prod = !!g.util.env.prod
   , noreq = !!g.util.env.noreq
@@ -85,18 +85,19 @@ gulp.task('build_fonts', function(cb) {
 gulp.task('build_images', function(cb) {
   var end = waitEnd(2, cb);
   gulp.src(conf.src.images + '/**/*.svg', {buffer: buffer})
+    .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/**/*.svg')))
     .pipe(g.cond(prod, g.svgmin, function() {
-      var watch = g.watch();
       end();
-      return new Duplexer({objectMode: true}, watch,
-        watch.pipe(g.livereload(server)));
+      return g.livereload(server);
     }))
     .pipe(gulp.dest(conf.build.images))
     .once('end', end);
 
   new StreamQueue({objectMode: true},
-    gulp.src(conf.src.images + '/**/*.{png,jpg,jpeg,gif}', {buffer: buffer}),
+    gulp.src(conf.src.images + '/**/*.{png,jpg,jpeg,gif}', {buffer: buffer})
+      .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/**/*.{png,jpg,jpeg,gif}'))),
     gulp.src(conf.src.images + '/favicon.svg', {buffer: buffer})
+      .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/favicon.svg')))
       // https://groups.google.com/forum/#!topic/nodejs/SxNKLclbM5k
       .pipe(g.spawn({
         cmd: '/bin/sh',
@@ -111,10 +112,8 @@ gulp.task('build_images', function(cb) {
   ).pipe(g.cond(prod, function() {
       return g.streamify(g.imagemin());
     }, function() {
-      var watch = g.watch();
       end();
-      return new Duplexer({objectMode: true}, watch,
-        watch.pipe(g.livereload(server)));
+      return g.livereload(server);
     }))
     .pipe(gulp.dest(conf.build.images))
     .once('end', end);
@@ -131,6 +130,13 @@ gulp.task('build_styles', function(cb) {
     .once('end', cb);
 });
 
+// JavaScript
+gulp.task('build_scripts', function(cb) {
+
+  browserify(conf.src.scripts + '/index.js')
+    .once('end', cb);
+});
+
 // HTML
 gulp.task('build_html', function(cb) {
   var nunjucks = Nunjucks
@@ -138,7 +144,7 @@ gulp.task('build_html', function(cb) {
     , markedFiles = []
     , dest = gulp.dest(conf.build.root)
   ;
-  
+
   nunjucks.configure(conf.src.templates, {
     autoescape: true
   });
@@ -151,7 +157,9 @@ gulp.task('build_html', function(cb) {
     return stream;
   }
 
-  var contentStream = gulp.src(conf.src.content + '/**/*.md', {buffer: buffer || true}) // Streams not supported yet
+  var mdFilter = g.filter('**/*.md');
+
+  var contentStream = gulp.src(conf.src.content + '/**/*.{html,md,glloq}', {buffer: buffer || true}) // Streams not supported yet
     .pipe(g.mdvars())
     .pipe(g.vartree({
       root: tree,
@@ -161,6 +169,7 @@ gulp.task('build_html', function(cb) {
       sortProp: 'shortTitle',
       sortDesc: true
     }))
+    .pipe(mdFilter)
     .pipe(g.marked({
       gfm: true,
       tables: true,
@@ -171,6 +180,7 @@ gulp.task('build_html', function(cb) {
       smartypants: true
     }))
     .pipe(g.rename({extname: '.html'}))
+    .pipe(mdFilter.restore())
     .once('end', function() {
       var rootItems = {};
       // Registering languages sections

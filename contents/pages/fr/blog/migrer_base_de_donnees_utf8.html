@@ -1,0 +1,28 @@
+<!--VarStream
+title=Migrer toute une base de données vers UTF8
+description=Vous avez peut-être commencé votre application avec les caractères latins et pour des besoins d'internationalisation, vous souhaitez passer vos bases en UTF8 ? La solution tient en un seul script.
+shortTitle=Passer une base en UTF8
+shortDesc=En savoir plus sur ce script
+published=2012-05-10T06:48:13.000Z
+lang=fr
+location=FR
+keywords.+=JavaScript
+categories.+=.*
+-->
+
+<h2>Vous avez peut-être commencé votre application avec les caractères latins et pour des besoins d'internationalisation, vous souhaitez passer vos bases en UTF8 ? La solution tient en un seul script.</h2>
+<p>Vous avez peut-être commencé votre application avec les caractères latins et pour
+  des besoins d'internationalisation, vous souhaitez passer vos bases en UTF8 ? La
+  solution tient en un seul script.</p>
+
+<p>Dans la série, je mets à disposition mes petits bouts de code sur GitHub, voici maintenant
+  le tour de mes scripts d'administration système. L'un d'entre eux me permet de
+  passer toute une base de donnée en UTF8 grâce à un simple script. L'opération était
+  fastidieuse avec PHPMyAdmin et la ligne de commande, c'est quand même plus fluide.</p>
+<p>Pour récupérer le script :</p><pre>root@server:~# wget https://raw.github.com/nfroidure/MysqlUtils/master/setdatabasecollate.sh</pre>
+<p>Ce petit script s'utilise tout simplement :</p><pre>root@server:~# setdatabasecollate.sh elitwork root yes<br />Enter password of user : root <br /> <br /># Setting UTF8 for database elitwork<br />## Converting table kikoolol<br />### Converting field href (varchar(50))<br />### Converting field title (varchar(200))<br />### Converting field description (varchar(200))<br />### Converting field shorttitle (varchar(100))<br />### Converting field shortdesc (varchar(150))<br />## Converting table kikoolol2<br />### Converting field contain (longtext)<br />### Converting field context (varchar(30))</pre>
+<p>Comme vous pouvez le remarquer, le script prend en argument le nom de la base à convertir,
+  le nom de l'utilisateur (optionnel) et une option "verbose" qui permet d'afficher
+  ce que le script fait.</p>
+<p>Comme vous pouvez le voir, il détecte les champs de type texte et leur assigne leur
+  nouveau format. N'hésitez pas à proposer des amélioration en <a>reflang=en title=Voir le projet sur GitHub href=https://github.com/nfroidure/MysqlUtils]forkant le projet</a>.</p>

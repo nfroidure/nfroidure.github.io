@@ -1,0 +1,52 @@
+<!--VarStream
+title=Utilisation de requestAnimationFrame pour les jeux HTML5
+description=Une nouvelle spécification permet d'optimiser l'affichage des jeux HTML5 en synchronisant ces derniers avec le moteur graphique du navigateur. Petit exemple de mise en oeuvre avec notre casse brique.
+shortTitle=requestAnimationFrame
+shortDesc=En savoir plus sur cette nouvelle possibilité pour les jeux HTML5
+published=2012-07-26T08:13:35.000Z
+lang=fr
+location=FR
+keywords.+=JavaScript
+categories.+=.*
+-->
+
+<h2>Une nouvelle spécification permet d'optimiser l'affichage des jeux HTML5 en synchronisant ces derniers avec le moteur graphique du navigateur. Petit exemple de mise en oeuvre avec notre casse brique.</h2>
+<p>Une nouvelle spécification permet d'optimiser l'affichage des jeux HTML5 en synchronisant
+  ces derniers avec le moteur graphique du navigateur. Petit exemple de mise en oeuvre
+  avec notre casse brique.</p>
+
+<p>Le <a>reflang=""en"" title=""Voir son code sur GitHub href=https://github.com/nfroidure/CasseBriques]code de notre casse brique</a>  consiste en une fonction appelée régulièrement (toutes les 30ms) par la fonction
+  setTimeout. J'expliquais dans l'<a>itle=""Voir l'article en question href=http://www.insertafter.com/articles-html5_casse_brique.html]article dédié au développement du casse brique</a>  que cette manière de faire permettait de faire ralentir le jeu en cas de difficulté
+  du navigateur à afficher les différents dessins a temps.</p>
+<p>Le problème est donc que la vitesse ressentie est différente en fonction du matériel
+  de notre utilisateur. Elle n'ira pas au delà de 30ms, mais peut aller bien moins
+  vite sur du matériel ancien. C'est ici que requestAnimationFrame intervient. L'idée
+  est de synchroniser l'affichage du jeu dans le canvas de façon à ce que le navigateur
+  puisse optimiser au mieux sa gestion.</p>
+<p>L'utilisation de requestAnimationFrame est simple bien que non-standardisée entre
+  les divers navigateurs. Néanmoins, leur point commun est que l'on peut leur passer
+  une fonction en argument qui sera appelé avant chaque repaint effectué par le navigateur.
+  Ce petit morceau de code m'a permis de l'utiliser sur tous les navigateurs l'implémentant :</p><pre>this.requestAnimFrame = (function(){ return window.requestAnimationFrame<br /> || window.webkitRequestAnimationFrame<br /> || window.mozRequestAnimationFrame<br /> || window.oRequestAnimationFrame<br /> || window.msRequestAnimationFrame<br /> || null})();</pre>
+<p>J'ai donc créé une méthode Game.draw() qui permet d'afficher les différents objets
+  de la scene du jeu que j'ai passé en argument de ma fonction wrappant les diverses
+  implémentations (notez l'utilisation de la methode call de l'objet function permettant
+  de réinjecter le scope global à la fonction wrapper (nécessaire sous Chrome) :</p><pre>if(this.requestAnimFrame)<br /> this.requestAnimFrame.call(window,this.draw.bind(this));</pre>
+<p>J'ai cependant conservé mon timer pour les mouvements de objets et leurs collisions.
+  En effet, le temps ne doit pas varier en fonction du matériel utilisé. Dans la
+  réalité, il varie un peu tout de même car il y a bien un temps de calcul entre
+  chaque appel de la fonction principale du jeu, mais cela est bien moins important
+  depuis que le dessin a été complètement dissocié. Le timer sert également de fallback
+  dans le cas où la fonction requestAnimationFrame ne serait pas disponible.</p>
+<p>Malheureusement, seul Mozilla a implémenté une méthode permettant de détacher la
+  fonction passée en argument (pour effectuer une pause du jeu sans consommer inutilement
+  de ressources système) grâce à la fonction cancelAnimationFrame à laquelle on passe
+  un id reçu en retour de la fonction requestAnimationFrame (un peu sur le modèle
+  des fonctions setTimeout et clearTimeout. J'ai donc du me référer au timer afin
+  de savoir si le jeu est mis en pause ou non pour ne pas dessiner inutilement la
+  scène. La fonction est cependant toujours appelée, mais je n'y peux pas grand chose.</p>
+<p>J'avoue que je n'ai pas vu de forte différences entre la version avec et la version
+  sans requestAnimationFrame, cela est sûrement dû à mon PC assez musclé ;). Je n'ai
+  pas encore testé sur mobile, j'imagine que la différence sera plus nette. Je vais
+  certainement réutiliser le même patron de conception pour Tank Arena dès que j'aurai
+  un peu plus de temps. La suite au prochain numéro ;).</p>
+<p>PS : Et ce prochain numéro est <a>itle=""Voir l'article sur le support de l'accéléromètre dans le casse brique href=articles-accelerometre_casse_briques.html]le support de l'accéléromètre</a>.</p>

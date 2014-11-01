@@ -71,7 +71,7 @@
 
     <footer class="ia-footer">
         <p class="ia-footer__content">
-          © Nicolas Froidure 2012 - 2013
+          © Nicolas Froidure 2012 - 2014
         </p>
     </footer>
     <script src="{{conf.baseURL}}/js/script.js"></script>
