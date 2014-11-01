@@ -12,6 +12,7 @@ html, body { height:100%; font-size:@basefontsize; line-height:@vrythm; }
 /******** Modules		         ********/
 @import "_vars.less";
 @import "_layout.less";
+@import "_content.less";
 
 /********	Default skin       ********/
 body { font-family:PT Sans, sans-serif; background:@c3; color:@c2; }
@@ -19,35 +20,4 @@ body { font-family:PT Sans, sans-serif; background:@c3; color:@c2; }
 /********	Components         ********/
 @import "components/_logo.less";
 @import "components/_social.less";
-
-.ia-content { color:@c2; }
-.ia-content h2 { margin:0 0 @vrythm 0; font-size:@basefontsize*3; font-weight:normal; line-height:@vrythm*3; text-align:center; color:@c1; }
-.ia-content h3 { margin:@vrythm*2 0 0 0; font-size:@basefontsize*2; font-weight:normal; line-height:@vrythm*3; color:@c1; }
-.ia-content h4 { margin:@vrythm 0 0 0; font-size:@basefontsize*1.05; font-weight:normal; text-decoration:underline; font-style:italic; }
-.ia-content h5 { margin:@vrythm 0 0 0; font-weight:bold; }
-.ia-content h6 { margin:@vrythm 0 0 0; font-weight:normal; text-decoration:underline; font-style:italic;  }
-.ia-content dt { font-weight:bold; }
-.ia-content p, .ia-content ul, .ia-content dl { margin:0 0 @vrythm 0; }
-.ia-content ol { margin:0 0 @vrythm @gutter; padding:0; }
-.ia-content dd { margin:0; padding:0 0 0 @gutter; }
-.ia-content li { margin:0; padding:0; }
-.ia-content ul>li { list-style-type:none; content:"- "; list-style-type:none; }
-.ia-content p { text-align:justify; }
-.ia-content blockquote, .ia-content address ,.ia-content pre { text-align:left; margin:@vrythm 0; padding:0 0 0 @gutter; }
-.ia-content pre { font-family:"Courier New", monospace; overflow:auto; padding:@vrythm 0 @vrythm @gutter; }
-/* Balises en ligne */
-.ia-content a { color:@c1; }
-.ia-content a:hover { color:@c1; }
-.ia-content a:visited { color:@c1; }
-.ia-content code { text-align:left; }
-.ia-content em { font-style:italic; }
-.ia-content strong { font-weight:normal; }
-.ia-content cite { text-decoration:underline; }
-.ia-content q { font-style:italic; }
-.ia-content q:before { content:"\201C"; }
-.ia-content q:after { content:"\201D"; }
-.ia-content img { border:0; margin:0; }/*
-.ia-content kbd { border: 1px solid @c5; padding: 1px 2px; }
-.ia-content kbd { border: @border outset @c4; background-color:@c3; padding: 0 (@border-@gutter); cursor: default; }
-.ia-content kbd:hover { border: @border inset #f3f3f3; }*/
-.ia-content abbr, acronym { cursor:help; }
+@import "components/_flags.less";

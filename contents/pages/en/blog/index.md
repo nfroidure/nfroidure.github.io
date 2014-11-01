@@ -8,8 +8,8 @@ keywords.+=developer
 keywords.+=Nicolas
 keywords.+=Froidure
 template=blog
-lang=fr
-location=FR
+lang=en
+location=US
 -->
 
 ## Another web developer blog

@@ -26,12 +26,23 @@
     <script>document.location.href=http://browsehappy.com;</script>
     <![endif]-->
     <header class="ia-header">
-        <h1 class="ia-header_title">
-          <a href="{{root.path}}{{root.name}}.html" title="{{root.shortDesc}}"
+        <div class="ia-header_title">
+          <h1><a href="{{root.path}}{{root.name}}.html" title="{{root.shortDesc}}"
             class="ia-logo">
             <span class="ia-logo__insert">Insert</span><span class="ia-logo__after">:after</span>
-          </a>
-        </h1>
+          </a></h1>
+          <nav class="ia-flags{% if metadata.standalone != true  %} ia-flags--reduced{% endif %}">
+              <ul class="ia-flags__body">{% for item in tree.childs %}
+                  <li class="ia-flags__item ia-flags__item--{{item.lang}}">
+                      <a href="{{item.path}}{{item.name}}.html"
+                        title="{% if item.shortDesc %}{{item.shortDesc}}{% else %}{{item.title}}{% endif %}"{% if item == metadata or item == metadata.parent or item == metadata.parent.parent %}
+                        class="selected"{% endif %}>
+                        <span>{{item.shortTitle}}</span>
+                      </a>
+                  </li>{% endfor %}
+              </ul>
+          </nav>
+        </div>
 {% if metadata.standalone != true  %}
         <nav class="ia-header_menu ia-menu">
         	  <ul class="ia-menu__body">
@@ -57,15 +68,6 @@
 {% if metadata.standalone != true  %}
     <div class="ia-extra">
       <aside class="ia-extra_box">
-        <nav class="ia-menu">
-        	  <ul class="ia-menu__body">{% for item in tree.childs %}
-                <li class="ia-menu__{{item.name}}">
-                    <a href="{{item.path}}{{item.name}}.html"
-                      title="{% if item.shortDesc %}{{item.shortDesc}}{% else %}{{item.title}}{% endif %}"{% if item == metadata or item == metadata.parent or item == metadata.parent.parent %}
-                      class="selected"{% endif %}>{{item.shortTitle}}</a>
-                </li>{% endfor %}
-            </ul>
-        </nav>
       </aside>
       <aside class="ia-extra_box">
       </aside>
@@ -81,6 +83,10 @@
             <a href="https://github.com/nfroidure" title="Follow me on GitHub"
              class="ia-social__item ia-social__item--github">
               <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/profile/view?id=44165977" title="Find me on LinkedIn"
+             class="ia-social__item ia-social__item--linkedin">
+              <span>LinkedIn</span>
             </a>
           </span>
           - © Nicolas Froidure 2012 - 2014
