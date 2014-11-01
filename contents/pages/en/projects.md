@@ -1,7 +1,7 @@
 <!--VarStream
-title=My projects
+title=Projects
 description=Discover my side projects
-shortTitle=My projects
+shortTitle=Projects
 shortDesc=Learn more about my projects
 keywords.+=projects
 keywords.+=developer

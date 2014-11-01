@@ -10,41 +10,23 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>HTML5 expose via l'API accelerometer des information sur l'inclinaison de l'appareil en fonction des trois axes de l'espace, utilisons les pour notre Casse brique.</h2>
-<p>HTML5 expose via l'API accelerometer des information sur l'inclinaison de l'appareil
-  en fonction des trois axes de l'espace, utilisons les pour notre Casse brique.</p>
+<h2>Utilisation de l&#039;accéléromètre dans le Casse Brique</h2>
+<p>HTML5 expose via l&#039;API accelerometer des information sur l&#039;inclinaison de l&#039;appareil en fonction des trois axes de l&#039;espace, utilisons les pour notre Casse brique.</p>
 
-<p>En effet, il pourrait être intéressant de faire bouger la barre du casse brique en
-  fonction des mouvements du téléphone.</p>
-<p>Je me suis donc mis à l'ouvrage et ai commencé à explorer l'API Accelerometer
-  <a
-  hreflang="en title=Voir les détails de l'API href=https://developer.mozilla.org/en-US/docs/Detecting_device_orientation">très bien documentée</a> par le Mozilla Developper Network.</p>
-<p>Obtenir les coodonnées de l'accéléromètre est assez simple. Il suffit d'ajouter un
-  écouteur d'évènement sur l'objet window. On récupère ainsi dans la fonction passée
-  en paramètre les évènements relatifs au changement d'orientation du téléphone ou
-  autre appareil contenant un accéléromètre.</p><pre>window.addEventListener('deviceorientation', this.orientationHandler.bind(this), true);</pre>
-<p>En revanche, il est plus compliqué d'interpréter ces coordonnées. En effet, en fonction
-  de la valeur de event.absolute, le référenciel peut varier. Soit ce dernier est
-  relatif à la position de la terre, soit le référenciel est arbitraire (a priori,
-  relatif au périphérique lui même voire à la position initiale ou à la gravité vu
-  que c'est un peu le principe de l'acceleromètre).</p>
-<p>Les deux coordonnées qui m'interessent sont les rotations de gauche à droite (pour
-  guider la barre) et l'inclinaison d'avant en arrière (pour utiliser le tir laser
-  ou fusil). Seulement, celles-ci changent selon que le périphérique est en mode
-  paysage ou en mode portrait. J'ai donc du passer par une détection du mode via
-  les media queries et la fonction bien pratique matchMedia.</p>
-<p>Ainsi, en mode portrait, la valeur <var>e.beta</var> désigne l'orientation de gauche
-  à droite et la valeur <var>e.gamma</var> celle d'avant en arrière et inversement
-  en mode paysage.</p>
-<p>J'aurai pu utiliser l'axe <var>e.alpha</var> pour déterminer l'orientation de l'appareil,
-  mais il semble que tous les navigateurs ont leurs propres coordonnées limites et
-  cela pose donc un problème évident de détection. Voilà ma fonction finale que vous
-  retrouvez <a hreflang="en title=Voir le commit href=https://github.com/nfroidure/CasseBriques/commit/3fa71a35035a7289d2a67baf1786a81a0d13a4bc">dans ce commit</a> :</p><pre><br />orientationHandler : function(e) {<br /> var portrait=(window.matchMedia&&window.matchMedia('(orientation: portrait)').matches);<br /> if((portrait&&e.beta<50)||((!portrait)&&(e.gamma<0&&e.gamma>-50)))<br /> this.bar.fire();<br /> if((portrait&&e.gamma<-15)||((!portrait)&&e.beta<-10))<br /> this.bar.setDirection(-1);<br /> else if((portrait&&e.gamma>15)||((!portrait)&&e.beta>10))<br /> this.bar.setDirection(1);<br /> else<br /> this.bar.setDirection(0);<br /> },</pre>
-<p>Cette dernière se contente de modifier la direction prise par la barre en fonction
-  de l'orientation. Elle fonctionne bien sur mon Galaxy S3 mais je n'ai pas d'autre
-  appareil pour tester la compatibilité sur d'autres périphériques. N'hésitez donc
-  pas à me relater vos éventuels problèmes voire à proposer vos commits. <a title="Jouer au Casse Brique href=http://breakit.elitwork.com/index.html">Bon jeu !</a>
+<p>En effet, il pourrait être intéressant de faire bouger la barre du casse brique en fonction des mouvements du téléphone.</p>
+<p>Je me suis donc mis à l&#039;ouvrage et ai commencé à explorer l&#039;API Accelerometer <a hreflang="en" title="Voir les détails de l&#039;API" href="https://developer.mozilla.org/en-US/docs/Detecting_device_orientation">très bien documentée</a> par le
+    Mozilla Developper Network.</p>
+<p>Obtenir les coodonnées de l&#039;accéléromètre est assez simple. Il suffit d&#039;ajouter un écouteur d&#039;évènement sur l&#039;objet window. On récupère ainsi dans la fonction passée en paramètre les évènements relatifs au changement d&#039;orientation
+    du téléphone ou autre appareil contenant un accéléromètre.</p><pre>window.addEventListener(&#039;deviceorientation&#039;, this.orientationHandler.bind(this), true);</pre>
+<p>En revanche, il est plus compliqué d&#039;interpréter ces coordonnées. En effet, en fonction de la valeur de event.absolute, le référenciel peut varier. Soit ce dernier est relatif à la position de la terre, soit le référenciel est arbitraire (a priori,
+    relatif au périphérique lui même voire à la position initiale ou à la gravité vu que c&#039;est un peu le principe de l&#039;acceleromètre).</p>
+<p>Les deux coordonnées qui m&#039;interessent sont les rotations de gauche à droite (pour guider la barre) et l&#039;inclinaison d&#039;avant en arrière (pour utiliser le tir laser ou fusil). Seulement, celles-ci changent selon que le périphérique est en
+    mode paysage ou en mode portrait. J&#039;ai donc du passer par une détection du mode via les media queries et la fonction bien pratique matchMedia.</p>
+<p>Ainsi, en mode portrait, la valeur <var>e.beta</var> désigne l&#039;orientation de gauche à droite et la valeur <var>e.gamma</var> celle d&#039;avant en arrière et inversement en mode paysage.</p>
+<p>J&#039;aurai pu utiliser l&#039;axe <var>e.alpha</var> pour déterminer l&#039;orientation de l&#039;appareil, mais il semble que tous les navigateurs ont leurs propres coordonnées limites et cela pose donc un problème évident de détection. Voilà ma fonction
+    finale que vous retrouvez <a hreflang="en" title="Voir le commit" href="https://github.com/nfroidure/CasseBriques/commit/3fa71a35035a7289d2a67baf1786a81a0d13a4bc">dans ce commit</a> :</p><pre><br />orientationHandler : function(e) &#123;<br /> var portrait=(window.matchMedia&amp;&amp;window.matchMedia(&#039;(orientation: portrait)&#039;).matches);<br /> if((portrait&amp;&amp;e.beta&lt;50)||((!portrait)&amp;&amp;(e.gamma&lt;0&amp;&amp;e.gamma&gt;-50)))<br /> this.bar.fire();<br /> if((portrait&amp;&amp;e.gamma&lt;-15)||((!portrait)&amp;&amp;e.beta&lt;-10))<br /> this.bar.setDirection(-1);<br /> else if((portrait&amp;&amp;e.gamma&gt;15)||((!portrait)&amp;&amp;e.beta&gt;10))<br /> this.bar.setDirection(1);<br /> else<br /> this.bar.setDirection(0);<br /> &#125;,</pre>
+<p>Cette dernière se contente de modifier la direction prise par la barre en fonction de l&#039;orientation. Elle fonctionne bien sur mon Galaxy S3 mais je n&#039;ai pas d&#039;autre appareil pour tester la compatibilité sur d&#039;autres périphériques.
+    N&#039;hésitez donc pas à me relater vos éventuels problèmes voire à proposer vos commits. <a title="Jouer au Casse Brique" href="http://breakit.elitwork.com/index.html">Bon jeu !</a>
 </p>
-<p>J'oubliais, puisqu'un malheur n'arrive jamais seul, j'ai ajouté un goodie qui inverse
-  les contrôles (et donc l'accéléromètre), attention de bien éviter ce dernier, à
-  moins que vous n'aimiez la difficulté ;). Tout est <a hreflang="en title=Voir le commit d'inversion des contrôles href=https://github.com/nfroidure/CasseBriques/commit/413b87edbd35e75b8b7101021ab0126be0678c52">dans ce commit</a>.</p>
+<p>J&#039;oubliais, puisqu&#039;un malheur n&#039;arrive jamais seul, j&#039;ai ajouté un goodie qui inverse les contrôles (et donc l&#039;accéléromètre), attention de bien éviter ce dernier, à moins que vous n&#039;aimiez la difficulté ;). Tout est <a hreflang="en"
+    title="Voir le commit d&#039;inversion des contrôles" href="https://github.com/nfroidure/CasseBriques/commit/413b87edbd35e75b8b7101021ab0126be0678c52">dans ce commit</a>.</p>

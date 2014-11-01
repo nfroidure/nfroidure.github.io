@@ -10,136 +10,84 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>On a d'abord connu les animations avec Flash, puis les animations sans Flash grâce aux frameworks JavaScript. Aujourd'hui, ce sont les animations CSS3 qui occupent le devant de la scène et, a priori, ça va durer.</h2>
-<p>On a d'abord connu les animations avec Flash, puis les animations sans Flash grâce
-  aux frameworks JavaScript. Aujourd'hui, ce sont les animations CSS3 qui occupent
-  le devant de la scène et, a priori, ça va durer.</p>
+<h2>Les animations sur les sites web en 2013</h2>
+<p>On a d&#039;abord connu les animations avec Flash, puis les animations sans Flash grâce aux frameworks JavaScript. Aujourd&#039;hui, ce sont les animations CSS3 qui occupent le devant de la scène et, a priori, ça va durer.</p>
 
-<p>Ce billet est la filiation directe de mon article sur <a title="Lire ce billet sur les polyfills href=articles-polyfill_or_not.html">les polyfills et leur utilisation</a>.
-  Dans ce dernier, j'explique pourquoi je ne suis pas passé au doctype HTML5 pour
-  les sites web classiques comme les sites vitrines ou les sites web e-commerce.
-  Pour résumer : parce que je n'en ai pas besoin pour faire ce type de sites. Pourquoi
-  alourdir mes pages et impacter leurs performances pour des balises qui ne sont
-  pas essentielles pour le business de mes clients ?</p>
+<p>Ce billet est la filiation directe de mon article sur <a title="Lire ce billet sur les polyfills" href="articles-polyfill_or_not.html">les polyfills et leur utilisation</a>. Dans ce dernier, j&#039;explique pourquoi je ne suis pas passé au doctype HTML5
+    pour les sites web classiques comme les sites vitrines ou les sites web e-commerce. Pour résumer : parce que je n&#039;en ai pas besoin pour faire ce type de sites. Pourquoi alourdir mes pages et impacter leurs performances pour des balises qui ne
+    sont pas essentielles pour le business de mes clients ?</p>
 <h3>Avec CSS pas de problème !</h3>
-<p>En revanche, si il y a bien des nouveautés que j'utilise dès leur parution, ce sont
-  les CSS. En effet, la façon dont fonctionnent les CSS depuis leur création permet
-  d'utiliser des fonctionnalités supplémentaires sans casser le site sur les anciens
-  navigateurs (petit bémol pour le layout, on aimerait tous dès maintenant travailler
-  avec le modèle de boîte flexbox :D). Aujourd'hui, j'ai envie de vous parler de
-  mon approche des animations CSS3 par la construction d'une destion d'affichage
-  animé polyvalente.</p>
+<p>En revanche, si il y a bien des nouveautés que j&#039;utilise dès leur parution, ce sont les CSS. En effet, la façon dont fonctionnent les CSS depuis leur création permet d&#039;utiliser des fonctionnalités supplémentaires sans casser le site sur les
+    anciens navigateurs (petit bémol pour le layout, on aimerait tous dès maintenant travailler avec le modèle de boîte flexbox :D). Aujourd&#039;hui, j&#039;ai envie de vous parler de mon approche des animations CSS3 par la construction d&#039;une destion
+    d&#039;affichage animé polyvalente.</p>
 <h3>Animations CSS3 ou animations Javascript ?</h3>
-<p>Mon approche est la suivante : un affichage animé n'est utile que s'il est fluide.
-  Or, la fluidité d'une animation est fonction de l'ordinateur utilisé :</p>
+<p>Mon approche est la suivante : un affichage animé n&#039;est utile que s&#039;il est fluide. Or, la fluidité d&#039;une animation est fonction de l&#039;ordinateur utilisé :</p>
 <ul>
-  <li>si l'utilisateur a navigateur moderne, l'animation sera fluide car les animations
-    CSS3 sont performantes,</li>
-  <li>si l'utilisateur a navigateur ancien (Internet Explorer), il aura un PC ancien.
-    Proposer des animations JavaScript sera très certainement lent car son PC est
-    vieux et sont navigateur peu performant (pas d'accellération matérielle, moteur
-    JavaScript à la ramasse).</li>
+    <li>si l&#039;utilisateur a navigateur moderne, l&#039;animation sera fluide car les animations CSS3 sont performantes,</li>
+    <li>si l&#039;utilisateur a navigateur ancien (Internet Explorer), il aura un PC ancien. Proposer des animations JavaScript sera très certainement lent car son PC est vieux et sont navigateur peu performant (pas d&#039;accellération matérielle, moteur
+        JavaScript à la ramasse).</li>
 </ul>
-<p>Conclusion : les animations Javascript sont une mauvaise chose puisqu'en l'état actuel
-  des choses, elle ne font que dégrader l'expérience des utilisateurs :</p>
+<p>Conclusion : les animations Javascript sont une mauvaise chose puisqu&#039;en l&#039;état actuel des choses, elle ne font que dégrader l&#039;expérience des utilisateurs :</p>
 <ul>
-  <li>ceux de navigateurs modernes car elles sous-performent les animations CSS3,</li>
-  <li>ceux des anciens navigateurs car elles ne sont pas adaptées à ses conditions de
-    navigation.</li>
+    <li>ceux de navigateurs modernes car elles sous-performent les animations CSS3,</li>
+    <li>ceux des anciens navigateurs car elles ne sont pas adaptées à ses conditions de navigation.</li>
 </ul>
 <h3>Implémentation de notre affichage polyvalent</h3>
-<p>L'idée est de pouvoir faire aussi bien un carousel, qu'un système d'onglet, qu'une
-  pagination simple ou un simple affichage tournant. Il y a beaucoup de similarités
-  entre ces quatre types d'affichage que nous allons factoriser. Par la suite, je
-  parlerai de carousel pour simplifier.</p>
+<p>L&#039;idée est de pouvoir faire aussi bien un carousel, qu&#039;un système d&#039;onglet, qu&#039;une pagination simple ou un simple affichage tournant. Il y a beaucoup de similarités entre ces quatre types d&#039;affichage que nous allons factoriser.
+    Par la suite, je parlerai de carousel pour simplifier.</p>
 <h4>Le choix des armes</h4>
-<p>Nous sommes partis pour créer un carousel avec les animations CSS3. De quoi avons
-  nous besoin ?</p>
+<p>Nous sommes partis pour créer un carousel avec les animations CSS3. De quoi avons nous besoin ?</p>
 <ul>
-  <li>d'un peu d'HTML : nous avons besoin de définir un certain markup que nous allons
-    utiliser pour délimiter notre carousel,</li>
-  <li>d'un peu de Javascript : nous ne pouvons pas encore faire de carousel vraiment
-    propre et accessible avec CSS uniquement, il va nous falloir un peu de JavaScript.</li>
-  <li>de CSS3 pour faire nos animations.</li>
+    <li>d&#039;un peu d&#039;HTML : nous avons besoin de définir un certain markup que nous allons utiliser pour délimiter notre carousel,</li>
+    <li>d&#039;un peu de Javascript : nous ne pouvons pas encore faire de carousel vraiment propre et accessible avec CSS uniquement, il va nous falloir un peu de JavaScript.</li>
+    <li>de CSS3 pour faire nos animations.</li>
 </ul>
 <h4>Balisage HTML</h4>
 <p>Notre carousel sera composé de :</p>
 <ul>
-  <li>pages composant le contenu du carousel</li>
-  <li>boutons suivant et précédent</li>
-  <li>boutons vers chaque partie du carousel</li>
+    <li>pages composant le contenu du carousel</li>
+    <li>boutons suivant et précédent</li>
+    <li>boutons vers chaque partie du carousel</li>
 </ul>
 <p>Comme dit précédemment, ce balisage ressemble fortement au balisage :</p>
 <ul>
-  <li>d'un système d'onglet comme on en voit beaucoup sur les fiches de produits e-commerce,
-    il nous suffit de retirer les boutons suivant et précédent,</li>
-  <li>d'une galerie d'image avec les boutons suivants et précédent (le menu pouvant être
-    des miniatures ou simplement supprimé),</li>
-  <li>d'un simple affichage tournant (une liste de photos apparaissant à intervalle régulier).</li>
+    <li>d&#039;un système d&#039;onglet comme on en voit beaucoup sur les fiches de produits e-commerce, il nous suffit de retirer les boutons suivant et précédent,</li>
+    <li>d&#039;une galerie d&#039;image avec les boutons suivants et précédent (le menu pouvant être des miniatures ou simplement supprimé),</li>
+    <li>d&#039;un simple affichage tournant (une liste de photos apparaissant à intervalle régulier).</li>
 </ul>
-<p>Si je résume, seules les pages de contenu de notre carousel seront vraiment nécessaires,
-  le reste des balises dépendra de l'utilisation que nous ferons de notre carousel
-  devenu une sorte de couteau suisse de l'affichage web. Voici le HTML que je vous
-  propose :</p><pre><div class="carbox"><br /> <ul class="carnav"> <br /> <li><a href="#paneln" title="Voir le panel précédent">Précédent</a></li><br /> <li class="selected"><a href="#panel1" title="Voir le panel 1">Panel 1</a></li><br /> <li><a href="#panel1" title="Voir le panel 2">Panel 2</a></li><br /> <li><a href="#paneln" title="Voir le panel n">Panel n</a></li> <br /> <li><a href="#panel2" title="Voir le panel suivant">Suivant</a></li><br /> </ul><br /> <div class="carpanel selected" id="carpanel1"><br /> Panel 1<br /> </div><br /> <div class="carpanel" id="carpanel1"><br /> Panel 2<br /> </div><br /> <div class="carpanel" id="carpaneln"><br /> Panel n<br /> </div><br /></div></pre>
-<p>Vous remarquez que le balisage est basé sur les classes. J'ai souhaité avoir un modèle
-  le plus souple possible de manière à pouvoir simplement mettre des classes sur
-  du contenu existant. Vous avez peut-être aussi remarqué que les boutons suivant
-  et précédent son dans la même liste que les boutons correspondant à chaque item.
-  Ils pourront en réalité être indifféremment regroupés ou séparés, mais pour ce
-  billet, j'ai simplifié. Le carousel est initialisé à un état initial donné.</p>
+<p>Si je résume, seules les pages de contenu de notre carousel seront vraiment nécessaires, le reste des balises dépendra de l&#039;utilisation que nous ferons de notre carousel devenu une sorte de couteau suisse de l&#039;affichage web. Voici le HTML que
+    je vous propose :</p><pre>&lt;div class=&#034;carbox&#034;&gt;<br /> &lt;ul class=&#034;carnav&#034;&gt; <br /> &lt;li&gt;&lt;a href=&#034;&#35;paneln&#034; title=&#034;Voir le panel précédent&#034;&gt;Précédent&lt;/a&gt;&lt;/li&gt;<br /> &lt;li class=&#034;selected&#034;&gt;&lt;a href=&#034;&#35;panel1&#034; title=&#034;Voir le panel 1&#034;&gt;Panel 1&lt;/a&gt;&lt;/li&gt;<br /> &lt;li&gt;&lt;a href=&#034;&#35;panel1&#034; title=&#034;Voir le panel 2&#034;&gt;Panel 2&lt;/a&gt;&lt;/li&gt;<br /> &lt;li&gt;&lt;a href=&#034;&#35;paneln&#034; title=&#034;Voir le panel n&#034;&gt;Panel n&lt;/a&gt;&lt;/li&gt; <br /> &lt;li&gt;&lt;a href=&#034;&#35;panel2&#034; title=&#034;Voir le panel suivant&#034;&gt;Suivant&lt;/a&gt;&lt;/li&gt;<br /> &lt;/ul&gt;<br /> &lt;div class=&#034;carpanel selected&#034; id=&#034;carpanel1&#034;&gt;<br /> Panel 1<br /> &lt;/div&gt;<br /> &lt;div class=&#034;carpanel&#034; id=&#034;carpanel1&#034;&gt;<br /> Panel 2<br /> &lt;/div&gt;<br /> &lt;div class=&#034;carpanel&#034; id=&#034;carpaneln&#034;&gt;<br /> Panel n<br /> &lt;/div&gt;<br />&lt;/div&gt;</pre>
+<p>Vous remarquez que le balisage est basé sur les classes. J&#039;ai souhaité avoir un modèle le plus souple possible de manière à pouvoir simplement mettre des classes sur du contenu existant. Vous avez peut-être aussi remarqué que les boutons suivant
+    et précédent son dans la même liste que les boutons correspondant à chaque item. Ils pourront en réalité être indifféremment regroupés ou séparés, mais pour ce billet, j&#039;ai simplifié. Le carousel est initialisé à un état initial donné.</p>
 <h4>Code JavaScript</h4>
 <p>Venons-en au JavaScript. Si je fais la liste de ce dont nous avons besoin :</p>
 <ul>
-  <li>ajouter des évènements sur les liens pour afficher les panels sélectionnés.</li>
-  <li>manipuler le DOM (insérer des éléments, ajouter des classes).</li>
-  <li>changer l'affichage automatiquement au delà d'un certain délai.</li>
+    <li>ajouter des évènements sur les liens pour afficher les panels sélectionnés.</li>
+    <li>manipuler le DOM (insérer des éléments, ajouter des classes).</li>
+    <li>changer l&#039;affichage automatiquement au delà d&#039;un certain délai.</li>
 </ul>
-<p>Les seuls problèmes de compatibilité que je vois (même pour IE6 et 7) sont : l'ajout
-  d'évènements (IE
-  <8 utilise attachEvent) et un petit getElementsByClassName. Autant
-  dire que ça ne sert pas à grand chose de s
-  'embarasser de ko de librairies superflues. Je vais donc m'orienter vers MooTools qui propose de <a hreflang="en title=Télécharger ce qu'il vous faut href=http://mootools.net/core"
-  />télécharger uniquement ce dont on a besoin</a>. J'ai donc fait mes amplettes en
-  sélectionnant DomReady (avec toutes ses dépendances, notamment les events et les
-  selecteurs) et les classes (j'aime bien le confort qu'elles apportent par rapport
-  à l'héritage et notre code sera donc extensible plus facilement).</p>
+<p>Les seuls problèmes de compatibilité que je vois (même pour IE6 et 7) sont : l&#039;ajout d&#039;évènements (IE&lt;8 utilise attachEvent) et un petit getElementsByClassName. Autant dire que ça ne sert pas à grand chose de s&#039;embarasser de ko de librairies
+    superflues. Je vais donc m&#039;orienter vers MooTools qui propose de <a hreflang="en" title="Télécharger ce qu&#039;il vous faut" href="http://mootools.net/core/">télécharger uniquement ce dont on a besoin</a>. J&#039;ai donc fait mes amplettes en
+    sélectionnant DomReady (avec toutes ses dépendances, notamment les events et les selecteurs) et les classes (j&#039;aime bien le confort qu&#039;elles apportent par rapport à l&#039;héritage et notre code sera donc extensible plus facilement).</p>
 <p>Il y a quelques petites choses vraiment importantes quand on implémente un carousel :</p>
 <ul>
-  <li>il faut arrêter le carousel quand la souris est au dessus de lui : pour cela nous
-    avons créé des fonctions resumer/pause qui permettrons d'obtenir ce comportement.
-    MooTools propose des évènements personnalisés appelés mouseenter et mouseleave
-    qui permettent d'<a title="Voir le code concerné href=https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js#L21">obtenir exactement ce comportement</a>.</li>
-  <li>il faut arrêter le carousel aussi quand un des éléments de ce dernier obtient le
-    focus, pour ce faire, nous devons ajouter un écouteur d'évènement en prenant
-    bien garde de <a title="Voir la ligne concernée href=https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js#L23">mettre true pour le troisième argument</a>    (mode capture) qui permet de capturer l'évènement pour les noeuds enfants.</li>
-  <li>il faut prendre en compte les hashs de manière à ce que si une personne visitant
-    le site décide de trasnmettre le lien à une autre personnes, celle-ci puisse
-    se retrouver sur le même contenu que lui.</li>
+    <li>il faut arrêter le carousel quand la souris est au dessus de lui : pour cela nous avons créé des fonctions resumer/pause qui permettrons d&#039;obtenir ce comportement. MooTools propose des évènements personnalisés appelés mouseenter et mouseleave
+        qui permettent d&#039;<a title="Voir le code concerné" href="https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js&#35;L21">obtenir exactement ce comportement</a>.</li>
+    <li>il faut arrêter le carousel aussi quand un des éléments de ce dernier obtient le focus, pour ce faire, nous devons ajouter un écouteur d&#039;évènement en prenant bien garde de <a title="Voir la ligne concernée" href="https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js&#35;L23">mettre true pour le troisième argument</a>        (mode capture) qui permet de capturer l&#039;évènement pour les noeuds enfants.</li>
+    <li>il faut prendre en compte les hashs de manière à ce que si une personne visitant le site décide de trasnmettre le lien à une autre personnes, celle-ci puisse se retrouver sur le même contenu que lui.</li>
 </ul>
-<p>Le script que je propose gère tous ces aspects plus un directement lié aux animations.
-  En effet, nous allons avoir besoin de savoir quel est l'onglet sélectionné grâce
-  à une classe selected, mais aussi, celui qui vient juste d'être déselectionné,
-  grâce à une classe unselected. Ainsi, nous pourrons animer respectivement l'apparition
-  et la disparition de ces deux éléments.</p>
+<p>Le script que je propose gère tous ces aspects plus un directement lié aux animations. En effet, nous allons avoir besoin de savoir quel est l&#039;onglet sélectionné grâce à une classe selected, mais aussi, celui qui vient juste d&#039;être déselectionné,
+    grâce à une classe unselected. Ainsi, nous pourrons animer respectivement l&#039;apparition et la disparition de ces deux éléments.</p>
 <h4>Animations CSS3</h4>
-<p>Nous voilà maintenant sur le terrain des animations. J'ai fait <a hreflang="en title=Voir la page d'exemple href=http://rest4.org/github/nfroidure/KissIsKool/master/webdisplay.html">une page d'exemple</a>  pour vous montrer quelques possibilités d'animation. La principale difficulté est
-  que l'on a deux contenus qui cohabitent dans la même zone : l'onglet sélectionné
-  et celui qui vient de disparaître. Il faut donc les superposer pour que le visiteur
-  puisse voir au même endroit la disparition et l'apparition.</p>
-<p>J'ai choisi pour cela de jouer avec position:absolute; et les z-index. De cette manière,
-  j'ai pu créer des animations de plusieurs genre sans problème. La contrainte est
-  que la hauteur et la largeur doivent être fixes. Comme ce sont des exemples, je
-  n'en ai pas fait cas, mais une solution semble plus appropriée avec l'inconvénient
-  d'alourdir le balisage : inclure les ognlets dans un wrapper en position relative
-  de hauteur égale à 0 et avec l'overflow visisible. Comme les éléments en position
-  relative gardent la largeur de leur parent, on pourra ainsi créer un carousel à
-  taille variable. Pour que le parent prenne tout de même la hauteur de ses enfants,
-  une solution est de ne pas mettre de hauteur égale à 0 uniquement pour l'onglet
-  actuellement sélectionné.</p>
+<p>Nous voilà maintenant sur le terrain des animations. J&#039;ai fait <a hreflang="en" title="Voir la page d&#039;exemple" href="http://rest4.org/github/nfroidure/KissIsKool/master/webdisplay.html">une page d&#039;exemple</a> pour vous montrer quelques
+    possibilités d&#039;animation. La principale difficulté est que l&#039;on a deux contenus qui cohabitent dans la même zone : l&#039;onglet sélectionné et celui qui vient de disparaître. Il faut donc les superposer pour que le visiteur puisse voir
+    au même endroit la disparition et l&#039;apparition.</p>
+<p>J&#039;ai choisi pour cela de jouer avec position:absolute; et les z-index. De cette manière, j&#039;ai pu créer des animations de plusieurs genre sans problème. La contrainte est que la hauteur et la largeur doivent être fixes. Comme ce sont des exemples,
+    je n&#039;en ai pas fait cas, mais une solution semble plus appropriée avec l&#039;inconvénient d&#039;alourdir le balisage : inclure les ognlets dans un wrapper en position relative de hauteur égale à 0 et avec l&#039;overflow visisible. Comme les
+    éléments en position relative gardent la largeur de leur parent, on pourra ainsi créer un carousel à taille variable. Pour que le parent prenne tout de même la hauteur de ses enfants, une solution est de ne pas mettre de hauteur égale à 0 uniquement
+    pour l&#039;onglet actuellement sélectionné.</p>
 <h3>Conclusion</h3>
-<p>A mon sens, l'ère du Javascript d'animation est bel et bien révolue, du moins, pour
-  des éléments HTML sur des sites vitrine, d'information ou e-commerce. CSS3 nous
-  offre une alternative bien plus efficace. Je vais donc petit à petit convertir
-  mes scripts MooTools pour ne plus manipuler que des classes et en finir avec les
-  classes de type Fx qui pour moi devraient même être retirées de MooTools Core.</p>
-<p>Ces derniers seront ajoutés au fur et à mesure sur le <a hreflang="en title=Voir le dépôt sur GitHub href=https://github.com/nfroidure/KissIsKool">dépôt créé pour l'occasion</a>  et appelé KissIsKool. Vos commentaires et pull request sont les bienvenus.</p>
+<p>A mon sens, l&#039;ère du Javascript d&#039;animation est bel et bien révolue, du moins, pour des éléments HTML sur des sites vitrine, d&#039;information ou e-commerce. CSS3 nous offre une alternative bien plus efficace. Je vais donc petit à petit convertir
+    mes scripts MooTools pour ne plus manipuler que des classes et en finir avec les classes de type Fx qui pour moi devraient même être retirées de MooTools Core.</p>
+<p>Ces derniers seront ajoutés au fur et à mesure sur le <a hreflang="en" title="Voir le dépôt sur GitHub" href="https://github.com/nfroidure/KissIsKool">dépôt créé pour l&#039;occasion</a> et appelé KissIsKool. Vos commentaires et pull request sont les
+    bienvenus.</p>

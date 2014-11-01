@@ -10,81 +10,40 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Exécuter du JavaScript aussi bien côté serveur que dans le navigateur de vos clients devient possible grâce à Browserify.</h2>
-<p>Exécuter du JavaScript aussi bien côté serveur que dans le navigateur de vos clients
-  devient possible grâce à Browserify.</p>
+<h2>Browserify : Partager le code JavaScript entre front et back end</h2>
+<p>Exécuter du JavaScript aussi bien côté serveur que dans le navigateur de vos clients devient possible grâce à Browserify.</p>
 
-<h3><a hreflang="en title=Voir le site de Browserify href=http://browserify.org">Browserify</a> : Qu'est-ce que c'est ?</h3>
-<p>Il dors et déjà possible d'exécuter du JavaScript côté client et côté serveur sans
-  utiliser Browserify. Cependant, la grande entrave actuellement est le fait que
-  les frameworks pour le front et le back end sont différents. Ainsi, l'exercice
-  est assez périlleux car on est contraint d'utiliser du JavaScript assez rudimentaire.</p>
-<p>De plus, la question des dépendances de votre projet est difficile à résoudre car
-  les systèmes de packets sont nombreux et aucun ne sort vraiment du lot côté front.</p>
-<p>Browserify résouds tous ces problèmes grâce à une technique radicale : porter la
-  plupart des modules natifs de NodeJS sur le front.</p>
+<h3><a hreflang="en" title="Voir le site de Browserify" href="http://browserify.org">Browserify</a> : Qu&#039;est-ce que c&#039;est ?</h3>
+<p>Il dors et déjà possible d&#039;exécuter du JavaScript côté client et côté serveur sans utiliser Browserify. Cependant, la grande entrave actuellement est le fait que les frameworks pour le front et le back end sont différents. Ainsi, l&#039;exercice
+    est assez périlleux car on est contraint d&#039;utiliser du JavaScript assez rudimentaire.</p>
+<p>De plus, la question des dépendances de votre projet est difficile à résoudre car les systèmes de packets sont nombreux et aucun ne sort vraiment du lot côté front.</p>
+<p>Browserify résouds tous ces problèmes grâce à une technique radicale : porter la plupart des modules natifs de NodeJS sur le front.</p>
 <p>NPM dans le navigateur</p>
-<p>L'idée de browserify est de créer un fichier (bundle) contenant vos fichiers JavaScript,
-  les modules chargés grâce à la fonction require de NodeJS et enfin, les modules
-  natifs susceptibles d'être utiles dans le navigateur.</p>
-<p>Il existe déjà un grand nombre de modules JavaScript compatibles avec Browserify
-  publiés sur NPM. Certains exclusivement front, d'autres indépendamment utilisables
-  côté client et côté serveur.</p>
-<h3>Les cas d'utilisations</h3>
-<p>Je vois déjà les sceptiques se demander pourquoi on voudrait partager du code entre
-  serveur et client. Les situations les plus fréquentes sont :</p>
+<p>L&#039;idée de browserify est de créer un fichier (bundle) contenant vos fichiers JavaScript, les modules chargés grâce à la fonction require de NodeJS et enfin, les modules natifs susceptibles d&#039;être utiles dans le navigateur.</p>
+<p>Il existe déjà un grand nombre de modules JavaScript compatibles avec Browserify publiés sur NPM. Certains exclusivement front, d&#039;autres indépendamment utilisables côté client et côté serveur.</p>
+<h3>Les cas d&#039;utilisations</h3>
+<p>Je vois déjà les sceptiques se demander pourquoi on voudrait partager du code entre serveur et client. Les situations les plus fréquentes sont :</p>
 <ul>
-  <li>mutualiser la validation de données côté client et côté serveur. Dans ce cas, il
-    faudra bien veiller à ce que cette validation se fasse en deux temps côté serveur :
-    vérification du format puis vérification des contraintes. En effet, la plupart
-    du temps, les contraintes dues au systèmes se font uniquement côté serveur.</li>
-  <li>partage de code de génération du HTML avec un système de template fonctionnant
-    aussi bien en front qu'en back. Avec ce cas d'usage vient aussi le fait de mutualiser
-    le code gérant l'internationalisation.</li>
-  <li>soulagement des CPU des serveurs grâce à l'exécution de code back sur les navigateurs
-    récents. Vous générez des données que les utilisateurs peuvent télécharger ?
-    Pourquoi ne pas les générer directement sur le poste du client ?</li>
-  <li>prévisualisation côté client. J'ai notamment utilisé cette technique pour mon <a
-    hreflang="en title=Voir ce générateur de fontes d'icônes href=http://nfroidure.github.io/svgiconfont"
-    />générateur de fontes d'icône full front</a>.</li>
+    <li>mutualiser la validation de données côté client et côté serveur. Dans ce cas, il faudra bien veiller à ce que cette validation se fasse en deux temps côté serveur : vérification du format puis vérification des contraintes. En effet, la plupart du
+        temps, les contraintes dues au systèmes se font uniquement côté serveur.</li>
+    <li>partage de code de génération du HTML avec un système de template fonctionnant aussi bien en front qu&#039;en back. Avec ce cas d&#039;usage vient aussi le fait de mutualiser le code gérant l&#039;internationalisation.</li>
+    <li>soulagement des CPU des serveurs grâce à l&#039;exécution de code back sur les navigateurs récents. Vous générez des données que les utilisateurs peuvent télécharger ? Pourquoi ne pas les générer directement sur le poste du client ?</li>
+    <li>prévisualisation côté client. J&#039;ai notamment utilisé cette technique pour mon <a hreflang="en" title="Voir ce générateur de fontes d&#039;icônes" href="http://nfroidure.github.io/svgiconfont/">générateur de fontes d&#039;icône full front</a>.</li>
 </ul>
-<p>Enfin, d'une manière générale, ma maxime est <q>qui peut le plus, peut le moins</q>,
-  pourquoi se priver de cette possibilité quand elle s'offre à vous ?</p>
+<p>Enfin, d&#039;une manière générale, ma maxime est <q>qui peut le plus, peut le moins</q>, pourquoi se priver de cette possibilité quand elle s&#039;offre à vous ?</p>
 <h3>Des gains évidents</h3>
-<p>En plus de ne pas avoir à écrire deux fois la même chose dans des langages différents,
-  le partage de code entre serveur et navigateur vous permet d'avoir un code plus
-  solide. Le code front et back est le même, il est donc consistant et souffre des
-  mêmes bugs. Un bug résolu sur le navigateur et votre code serveur est amélioré.
-  Pas la peine de vérifier à deux endroits si un changement a lieu dans votre façon
-  de vérifier les données de formulaires.</p>
-<p>Browserify étant basé sur NodeJS et NPM, c'est tout l'écosystème de Node qu'il vous
-  apporte (le plus dynamique actuellement). Vous seriez surpris d'apprendre tout
-  ce qu'on peut faire dans le navigateur avec du simple JavaScript. Il suffit de
-  vérifier que le module que vous souhaitez utiliser est bien compatible.</p>
-<p>Enfin, grâce à un simple npm install, toutes les dépendances de votre projet, back
-  comme front, sont automatiquement récupérées. Cela rend le déployment de votre
-  application vraiment simple.</p>
+<p>En plus de ne pas avoir à écrire deux fois la même chose dans des langages différents, le partage de code entre serveur et navigateur vous permet d&#039;avoir un code plus solide. Le code front et back est le même, il est donc consistant et souffre des
+    mêmes bugs. Un bug résolu sur le navigateur et votre code serveur est amélioré. Pas la peine de vérifier à deux endroits si un changement a lieu dans votre façon de vérifier les données de formulaires.</p>
+<p>Browserify étant basé sur NodeJS et NPM, c&#039;est tout l&#039;écosystème de Node qu&#039;il vous apporte (le plus dynamique actuellement). Vous seriez surpris d&#039;apprendre tout ce qu&#039;on peut faire dans le navigateur avec du simple JavaScript.
+    Il suffit de vérifier que le module que vous souhaitez utiliser est bien compatible.</p>
+<p>Enfin, grâce à un simple npm install, toutes les dépendances de votre projet, back comme front, sont automatiquement récupérées. Cela rend le déployment de votre application vraiment simple.</p>
 <h3>Trouver/créer des modules Browserify-friendly</h3>
-<p>Pour qu'un module soit utilisable avec Browserify, il faut qu'il soit pur. Il ne
-  doit pas avoir d'état interne et uniquement exposer des API qui retourneront les
-  mêmes résultats avec les même paramètres en entrées. Cela exclue donc tout usage
-  du système de fichier. D'ailleurs le modules fs de NodeJS n'est pas et ne sera
-  probablement jamais porté sur le navigateur.</p>
-<p>Il vaut mieux également éviter les modules qui ont trop de dépendances. L'idéal est
-  d'utiliser des modules qui n'en ont pas du tout. Au minimum, assurez-vous qu'il
-  n'y a pas de dépendances du style lodash ou underscore. En effet, vous auriez vite
-  fait de vous retrouver avec cinq frameworks différents faisant la même chose dans
-  votre code front.</p>
-<p>Les streams de Node se prêtent parfaitement à la création de modules pour Browserify
-  puisque leur design favorise la programmation fonctionnelle. De plus, leur nature
-  asynchrone est adaptée au développement dans le navigateur.</p>
-<p>La philosophie Unix ; faîtes une seule chose, mais faîtes la bien, s'applique donc
-  encore plus fortement pour Browserify et ce n'est pas un mal.</p>
-<p>Bref, Browserify, c'est bon, mangez-en ! Seul revers de la médaille, Browserify ne
-  fonctionne qu'avec les navigateur récents (IE9+), mais je pense qu'avec quelques
-  polyfills, il doit être possible de matcher IE8. Pour un exemple de projet utilisant
-  Browserify, jetez un oeil à <a hreflang="en title=Voir cet éditeur héxadécimal href=http://hexa.insertafter.com"
-  />Hexa</a>.</p>
-<p>Pour ma part, j'ai complètement remplacé RequireJS par Browserify pour mes sides
-  projects et je compte bien passer au pro dès que j'aurai résolu tous les petits
-  détails restants.</p>
+<p>Pour qu&#039;un module soit utilisable avec Browserify, il faut qu&#039;il soit pur. Il ne doit pas avoir d&#039;état interne et uniquement exposer des API qui retourneront les mêmes résultats avec les même paramètres en entrées. Cela exclue donc tout
+    usage du système de fichier. D&#039;ailleurs le modules fs de NodeJS n&#039;est pas et ne sera probablement jamais porté sur le navigateur.</p>
+<p>Il vaut mieux également éviter les modules qui ont trop de dépendances. L&#039;idéal est d&#039;utiliser des modules qui n&#039;en ont pas du tout. Au minimum, assurez-vous qu&#039;il n&#039;y a pas de dépendances du style lodash ou underscore. En effet,
+    vous auriez vite fait de vous retrouver avec cinq frameworks différents faisant la même chose dans votre code front.</p>
+<p>Les streams de Node se prêtent parfaitement à la création de modules pour Browserify puisque leur design favorise la programmation fonctionnelle. De plus, leur nature asynchrone est adaptée au développement dans le navigateur.</p>
+<p>La philosophie Unix ; faîtes une seule chose, mais faîtes la bien, s&#039;applique donc encore plus fortement pour Browserify et ce n&#039;est pas un mal.</p>
+<p>Bref, Browserify, c&#039;est bon, mangez-en ! Seul revers de la médaille, Browserify ne fonctionne qu&#039;avec les navigateur récents (IE9+), mais je pense qu&#039;avec quelques polyfills, il doit être possible de matcher IE8. Pour un exemple de projet
+    utilisant Browserify, jetez un oeil à <a hreflang="en" title="Voir cet éditeur héxadécimal" href="http://hexa.insertafter.com/">Hexa</a>.</p>
+<p>Pour ma part, j&#039;ai complètement remplacé RequireJS par Browserify pour mes sides projects et je compte bien passer au pro dès que j&#039;aurai résolu tous les petits détails restants.</p>

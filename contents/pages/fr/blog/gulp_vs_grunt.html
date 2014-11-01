@@ -10,108 +10,61 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Gulp est un concurrent de Grunt qui se targue d'exploiter les capacités des streams NodeJS. Petit passage en revue de cet outil.</h2>
-<p>Gulp est un concurrent de Grunt qui se targue d'exploiter les capacités des streams
-  NodeJS. Petit passage en revue de cet outil.</p>
+<h2>Gulp remplacera-t-il Grunt ?</h2>
+<p>Gulp est un concurrent de Grunt qui se targue d&#039;exploiter les capacités des streams NodeJS. Petit passage en revue de cet outil.</p>
 
-<p>Si vous ne l'avez pas déjà lu, mon billet sur la génération de fontes vous permettra
-  de <a title="Lire ce billet href=articles-gruntjs_font_icons.html">découvrir GruntJS</a>.
-  Pour résumer, GruntJS permet d'exécuter des tâches diverses et variées grâce à
-  un nombre impressionnant de plug-ins publiés sur NPM. Bref, un outil intéressant
-  mais souffrant de quelques lacunes.</p>
+<p>Si vous ne l&#039;avez pas déjà lu, mon billet sur la génération de fontes vous permettra de <a title="Lire ce billet" href="articles-gruntjs_font_icons.html">découvrir GruntJS</a>. Pour résumer, GruntJS permet d&#039;exécuter des tâches diverses et variées
+    grâce à un nombre impressionnant de plug-ins publiés sur NPM. Bref, un outil intéressant mais souffrant de quelques lacunes.</p>
 <h3>Les défauts de GruntJS</h3>
-<p>L'un des reproches les plus importants que j'ai à formuler vis à vis de GruntJS est
-  très certainement l'absence d'exploitation des streams. En effet, chaque tâche
-  Grunt lis un fichier et écrit dans le suivant de telle manière que les performances
-  en sont affectées, surtout pour les développeurs qui ont des disques durs classiques.</p>
-<p>On se retrouve avec des tâches "silos" qui ne peuvent s'exécuter que l'une après
-  l'autre alors que bien souvent, il serait techniquement possible d'effectuer ces
-  tâches de manière plus fluide grâce aux streams.</p>
-<p>Une conséquence de ce problème est qu'il y a énormément de répétitions dans la configuration
-  des tâches car on doit les configurer indépendamment plutôt que de montrer leurs
-  relations.</p>
-<h3>L'apport de Gulp</h3>
-<p><a hreflang="en title=Voir le site officiel href=http://gulpjs.com" />Gulp</a> propose
-  une toute autre vision en considérant une tâche comme une sorte de middleware,
-  à l'image de ce que l'on trouve pour Connect/Express. La description d'une tâche
-  Gulp devient donc une succession d'opérations spécifiques sur des fichiers. Gulp
-  tire donc parti des streams NodeJS à plusieurs niveaux.</p>
-<p>Tout d'abord, au niveau des tâches, Gulp utilise les streams de NodeJS et plus particulièrement
-  leur mode "objet" (<a hreflang="en title=Voir la documentation href=http://nodejs.org/api/stream.html#stream_object_mode">objectMode</a>).
-  La physionomie d'une tâche Gulp est la suivante :</p>
+<p>L&#039;un des reproches les plus importants que j&#039;ai à formuler vis à vis de GruntJS est très certainement l&#039;absence d&#039;exploitation des streams. En effet, chaque tâche Grunt lis un fichier et écrit dans le suivant de telle manière que les
+    performances en sont affectées, surtout pour les développeurs qui ont des disques durs classiques.</p>
+<p>On se retrouve avec des tâches &#034;silos&#034; qui ne peuvent s&#039;exécuter que l&#039;une après l&#039;autre alors que bien souvent, il serait techniquement possible d&#039;effectuer ces tâches de manière plus fluide grâce aux streams.</p>
+<p>Une conséquence de ce problème est qu&#039;il y a énormément de répétitions dans la configuration des tâches car on doit les configurer indépendamment plutôt que de montrer leurs relations.</p>
+<h3>L&#039;apport de Gulp</h3>
+<p><a hreflang="en" title="Voir le site officiel" href="http://gulpjs.com/">Gulp</a> propose une toute autre vision en considérant une tâche comme une sorte de middleware, à l&#039;image de ce que l&#039;on trouve pour Connect/Express. La description d&#039;une
+    tâche Gulp devient donc une succession d&#039;opérations spécifiques sur des fichiers. Gulp tire donc parti des streams NodeJS à plusieurs niveaux.</p>
+<p>Tout d&#039;abord, au niveau des tâches, Gulp utilise les streams de NodeJS et plus particulièrement leur mode &#034;objet&#034; (<a hreflang="en" title="Voir la documentation" href="http://nodejs.org/api/stream.html&#35;stream_object_mode">objectMode</a>).
+    La physionomie d&#039;une tâche Gulp est la suivante :</p>
 <ol>
-  <li>création d'un flux d'objets représentants les fichiers obtenus à partir d'un pattern
-    donné (via la méthode <code>gulp.src</code> qui utilise <a hreflang="en title=Voir la ligne href=https://github.com/wearefractal/gulp/blob/master/lib/createInputStream/index.js#L2">glob-stream</a>)
-    ;</li>
-  <li>branchement de ce flux sur une ou plusieurs tâches (via la méthode <code>pipe</code>)
-    ;</li>
-  <li>enregistrement du résultat dans un ou plusieurs fichiers (respectivement via la
-    méthode gulp.dest ou via une tâche).</li>
+    <li>création d&#039;un flux d&#039;objets représentants les fichiers obtenus à partir d&#039;un pattern donné (via la méthode <code>gulp.src</code> qui utilise <a hreflang="en" title="Voir la ligne" href="https://github.com/wearefractal/gulp/blob/master/lib/createInputStream/index.js&#35;L2">glob-stream</a>)
+        ;</li>
+    <li>branchement de ce flux sur une ou plusieurs tâches (via la méthode <code>pipe</code>) ;</li>
+    <li>enregistrement du résultat dans un ou plusieurs fichiers (respectivement via la méthode gulp.dest ou via une tâche).</li>
 </ol>
-<p>Chaque objet est donc passé de manière asynchrone dans l'enchaînement de tâches configuré
-  pour l'occasion. Chaque <a hreflang="en title=Voir le package utilis href=https://npmjs.org/package/vinyl">objet <code>File</code></a>  passé contient les informations suivantes :</p>
+<p>Chaque objet est donc passé de manière asynchrone dans l&#039;enchaînement de tâches configuré pour l&#039;occasion. Chaque <a hreflang="en" title="Voir le package utilis" href="https://npmjs.org/package/vinyl">objet <code>File</code></a> passé contient
+    les informations suivantes :</p>
 <ul>
-  <li>le chemin du fichier ;</li>
-  <li>le répertoire courant ;</li>
-  <li>le contenu du fichier ;</li>
+    <li>le chemin du fichier ;</li>
+    <li>le répertoire courant ;</li>
+    <li>le contenu du fichier ;</li>
 </ul>
-<p>Le contenu du fichier peut être nul, être un <a hreflang="en title=Voir la documentation de NodeJS pour les buffers href=http://nodejs.org/api/buffer.html">Buffer</a>  de son contenu ou un <a hreflang="en title=Voir la documentation de NodeJS pour les streams href=http://nodejs.org/api/stream.html#stream_class_stream_readable">ReadableStream</a>.
-  Par défaut, Gulp fournit un Buffer, c'est peut-être d'ailleurs son plus grand défaut.</p>
-<p>En effet, les streams sont dans la plupart des cas une suite de Buffers. Utiliser
-  les streams permet donc également d'utiliser un unique buffer au sein d'un stream.
-  Bref, utiliser les streams uniquement aurait pu simplifier la création de plug-ins.</p>
-<p>Si on résume, Gulp propose d'agir sur des flux de fichiers qui peuvent eux-même proposer
-  leur contenu sous forme de Buffer ou un flux de leur propres données.</p>
+<p>Le contenu du fichier peut être nul, être un <a hreflang="en" title="Voir la documentation de NodeJS pour les buffers" href="http://nodejs.org/api/buffer.html">Buffer</a> de son contenu ou un <a hreflang="en" title="Voir la documentation de NodeJS pour les streams"
+    href="http://nodejs.org/api/stream.html&#35;stream_class_stream_readable">ReadableStream</a>. Par défaut, Gulp fournit un Buffer, c&#039;est peut-être d&#039;ailleurs son plus grand défaut.</p>
+<p>En effet, les streams sont dans la plupart des cas une suite de Buffers. Utiliser les streams permet donc également d&#039;utiliser un unique buffer au sein d&#039;un stream. Bref, utiliser les streams uniquement aurait pu simplifier la création de plug-ins.</p>
+<p>Si on résume, Gulp propose d&#039;agir sur des flux de fichiers qui peuvent eux-même proposer leur contenu sous forme de Buffer ou un flux de leur propres données.</p>
 <h3>À quoi ça sert ?</h3>
-<p>Les streams permettent d'optimiser l'utilisation des ressources systèmes et offrent
-  une plus grande souplesse. Imaginons la combinaison de tâches suivante à appliquer
-  à des fichiers :</p>
+<p>Les streams permettent d&#039;optimiser l&#039;utilisation des ressources systèmes et offrent une plus grande souplesse. Imaginons la combinaison de tâches suivante à appliquer à des fichiers :</p>
 <ul>
-  <li>remplacer "foo" par "bar" ;</li>
-  <li> ajouter une phrase au début du fichier ;</li>
-  <li>tronquer le fichier à partir de 10000 lignes.</li>
+    <li>remplacer &#034;foo&#034; par &#034;bar&#034; ;</li>
+    <li> ajouter une phrase au début du fichier ;</li>
+    <li>tronquer le fichier à partir de 10000 lignes.</li>
 </ul>
-<p>Le design de GruntJS fera qu'il y aura autant de fichiers écrits sur le disque qu'il
-  y a d'étapes. De plus, chacune de ces étapes se fera sur la totalité des fichiers
-  séquentiellement.</p>
-<p>Avec Gulp, chaque fichier sera passé aux tâches de manière totalement asynchrone.
-  Théoriquement, il est possible que le premier fichier envoyé aux tâches soit écrit
-  sur disque alors que tous les fichiers concernés par le pattern fournit à <code>gulp.src</code>  n'ont pas encore été totalement listés.</p>
-<p>Mais en plus de cela pour les fichiers eux-mêmes, en utilisant le mode stream, une
-  tâche effectuée en dernier (ici, tronquer le fichier à 10000 lignes) peut influer
-  sur les tâches précédentes.</p>
-<p>En effet, puisque l'on ne souhaite prendre en compte que les 10000 premières lignes,
-  pourquoi remplacer "foo" par "bar" dans les lignes suivantes ? En fermant le flux
-  après les 10000 lignes, l'évènement sera transmis aux flux parents. Théoriquement,
-  il est possible que la lecture des données s'interrompe également permettant ainsi
-  d'économiser des ressources.</p>
-<p>Puisque les streams sont asynchrones, on peut utiliser les différentes ressources
-  système simultanément. Écrire sur le disque ne demande pas beaucoup de CPU ou de
-  mémoire, a contrario, opérer sur les données ne sollicite pas les disques (sauf
-  cas extrême). Avec GruntJS, ces étapes ont lieu séquentiellement ce qui crée des
-  goulets d'étranglement. Avec Gulp ces dernières sont simultanées, menant à une
-  utilisation plus intelligente du système.</p>
+<p>Le design de GruntJS fera qu&#039;il y aura autant de fichiers écrits sur le disque qu&#039;il y a d&#039;étapes. De plus, chacune de ces étapes se fera sur la totalité des fichiers séquentiellement.</p>
+<p>Avec Gulp, chaque fichier sera passé aux tâches de manière totalement asynchrone. Théoriquement, il est possible que le premier fichier envoyé aux tâches soit écrit sur disque alors que tous les fichiers concernés par le pattern fournit à <code>gulp.src</code>    n&#039;ont pas encore été totalement listés.</p>
+<p>Mais en plus de cela pour les fichiers eux-mêmes, en utilisant le mode stream, une tâche effectuée en dernier (ici, tronquer le fichier à 10000 lignes) peut influer sur les tâches précédentes.</p>
+<p>En effet, puisque l&#039;on ne souhaite prendre en compte que les 10000 premières lignes, pourquoi remplacer &#034;foo&#034; par &#034;bar&#034; dans les lignes suivantes ? En fermant le flux après les 10000 lignes, l&#039;évènement sera transmis aux
+    flux parents. Théoriquement, il est possible que la lecture des données s&#039;interrompe également permettant ainsi d&#039;économiser des ressources.</p>
+<p>Puisque les streams sont asynchrones, on peut utiliser les différentes ressources système simultanément. Écrire sur le disque ne demande pas beaucoup de CPU ou de mémoire, a contrario, opérer sur les données ne sollicite pas les disques (sauf cas extrême).
+    Avec GruntJS, ces étapes ont lieu séquentiellement ce qui crée des goulets d&#039;étranglement. Avec Gulp ces dernières sont simultanées, menant à une utilisation plus intelligente du système.</p>
 <h3>Et dans la pratique ?</h3>
-<p>Dans la pratique, ce n'est pas si simple. Tout d'abord car les créateurs de Gulp
-  indiquent clairement que les créateurs de plug-in peuvent ne supporter que les
-  buffers ce qui réduit quelque peu l'intérêt de Gulp. Les streams au niveau des
-  fichiers sont cachés derrière une option que peu activeront.</p>
-<p>Un autre problème qui est posé par cette façon de faire est comment opérer sur les
-  fichiers en cours de traitement (renommer/supprimer) sans être sûr qu'il n'y aura
-  pas d'effets de bord imprédictibles. Le fonctionnement de Grunt est sur ce point
-  plus "rassurant".</p>
-<p>Étant donné le manque de maturité de Gulp et le succès de GruntJS, je pense rester
-  sur GruntJS au moins dans un premier temps. Ce qui ne m'empêchera pas de rester
-  attentif. Je suis entrain de porter <a hreflang="en title=Voir le dépôt du plug-in href=https://github.com/nfroidure/grunt-svgicons2svgfont">grunt-svgicons2svgfont</a>  vers Gulp, je vous en donne des nouvelles bientôt ;).</p>
-<p>Edit du 16/12/2013 : Finalement, le fait de supporter les buffers est moins handicapant
-  que prévu puisque le module vinyl permet de faire abstraction du fait que le fichier
-  soit un Buffer ou un Stream. A un petit détail près. En effet, piper un stream
-  est susceptible d'émettre un évènement <code>end</code> pour indiquer la fin du
-  stream, mais piper un buffer n'émet pas cet évènement. Je viens de soumettre une
-  <a hreflang="en title=Voir son contenu href=https://github.com/wearefractal/vinyl/pull/2">pull request à ce sujet</a>,
-  j'espère qu'elle sera rapidement acceptée.</p>
-<p>Malheureusement, cette abstraction ne semble exister qu'en entrée mais pas en sortie.
-  Je continue d'investiguer en même temps que j'adapte mon plug-in Grunt. Je rééditerai
-  sûrement ce billet avec d'autres informations pratiques.</p>
-<p>Enfin, je ne l'ai pas précisé, mais les plug-in Gulp sont plus facile à tester puisqu'il
-  ne nécessitent pas d'écrire sur un fichier ce qui est le cas avec GruntJS.</p>
+<p>Dans la pratique, ce n&#039;est pas si simple. Tout d&#039;abord car les créateurs de Gulp indiquent clairement que les créateurs de plug-in peuvent ne supporter que les buffers ce qui réduit quelque peu l&#039;intérêt de Gulp. Les streams au niveau des
+    fichiers sont cachés derrière une option que peu activeront.</p>
+<p>Un autre problème qui est posé par cette façon de faire est comment opérer sur les fichiers en cours de traitement (renommer/supprimer) sans être sûr qu&#039;il n&#039;y aura pas d&#039;effets de bord imprédictibles. Le fonctionnement de Grunt est sur
+    ce point plus &#034;rassurant&#034;.</p>
+<p>Étant donné le manque de maturité de Gulp et le succès de GruntJS, je pense rester sur GruntJS au moins dans un premier temps. Ce qui ne m&#039;empêchera pas de rester attentif. Je suis entrain de porter <a hreflang="en" title="Voir le dépôt du plug-in"
+    href="https://github.com/nfroidure/grunt-svgicons2svgfont">grunt-svgicons2svgfont</a> vers Gulp, je vous en donne des nouvelles bientôt ;).</p>
+<p>Edit du 16/12/2013 : Finalement, le fait de supporter les buffers est moins handicapant que prévu puisque le module vinyl permet de faire abstraction du fait que le fichier soit un Buffer ou un Stream. A un petit détail près. En effet, piper un stream
+    est susceptible d&#039;émettre un évènement <code>end</code> pour indiquer la fin du stream, mais piper un buffer n&#039;émet pas cet évènement. Je viens de soumettre une <a hreflang="en" title="Voir son contenu" href="https://github.com/wearefractal/vinyl/pull/2">pull request à ce sujet</a>,
+    j&#039;espère qu&#039;elle sera rapidement acceptée.</p>
+<p>Malheureusement, cette abstraction ne semble exister qu&#039;en entrée mais pas en sortie. Je continue d&#039;investiguer en même temps que j&#039;adapte mon plug-in Grunt. Je rééditerai sûrement ce billet avec d&#039;autres informations pratiques.</p>
+<p>Enfin, je ne l&#039;ai pas précisé, mais les plug-in Gulp sont plus facile à tester puisqu&#039;il ne nécessitent pas d&#039;écrire sur un fichier ce qui est le cas avec GruntJS.</p>

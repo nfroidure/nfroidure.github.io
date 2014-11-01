@@ -10,71 +10,39 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Depuis que j'ai découvert les bases de données avec MySQL, je n'ai pas cessé de m'en servir, tant et si bien que j'ai fini par définir une convention de nommage.</h2>
-<p>Depuis que j'ai découvert les bases de données avec MySQL, je n'ai pas cessé de m'en
-  servir, tant et si bien que j'ai fini par définir une convention de nommage.</p>
+<h2>Conventions de nommage des bases de données</h2>
+<p>Depuis que j&#039;ai découvert les bases de données avec MySQL, je n&#039;ai pas cessé de m&#039;en servir, tant et si bien que j&#039;ai fini par définir une convention de nommage.</p>
 
-<p>Je suis actuellement en pleine lecture du livre Bases de données : <cite>Concepts, utilisation et développement de Jean-Luc Hainaut</cite>.
-  J'en ferai la critique sur ce même blog, pour l'instant mon impression est plutôt
-  bonne.</p>
-<p>En revanche, il y a une chose qui m'exaspère au plus haut point dans ce livre : le
-  manque d'uniformité et de clarté dans les appellations des bases et des champs.
-  Tout est en majuscule (argh !), en français (ouch !) et les clés primaires auto
-  incrémentées sont nommées comme suit : NCOM, NCLI, NPRO. Ce n'est pas vraiment
-  l'idéal.</p>
-<p>Au fil de mon utilisation des bases de données, j'ai normalisé ma façon de les nommer
-  de manière à ce que l'on puisse facilement comprendre les requêtes que je rédige.
-  Je vous livre donc ma méthode afin que les plus fainéants d'entre vous n'aient
-  pas à y réflechir, mais simplement à l'appliquer.</p>
+<p>Je suis actuellement en pleine lecture du livre Bases de données : <cite>Concepts, utilisation et développement de Jean-Luc Hainaut</cite>. J&#039;en ferai la critique sur ce même blog, pour l&#039;instant mon impression est plutôt bonne.</p>
+<p>En revanche, il y a une chose qui m&#039;exaspère au plus haut point dans ce livre : le manque d&#039;uniformité et de clarté dans les appellations des bases et des champs. Tout est en majuscule (argh !), en français (ouch !) et les clés primaires auto
+    incrémentées sont nommées comme suit : NCOM, NCLI, NPRO. Ce n&#039;est pas vraiment l&#039;idéal.</p>
+<p>Au fil de mon utilisation des bases de données, j&#039;ai normalisé ma façon de les nommer de manière à ce que l&#039;on puisse facilement comprendre les requêtes que je rédige. Je vous livre donc ma méthode afin que les plus fainéants d&#039;entre vous
+    n&#039;aient pas à y réflechir, mais simplement à l&#039;appliquer.</p>
 <h3>Règles de base</h3>
-<p>English everywhere. Quel est le sens de nommer ses bases, tables ou champs en français
-  alors que :</p>
+<p>English everywhere. Quel est le sens de nommer ses bases, tables ou champs en français alors que :</p>
 <ul>
-  <li>la langue des programmeurs est l'anglais;</li>
-  <li> rien ne dit qu'un projet ne s'internationalisera pas durant son cycle de vie ou
-    que l'entreprise ne devienne pas une multinationale entre temps;</li>
-  <li>l'anglais est simple, n'a pas d'accents donc pas de source d'erreurs du genre :
-    comment savoir si la table <code>colles</code> fait référence aux collés du collège
-    du coin ou aux tubes de colle en réserve ?</li>
-  <li>Le langage <code><abbr title="Structured Query Language">SQL</abbr></code> est
-    en anglais, nommer ses tables en français est un curieux mélange des genres,
-    nécessitant de switcher de français à anglais en permanence.</li>
+    <li>la langue des programmeurs est l&#039;anglais;</li>
+    <li> rien ne dit qu&#039;un projet ne s&#039;internationalisera pas durant son cycle de vie ou que l&#039;entreprise ne devienne pas une multinationale entre temps;</li>
+    <li>l&#039;anglais est simple, n&#039;a pas d&#039;accents donc pas de source d&#039;erreurs du genre : comment savoir si la table <code>colles</code> fait référence aux collés du collège du coin ou aux tubes de colle en réserve ?</li>
+    <li>Le langage <code><abbr title="Structured Query Language">SQL</abbr></code> est en anglais, nommer ses tables en français est un curieux mélange des genres, nécessitant de switcher de français à anglais en permanence.</li>
 </ul>
-<p>Utilisation de camelCase. En effet, cette syntaxe rend plus lisible les noms des
-  tables en marquant les différents mots qui composent le nom d'une table apportant
-  une visibilité qui n'est pas de trop pour les requêtes les plus complexes. De plus
-  cette syntaxe est assez naturelle à tout programmeur initié à la <abbr title="Programmation Orientée Objet">POO</abbr>.</p>
-<p>Cela découle de l'utilisation du camelCase, mais je le précise tout de même : pas
-  de tirets ou autres signes superflux. On reste sur des caractères de a à z. Cette
-  règle souffre une seule exception comme vous le constaterez ci-après.</p>
-<p>Ces deux règles suffisent à savoir comment nommer une base de donnée, pour les tables,
-  c'est un peu plus complexe.</p>
+<p>Utilisation de camelCase. En effet, cette syntaxe rend plus lisible les noms des tables en marquant les différents mots qui composent le nom d&#039;une table apportant une visibilité qui n&#039;est pas de trop pour les requêtes les plus complexes. De
+    plus cette syntaxe est assez naturelle à tout programmeur initié à la <abbr title="Programmation Orientée Objet">POO</abbr>.</p>
+<p>Cela découle de l&#039;utilisation du camelCase, mais je le précise tout de même : pas de tirets ou autres signes superflux. On reste sur des caractères de a à z. Cette règle souffre une seule exception comme vous le constaterez ci-après.</p>
+<p>Ces deux règles suffisent à savoir comment nommer une base de donnée, pour les tables, c&#039;est un peu plus complexe.</p>
 <h3>Nomenclature des tables</h3>
-<p>Je nomme toutes les tables au pluriel selon un postulat simple : les tables sont
-  une liste de lignes. C'est aussi une façon de bien distinguer une table d'une table
-  liée. Par exemple, grâce à l'utilisation du pluriel, on ne peut pas confondre la
-  table <span>products</span> avec la table <span>productCategories</span> ou le
-  champ <span>billRows.product</span>.</p>
-<p>Seules les tables de jointures peuvent contenir (elles le doivent) des tirets. Plus
-  précisément l'underscore (tiret sous le 8 sur votre clavier). Une table qui associerai
-  des utilisateurs à leurs produits préférés se nommerai <code>products_users</code>.</p>
-<p>C'est une convention personnelle mais qui peut avoir de l'importance : le nom de
-  la table <code>products_users</code> doit être composée des deux tables qu'elle
-  référence par ordre croissant. Cela permet de pouvoir prédire leur nom sans avoir
-  besoin de consulter le schéma de la table.</p>
+<p>Je nomme toutes les tables au pluriel selon un postulat simple : les tables sont une liste de lignes. C&#039;est aussi une façon de bien distinguer une table d&#039;une table liée. Par exemple, grâce à l&#039;utilisation du pluriel, on ne peut pas confondre
+    la table <span>products</span> avec la table <span>productCategories</span> ou le champ <span>billRows.product</span>.</p>
+<p>Seules les tables de jointures peuvent contenir (elles le doivent) des tirets. Plus précisément l&#039;underscore (tiret sous le 8 sur votre clavier). Une table qui associerai des utilisateurs à leurs produits préférés se nommerai <code>products_users</code>.</p>
+<p>C&#039;est une convention personnelle mais qui peut avoir de l&#039;importance : le nom de la table <code>products_users</code> doit être composée des deux tables qu&#039;elle référence par ordre croissant. Cela permet de pouvoir prédire leur nom sans
+    avoir besoin de consulter le schéma de la table.</p>
 <h3>Nomenclature des champs</h3>
-<p>Les champs sont le plus souvent au singulier lorsqu'il ne peuvent contenir qu'une
-  valeur. Une exception cependant, les champs de type <code>SET</code> qui contiennent
-  un sous ensemble du set de valeurs qu'il peuvent contenir.</p>
-<p>Cela permet aussi de se poser une question sur le contenu de votre table. Si l'un
-  des champs est au pluriels et n'est pas de type <code>SET</code>, il y a de fortes
-  présomptions sur le fait que le schéma de votre table n'est pas optimal conceptuellement.</p>
-<p>Bien entendu, un champs avec une clé étrangère référençant la table <code>products</code>  sera nommé <code>product</code> si que possible.</p>
-<p>Enfin, l'identifiant unique quand il se résume à une seule valeur auto-incrémentée
-  (90% des cas) sera nommé simplement <code>id</code>.</p>
+<p>Les champs sont le plus souvent au singulier lorsqu&#039;il ne peuvent contenir qu&#039;une valeur. Une exception cependant, les champs de type <code>SET</code> qui contiennent un sous ensemble du set de valeurs qu&#039;il peuvent contenir.</p>
+<p>Cela permet aussi de se poser une question sur le contenu de votre table. Si l&#039;un des champs est au pluriels et n&#039;est pas de type <code>SET</code>, il y a de fortes présomptions sur le fait que le schéma de votre table n&#039;est pas optimal
+    conceptuellement.</p>
+<p>Bien entendu, un champs avec une clé étrangère référençant la table <code>products</code> sera nommé <code>product</code> si que possible.</p>
+<p>Enfin, l&#039;identifiant unique quand il se résume à une seule valeur auto-incrémentée (90&#37; des cas) sera nommé simplement <code>id</code>.</p>
 <h3>Et au niveau des requêtes ?</h3>
-<p>En revanche, pour mes requêtes, j'utilise les majuscules, distinguant ainsi les parties
-  propres au language des noms des tables et champs. Voici une requête créée récemment
-  pour l'export <abbr title="Comma Separated Values">CSV</abbr> d'un client:</p><pre>SELECT equipments.id AS Id, organizations.label AS Client, installations.label AS Aire, CONCAT_WS(' ', equipmentModels.model, equipments.precision) AS Jeu<br /> FROM equipments<br /> LEFT JOIN equipmentModels on equipments.model=equipmentModels.id<br /> LEFT JOIN installations ON equipments.installation=installations.id<br /> LEFT JOIN organizations ON installations.organization=organizations.id<br /> WHERE equipmentModels.model LIKE '%sans réf%'</pre>
-<p>Voilà pour mes petites règles de bonne conduite SQL ! Et vous, comment nommez-vous
-  vos tables ? Que pensez-vous de ces principes ?</p>
+<p>En revanche, pour mes requêtes, j&#039;utilise les majuscules, distinguant ainsi les parties propres au language des noms des tables et champs. Voici une requête créée récemment pour l&#039;export <abbr title="Comma Separated Values">CSV</abbr> d&#039;un
+    client:</p><pre>SELECT equipments.id AS Id, organizations.label AS Client, installations.label AS Aire, CONCAT_WS(&#039; &#039;, equipmentModels.model, equipments.precision) AS Jeu<br /> FROM equipments<br /> LEFT JOIN equipmentModels on equipments.model=equipmentModels.id<br /> LEFT JOIN installations ON equipments.installation=installations.id<br /> LEFT JOIN organizations ON installations.organization=organizations.id<br /> WHERE equipmentModels.model LIKE &#039;&#37;sans réf&#37;&#039;</pre>
+<p>Voilà pour mes petites règles de bonne conduite SQL ! Et vous, comment nommez-vous vos tables ? Que pensez-vous de ces principes ?</p>

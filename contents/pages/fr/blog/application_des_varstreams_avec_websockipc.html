@@ -10,24 +10,17 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Afin de mieux mettre en exergue l'intérêt des VarStreams, j'ai créé une petite application NodeJS mettant en oeuvre une communication inter processus avec les WebSockets.</h2>
-<p>Afin de mieux mettre en exergue l'intérêt des VarStreams, j'ai créé une petite application
-  NodeJS mettant en oeuvre une communication inter processus avec les WebSockets.</p>
+<h2>Exemple de mise en oeuvre des VarStreams avec WebSockIPC et NodeJS</h2>
+<p>Afin de mieux mettre en exergue l&#039;intérêt des VarStreams, j&#039;ai créé une petite application NodeJS mettant en oeuvre une communication inter processus avec les WebSockets.</p>
 
-<p>L'idée dérrière WebSockIPC est de maintenir, pour chaque client, un arbre de données
-  synchronisé. Cela permet de simplifier la communication entre le client et le serveur
-  en introduisant une couche d'abstraction.</p>
-<p>Afin de l'uliser, il faut d'abord installer ses dépendances :</p><pre>nfroidure@server:~# npm install varstream<br />nfroidure@server:~# npm install websocket</pre>
-<p>WebSockIPC est un simple fichier Javascript qu'il suffit d'executer avec NodeJS après
-  avoir cloné le dépôt :</p><pre>nfroidure@server:~# node <a hreflang="en title=Voir le fichier Javascript du serveur href=https://github.com/nfroidure/WebSockIPC/blob/master/websockipc.js">websockipc.js</a></pre>
-<p>Ou encore plus simple, en live depuis la branche master :</p><pre>nfroidure@server:~# curl https://raw.github.com/nfroidure/WebSockIPC/master/websockipc.js | node</pre>
-<p>Ce dernier se met alors à l'écoute de nouveaux clients. Il garde en mémoire une copie
-  de l'arbre de données à synchroniser et reçoit les demandes de synchronisation
-  des clients qu'il s'empresse de dispatcher à chacun d'entre eux pour maintenir
-  continuellement le même état.</p>
-<p>A titre d'exemple, <a hreflang="en title=Voir le fichier en question href=https://github.com/nfroidure/WebSockIPC/blob/master/index.html">un programme client est livré</a>  avec le serveur. Ce dernier utilise avantageusement les setters/getters Javascript
-  pour binder des éléments d'interface à l'arbre de donnée. Au final, nous avons
-  un formulaire éditable collaborativement entre les divers clients de l'application
-  grâce à 50 malheureuses lignes de Javascript. Elle est pas belle la vie ?</p>
-<p>A vous d'innover avec les <a hreflang="en title=Voir le dépôt des VarStreams href=https://github.com/nfroidure/VarStream">VarStreams</a>  et <a hreflang="en title=Voir le dépôt de WebSocketIPC href=https://github.com/nfroidure/WebSockIPC">WebSocketIPC</a>,
-  rendez-vous sur leurs dépôts Git respectifs !</p>
+<p>L&#039;idée dérrière WebSockIPC est de maintenir, pour chaque client, un arbre de données synchronisé. Cela permet de simplifier la communication entre le client et le serveur en introduisant une couche d&#039;abstraction.</p>
+<p>Afin de l&#039;uliser, il faut d&#039;abord installer ses dépendances :</p><pre>nfroidure&#64;server:~&#35; npm install varstream<br />nfroidure&#64;server:~&#35; npm install websocket</pre>
+<p>WebSockIPC est un simple fichier Javascript qu&#039;il suffit d&#039;executer avec NodeJS après avoir cloné le dépôt :</p><pre>nfroidure&#64;server:~&#35; node <a hreflang="en" title="Voir le fichier Javascript du serveur" href="https://github.com/nfroidure/WebSockIPC/blob/master/websockipc.js">websockipc.js</a></pre>
+<p>Ou encore plus simple, en live depuis la branche master :</p><pre>nfroidure&#64;server:~&#35; curl https://raw.github.com/nfroidure/WebSockIPC/master/websockipc.js | node</pre>
+<p>Ce dernier se met alors à l&#039;écoute de nouveaux clients. Il garde en mémoire une copie de l&#039;arbre de données à synchroniser et reçoit les demandes de synchronisation des clients qu&#039;il s&#039;empresse de dispatcher à chacun d&#039;entre eux
+    pour maintenir continuellement le même état.</p>
+<p>A titre d&#039;exemple, <a hreflang="en" title="Voir le fichier en question" href="https://github.com/nfroidure/WebSockIPC/blob/master/index.html">un programme client est livré</a> avec le serveur. Ce dernier utilise avantageusement les setters/getters
+    Javascript pour binder des éléments d&#039;interface à l&#039;arbre de donnée. Au final, nous avons un formulaire éditable collaborativement entre les divers clients de l&#039;application grâce à 50 malheureuses lignes de Javascript. Elle est pas
+    belle la vie ?</p>
+<p>A vous d&#039;innover avec les <a hreflang="en" title="Voir le dépôt des VarStreams" href="https://github.com/nfroidure/VarStream">VarStreams</a> et <a hreflang="en" title="Voir le dépôt de WebSocketIPC" href="https://github.com/nfroidure/WebSockIPC">WebSocketIPC</a>,
+    rendez-vous sur leurs dépôts Git respectifs !</p>

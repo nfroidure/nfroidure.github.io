@@ -10,144 +10,87 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Comme promis, Gulp revient à l'ordre du jour de ce Blog avec un retour d'expérience sur l'utilisation de Gulp et le développement de plugins.</h2>
-<p>Comme promis, Gulp revient à l'ordre du jour de ce Blog avec un retour d'expérience
-  sur l'utilisation de Gulp et le développement de plugins.</p>
+<h2>Gulp : Retour d&#039;expérience</h2>
+<p>Comme promis, Gulp revient à l&#039;ordre du jour de ce Blog avec un retour d&#039;expérience sur l&#039;utilisation de Gulp et le développement de plugins.</p>
 
-<p>Suite à la <a title="Voir le billet de blog sur les différences entre GulpJS et GruntJS href=articles-gulp_vs_grunt.html">comparaison entre Gulp et Grunt</a>,
-  vous avez peut-être envie d'aller plus loin dans l'utilisation de Gulp. Dans ce
-  billet, je reviendrais sur les fondamentaux de Gulp, les bonnes pratiques et aussi
-  la création de plugins.</p>
+<p>Suite à la <a title="Voir le billet de blog sur les différences entre GulpJS et GruntJS" href="articles-gulp_vs_grunt.html">comparaison entre Gulp et Grunt</a>, vous avez peut-être envie d&#039;aller plus loin dans l&#039;utilisation de Gulp. Dans ce
+    billet, je reviendrais sur les fondamentaux de Gulp, les bonnes pratiques et aussi la création de plugins.</p>
 <h3>Installation</h3>
-<p>Pour commencer à utiliser Gulp, deux petites actions doivnet être réalisées. Premièrement,
-  l'installation de Gulp de manière globale :</p><pre>npm install -g gulp</pre>
-<p>Ceci nous permettra de démarrer Gulp, quelque soit le dossier dans lequel on se trouve.
-  Ensuite, nous devons installer Gulp localement à chaque projet pour lequel on souhaite
-  l'utiliser.</p><pre>cd monprojet && npm install gulp --save-dev</pre>
-<p>Nous sommes prêts à commencer à créer nos tâches Gulp dans le fichier gulpfile.js
-  qui est par convention, le fichier qui doit les contenir :</p><pre>touch gulpfile.js && vim gulpfile.js</pre>
+<p>Pour commencer à utiliser Gulp, deux petites actions doivnet être réalisées. Premièrement, l&#039;installation de Gulp de manière globale :</p><pre>npm install -g gulp</pre>
+<p>Ceci nous permettra de démarrer Gulp, quelque soit le dossier dans lequel on se trouve. Ensuite, nous devons installer Gulp localement à chaque projet pour lequel on souhaite l&#039;utiliser.</p><pre>cd monprojet &amp;&amp; npm install gulp --save-dev</pre>
+<p>Nous sommes prêts à commencer à créer nos tâches Gulp dans le fichier gulpfile.js qui est par convention, le fichier qui doit les contenir :</p><pre>touch gulpfile.js &amp;&amp; vim gulpfile.js</pre>
 <h3>Principe de Gulp</h3>
 <h4>Les tâches</h4>
-<p>Le principe de Gulp est très simple. Le fichier gulpfile.js contient la déclaration
-  de tâches. Ces dernières sont déclarées de la manière suivante :</p>
+<p>Le principe de Gulp est très simple. Le fichier gulpfile.js contient la déclaration de tâches. Ces dernières sont déclarées de la manière suivante :</p>
 <script src="https://gist.github.com/nfroidure/9833275683d38f06134a.js"></script>
 <noscript>
-  <p><pre><p>// The clean task gulp.task('clean', function(cb) { rimraf(conf.build.root, cb); });</p></pre>
-  </p>
+    <p>&lt;pre&gt;&lt;p&gt;// The clean task gulp.task(&#039;clean&#039;, function(cb) &#123; rimraf(conf.build.root, cb); &#125;);&lt;/p&gt;&lt;/pre&gt;</p>
 </noscript>
-<p>Cette tâche est nommée <code>clean</code> et équivaut à une commande <code>rm -rf</code>  (d'où le nom du module). Une fois déclarée, notre tâche pourra être appelée à tout
-  moment depuis la console grâce à la commande suivante :</p><pre>gulp clean</pre>
-<p>Il est aussi possible de l'appeler directement dans une autre tâche avec la méthode
-  <code>gulp.run</code> :</p><pre>gulp.run('clean', function() { console.log('Terminé') };</pre>
-<p>Cependant, je ne vous conseille pas l'utilisation de cette méthode car elle est encore
-  un peu boguée et <a hreflang="en title=Voir l'issue concernant ce souci href=https://github.com/robrich/orchestrator/issues/15">ne fonctionne pas comme on pourrait s'y attendre</a>.</p>
-<p>En réalité, il est préférable d'utiliser les dépendances qui peuvent être déclarées
-  au niveau de la déclaration d'une tâche comme <a hreflang="en title=Voir le gulpfile de ChtiJS href=https://github.com/ChtiJS/chtijs.francejs.org/blob/gulp/gulpfile.js#L160">ici pour le gulpfile de ChtiJS</a>.</p>
+<p>Cette tâche est nommée <code>clean</code> et équivaut à une commande <code>rm -rf</code> (d&#039;où le nom du module). Une fois déclarée, notre tâche pourra être appelée à tout moment depuis la console grâce à la commande suivante :</p><pre>gulp clean</pre>
+<p>Il est aussi possible de l&#039;appeler directement dans une autre tâche avec la méthode <code>gulp.run</code> :</p><pre>gulp.run(&#039;clean&#039;, function() &#123; console.log(&#039;Terminé&#039;) &#125;;</pre>
+<p>Cependant, je ne vous conseille pas l&#039;utilisation de cette méthode car elle est encore un peu boguée et <a hreflang="en" title="Voir l&#039;issue concernant ce souci" href="https://github.com/robrich/orchestrator/issues/15">ne fonctionne pas comme on pourrait s&#039;y attendre</a>.</p>
+<p>En réalité, il est préférable d&#039;utiliser les dépendances qui peuvent être déclarées au niveau de la déclaration d&#039;une tâche comme <a hreflang="en" title="Voir le gulpfile de ChtiJS" href="https://github.com/ChtiJS/chtijs.francejs.org/blob/gulp/gulpfile.js&#35;L160">ici pour le gulpfile de ChtiJS</a>.</p>
 <h4>Les streams</h4>
-<p>Passons maintenant à la véritable particularité de Gulp. La plupart des tâches dont
-  on a besoin pour un projet sont en réalité des tâches qui sont appliquées sur un
-  ensemble de fichiers contenus dans une répertoire donné.</p>
-<p>L'idée de Gulp est de créer un stream d'objets représentant chacun de ces fichiers
-  (avec <code>gulp.src</code>) que l'on pourra modifier au travers de divers plugins.
-  Ces plugins sont en fait des streams d'objets de type <code>Stream.Transform</code>.</p>
-<p>Les plugins opèrent des modifications sur le contenu des fichiers et/ou sur leur
-  propriétés (chemin, nom de fichier et/ou extension).</p>
-<p>À l'autre bout de la chaîne, on peut utiliser <code>gulp.dest</code> pour sauvegarder
-  les modifications effectuées. Un "pipeline" typique avec Gulp donne ceci :</p>
+<p>Passons maintenant à la véritable particularité de Gulp. La plupart des tâches dont on a besoin pour un projet sont en réalité des tâches qui sont appliquées sur un ensemble de fichiers contenus dans une répertoire donné.</p>
+<p>L&#039;idée de Gulp est de créer un stream d&#039;objets représentant chacun de ces fichiers (avec <code>gulp.src</code>) que l&#039;on pourra modifier au travers de divers plugins. Ces plugins sont en fait des streams d&#039;objets de type <code>Stream.Transform</code>.</p>
+<p>Les plugins opèrent des modifications sur le contenu des fichiers et/ou sur leur propriétés (chemin, nom de fichier et/ou extension).</p>
+<p>À l&#039;autre bout de la chaîne, on peut utiliser <code>gulp.dest</code> pour sauvegarder les modifications effectuées. Un &#034;pipeline&#034; typique avec Gulp donne ceci :</p>
 <noscript>
-  <p><pre>gulp.src('less/**/*.less') // création d'un flux d'objets de type fichier<br /> .pipe(less()) // préprocesseur less<br /> .pipe(minify()) // minification<br /> .pipe(gulp.dest('css/')) // enregistrement des fichiers dans un autre dossier</pre>
-  </p>
+    <p>&lt;pre&gt;gulp.src(&#039;less/**/*.less&#039;) // création d&#039;un flux d&#039;objets de type fichier&lt;br /&gt; .pipe(less()) // préprocesseur less&lt;br /&gt; .pipe(minify()) // minification&lt;br /&gt; .pipe(gulp.dest(&#039;css/&#039;)) //
+        enregistrement des fichiers dans un autre dossier&lt;/pre&gt;</p>
 </noscript>
 <script src="https://gist.github.com/nfroidure/9e7c7bdf6365deb13fbc.js"></script>
-<p>Il est possible de subordonner un plugin à une condition particulière avec <code>gulp.env</code>  et <code>gulp-if</code>. Ici, selon la valeur de <code>gulp.env.prod</code>, on
-  minifie ou non les CSS et on utilise Livereload ou non.</p>
+<p>Il est possible de subordonner un plugin à une condition particulière avec <code>gulp.env</code> et <code>gulp-if</code>. Ici, selon la valeur de <code>gulp.env.prod</code>, on minifie ou non les CSS et on utilise Livereload ou non.</p>
 <script src="https://gist.github.com/nfroidure/d89133c3869109ff636e.js"></script>
 <noscript>
-  <p><pre> // CSS gulp.task('build_styles', function(cb) { gulp.src(conf.src.less + '/main.less', {buffer: buffer}) .pipe(gStreamify((gLess()))) .pipe(gIf(prod, gMinifyCss())) .pipe(gIf(!prod, gLivereload(server))) .pipe(gulp.dest(conf.build.css)) .once('end', cb); });</pre>
-  </p>
+    <p>&lt;pre&gt; // CSS gulp.task(&#039;build_styles&#039;, function(cb) &#123; gulp.src(conf.src.less + &#039;/main.less&#039;, &#123;buffer: buffer&#125;) .pipe(gStreamify((gLess()))) .pipe(gIf(prod, gMinifyCss())) .pipe(gIf(!prod, gLivereload(server)))
+        .pipe(gulp.dest(conf.build.css)) .once(&#039;end&#039;, cb); &#125;);&lt;/pre&gt;</p>
 </noscript>
-<p>Via la ligne de commande, il nous suffira d'ajouter le paramètre suivant pour que
-  <code>gulp.env.prod</code> soit vrai :</p><pre>gulp css --prod</pre>
+<p>Via la ligne de commande, il nous suffira d&#039;ajouter le paramètre suivant pour que <code>gulp.env.prod</code> soit vrai :</p><pre>gulp css --prod</pre>
 <h4>Contenu : Buffer ou streams ?</h4>
-<p>Il existe deux modes différents pour le contenu des fichiers. Le mode buffer comme
-  son nom l'indique traite le contenu du fichier comme un unique buffer (c'est à
-  dire, une zone contigüe de la mémoire virtuelle, ou encore, un objet contenu dans
-  la zone Heap du processus).</p>
-<p>En mode buffer, la plupart des transformations sur le contenu des fichiers sont réalisées
-  de manière synchrone et on ne peut pas traiter des fichiers trop volumineux sans
-  une dégradation très importante des performances.</p>
-<p>Je ne suis personnellement pas fan du mode buffer, bien qu'il soit activé par défaut.
-  À vrai dire, pour ma part, j'aurais préféré que les objets passés aux plugins soient
-  en réalité directement des streams qui, par convention, auraient une propriété
-  réservée aux méta-données (chemin, nom de fichier, répertoire courant etc.).</p>
-<p>Ce qui nous amène au mode stream, celui que j'affectionne le plus. Le contenu des
-  fichiers y est traité cette fois de manière plus fluide, par morceaux. L'avantage
-  de ce mode est qu'il est entièrement asynchrone. Les données sont traitées au fur
-  et à mesure des retours des appels système de lecture et d'écriture sur le disque.</p>
-<p>Grâce à la nouvelle API des streams de Node (parfois appelée Streams2, dont je parlerais
-  en détail dans un futur billet), les traitements sont ordonnancés selon la disponibilité
-  des ressources (concept de backpressure). Ainsi, théoriquement, il n'y a aucune
-  limite dans la taille des fichiers traités ou dans leur nombre.</p>
-<p>Malheureusement, il y a une certaine incompréhension/difficulté avec l'utilisation
-  des streams. Ainsi, peu de développeurs de plugins implémentent le support de ces
-  derniers. De plus, l'utilisation de <code>event-stream</code> est conseillée malgré
-  l'utilisation de l'évènement <code>data</code> qui dans la nouvelle version de
-  Node n'est pas conseillée.</p>
-<p>Le choix du mode buffer ou stream se fait au niveau de <code>gulp.src</code> ou tout
-  autre plugin devant générer de nouveaux fichiers sans qu'il soit possible de détecter
-  le mode courant. Pour utiliser les streams avec <code>gulp.src</code>, il suffit
-  de passer en deuxième paramètre un objet d'options contenant une propriété <code>buffer</code>  valant <code>false</code>.</p>
+<p>Il existe deux modes différents pour le contenu des fichiers. Le mode buffer comme son nom l&#039;indique traite le contenu du fichier comme un unique buffer (c&#039;est à dire, une zone contigüe de la mémoire virtuelle, ou encore, un objet contenu dans
+    la zone Heap du processus).</p>
+<p>En mode buffer, la plupart des transformations sur le contenu des fichiers sont réalisées de manière synchrone et on ne peut pas traiter des fichiers trop volumineux sans une dégradation très importante des performances.</p>
+<p>Je ne suis personnellement pas fan du mode buffer, bien qu&#039;il soit activé par défaut. À vrai dire, pour ma part, j&#039;aurais préféré que les objets passés aux plugins soient en réalité directement des streams qui, par convention, auraient une propriété
+    réservée aux méta-données (chemin, nom de fichier, répertoire courant etc.).</p>
+<p>Ce qui nous amène au mode stream, celui que j&#039;affectionne le plus. Le contenu des fichiers y est traité cette fois de manière plus fluide, par morceaux. L&#039;avantage de ce mode est qu&#039;il est entièrement asynchrone. Les données sont traitées
+    au fur et à mesure des retours des appels système de lecture et d&#039;écriture sur le disque.</p>
+<p>Grâce à la nouvelle API des streams de Node (parfois appelée Streams2, dont je parlerais en détail dans un futur billet), les traitements sont ordonnancés selon la disponibilité des ressources (concept de backpressure). Ainsi, théoriquement, il n&#039;y
+    a aucune limite dans la taille des fichiers traités ou dans leur nombre.</p>
+<p>Malheureusement, il y a une certaine incompréhension/difficulté avec l&#039;utilisation des streams. Ainsi, peu de développeurs de plugins implémentent le support de ces derniers. De plus, l&#039;utilisation de <code>event-stream</code> est conseillée
+    malgré l&#039;utilisation de l&#039;évènement <code>data</code> qui dans la nouvelle version de Node n&#039;est pas conseillée.</p>
+<p>Le choix du mode buffer ou stream se fait au niveau de <code>gulp.src</code> ou tout autre plugin devant générer de nouveaux fichiers sans qu&#039;il soit possible de détecter le mode courant. Pour utiliser les streams avec <code>gulp.src</code>, il suffit
+    de passer en deuxième paramètre un objet d&#039;options contenant une propriété <code>buffer</code> valant <code>false</code>.</p>
 <h4>Quelques plugins utiles</h4>
 <p>Voici une petite liste de plugins qui vous seront bien utile :</p>
 <ul>
-  <li>gulp-if : conditionner l'utilisation d'un plugin</li>
-  <li>gulp-rename : Permet de renommer les fichier en tout point d'un pipeline de fichier</li>
-  <li>gulp-stream : Permet de transformer en stream le contenu des fichiers en entrée.
-    Pratique quand un plugin accepte les streams en entrée, mais retourne un buffer
-    (ce qui est le cas de gulp-browserify, j'ai une <a hreflang="en title=Voir la PR href=https://github.com/deepak1556/gulp-browserify/pull/10">PR en attente</a>    à ce sujet).</li>
-  <li>gulp-streamify : Un plugin que j'ai créé pour wrapper un plugin qui ne supporte
-    pas les streams afin qu'il ne casse pas le pipeline et que le mode stream soit
-    donc quand même utilisable.</li>
+    <li>gulp-if : conditionner l&#039;utilisation d&#039;un plugin</li>
+    <li>gulp-rename : Permet de renommer les fichier en tout point d&#039;un pipeline de fichier</li>
+    <li>gulp-stream : Permet de transformer en stream le contenu des fichiers en entrée. Pratique quand un plugin accepte les streams en entrée, mais retourne un buffer (ce qui est le cas de gulp-browserify, j&#039;ai une <a hreflang="en" title="Voir la PR"
+        href="https://github.com/deepak1556/gulp-browserify/pull/10">PR en attente</a> à ce sujet).</li>
+    <li>gulp-streamify : Un plugin que j&#039;ai créé pour wrapper un plugin qui ne supporte pas les streams afin qu&#039;il ne casse pas le pipeline et que le mode stream soit donc quand même utilisable.</li>
 </ul>
 <h3>Créer un plug-in Gulp</h3>
-<p>Étant donné le faible nombre de plugins Gulp, il est fort probable que vous souhaitiez
-  en créer un. Voici donc quelques conseils que je vais illustrer avec le code de
-  <code>gulp-cat</code> et <code>gulp-svg2ttf</code>.</p>
-<p>Tout d'abord, un plugin est un <a hreflang="en title=Voir la ligne concernée href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L7">module NPM qui exporte une fonction</a>  qui <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L27">retourne</a>  un <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L8">stream d'objets</a>.
-  Idéalement, cette fonction <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L32">doit être nommée</a>  pour faciliter le débogage.</p>
-<p>Selon moi, il très important d'hériter des interface <code>Stream.*</code> de NodeJS
-  plutôt que d'utiliser des modules comme <code>event-stream</code> ou <code>event-map</code>.
-  C'est certe, un peu plus verbeux, mais ces interfaces ont été pensées pour conserver
-  les bénéfices de l'usage des streams. La plupart du temps, vous utiliserez une
-  instance de l'interface <code>Stream.Transform</code> qui doit être augmentée d'une
-  <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L40">méthode <code>_transform</code></a>  qui comme son nom l'indique gère la transformation du contenu du stream (ici, les
-  fichiers) et d'une méthode <code>_flush</code>, optionnelle, dans le cas où vous
-  souhaiteriez faire une action particulière à la fin du flux d'objets.</p>
-<p>Au sein de la méthode de transformation des fichiers, dans la plupart des cas, les
-  fichier dont le contenu est nul <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L42">seront ignorés</a>.
-  Puis, selon que le contenu du fichier est <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L60">un buffer</a>  ou <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L68">un stream</a>,
-  on <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L62">modifiera le buffer</a>  ou, on <a title="Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L70">pipera le stream dans un nouveau stream de transformation</a>.</p>
-<p>Si l'on souhaite uniquement lire les données, pour le buffer, il suffit d'accèder
-  à la <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L18">propriété contents</a>  pour en lire le contenu. Pour un stream, il faudra <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L20">le dédoubler</a>  via une instance de <code>Stream.PassThrough</code> afin de garantir aux autre
-  plugins un accès à toute les données du stream.</p>
-<p>Enfin, une fois le buffer transformé ou le stream du contenu du fichier "pipé", on
-  <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L24">passe l'objet représentant le fichier</a>  au plugin suivant et on <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L25">appelle le callback</a>  reçu en argument de la méthode <code>_transform</code>.</p>
-<p>Si durant ce processus, vous ne traitez que les fichiers d'un genre particulier,
-  il peut-être utile de <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L48">tester l'extension du fichier</a>  et de passer directement au plugin suivant tout fichier ne correspondant pas aux
-  critères souhaités.</p>
-<p>De la même façon, une option permettant de <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L53">cloner les fichiers</a>  avant de les transformer peut être très utile pour <a hreflang="en title=Voir un commit illustrant cette facilité d'usage href=https://github.com/nfroidure/gulp-iconfont/commit/58f0f61c1a829eb316759b5bf26a3423e8795404">faciliter l'usage d'un plugin</a>.</p>
-<p>Bien-sûr, si une transformation d'un fichier, implique le changement de type de ce
-  dernier, il est de votre responsabilité de <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L57">changer l'extension de ce dernier</a>.</p>
-<p>Enfin, toute erreur doit être signalée par l'<a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L64">émission d'un évènement</a>.</p>
+<p>Étant donné le faible nombre de plugins Gulp, il est fort probable que vous souhaitiez en créer un. Voici donc quelques conseils que je vais illustrer avec le code de <code>gulp-cat</code> et <code>gulp-svg2ttf</code>.</p>
+<p>Tout d&#039;abord, un plugin est un <a hreflang="en" title="Voir la ligne concernée" href="https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js&#35;L7">module NPM qui exporte une fonction</a> qui <a hreflang="en" title="Voir la ligne"
+    href="https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js&#35;L27">retourne</a> un <a hreflang="en" title="Voir la ligne" href="https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js&#35;L8">stream d&#039;objets</a>.
+    Idéalement, cette fonction <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L32">doit être nommée</a> pour faciliter le débogage.</p>
+<p>Selon moi, il très important d&#039;hériter des interface <code>Stream.*</code> de NodeJS plutôt que d&#039;utiliser des modules comme <code>event-stream</code> ou <code>event-map</code>. C&#039;est certe, un peu plus verbeux, mais ces interfaces ont
+    été pensées pour conserver les bénéfices de l&#039;usage des streams. La plupart du temps, vous utiliserez une instance de l&#039;interface <code>Stream.Transform</code> qui doit être augmentée d&#039;une <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L40">méthode <code>_transform</code></a>    qui comme son nom l&#039;indique gère la transformation du contenu du stream (ici, les fichiers) et d&#039;une méthode <code>_flush</code>, optionnelle, dans le cas où vous souhaiteriez faire une action particulière à la fin du flux d&#039;objets.</p>
+<p>Au sein de la méthode de transformation des fichiers, dans la plupart des cas, les fichier dont le contenu est nul <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L42">seront ignorés</a>.
+    Puis, selon que le contenu du fichier est <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L60">un buffer</a> ou <a hreflang="en" title="Voir la ligne"
+    href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L68">un stream</a>, on <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L62">modifiera le buffer</a>    ou, on <a title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L70">pipera le stream dans un nouveau stream de transformation</a>.</p>
+<p>Si l&#039;on souhaite uniquement lire les données, pour le buffer, il suffit d&#039;accèder à la <a hreflang="en" title="Voir la ligne" href="https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js&#35;L18">propriété contents</a>    pour en lire le contenu. Pour un stream, il faudra <a hreflang="en" title="Voir la ligne" href="https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js&#35;L20">le dédoubler</a> via une instance de <code>Stream.PassThrough</code>    afin de garantir aux autre plugins un accès à toute les données du stream.</p>
+<p>Enfin, une fois le buffer transformé ou le stream du contenu du fichier &#034;pipé&#034;, on <a hreflang="en" title="Voir la ligne" href="https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js&#35;L24">passe l&#039;objet représentant le fichier</a>    au plugin suivant et on <a hreflang="en" title="Voir la ligne" href="https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js&#35;L25">appelle le callback</a> reçu en argument de la méthode <code>_transform</code>.</p>
+<p>Si durant ce processus, vous ne traitez que les fichiers d&#039;un genre particulier, il peut-être utile de <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L48">tester l&#039;extension du fichier</a>    et de passer directement au plugin suivant tout fichier ne correspondant pas aux critères souhaités.</p>
+<p>De la même façon, une option permettant de <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L53">cloner les fichiers</a> avant de les transformer peut
+    être très utile pour <a hreflang="en" title="Voir un commit illustrant cette facilité d&#039;usage" href="https://github.com/nfroidure/gulp-iconfont/commit/58f0f61c1a829eb316759b5bf26a3423e8795404">faciliter l&#039;usage d&#039;un plugin</a>.</p>
+<p>Bien-sûr, si une transformation d&#039;un fichier, implique le changement de type de ce dernier, il est de votre responsabilité de <a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L57">changer l&#039;extension de ce dernier</a>.</p>
+<p>Enfin, toute erreur doit être signalée par l&#039;<a hreflang="en" title="Voir la ligne" href="https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js&#35;L64">émission d&#039;un évènement</a>.</p>
 <h4>Supportez les streams !</h4>
-<p>Bien-sûr, créer une API streamable n'est pas la solution de facilité. Mais je vous
-  encourage grandement à le faire. Qui peut le plus, peut le moins. J'ai bien écris
-  trois fois cette maxime sur ce blog, mais en la matière mieux vaut trop que pas
-  assez.</p>
-<p>Si vous pensez que votre API ne peut pas utiliser les streams, je vous enjoint à
-  regarder le code de Browserify. Si ils ont réussi à tirer parti des streams pour
-  un module aussi complexe, il y a fort à parier que votre format XML peut le faire
-  également.</p>
-<p>Si cependant, vous n'avez pas la main sur la bibliothèque wrappée par votre plugin,
-  utilisez <a hreflang="en title=Voir le module href=https://npmjs.org/package/bufferstreams">BufferStreams</a>  en attendant et créer une issue, ou mieux, faîtes une PR !</p>
-<p>Voilà, c'est tout pour aujourd'hui ! Vos retours ou questions sont les bienvenues :).</p>
+<p>Bien-sûr, créer une API streamable n&#039;est pas la solution de facilité. Mais je vous encourage grandement à le faire. Qui peut le plus, peut le moins. J&#039;ai bien écris trois fois cette maxime sur ce blog, mais en la matière mieux vaut trop que
+    pas assez.</p>
+<p>Si vous pensez que votre API ne peut pas utiliser les streams, je vous enjoint à regarder le code de Browserify. Si ils ont réussi à tirer parti des streams pour un module aussi complexe, il y a fort à parier que votre format XML peut le faire également.</p>
+<p>Si cependant, vous n&#039;avez pas la main sur la bibliothèque wrappée par votre plugin, utilisez <a hreflang="en" title="Voir le module" href="https://npmjs.org/package/bufferstreams">BufferStreams</a> en attendant et créer une issue, ou mieux, faîtes
+    une PR !</p>
+<p>Voilà, c&#039;est tout pour aujourd&#039;hui ! Vos retours ou questions sont les bienvenues :).</p>

@@ -11,7 +11,7 @@ lang=en
 location=US
 -->
 
-## Another web developer blog
+## Welcome
 
-Find on this blog many developper resources i find usefull to share and more
- informations on my projects.
+This is my peace of web. It's a bit about me and a lot about technologies, web
+ and all that geeky stuffs you're probably here to read ;).

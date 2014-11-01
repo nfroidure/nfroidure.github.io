@@ -10,34 +10,20 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>En administration système, tout arrive, même les cas les plus désespérés. Perdre le mot de passe ou les privilèges de root de MySQL en fait partie. Voici comment s'en sortir.</h2>
-<p>En administration système, tout arrive, même les cas les plus désespérés. Perdre
-  le mot de passe ou les privilèges de root de MySQL en fait partie. Voici comment
-  s'en sortir.</p>
+<h2>Récupérer les privilèges de l&#039;utilisateur root de MySQL</h2>
+<p>En administration système, tout arrive, même les cas les plus désespérés. Perdre le mot de passe ou les privilèges de root de MySQL en fait partie. Voici comment s&#039;en sortir.</p>
 
-<p>Perdre les privilèges et/ou le mot de passe de l'utilisateur root de MySQL est plutôt
-  ennuyeux. Pour résoudre ce problème, il va falloir utiliser la ligne de commande.
-  Sous Debian GNU/Linux, la méthode est la suivante.</p>
-<p>Tout d'abord, il faut arrêter le serveur MySQL :</p><pre>root@server:~# /etc/init.d/mysql stop</pre>
-<p>Si le serveur ne s'arrête pas, il faut alors trouver le numéro de processus du démon
-  MySQL (PID) :</p><pre>root@server:~# ps aux | grep mysqld<br />mysql 27257 0.0 7.0 136720 17824 pts/1 Sl 15:30 0:00 /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/run/mysqld/mysqld.sock --port=3306<br />root 27341 0.0 0.3 3320 804 pts/1 S+ 15:37 0:00 grep mysqld</pre>
-<p>Puis, l'arrêter manuellement (ici, il s'agit du PID 27257) :</p><pre>root@server:~# kill 27257</pre>
-<p>Maintenant, nous allons démarrer le démon MySQL en ligne de commande en lui ajoutant
-  des options bien pratiques. Tout d'abord l'option --skip-grant-tables qui permet
-  d'enlever les vérifications de privilège et d'accéder sans authentification au
-  serveur MySQL. Ensuite, l'option --skip-networking afin d'éviter d'exposer le serveur
-  au réseau ce qui pourrait laisser la porte ouverte au hacker avisé qui passerai
-  par là.</p><pre>root@server:~# mysqld --skip-grant-tables --skip-networking &</pre>
-<p>L'esperluette permet de récupérer la ligne de commande après le démarrage du démon
-  car nous allons en avoir besoin.</p>
-<p>Connectons nous à MySQL grâce à son client en ligne de commande :</p><pre>root@server:~# mysql<br />Welcome to the MySQL monitor. Commands end with ; or g.<br /><br />Server version: 5.1.49-3 (Debian)<br /> <br />Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.<br />This software comes with ABSOLUTELY NO WARRANTY. This is free software,<br />and you are welcome to modify and redistribute it under the GPL v2 license<br />Type 'help;' or 'h' for help. Type 'c' to clear the current input statement. <br />mysql></pre>
-<p>Nous avon maintenant la possibilité d'entrer des requêtes SQL sans vérification de
-  droits quelconques. A savoir, l'option --skip-grant-tables ne nous permet pas d'utiliser
-  les requêtes de type GRANT. Nous allons donc devoir agir directement sur les tables
-  virtuelles de MySQL. Pour changer le mot de passe :</p><pre>mysql> UPDATE mysql.user SET password=PASSWORD('nouveaumdp') WHERE User="root";</pre>
-<p>Pour récupérer tous les privilèges :</p><pre>mysql> UPDATE mysql.user SET Grant_priv = 'Y', Super_priv = 'Y' WHERE User = 'root';</pre>
-<p>On peut maintenant fermer le client mysql.</p><pre>mysql> exit<br />Bye</pre>
-<p>Pour mettre fin au processus et redémarrer MySQL dans des conditions normales de
-  production, il faut à nouveau tuer le processus mysqld grâce aux commandes utilisées
-  plus haut et redémarrer le serveur :</p><pre>root@server:~# /etc/init.d/mysql restart</pre>
-<p>Voilà. N'hésitez pas à donner vos trucs perso en commentaire.</p>
+<p>Perdre les privilèges et/ou le mot de passe de l&#039;utilisateur root de MySQL est plutôt ennuyeux. Pour résoudre ce problème, il va falloir utiliser la ligne de commande. Sous Debian GNU/Linux, la méthode est la suivante.</p>
+<p>Tout d&#039;abord, il faut arrêter le serveur MySQL :</p><pre>root&#64;server:~&#35; /etc/init.d/mysql stop</pre>
+<p>Si le serveur ne s&#039;arrête pas, il faut alors trouver le numéro de processus du démon MySQL (PID) :</p><pre>root&#64;server:~&#35; ps aux | grep mysqld<br />mysql 27257 0.0 7.0 136720 17824 pts/1 Sl 15:30 0:00 /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/run/mysqld/mysqld.sock --port=3306<br />root 27341 0.0 0.3 3320 804 pts/1 S+ 15:37 0:00 grep mysqld</pre>
+<p>Puis, l&#039;arrêter manuellement (ici, il s&#039;agit du PID 27257) :</p><pre>root&#64;server:~&#35; kill 27257</pre>
+<p>Maintenant, nous allons démarrer le démon MySQL en ligne de commande en lui ajoutant des options bien pratiques. Tout d&#039;abord l&#039;option --skip-grant-tables qui permet d&#039;enlever les vérifications de privilège et d&#039;accéder sans authentification
+    au serveur MySQL. Ensuite, l&#039;option --skip-networking afin d&#039;éviter d&#039;exposer le serveur au réseau ce qui pourrait laisser la porte ouverte au hacker avisé qui passerai par là.</p><pre>root&#64;server:~&#35; mysqld --skip-grant-tables --skip-networking &amp;</pre>
+<p>L&#039;esperluette permet de récupérer la ligne de commande après le démarrage du démon car nous allons en avoir besoin.</p>
+<p>Connectons nous à MySQL grâce à son client en ligne de commande :</p><pre>root&#64;server:~&#35; mysql<br />Welcome to the MySQL monitor. Commands end with ; or g.<br /><br />Server version: 5.1.49-3 (Debian)<br /> <br />Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.<br />This software comes with ABSOLUTELY NO WARRANTY. This is free software,<br />and you are welcome to modify and redistribute it under the GPL v2 license<br />Type &#039;help;&#039; or &#039;h&#039; for help. Type &#039;c&#039; to clear the current input statement. <br />mysql&gt;</pre>
+<p>Nous avon maintenant la possibilité d&#039;entrer des requêtes SQL sans vérification de droits quelconques. A savoir, l&#039;option --skip-grant-tables ne nous permet pas d&#039;utiliser les requêtes de type GRANT. Nous allons donc devoir agir directement
+    sur les tables virtuelles de MySQL. Pour changer le mot de passe :</p><pre>mysql&gt; UPDATE mysql.user SET password=PASSWORD(&#039;nouveaumdp&#039;) WHERE User=&#034;root&#034;;</pre>
+<p>Pour récupérer tous les privilèges :</p><pre>mysql&gt; UPDATE mysql.user SET Grant_priv = &#039;Y&#039;, Super_priv = &#039;Y&#039; WHERE User = &#039;root&#039;;</pre>
+<p>On peut maintenant fermer le client mysql.</p><pre>mysql&gt; exit<br />Bye</pre>
+<p>Pour mettre fin au processus et redémarrer MySQL dans des conditions normales de production, il faut à nouveau tuer le processus mysqld grâce aux commandes utilisées plus haut et redémarrer le serveur :</p><pre>root&#64;server:~&#35; /etc/init.d/mysql restart</pre>
+<p>Voilà. N&#039;hésitez pas à donner vos trucs perso en commentaire.</p>

@@ -10,98 +10,54 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Cette semaine, je me suis penché sur la génération de fontes automatiquement avec GruntJS. Compte rendu de mes découvertes et des développements qui les ont suivies.</h2>
-<p>Cette semaine, je me suis penché sur la génération de fontes automatiquement avec
-  GruntJS. Compte rendu de mes découvertes et des développements qui les ont suivies.</p>
+<h2>Générer des fontes d&#039;icônes avec GruntJS</h2>
+<p>Cette semaine, je me suis penché sur la génération de fontes automatiquement avec GruntJS. Compte rendu de mes découvertes et des développements qui les ont suivies.</p>
 
-<p>Il existe de nombreux sites web qui permettent de générer des fontes personnalisées
-  à partir de sets d'icônes prédéfinis ou directement à partir d'icônes uploadées
-  en SVG (<a hreflang="en title=Voir le site de ce générateur d'icône href=http://fontello.com"
-  />Fontello</a>, <a hreflang="en title=Voir cet autre site de génération d'icône href=http://icomoon.io"
-  />Icomoon</a> ...). Malheureusement, ces derniers ne facilitent pas la maintenance
-  de votre site car à chaque ajout d'icônes, vous êtes contraint de vous reconnecter
-  sur leur site et de renvoyer toutes vos icônes. De plus, les numéros de caractères
-  Unicode utilisés changent d'une génération de fonte à l'autre. Bref, j'ai décider
-  de me tourner vers GruntJS pour automatiser ces tâches.</p>
+<p>Il existe de nombreux sites web qui permettent de générer des fontes personnalisées à partir de sets d&#039;icônes prédéfinis ou directement à partir d&#039;icônes uploadées en SVG (<a hreflang="en" title="Voir le site de ce générateur d&#039;icône" href="http://fontello.com/">Fontello</a>,
+    <a hreflang="en" title="Voir cet autre site de génération d&#039;icône" href="http://icomoon.io/">Icomoon</a> ...). Malheureusement, ces derniers ne facilitent pas la maintenance de votre site car à chaque ajout d&#039;icônes, vous êtes contraint
+    de vous reconnecter sur leur site et de renvoyer toutes vos icônes. De plus, les numéros de caractères Unicode utilisés changent d&#039;une génération de fonte à l&#039;autre. Bref, j&#039;ai décider de me tourner vers GruntJS pour automatiser ces
+    tâches.</p>
 <h3>Présentation de GruntJS</h3>
-<p>GruntJS est un outil d'automatisation de tâches basé sur NodeJS et son gestionnaire
-  de modules NPM. J'ai tout d'abord été un peu sceptique puisque j'utilise d'ordinaire
-  le Shell pour automatiser les actions répétitives. Mais face à l'enthousiasme de
-  l'écosystème JS et grâce à la présentation d'<a hreflang="en title=Voir son profil GitHub href=https://github.com/0gust1">0gust1</a>  au <a title="Voir le Doodle de ce ChtiJS href=http://doodle.com/bq68aumq2uf7vmk8">dernier ChtiJS</a>,
-  j'ai décidé de m'y pencher avec pour point d'entrée la génération des fontes.</p>
-<p>Finalement, l'atout de GruntJS n'est pas vraiment dans la façon d'automatiser les
-  tâches proposées, mais plutôt dans son intégration avec NodeJS et NPM. En effet,
-  ce que l'on peut faire avec Grunt, on peut bien le faire avec le Shell, mais généralement
-  on ne le fait pas.</p>
-<p>Simplement parce qu'avec GruntJS c'est facile d'automatiser ses tâches à partir du
-  moment où l'on utilise déjà NodeJS au quotidien. C'est d'autant plus facile qu'un
-  grand nombre de tâches Grunt existent déjà pour toute sorte de besoin. Bref, si
-  ce n'est pas déjà fait, je vous conseille d'installer Grunt ;).</p>
+<p>GruntJS est un outil d&#039;automatisation de tâches basé sur NodeJS et son gestionnaire de modules NPM. J&#039;ai tout d&#039;abord été un peu sceptique puisque j&#039;utilise d&#039;ordinaire le Shell pour automatiser les actions répétitives. Mais face
+    à l&#039;enthousiasme de l&#039;écosystème JS et grâce à la présentation d&#039;<a hreflang="en" title="Voir son profil GitHub" href="https://github.com/0gust1">0gust1</a> au <a title="Voir le Doodle de ce ChtiJS" href="http://doodle.com/bq68aumq2uf7vmk8">dernier ChtiJS</a>,
+    j&#039;ai décidé de m&#039;y pencher avec pour point d&#039;entrée la génération des fontes.</p>
+<p>Finalement, l&#039;atout de GruntJS n&#039;est pas vraiment dans la façon d&#039;automatiser les tâches proposées, mais plutôt dans son intégration avec NodeJS et NPM. En effet, ce que l&#039;on peut faire avec Grunt, on peut bien le faire avec le Shell,
+    mais généralement on ne le fait pas.</p>
+<p>Simplement parce qu&#039;avec GruntJS c&#039;est facile d&#039;automatiser ses tâches à partir du moment où l&#039;on utilise déjà NodeJS au quotidien. C&#039;est d&#039;autant plus facile qu&#039;un grand nombre de tâches Grunt existent déjà pour toute
+    sorte de besoin. Bref, si ce n&#039;est pas déjà fait, je vous conseille d&#039;installer Grunt ;).</p>
 <h4>Installation</h4>
-<p>Installer GruntJS est très simple, il suffit d'installer ce dernier via NPM et de
-  manière globale obligatoirement (sinon, cela n'a pas grand intérêt) :</p><pre>npm install grunt-cli</pre>
+<p>Installer GruntJS est très simple, il suffit d&#039;installer ce dernier via NPM et de manière globale obligatoirement (sinon, cela n&#039;a pas grand intérêt) :</p><pre>npm install grunt-cli</pre>
 <h4>Mise en place de Grunt pour un projet</h4>
-<p>Tout projet, et en particulier, tout projet basé sur NodeJS devrait utiliser Grunt
-  pour automatiser les tâches répétitives auxquelles nous sommes régulièrement confrontés
-  que ce soit au niveau du back-end que du front-end.</p>
-<p>Dans le cas d'un projet NodeJS, il suffit de créer un fichier Gruntfile.js à la racine
-  du projet qui contiendra toutes les tâches dont vous pourriez avoir besoin. Nous
-  y reviendrons par la suite. Vous devrez aussi ajouter Grunt aux dépendances de
-  développement de votre projet NodeJS.</p>
+<p>Tout projet, et en particulier, tout projet basé sur NodeJS devrait utiliser Grunt pour automatiser les tâches répétitives auxquelles nous sommes régulièrement confrontés que ce soit au niveau du back-end que du front-end.</p>
+<p>Dans le cas d&#039;un projet NodeJS, il suffit de créer un fichier Gruntfile.js à la racine du projet qui contiendra toutes les tâches dont vous pourriez avoir besoin. Nous y reviendrons par la suite. Vous devrez aussi ajouter Grunt aux dépendances de
+    développement de votre projet NodeJS.</p>
 <h4>Recherche de plugins</h4>
-<p>Une fois votre projet enrichi d'un fichier de manifeste GruntJS, il va falloir trouver
-  les plugins existants qui vous permettront d'automatiser vos tâches répétitives.
-  Par exemple, pour trouver des plugins de gestion des fontes, j'ai tapé la commande
-  suivante :</p><pre>npm search "gruntplugin font"</pre>
-<p>Une fois que vous avez trouvé des tâches qui vous seront utiles, il vous suffit de
-  les installer comme suit :</p>
+<p>Une fois votre projet enrichi d&#039;un fichier de manifeste GruntJS, il va falloir trouver les plugins existants qui vous permettront d&#039;automatiser vos tâches répétitives. Par exemple, pour trouver des plugins de gestion des fontes, j&#039;ai tapé
+    la commande suivante :</p><pre>npm search &#034;gruntplugin font&#034;</pre>
+<p>Une fois que vous avez trouvé des tâches qui vous seront utiles, il vous suffit de les installer comme suit :</p>
 <p>npm install grunt-svgicons2svgfont grunt-svg2ttf grunt-ttf2eot grunt-ttf2woff</p>
-<p>Cette commande permet, par exemple, d'installer toutes les tâches nécessaires pour
-  créer des fontes custom.</p>
+<p>Cette commande permet, par exemple, d&#039;installer toutes les tâches nécessaires pour créer des fontes custom.</p>
 <h3>Génération de fontes</h3>
-<p>Suite à ce petit intermède, revenons au sujet principal de cette article. Lors de
-  mes recherches, j'ai trouvé trois systèmes de génération de fontes. L'un d'entre
-  eux reposait sur des services web tiers pour générer les fontes, je l'ai donc écarté
-  de facto. Un autre, bien que fonctionnel, se basait sur FontForge et ne proposait
-  pas de garder les mêmes codes de caractères à chaque génération de fonte (une limitation
-  due à Font Forge me semble-t-il.</p>
-<p>Le dernier, grunt-fontfactory était uniquement basé sur des modules NodeJS, mais
-  était bogué (les icônes étaient affiché à l'envers). Par contre, bien que la conservation
-  des codes de caractères unicode n'était pas implémentée, à la lecture du code,
-  il semblait possible de le faire. J'ai donc retroussé mes manches et <a hreflang="en title=Voir le pull request en question href=https://github.com/cameronhunter/grunt-fontfactory/pull/2">proposé des modifications</a>.
-  Malheureusement, le développeur n'est pas très réactif, j'ai donc décidé de créer
-  ma propre librairie de génération de fontes, plus souple.</p>
+<p>Suite à ce petit intermède, revenons au sujet principal de cette article. Lors de mes recherches, j&#039;ai trouvé trois systèmes de génération de fontes. L&#039;un d&#039;entre eux reposait sur des services web tiers pour générer les fontes, je l&#039;ai
+    donc écarté de facto. Un autre, bien que fonctionnel, se basait sur FontForge et ne proposait pas de garder les mêmes codes de caractères à chaque génération de fonte (une limitation due à Font Forge me semble-t-il.</p>
+<p>Le dernier, grunt-fontfactory était uniquement basé sur des modules NodeJS, mais était bogué (les icônes étaient affiché à l&#039;envers). Par contre, bien que la conservation des codes de caractères unicode n&#039;était pas implémentée, à la lecture
+    du code, il semblait possible de le faire. J&#039;ai donc retroussé mes manches et <a hreflang="en" title="Voir le pull request en question" href="https://github.com/cameronhunter/grunt-fontfactory/pull/2">proposé des modifications</a>. Malheureusement,
+    le développeur n&#039;est pas très réactif, j&#039;ai donc décidé de créer ma propre librairie de génération de fontes, plus souple.</p>
 <h4>svgicons2svgfont</h4>
-<p>svgicons2svgfonts permet de parcourir des icônes SVG et de les inclure dans une fonte
-  SVG. Pour créer cette librairie, j'ai dû créer une librairie de plus bas niveau
-  permettant de manipuler le contenu des chemins SVG (attribut <code>d</code> des
-  balises <code>path</code> de SVG), je l'ai nommée <a hreflang="en title=Voir le dépôt du projet SVGPathData href=https://github.com/nfroidure/SVGPathData">SVGPathData</a>.</p>
-<p>Puis, comme les outils de conversion de fontes sont assez rudimentaires, j'ai dû
-  écrire du code qui convertisse chaque forme SVG (balises <code>circle</code>, <code>rect</code>,
-  <code>polygon</code> etc.) en chemins SVG. Il reste encore un peu de travail pour
-  prendre en compte tous les cas possibles, mais la plupart des icônes SVG sont dors
-  et déjà supportées. Je vous encourage d'ailleurs à <a hreflang="en title=Signaler un problème avec une icône donnée href=https://github.com/nfroidure/svgicons2svgfont/issues">me signaler tout problème rencontré</a>.</p>
-<p>La fonctionnalité la plus importante à mes yeux a bien-sûr été implémentée. Il suffit
-  de préfixer les fichiers SVG des icônes avec le code du caractère souhaité pour
-  que ce dernier conserve toujours le même code pour toutes les générations de fontes
-  ultérieures.</p>
+<p>svgicons2svgfonts permet de parcourir des icônes SVG et de les inclure dans une fonte SVG. Pour créer cette librairie, j&#039;ai dû créer une librairie de plus bas niveau permettant de manipuler le contenu des chemins SVG (attribut <code>d</code> des
+    balises <code>path</code> de SVG), je l&#039;ai nommée <a hreflang="en" title="Voir le dépôt du projet SVGPathData" href="https://github.com/nfroidure/SVGPathData">SVGPathData</a>.</p>
+<p>Puis, comme les outils de conversion de fontes sont assez rudimentaires, j&#039;ai dû écrire du code qui convertisse chaque forme SVG (balises <code>circle</code>, <code>rect</code>, <code>polygon</code> etc.) en chemins SVG. Il reste encore un peu de
+    travail pour prendre en compte tous les cas possibles, mais la plupart des icônes SVG sont dors et déjà supportées. Je vous encourage d&#039;ailleurs à <a hreflang="en" title="Signaler un problème avec une icône donnée" href="https://github.com/nfroidure/svgicons2svgfont/issues">me signaler tout problème rencontré</a>.</p>
+<p>La fonctionnalité la plus importante à mes yeux a bien-sûr été implémentée. Il suffit de préfixer les fichiers SVG des icônes avec le code du caractère souhaité pour que ce dernier conserve toujours le même code pour toutes les générations de fontes ultérieures.</p>
 <h4>Retour à nos tâches Grunt</h4>
-<p>J'ai donc créé le plug-in <a hreflang="en title=Voir le dépôt de ce projet href=https://github.com/nfroidure/grunt-svgicons2svgfont">grunt-svgicons2svgfont</a>  et les plug-ins de transformation basés sur les librairies NodeJS de Fontello pour
-  obtenir les fontes dans tous les formats nécessaires au bon fonctionnement de nos
-  icônes sur tous les navigateurs (<a hreflang="en title=Voir le dépôt du projet grunt-ttf2eot href=https://github.com/nfroidure/grunt-svg2ttf">grunt-svg2ttf</a>,
-  <a hreflang="en title=Voir le dépôt de grunt-ttf2eot href=https://github.com/nfroidure/grunt-ttf2eot">grunt-ttf2eot</a>,
-  <a hreflang="en title=Voir le dépôt de grunt-ttf2woff href=https://github.com/nfroidure/grunt-ttf2woff">grunt-ttf2woff</a>).</p>
-<p>Il ne nous reste plus qu'à générer nos fontes grâce au fichier manifeste GruntJS
-  suivant que j'ai commenté pour le rendre plus explicite :</p>
+<p>J&#039;ai donc créé le plug-in <a hreflang="en" title="Voir le dépôt de ce projet" href="https://github.com/nfroidure/grunt-svgicons2svgfont">grunt-svgicons2svgfont</a> et les plug-ins de transformation basés sur les librairies NodeJS de Fontello pour
+    obtenir les fontes dans tous les formats nécessaires au bon fonctionnement de nos icônes sur tous les navigateurs (<a hreflang="en" title="Voir le dépôt du projet grunt-ttf2eot" href="https://github.com/nfroidure/grunt-svg2ttf">grunt-svg2ttf</a>,
+    <a hreflang="en" title="Voir le dépôt de grunt-ttf2eot" href="https://github.com/nfroidure/grunt-ttf2eot">grunt-ttf2eot</a>, <a hreflang="en" title="Voir le dépôt de grunt-ttf2woff" href="https://github.com/nfroidure/grunt-ttf2woff">grunt-ttf2woff</a>).</p>
+<p>Il ne nous reste plus qu&#039;à générer nos fontes grâce au fichier manifeste GruntJS suivant que j&#039;ai commenté pour le rendre plus explicite :</p>
 <p>
-  <script src="https://gist.github.com/nfroidure/7385942.js"></script>
+    <script src="https://gist.github.com/nfroidure/7385942.js"></script>
 </p>
-<p>Bref, nous avons une tâche Grunt qui régénère nos fontes de manière prédictible à
-  chaque changement, ajout ou suppression d'icône dans le dossier de notre choix.
-  Libre à vous d'adapter cette tâche comme bon vous semble à votre workflow, en espérant
-  que ces plugins vous seront autant utiles qu'à moi ;).</p>
-<p>Ajout du 7 décembre 2013 : Finalement je suis allé encore plus loin en créant un
-  <a hreflang="en title=Voir cette application href=http://nfroidure.github.io/svgiconfont"
-  />générateur de fontes Front-End</a> qui servira à illustrer le partage de code
-  entre le serveur et le navigateur en JavaScript avec NodeJS et Browserify au prochain
-  ChtiJS qui aura lieu le 19 décembre. <a title="Voir le Doodle du ChtiJS#6 href=http://doodle.com/uqrqwhsxbyfuafie">N'hésitez pas à vous inscrire</a>.</p>
+<p>Bref, nous avons une tâche Grunt qui régénère nos fontes de manière prédictible à chaque changement, ajout ou suppression d&#039;icône dans le dossier de notre choix. Libre à vous d&#039;adapter cette tâche comme bon vous semble à votre workflow, en espérant
+    que ces plugins vous seront autant utiles qu&#039;à moi ;).</p>
+<p>Ajout du 7 décembre 2013 : Finalement je suis allé encore plus loin en créant un <a hreflang="en" title="Voir cette application" href="http://nfroidure.github.io/svgiconfont/">générateur de fontes Front-End</a> qui servira à illustrer le partage de code
+    entre le serveur et le navigateur en JavaScript avec NodeJS et Browserify au prochain ChtiJS qui aura lieu le 19 décembre. <a title="Voir le Doodle du ChtiJS&#35;6" href="http://doodle.com/uqrqwhsxbyfuafie">N&#039;hésitez pas à vous inscrire</a>.</p>

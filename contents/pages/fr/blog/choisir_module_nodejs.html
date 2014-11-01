@@ -10,56 +10,32 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Hier à la troisième édition de ChtiJS, un question a été soulevée sur la confiance que l'on pouvait avoir dans les modules NodeJS. Je vous dévoile donc ma méthode pour trancher entre npm install et npm remove ;).</h2>
-<p>Hier à la troisième édition de ChtiJS, un question a été soulevée sur la confiance
-  que l'on pouvait avoir dans les modules NodeJS. Je vous dévoile donc ma méthode
-  pour trancher entre npm install et npm remove ;).</p>
+<h2>Bien choisir ses modules NodeJS : ma méthode</h2>
+<p>Hier à la troisième édition de ChtiJS, un question a été soulevée sur la confiance que l&#039;on pouvait avoir dans les modules NodeJS. Je vous dévoile donc ma méthode pour trancher entre npm install et npm remove ;).</p>
 
-<p>Il existe deux types de modules. Les natifs que l'on retrouve à l'installation de
-  NodeJS et qui peuvent être utilisés via un simple require. Et les modules NPM (Node
-  Package Manager) que l'on télécharge grâce à la commande <code>npm install</code>  et que l'on peut consulter sur le <a hreflang="en title=Voir le site des modules NodeJS href=http://npmjs.org">site dédié aux modules NodeJS</a>.</p>
+<p>Il existe deux types de modules. Les natifs que l&#039;on retrouve à l&#039;installation de NodeJS et qui peuvent être utilisés via un simple require. Et les modules NPM (Node Package Manager) que l&#039;on télécharge grâce à la commande <code>npm install</code>    et que l&#039;on peut consulter sur le <a hreflang="en" title="Voir le site des modules NodeJS" href="http://npmjs.org">site dédié aux modules NodeJS</a>.</p>
 <h3>Les modules natifs</h3>
-<p>Pour avoir créé des applications node assez tôt, je peux affirmer que même les modules
-  instables cassent rarement la compatibilité. Si ils le font, c'est rarement brutal.
-  On observe un message indiquant que telle ou telle méthode est dépréciée plusieurs
-  versions avant le retrait définitif. En général, on observe plutôt un ajout de
-  fonctionnalités plutôt qu'une refonte des API.</p>
-<p>Cependant, un excellent moyen d'être informé des problèmes éventuels est de suivre
-  le flux RSS du <a hreflang="en title=Se rednre sur le blog de NodeJS href=http://blog.nodejs.org"
-  />blog du projet</a> qui pour chque nouvelle version indique les ajout et modifications
-  réalisés ainsi que les problèmes qui peuvent en résulter.</p>
+<p>Pour avoir créé des applications node assez tôt, je peux affirmer que même les modules instables cassent rarement la compatibilité. Si ils le font, c&#039;est rarement brutal. On observe un message indiquant que telle ou telle méthode est dépréciée plusieurs
+    versions avant le retrait définitif. En général, on observe plutôt un ajout de fonctionnalités plutôt qu&#039;une refonte des API.</p>
+<p>Cependant, un excellent moyen d&#039;être informé des problèmes éventuels est de suivre le flux RSS du <a hreflang="en" title="Se rednre sur le blog de NodeJS" href="http://blog.nodejs.org/">blog du projet</a> qui pour chque nouvelle version indique les
+    ajout et modifications réalisés ainsi que les problèmes qui peuvent en résulter.</p>
 <h3>Les modules tiers</h3>
-<p>N'importe qui peut soumettre un module NodeJS avec NPM. C'est pour cette raison qu'il
-  est nécessaire d'être attentif à la sélection de ces derniers. L'un des premiers
-  discriminants est l'absence de tests.</p>
+<p>N&#039;importe qui peut soumettre un module NodeJS avec NPM. C&#039;est pour cette raison qu&#039;il est nécessaire d&#039;être attentif à la sélection de ces derniers. L&#039;un des premiers discriminants est l&#039;absence de tests.</p>
 <h4>Choisir des modules testés</h4>
-<p>Les chiffres mis en avant par ce projet d'examem des <a hreflang="en title=Voir ce site qui référence et teste les modules NPM href=http://npmt.abru.pt"
-  />modules NPM</a> sont sur ce point peu rassurant. Seuls 50% des modules possèderaient
-  des tests. Parmi eux, seul 50% passerairent leurs propres tests.</p>
-<p>Un projet qui ne passe pas tous les tests n'est pas forcément mauvais. Il peut s'agir
-  d'un module réalisé en TDD et ainsi, les fonctionnalités futures dont les tests
-  sont déjà écrits mais pas encore implémentés ne passent logiquement pas.</p>
+<p>Les chiffres mis en avant par ce projet d&#039;examem des <a hreflang="en" title="Voir ce site qui référence et teste les modules NPM" href="http://npmt.abru.pt/">modules NPM</a> sont sur ce point peu rassurant. Seuls 50&#37; des modules possèderaient
+    des tests. Parmi eux, seul 50&#37; passerairent leurs propres tests.</p>
+<p>Un projet qui ne passe pas tous les tests n&#039;est pas forcément mauvais. Il peut s&#039;agir d&#039;un module réalisé en TDD et ainsi, les fonctionnalités futures dont les tests sont déjà écrits mais pas encore implémentés ne passent logiquement pas.</p>
 <h4>Choisir des modules open-source/collaboratifs</h4>
-<p>Un autre point fondamental est la manière dont le développement est réalisé. Si le
-  projet est sur GitHub et possède une licence libre, c'est déjà un bon point. Si
-  en plus il est vivant (mis en favoris, commit réguliers de diverses personnes,
-  issues rapidement résolues etc...), alors vous pouvez avoir confiance dans ce module.</p>
-<p>La documentation doit également être bonne. Le fameux "Get started" dans le fichier
-  README est un must-have. Un documentation plus complète est un gros plus. On peut
-  prendre l'exemple de RequireJS qui pousse le bouchon jusqu'à insérer les URL du
-  manuel pertinentes dans le texte de ses exceptions (vous n'avez plus qu'à cliquer :p).</p>
+<p>Un autre point fondamental est la manière dont le développement est réalisé. Si le projet est sur GitHub et possède une licence libre, c&#039;est déjà un bon point. Si en plus il est vivant (mis en favoris, commit réguliers de diverses personnes, issues
+    rapidement résolues etc...), alors vous pouvez avoir confiance dans ce module.</p>
+<p>La documentation doit également être bonne. Le fameux &#034;Get started&#034; dans le fichier README est un must-have. Un documentation plus complète est un gros plus. On peut prendre l&#039;exemple de RequireJS qui pousse le bouchon jusqu&#039;à insérer
+    les URL du manuel pertinentes dans le texte de ses exceptions (vous n&#039;avez plus qu&#039;à cliquer :p).</p>
 <h4>Inspecter le code source</h4>
-<p>Rien de mieux pour juger de la qualité d'un module que d'inspecter son code. Ma méthode
-  pour ce faire est très simple :</p>
+<p>Rien de mieux pour juger de la qualité d&#039;un module que d&#039;inspecter son code. Ma méthode pour ce faire est très simple :</p>
 <ul>
-  <li>consultation du fichier <code>package.json</code> : on peut ainsi y trouver la
-    dépendance à d'autres modules. En effet, un module basé sur un mauvais est forcément
-    mauvais, qu'importe la qualité de ce dernier. Autre info utile, on y retrouve
-    le fichier principal (propriété <code>main</code>). Cela va vous servir de point
-    de départ pour la lectuire de la source. Enfin, la propriété <code>scripts.test</code>    permet de savoir si des tests sont présents ou non et l'endroit où ils se trouvent.</li>
-  <li>lecture du dichier principal : il ne nous reste plus qu'à examiner le code. Les
-    appels à la fonction <code>require</code> nous permettent d'accèder aux autres
-    fichiers du module pour inspecter plus profondément ce dernier.</li>
+    <li>consultation du fichier <code>package.json</code> : on peut ainsi y trouver la dépendance à d&#039;autres modules. En effet, un module basé sur un mauvais est forcément mauvais, qu&#039;importe la qualité de ce dernier. Autre info utile, on y retrouve
+        le fichier principal (propriété <code>main</code>). Cela va vous servir de point de départ pour la lectuire de la source. Enfin, la propriété <code>scripts.test</code> permet de savoir si des tests sont présents ou non et l&#039;endroit où ils
+        se trouvent.</li>
+    <li>lecture du dichier principal : il ne nous reste plus qu&#039;à examiner le code. Les appels à la fonction <code>require</code> nous permettent d&#039;accèder aux autres fichiers du module pour inspecter plus profondément ce dernier.</li>
 </ul>
-<p>Voilà, j'espère vous avoir aidé à choisir vos modules, n'hésitez pas à me proposer
-  vos méthodes en commentaire, je serai ravi d'enrichir celle-ci avec vos idées.</p>
+<p>Voilà, j&#039;espère vous avoir aidé à choisir vos modules, n&#039;hésitez pas à me proposer vos méthodes en commentaire, je serai ravi d&#039;enrichir celle-ci avec vos idées.</p>

@@ -10,31 +10,19 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Bien que HTML5 progresse de jour en jour, on aimerait parfois pouvoir accéder à n'importe quoi dans son navigateur. C'est déjà possible, grâce à un nouveau petit projet NodeJS.</h2>
-<p>Bien que HTML5 progresse de jour en jour, on aimerait parfois pouvoir accéder à n'importe
-  quoi dans son navigateur. C'est déjà possible, grâce à un nouveau petit projet
-  NodeJS.</p>
+<h2>Une application desktop avec Chrome</h2>
+<p>Bien que HTML5 progresse de jour en jour, on aimerait parfois pouvoir accéder à n&#039;importe quoi dans son navigateur. C&#039;est déjà possible, grâce à un nouveau petit projet NodeJS.</p>
 
-<p>Ce projet, c'est <a hreflang="en title=Voir le dépôt du projet href=https://github.com/hij1nx/node-chrome">Node-Chrome</a>.
-  L'idée est toute bête, mais encore fallait-il y penser.</p>
-<p>Le navigateur Google Chrome possède pléthore de ligne de commandes, malheureusement
-  peu documentées dans le man correspondant, mais <a hreflang="en title=Voir la liste des arguments href=http://peter.sh/experiments/chromium-command-line-switches"
-  />disponibles ici</a>. Deux arguments sont assez intéressants :</p>
+<p>Ce projet, c&#039;est <a hreflang="en" title="Voir le dépôt du projet" href="https://github.com/hij1nx/node-chrome">Node-Chrome</a>. L&#039;idée est toute bête, mais encore fallait-il y penser.</p>
+<p>Le navigateur Google Chrome possède pléthore de ligne de commandes, malheureusement peu documentées dans le man correspondant, mais <a hreflang="en" title="Voir la liste des arguments" href="http://peter.sh/experiments/chromium-command-line-switches/">disponibles ici</a>.
+    Deux arguments sont assez intéressants&#0160;:</p>
 <ul>
-  <li><strong>--app http://localhost :</strong> Celui-ci permet de spécifier une URL
-    à ouvrir</li>
-  <li><strong>--force-app-mode :</strong> Permet d'ouvrir Chrome sans les boutons de
-    l'interface (sans le Chrome).</li>
+    <li><strong>--app http://localhost&#0160;:</strong> Celui-ci permet de spécifier une URL à ouvrir</li>
+    <li><strong>--force-app-mode&#0160;:</strong> Permet d&#039;ouvrir Chrome sans les boutons de l&#039;interface (sans le Chrome).</li>
 </ul>
-<p>Ces options sont utilisées pour créer les raccourcis vers des applications web du
-  Marketplace de Chrome sur le bureau.</p>
-<p>Node-Chrome tire parti de ces options en créant un serveur NodeJS et en lancant un
-  processus Google-Chrome. Grâce à cette exécution simultanée, l'instance de NodeJS
-  peut donc donner accès à tous les périphériques du système.</p>
-<p>Résultat : promesse tenue ! Une application desktop grâce à Google Chrome et NodeJS
-  qui n'aura aucune limite (à part celles de l'utilisateur via lequel le processus
-  a été lancé).</p>
-<p>Comme Chrome et Node sont multi-plateformes, cela donne donc une configuration tout
-  à fait portable sur n'importe quel OS.</p>
+<p>Ces options sont utilisées pour créer les raccourcis vers des applications web du Marketplace de Chrome sur le bureau.</p>
+<p>Node-Chrome tire parti de ces options en créant un serveur NodeJS et en lancant un processus Google-Chrome. Grâce à cette exécution simultanée, l&#039;instance de NodeJS peut donc donner accès à tous les périphériques du système.</p>
+<p>Résultat&#0160;: promesse tenue&#0160;! Une application desktop grâce à Google Chrome et NodeJS qui n&#039;aura aucune limite (à part celles de l&#039;utilisateur via lequel le processus a été lancé).</p>
+<p>Comme Chrome et Node sont multi-plateformes, cela donne donc une configuration tout à fait portable sur n&#039;importe quel OS.</p>
 <p>On pourrait tout à fait imaginer la même chose avec Firefox en lieu et place de Chrome.</p>
-<p>Bref, une question reste en suspens, combien de temps Java va mettre pour mourir ?</p>
+<p>Bref, une question reste en suspens, combien de temps Java va mettre pour mourir&#0160;?</p>

@@ -10,143 +10,70 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Créer un jeu en HTML5 est simple. Cependant, il faut respecter quelques bonnes pratiques pour éviter que cela tourne au cauchemar.</h2>
-<p>Créer un jeu en HTML5 est simple. Cependant, il faut respecter quelques bonnes pratiques
-  pour éviter que cela tourne au cauchemar.</p>
+<h2>Jeux HTML5 : Développement d&#039;un casse brique</h2>
+<p>Créer un jeu en HTML5 est simple. Cependant, il faut respecter quelques bonnes pratiques pour éviter que cela tourne au cauchemar.</p>
 
-<p>Suite à mon précédent article sur l'amélioration d'un casse brique, j'ai discuté
-  avec Jonathan Kowalski, l'auteur initial des prémices du jeu. Il a très gentiment
-  accepté de passer le jeu sous Licence GNU/GPL de façon à ce que chacun puisse le
-  modifier à sa guise. De cette façon, le jeu que vous allez créer ici sera utilisable
-  comme point de départ d'un véritable jeu avec différents niveaux ou un look à votre
-  guise.</p>
+<p>Suite à mon précédent article sur l&#039;amélioration d&#039;un casse brique, j&#039;ai discuté avec Jonathan Kowalski, l&#039;auteur initial des prémices du jeu. Il a très gentiment accepté de passer le jeu sous Licence GNU/GPL de façon à ce que chacun
+    puisse le modifier à sa guise. De cette façon, le jeu que vous allez créer ici sera utilisable comme point de départ d&#039;un véritable jeu avec différents niveaux ou un look à votre guise.</p>
 <h3>Diagramme des classes</h3>
-<p style="text-align: center;"><img alt="Diagramme de classes du Casse Brique src=http://www.insertafter.com/images/classesdiagram.png"
-  /> </p>
+<p style="text-align: center;"><img alt="Diagramme de classes du Casse Brique" src="http://www.insertafter.com/images/classesdiagram.png" /> </p>
 <p>Notre application sera composée de 4 objets :</p>
 <ul>
-  <li>L'objet Game qui se chargera de gérer la boucle de jeu, la création du canvas et
-    la génération des murs à détruire,</li>
-  <li>L'objet Ball qui se chargera de gérer la position de la balle, son dessin sur le
-    Canvas, son rebonsissement et son interaction avec les autres éléments du jeu,</li>
-  <li>L'objet Bar qui permettra le dessin de la barre sur le Canvas, la gestion de ses
-    déplacement et la collision avec la balle.</li>
-  <li>L'objet Brick qui se chargera du dessin des briques et de la collision avec la
-    balle.</li>
+    <li>L&#039;objet Game qui se chargera de gérer la boucle de jeu, la création du canvas et la génération des murs à détruire,</li>
+    <li>L&#039;objet Ball qui se chargera de gérer la position de la balle, son dessin sur le Canvas, son rebonsissement et son interaction avec les autres éléments du jeu,</li>
+    <li>L&#039;objet Bar qui permettra le dessin de la barre sur le Canvas, la gestion de ses déplacement et la collision avec la balle.</li>
+    <li>L&#039;objet Brick qui se chargera du dessin des briques et de la collision avec la balle.</li>
 </ul>
-<p>Enfin, il y a un dépôt existant, mais je vais le réinitialiser et tout reprendre
-  étape par étape afin que vous puissiez suivre ce tutoriel en suivant les modifications
-  faîtes grâce à Git. Pour obtenir le dépôt tel qu'il est au début du tuto :</p><pre>nfroidure@production:~/ mkdir CasseBrique && cd CasseBrique<br />nfroidure@production:~/ git clone git@github.com:nfroidure/CasseBriques.git .<br />nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/84162a4c2fa6ece151e80031c1e76af25e508835">84162a4c2fa6ece151e80031c1e76af25e508835</a></pre>
-<p>A noter aussi, le casse brique était initialement développé avec l'aide de JQuery,
-  je vais plutôt utiliser Mootools qui est plus adapté à la POO et que je maîtrise
-  mieux. De plus, je souhaite intégrer ce petit jeu dans une de mes applications
-  comme "goodies" pour un de mes clients.</p>
-<p>Voilà, vous êtes prêt. Je vais détailler la programmation de chaque ligne de code,
-  mais avant de commencer, petit retout sur Canvas, l'élement qui permet le dessin
-  de formes et autres graphismes.</p>
-<h3>Canvas : L'élément central</h3>
-<p>Créer un jeu vidéo en HTML5 commence souvent par la création d'un élément Canvas.
-  En effet, cet élément permet d'afficher des graphismes grâce à l'utilisation de
-  fonctions de l'<acronym title="Application Programming Interface">API</acronym>  Javascript qui lui est associé. Les fonctions diffèrent en fonction du contexte,
-  puisque notre casse brique est en 2D, ce sera donc le paradigme de la 2D que nous
-  utiliserons. Vous trouverez un tutorial complet sur le <a title="Lire la suite href=https://developer.mozilla.org/en/Canvas_tutorial">fonctionnement de Canvas</a>  sur le Mozilla Developper Network. Il est très important de comprendre le fonctionnement
-  de Canvas pour bien comprendre ce tutoriel.</p>
-<h3>L'objet Game : Création</h3>
-<p>Le premier objet qu'il faut créer est l'objet Game, c'est lui qui sera instancié
-  pour commencer une partie de casse brique. Afin de rendre le jeu le plus souple
-  possible, nous allons nous imposer une contrainte : il doit être possible de créer
-  un jeu casse brique en fournissant uniquement à Game l'élément HTML chargé de recueillir
-  le jeu. D'ailleurs, nous allons nous arranger pour que dans l'absolu, il soit possible
-  de créer plusieurs instances du casse brique dans la même page web.</p>
-<p>De cette contrainte, on peut tout de suite déduire quel sera le constructeur de l'objet
-  Game :</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/07e4ed976eba295c8bd0e6d9032c1ca6474717c6">07e4ed976eba295c8bd0e6d9032c1ca6474717c6</a></pre>
-<p>Dans le fichier index.html, ajoutons un code de détection des éléments ayant la classe
-  CasseBrique et passons le premier trouvé à un object Game nouvellement créé :</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/fbd961660abf136103d84a93aacbeb4d7d734795">fbd961660abf136103d84a93aacbeb4d7d734795</a></pre>
-<p><a title="Voir le résultat du commit href=http://rest4.org/github/nfroidure/CasseBriques/07e4ed976eba295c8bd0e6d9032c1ca6474717c6/index.html">La détection se fait bien</a>,
-  nous allons pouvoir créer un élément canvas et l'insérer dans l'élément détecté.
-  Pour ce faire, on récupère la taille de l'élément reçu et on l'assigne au canvas.
-  Ensuite, on détecte si l'API de Canvas est bien présente et on ajoute l'élément,
-  sinon, on affiche un message d'erreur.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/fbd961660abf136103d84a93aacbeb4d7d734795">fbd961660abf136103d84a93aacbeb4d7d734795b</a></pre>
-<p>On a donc maintenant un canvas en état de marche. Vous remarquerez la présence d'une
-  propriété nommée aspectRatio. Cette dernière va nous servir pour déterminer la
-  taille des différents objets du Canvas pour qu'elle soit adaptée à la place disponible
-  dans l'élément transmis.</p>
+<p>Enfin, il y a un dépôt existant, mais je vais le réinitialiser et tout reprendre étape par étape afin que vous puissiez suivre ce tutoriel en suivant les modifications faîtes grâce à Git. Pour obtenir le dépôt tel qu&#039;il est au début du tuto :</p><pre>nfroidure&#64;production:~/ mkdir CasseBrique &amp;&amp; cd CasseBrique<br />nfroidure&#64;production:~/ git clone git&#64;github.com:nfroidure/CasseBriques.git .<br />nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/84162a4c2fa6ece151e80031c1e76af25e508835">84162a4c2fa6ece151e80031c1e76af25e508835</a></pre>
+<p>A noter aussi, le casse brique était initialement développé avec l&#039;aide de JQuery, je vais plutôt utiliser Mootools qui est plus adapté à la POO et que je maîtrise mieux. De plus, je souhaite intégrer ce petit jeu dans une de mes applications comme
+    &#034;goodies&#034; pour un de mes clients.</p>
+<p>Voilà, vous êtes prêt. Je vais détailler la programmation de chaque ligne de code, mais avant de commencer, petit retout sur Canvas, l&#039;élement qui permet le dessin de formes et autres graphismes.</p>
+<h3>Canvas : L&#039;élément central</h3>
+<p>Créer un jeu vidéo en HTML5 commence souvent par la création d&#039;un élément Canvas. En effet, cet élément permet d&#039;afficher des graphismes grâce à l&#039;utilisation de fonctions de l&#039;<acronym title="Application Programming Interface">API</acronym>    Javascript qui lui est associé. Les fonctions diffèrent en fonction du contexte, puisque notre casse brique est en 2D, ce sera donc le paradigme de la 2D que nous utiliserons. Vous trouverez un tutorial complet sur le <a title="Lire la suite" href="https://developer.mozilla.org/en/Canvas_tutorial">fonctionnement de Canvas</a>    sur le Mozilla Developper Network. Il est très important de comprendre le fonctionnement de Canvas pour bien comprendre ce tutoriel.</p>
+<h3>L&#039;objet Game : Création</h3>
+<p>Le premier objet qu&#039;il faut créer est l&#039;objet Game, c&#039;est lui qui sera instancié pour commencer une partie de casse brique. Afin de rendre le jeu le plus souple possible, nous allons nous imposer une contrainte : il doit être possible de
+    créer un jeu casse brique en fournissant uniquement à Game l&#039;élément HTML chargé de recueillir le jeu. D&#039;ailleurs, nous allons nous arranger pour que dans l&#039;absolu, il soit possible de créer plusieurs instances du casse brique dans
+    la même page web.</p>
+<p>De cette contrainte, on peut tout de suite déduire quel sera le constructeur de l&#039;objet Game :</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/07e4ed976eba295c8bd0e6d9032c1ca6474717c6">07e4ed976eba295c8bd0e6d9032c1ca6474717c6</a></pre>
+<p>Dans le fichier index.html, ajoutons un code de détection des éléments ayant la classe CasseBrique et passons le premier trouvé à un object Game nouvellement créé :</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/fbd961660abf136103d84a93aacbeb4d7d734795">fbd961660abf136103d84a93aacbeb4d7d734795</a></pre>
+<p><a title="Voir le résultat du commit" href="http://rest4.org/github/nfroidure/CasseBriques/07e4ed976eba295c8bd0e6d9032c1ca6474717c6/index.html">La détection se fait bien</a>, nous allons pouvoir créer un élément canvas et l&#039;insérer dans l&#039;élément
+    détecté. Pour ce faire, on récupère la taille de l&#039;élément reçu et on l&#039;assigne au canvas. Ensuite, on détecte si l&#039;API de Canvas est bien présente et on ajoute l&#039;élément, sinon, on affiche un message d&#039;erreur.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/fbd961660abf136103d84a93aacbeb4d7d734795">fbd961660abf136103d84a93aacbeb4d7d734795b</a></pre>
+<p>On a donc maintenant un canvas en état de marche. Vous remarquerez la présence d&#039;une propriété nommée aspectRatio. Cette dernière va nous servir pour déterminer la taille des différents objets du Canvas pour qu&#039;elle soit adaptée à la place disponible
+    dans l&#039;élément transmis.</p>
 <h3>Création de la barre et de la balle</h3>
-<p>Commençons par dessiner la balle et la barre. Pour chacun d'eux, nous allons créer
-  une classe avec comme propriétés la position et les dimensions de l'objet et deux
-  méthodes, une pour dessiner l'objet à sa position actuelle (draw), une autre pour
-  l'effacer (clear). Nous allons passer à chaque objet du canvas une référence à
-  l'objet game afin que ces objets puissent s'y référer.</p>
-<p>Pour la barre, nous souhaitons dessiner un rectangle. Heureusement, l'élément Canvas
-  dispose de la fonction fillRect. Au début du jeu, nous positionnerons la barre
-  au centre.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/dbea5701e152b7ac36cae867735568d5ae0c6261">dbea5701e152b7ac36cae867735568d5ae0c6261</a></pre>
-<p>En ce qui concerne la balle, la classe est similaire à ceci près que nous n'avons
-  pas une largeur et une longeur, mais un rayon. La fonction de dessin est également
-  différente puisqu'ici nous utilisons les fonctions de dessin pour obtenir un cercle.
-  La fonction de positionnement est également différente puisque la position de la
-  balle est relative à celle de la barre.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/8ffcdb2815fc23fcc0fdfcb98a1a589be02af8bf">8ffcdb2815fc23fcc0fdfcb98a1a589be02af8bf</a></pre>
+<p>Commençons par dessiner la balle et la barre. Pour chacun d&#039;eux, nous allons créer une classe avec comme propriétés la position et les dimensions de l&#039;objet et deux méthodes, une pour dessiner l&#039;objet à sa position actuelle (draw), une
+    autre pour l&#039;effacer (clear). Nous allons passer à chaque objet du canvas une référence à l&#039;objet game afin que ces objets puissent s&#039;y référer.</p>
+<p>Pour la barre, nous souhaitons dessiner un rectangle. Heureusement, l&#039;élément Canvas dispose de la fonction fillRect. Au début du jeu, nous positionnerons la barre au centre.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/dbea5701e152b7ac36cae867735568d5ae0c6261">dbea5701e152b7ac36cae867735568d5ae0c6261</a></pre>
+<p>En ce qui concerne la balle, la classe est similaire à ceci près que nous n&#039;avons pas une largeur et une longeur, mais un rayon. La fonction de dessin est également différente puisqu&#039;ici nous utilisons les fonctions de dessin pour obtenir un
+    cercle. La fonction de positionnement est également différente puisque la position de la balle est relative à celle de la barre.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/8ffcdb2815fc23fcc0fdfcb98a1a589be02af8bf">8ffcdb2815fc23fcc0fdfcb98a1a589be02af8bf</a></pre>
 <h3>Déplacement de la balle et création de la boucle de jeu</h3>
-<p>Nous avons déjà <a title="Voir le résultats des commits précédents href=http://rest4.org/github/nfroidure/CasseBriques/8ffcdb2815fc23fcc0fdfcb98a1a589be02af8bf/index.html">deux éléments affichés</a>,
-  maintenant, nous allons animer un peu tout ça. La première chose à faire est de
-  créer une boucle de jeu. Certains utilisent la fonction setInterval à cette fin,
-  je lui préfère la fonction setTimeout. En effet, setTimeout répété plusieurs fois
-  permet de ne pas demander le redessin des objets sur le canvas tant que le dessin
-  précédent n'a pas été fait.</p>
-<p>De ce fait, si l'on utilise le jeu sur de petits appareils peu performants, on aura
-  moins de difficultés à jouer, le jeu sera juste un peu ralenti. Ca tombe bien,
-  mon objectif est que ce jeu marche aussi sur les mobiles. MooTools utilise la fonction
-  delay pour effectuer une action après n millisecondes d'attente. Garder une référence
-  à ce délai dans la propriété timer nous permettra de mettre fin à la boucle principale
-  en temps voulu.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/efd8c071e8fc6f552640befb2ee12cca8a3d7492">efd8c071e8fc6f552640befb2ee12cca8a3d7492</a></pre>
-<p>On a donc notre balle qui est dessinnée toutes les 5 millisecondes. Pour la faire
-  bouger, nous allons lui donner une vitesse (speed), une direction (angle) et ajouter
-  une méthode (move) permettant de lui demander de bouger. Notre boucle principale
-  n'aura alors qu'à appeller la fonction move pour permettre à la balle de s'afficher
-  à chaque fois à une position différente.</p>
-<p>Vous remarquerez que nous avons adapté la vitesse à la taille du canvas grâce à la
-  propriété aspect ratio. La vitesse de la balle sera ainsi constante quelle que
-  soit la taille de l'élément dans lequel se déroule le jeu.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/2f6e0b5ace29711707c58c601fbc6cfcfb362a17">2f6e0b5ace29711707c58c601fbc6cfcfb362a17</a></pre>
-<p>Maintenant, nous devons nous assurer que la balle ne sortira pas du canvas. Pour
-  cela, nous avons déjà préparé le terrain. En effet, dans la fonction move, deux
-  variables sont créées pour stocker temporairement les nouvelles coordonéees. Nous
-  allons donc procéder à divers tests et dévier la balle si les nouvelles coordonnées
-  sont en dehors des limites du jeu, de cette façon, au prochain calcul, la balle
-  <a title="Voir le commit en action href=http://rest4.org/github/nfroidure/CasseBriques/b738ec5d0167afc29caaf07ca9ec3e71296fe5f3/index.html">n'ira plus hors des limites du jeu</a>.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/b738ec5d0167afc29caaf07ca9ec3e71296fe5f3">b738ec5d0167afc29caaf07ca9ec3e71296fe5f3</a></pre>
+<p>Nous avons déjà <a title="Voir le résultats des commits précédents" href="http://rest4.org/github/nfroidure/CasseBriques/8ffcdb2815fc23fcc0fdfcb98a1a589be02af8bf/index.html">deux éléments affichés</a>, maintenant, nous allons animer un peu tout ça. La
+    première chose à faire est de créer une boucle de jeu. Certains utilisent la fonction setInterval à cette fin, je lui préfère la fonction setTimeout. En effet, setTimeout répété plusieurs fois permet de ne pas demander le redessin des objets sur le
+    canvas tant que le dessin précédent n&#039;a pas été fait.</p>
+<p>De ce fait, si l&#039;on utilise le jeu sur de petits appareils peu performants, on aura moins de difficultés à jouer, le jeu sera juste un peu ralenti. Ca tombe bien, mon objectif est que ce jeu marche aussi sur les mobiles. MooTools utilise la fonction
+    delay pour effectuer une action après n millisecondes d&#039;attente. Garder une référence à ce délai dans la propriété timer nous permettra de mettre fin à la boucle principale en temps voulu.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/efd8c071e8fc6f552640befb2ee12cca8a3d7492">efd8c071e8fc6f552640befb2ee12cca8a3d7492</a></pre>
+<p>On a donc notre balle qui est dessinnée toutes les 5 millisecondes. Pour la faire bouger, nous allons lui donner une vitesse (speed), une direction (angle) et ajouter une méthode (move) permettant de lui demander de bouger. Notre boucle principale n&#039;aura
+    alors qu&#039;à appeller la fonction move pour permettre à la balle de s&#039;afficher à chaque fois à une position différente.</p>
+<p>Vous remarquerez que nous avons adapté la vitesse à la taille du canvas grâce à la propriété aspect ratio. La vitesse de la balle sera ainsi constante quelle que soit la taille de l&#039;élément dans lequel se déroule le jeu.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/2f6e0b5ace29711707c58c601fbc6cfcfb362a17">2f6e0b5ace29711707c58c601fbc6cfcfb362a17</a></pre>
+<p>Maintenant, nous devons nous assurer que la balle ne sortira pas du canvas. Pour cela, nous avons déjà préparé le terrain. En effet, dans la fonction move, deux variables sont créées pour stocker temporairement les nouvelles coordonéees. Nous allons donc
+    procéder à divers tests et dévier la balle si les nouvelles coordonnées sont en dehors des limites du jeu, de cette façon, au prochain calcul, la balle <a title="Voir le commit en action" href="http://rest4.org/github/nfroidure/CasseBriques/b738ec5d0167afc29caaf07ca9ec3e71296fe5f3/index.html">n&#039;ira plus hors des limites du jeu</a>.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/b738ec5d0167afc29caaf07ca9ec3e71296fe5f3">b738ec5d0167afc29caaf07ca9ec3e71296fe5f3</a></pre>
 <h3>Mouvement de la barre et collision</h3>
-<p>Il faut maintenant permettre à l'utilisateur de faire se déplacer la barre. Pour
-  cela, nous allons suivre le mouvement de la souris. Puisque la barre n'est amené
-  à être dessiné que quand la souris est bougée, nous allons directement gérer l'évènement
-  et le dessin de la barre au sein de l'objet lui même.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/52e2f453b89e928b13416744a109edb1ce93b25e">52e2f453b89e928b13416744a109edb1ce93b25e</a></pre>
-<p>Enfin, nous allons gérer la collision de la balle avec la barre. Nous allons faire
-  ceci au sein de l'objet ball puisque la focntion move s'y prête parfaitement. En
-  plus de la collision, nous allons dévier l'angle du rebond en fonction de la position
-  sur la barre.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/5f9309603275df07c3214a97c870ecfa40510f7c">5f9309603275df07c3214a97c870ecfa40510f7c</a></pre>
-<p>Enfin, nous allons permettre à la barre d'<a title="Voir le commit href=http://rest4.org/github/nfroidure/CasseBriques/fcf6249a93119e4de4b4b38d774fbbd9ed54c5e7/index.html">emmener la balle dans son sillon</a>  quand sa vitesse est nulle, c'est à dire, au début du jeu.</p>
+<p>Il faut maintenant permettre à l&#039;utilisateur de faire se déplacer la barre. Pour cela, nous allons suivre le mouvement de la souris. Puisque la barre n&#039;est amené à être dessiné que quand la souris est bougée, nous allons directement gérer l&#039;évènement
+    et le dessin de la barre au sein de l&#039;objet lui même.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/52e2f453b89e928b13416744a109edb1ce93b25e">52e2f453b89e928b13416744a109edb1ce93b25e</a></pre>
+<p>Enfin, nous allons gérer la collision de la balle avec la barre. Nous allons faire ceci au sein de l&#039;objet ball puisque la focntion move s&#039;y prête parfaitement. En plus de la collision, nous allons dévier l&#039;angle du rebond en fonction de
+    la position sur la barre.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/5f9309603275df07c3214a97c870ecfa40510f7c">5f9309603275df07c3214a97c870ecfa40510f7c</a></pre>
+<p>Enfin, nous allons permettre à la barre d&#039;<a title="Voir le commit" href="http://rest4.org/github/nfroidure/CasseBriques/fcf6249a93119e4de4b4b38d774fbbd9ed54c5e7/index.html">emmener la balle dans son sillon</a> quand sa vitesse est nulle, c&#039;est
+    à dire, au début du jeu.</p>
 <h3>Génération des briques et collision</h3>
-<p>Nous allons créer un objet brique permettant de dessiner et gérer les collisions
-  avec une brique. Le dessin reprend simplement ce que nous avons vu pour la barre.
-  La fonction de collision (hit) permet, en passant en paramètre des coordonnées
-  et un rayon de retourner une valeur permettant de savoir si il y a eu collision
-  et de quels côtés de la brique. Cette valeur de retour utilise une technique de
-  <a title="En savoir plus href=http://www.expert-php.fr/php/bit-bashing-et-gestion-des-droits-dacces.html">bit bashing</a>  très connue dans le monde Unix. Ici, grâce à un seul entier, on symbolise un nombre
-  importants de combinaisons de valeurs différentes.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/5336331b048af72cdd1ee3e84afa0bbbdda0a207">5336331b048af72cdd1ee3e84afa0bbbdda0a207</a></pre>
-<p>Maintenant que l'objet brique est créé, nous allons créer une fonction pour les générer
-  au sein de l'objet Game (populate) afin de <a title="Voir le commit de la création du mur href=http://rest4.org/github/nfroidure/CasseBriques/7f3ed8d067d53fe39816c74aabc66621bee5276d/index.html">former le mur</a>.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/7f3ed8d067d53fe39816c74aabc66621bee5276d">7f3ed8d067d53fe39816c74aabc66621bee5276d</a></pre>
-<p>Intéressons nous aux collisions balle briques. Notre fonction Brick.hit retourne
-  un entier indiquant les côtés de la brique ayant subis la collision. Nous allons
-  donc executer catte fonction pour toutes les briques successivement, supprimer
-  les briques et aglomérer les résultats de toutes les collisions grâce à l'opérateur
-  binaire | (ou inclusif). Cela se passe toujours dans l'objet ball et sa fonction
-  move qui s'y prête bien. Enfin, grâce à l'opérateur binaire &, nous sommes en mesure
-  de déterminer quel est le résultat de cette aglomération et changer l'angle de
-  la balle en conséquence. Nous allon aussi ajouter à la fonction remove de l'object
-  brick une ligne pour retirer une brique détruite du tableau bricks de l'objet Game.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/b3ed8c550a2cf8948c838b09aa62c772e34e9381">b3ed8c550a2cf8948c838b09aa62c772e34e9381</a></pre>
+<p>Nous allons créer un objet brique permettant de dessiner et gérer les collisions avec une brique. Le dessin reprend simplement ce que nous avons vu pour la barre. La fonction de collision (hit) permet, en passant en paramètre des coordonnées et un rayon
+    de retourner une valeur permettant de savoir si il y a eu collision et de quels côtés de la brique. Cette valeur de retour utilise une technique de <a title="En savoir plus" href="http://www.expert-php.fr/php/bit-bashing-et-gestion-des-droits-dacces.html">bit bashing</a>    très connue dans le monde Unix. Ici, grâce à un seul entier, on symbolise un nombre importants de combinaisons de valeurs différentes.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/5336331b048af72cdd1ee3e84afa0bbbdda0a207">5336331b048af72cdd1ee3e84afa0bbbdda0a207</a></pre>
+<p>Maintenant que l&#039;objet brique est créé, nous allons créer une fonction pour les générer au sein de l&#039;objet Game (populate) afin de <a title="Voir le commit de la création du mur" href="http://rest4.org/github/nfroidure/CasseBriques/7f3ed8d067d53fe39816c74aabc66621bee5276d/index.html">former le mur</a>.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/7f3ed8d067d53fe39816c74aabc66621bee5276d">7f3ed8d067d53fe39816c74aabc66621bee5276d</a></pre>
+<p>Intéressons nous aux collisions balle briques. Notre fonction Brick.hit retourne un entier indiquant les côtés de la brique ayant subis la collision. Nous allons donc executer catte fonction pour toutes les briques successivement, supprimer les briques
+    et aglomérer les résultats de toutes les collisions grâce à l&#039;opérateur binaire | (ou inclusif). Cela se passe toujours dans l&#039;objet ball et sa fonction move qui s&#039;y prête bien. Enfin, grâce à l&#039;opérateur binaire &amp;, nous sommes
+    en mesure de déterminer quel est le résultat de cette aglomération et changer l&#039;angle de la balle en conséquence. Nous allon aussi ajouter à la fonction remove de l&#039;object brick une ligne pour retirer une brique détruite du tableau bricks
+    de l&#039;objet Game.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/b3ed8c550a2cf8948c838b09aa62c772e34e9381">b3ed8c550a2cf8948c838b09aa62c772e34e9381</a></pre>
 <h3>Bouclage du jeu</h3>
-<p>Voilà, nous y sommes quasiment, il reste à permettre de continuer de jouer lorsque
-  la balle est tombée puis à regénérer le mur lorsque ce dernier est complètement
-  détruit.</p><pre>nfroidure@production:~/ git checkout <a title="Voir le diff de ce commit href=https://github.com/nfroidure/CasseBriques/commit/9f6794c154cabc0d9f03ca0e4349027f21c79b81">9f6794c154cabc0d9f03ca0e4349027f21c79b81</a></pre>
-<p>Et voilà, nous avons <a title="Voir le jeu dans sa version actuelle href=http://breakit.elitwork.com/index.html">un jeu sommaire</a>  mais très facilement personnalisable ou augmentable le tout sous licence GNU/GPL.
-  Les collisions mériteraient d'être améliorées pour être plus naturelles, mais pour
-  cela, il faudrait que je me penche plus sérieusement dessus, peut-être que ce sera
-  le sujet d'un autre billet. Y'a plus qu'à continuer le projet pour les plus braves :d.</p>
-<p>PS : L'aventure continue avec l'ajout du <a title="Voir le billet sur le support de requestAnimationFrame href=articles-request_animation_frame.html">support de requestAnimationFrame</a>.</p>
+<p>Voilà, nous y sommes quasiment, il reste à permettre de continuer de jouer lorsque la balle est tombée puis à regénérer le mur lorsque ce dernier est complètement détruit.</p><pre>nfroidure&#64;production:~/ git checkout <a title="Voir le diff de ce commit" href="https://github.com/nfroidure/CasseBriques/commit/9f6794c154cabc0d9f03ca0e4349027f21c79b81">9f6794c154cabc0d9f03ca0e4349027f21c79b81</a></pre>
+<p>Et voilà, nous avons <a title="Voir le jeu dans sa version actuelle" href="http://breakit.elitwork.com/index.html">un jeu sommaire</a> mais très facilement personnalisable ou augmentable le tout sous licence GNU/GPL. Les collisions mériteraient d&#039;être
+    améliorées pour être plus naturelles, mais pour cela, il faudrait que je me penche plus sérieusement dessus, peut-être que ce sera le sujet d&#039;un autre billet. Y&#039;a plus qu&#039;à continuer le projet pour les plus braves :d.</p>
+<p>PS : L&#039;aventure continue avec l&#039;ajout du <a title="Voir le billet sur le support de requestAnimationFrame" href="articles-request_animation_frame.html">support de requestAnimationFrame</a>.</p>

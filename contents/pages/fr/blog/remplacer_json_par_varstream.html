@@ -10,121 +10,64 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>JSON est très connu et semble bon pour la plupart des utilisations, cependant, par "hasard", j'ai créé un format de données que je trouve supérieur et que j'ai décidé d'appeler VarStream.</h2>
-<p>JSON est très connu et semble bon pour la plupart des utilisations, cependant, par
-  "hasard", j'ai créé un format de données que je trouve supérieur et que j'ai décidé
-  d'appeler VarStream.</p>
+<h2>Pourquoi j&#039;ai remplacé JSON par VarStream</h2>
+<p>JSON est très connu et semble bon pour la plupart des utilisations, cependant, par &#034;hasard&#034;, j&#039;ai créé un format de données que je trouve supérieur et que j&#039;ai décidé d&#039;appeler VarStream.</p>
 
-<p>Aujourd'hui, ne nombreux développeurs ont choisi de privilégier <acronym title="Javascript Object Notation">JSON</acronym>  à <acronym title="eXtensible Markup Language">XML</acronym> pour de nombreuses
-  raisons. Sa légèreté est mise en avant par rapport à la lourdeur de XML. Mais JSON
-  a lui aussi des défauts finalement peu connus, des défauts qui ont fait que j'ai
-  créé VarStream, un autre format d'échange de donnée. Créé pour mon usage personnel,
-  je vous livre aujourd'hui ses principes et espère que certains d'entre vous en
-  tireront avantage.</p>
-<h3>L'histoire</h3>
-<p>Lorsque j'ai décidé de créer mon propre CMS, JSON n'existait pas ou n'était pas très
-  connu. XML était bien présent, mais je le trouvais un peu compliqué et surtout
-  très lourd. J'avais pourtant besoin d'un format de stockage de valeurs pour deux
-  besoins principalement : la localisation et la configuration.</p>
-<p>Influencé par les fichiers de configuration Unix et les fichiers .properties utilisés
-  pour la localisation chez Mozilla, j'ai décidé d'utiliser un format simple de type
-  <code>cle=valeur</code> suvi d'une nouvelle ligne. Par la suite, j'ai dû ajouter
-  une façon de commenter ces fichiers. Toujours dans le pompage des fichiers de conf
-  Unix, j'ai choisi le <code>#</code> en début de ligne.</p>
-<p>Enfin, il m'a fallu trouver un moyen d'insérer des nouvelles lignes et de réprésenter
-  une arborescence de valeurs ou des tableaux. Au fil de mes améliorations, je suis
-  parvenu à un format qui ne m'apporte que des avantages et c'est pour cela que je
-  souhaite aujourd'hui le proposer à la communauté de développeurs.</p>
-<p>Pour ce faire, je vais vous le présenter dans sa forme actuelle, mettre en lumière
-  ses forces et partager avec vous les bouts de code qui permettent de l'exploiter
-  en PHP et en Javascript.</p>
+<p>Aujourd&#039;hui, ne nombreux développeurs ont choisi de privilégier <acronym title="Javascript Object Notation">JSON</acronym> à <acronym title="eXtensible Markup Language">XML</acronym> pour de nombreuses raisons. Sa légèreté est mise en avant par rapport
+    à la lourdeur de XML. Mais JSON a lui aussi des défauts finalement peu connus, des défauts qui ont fait que j&#039;ai créé VarStream, un autre format d&#039;échange de donnée. Créé pour mon usage personnel, je vous livre aujourd&#039;hui ses principes
+    et espère que certains d&#039;entre vous en tireront avantage.</p>
+<h3>L&#039;histoire</h3>
+<p>Lorsque j&#039;ai décidé de créer mon propre CMS, JSON n&#039;existait pas ou n&#039;était pas très connu. XML était bien présent, mais je le trouvais un peu compliqué et surtout très lourd. J&#039;avais pourtant besoin d&#039;un format de stockage de
+    valeurs pour deux besoins principalement : la localisation et la configuration.</p>
+<p>Influencé par les fichiers de configuration Unix et les fichiers .properties utilisés pour la localisation chez Mozilla, j&#039;ai décidé d&#039;utiliser un format simple de type <code>cle=valeur</code> suvi d&#039;une nouvelle ligne. Par la suite, j&#039;ai
+    dû ajouter une façon de commenter ces fichiers. Toujours dans le pompage des fichiers de conf Unix, j&#039;ai choisi le <code>&#35;</code> en début de ligne.</p>
+<p>Enfin, il m&#039;a fallu trouver un moyen d&#039;insérer des nouvelles lignes et de réprésenter une arborescence de valeurs ou des tableaux. Au fil de mes améliorations, je suis parvenu à un format qui ne m&#039;apporte que des avantages et c&#039;est
+    pour cela que je souhaite aujourd&#039;hui le proposer à la communauté de développeurs.</p>
+<p>Pour ce faire, je vais vous le présenter dans sa forme actuelle, mettre en lumière ses forces et partager avec vous les bouts de code qui permettent de l&#039;exploiter en PHP et en Javascript.</p>
 <h3>Le format</h3>
-<p>Afin d'illustrer ce format, je vous livre un petit exemple de fichier de configuration :</p><pre># Database<br />database.type=mysql<br />database.hosts.+.domain=mysql1.example.com<br />database.hosts.*.master=true<br />database.hosts.+.domain=mysql2.example.com<br />database.hosts.*.master=false<br />database.hosts.0.master=true<br />database.user=root<br />database.base=myapp<br />database.base=myapp2<br />".base=myapp<br /># REST servers<br />rest.servers.+.domain=api.example.com<br />rest.servers.*.auth=basic<br />rest.servers.*.user=&database.user</pre>
-<p>Et aussi un exemple de fichier de langue dans ce format :</p><pre><br /># Date<br />l_timezone=Europe/Paris<br />l_date_format=l d F Y<br />l_day_format=d F<br />l_time_format=l d F Y à H:i:s<br />l_hour_format=H:i:s<br />l_days.monday=Lundi<br />l_days.tuesday=Mardi<br />l_days.wednesday=Mercredi<br />l_days.thursday=Jeudi<br />l_days.friday=Vendredi<br />l_days.saturday=Samedi<br />l_days.sunday=Dimanche<br />l_months.january=Janvier<br />l_months.february=Février<br />l_months.march=Mars<br />l_months.april=Avril<br />l_months.may=Mai<br />l_months.june=Juin<br />l_months.july=Juillet<br />l_months.august=Août<br />l_months.september=Septembre<br />l_months.october=Octobre<br />l_months.november=Novembre<br />l_months.december=Decembre<br /># Numbers<br />l_number_dec_point=,<br />l_number_thousands_sep= # Phone numbers<br />l_phone_local_indicator=33<br />l_phone_local_format=0<br />l_phone_indicator_format=+XXXX (0)<br />l_phone_number_format=X XX XX XX XX<br /># GPS Locations<br />l_gps_latitude=N<br />l_gps_longitude=O<br /># Multiline <br />l_multiline=i curently have a <br />multiline value. <br />It's great !</pre>
-<p>Un bref coup d'oeil permet de comprendre que la partie de gauche du signe <span>=</span>  représente le nom de la variable, la partie droite sa valeur. Les noms des variables
-  sont séparés par des points délimitant des nœuds permettant de représenter la position
-  de la valeur dans l'arborescence du programme d'une façon linéaire. Un peu comme
-  ce que l'on peut observer dans Javascript.</p>
-<p>Les nœuds sont soit des noms de variable (ex:database) soit des caractères spéciaux
-  (",+,*,!). Le nœud le plus à droite est forcément un nom de variable. Les autres
-  nœuds sont soit des objets, soit des tableaux, soit une ligne d'un tableau. Ceci
-  est déterminé par leur format. Si le nœud est composé de caractères alphanumériques
-  uniquement ou des signes +,*,!, c'est une ligne d'un tableau. Automatiquement,
-  le nœud précédent est un tableau. Sinon, il s'agit d'un objet (Object en Javascript,
-  stdClass en PHP).</p>
-<p>Les tableaux sont initialisés par un noeud numérique, un signe +, un signe * ou un
-  signe !. Le signe + quand un tableau existe précise que la variable qui suit doit
-  être ajoutée dans une nouvelle ligne du tableau. Le caractère * fait référence
-  à la ligne courante du tableau. Le caractère ! signifie que quoiqu'il y ait eu
-  auparavant dans le tableau, il faut le réinitialiser. Enfin, un noeud alphanumérique
-  fait référence au n° de ligne (un table[[n]] dans la plupart des langages).</p>
-<p>Les objets sont initialisés lors de la première référence à ces derniers et on y
-  fait référence par leur nom simplement. On peut ajouter une propriété à un objet
-  sans répéter sa position dans l'arborescence en utilisant le signe " qui représente
-  alors le chemin de la ligne précédente comme on le ferait naturellement quand on
-  écrit plusieurs lignes à la suite avec un début identique. C'est le cas dans notre
-  fichier de configuration ou j'assigne la valeur myapp à database.base pour ensuite
-  y mettre la valeur myapp2 et enfin y remettre la valeur myapp. Cela n'a aucun autre
-  intérêt que d'illustrer le concept mais vous comprendrez par la suite.</p>
-<p>Les valeurs sont soit du texte, soit des valeurs numériques, soit une valeur booléenne
-  (true ou false).</p>
-<p>On peut faire référence à une autre variable dans la partie droite de la ligne plutôt
-  que d'y mettre la valeur une seconde fois grâce au signe esperluette (&) comme
-  vous pouvez le voir pour la variable rest.servers.*.user. Si la valeur est une
-  variable, la valeur est copié, si c'est un objet, il est référencé.</p>
-<p>Enfin, pour insérer une valeur contenant plusieurs lignes dans une variable, on termine
-  chaque nouvelle ligne par un backslash ().</p>
-<p>Vous êtes sûrement entrain de vous dire que c'est bien compliqué, mais en fait, ces
-  règles sont aisément déductibles à la vue d'un fichier de configuration ou de langue
-  dans ce format. Maintenant, laissez-moi vous expliquer pourquoi j'ai fini par utiliser
-  ce format en lieu et place de JSon pour de la communication client-server.</p>
+<p>Afin d&#039;illustrer ce format, je vous livre un petit exemple de fichier de configuration :</p><pre>&#35; Database<br />database.type=mysql<br />database.hosts.+.domain=mysql1.example.com<br />database.hosts.*.master=true<br />database.hosts.+.domain=mysql2.example.com<br />database.hosts.*.master=false<br />database.hosts.0.master=true<br />database.user=root<br />database.base=myapp<br />database.base=myapp2<br />&#034;.base=myapp<br />&#35; REST servers<br />rest.servers.+.domain=api.example.com<br />rest.servers.*.auth=basic<br />rest.servers.*.user=&amp;database.user</pre>
+<p>Et aussi un exemple de fichier de langue dans ce format :</p><pre><br />&#35; Date<br />l_timezone=Europe/Paris<br />l_date_format=l d F Y<br />l_day_format=d F<br />l_time_format=l d F Y à H:i:s<br />l_hour_format=H:i:s<br />l_days.monday=Lundi<br />l_days.tuesday=Mardi<br />l_days.wednesday=Mercredi<br />l_days.thursday=Jeudi<br />l_days.friday=Vendredi<br />l_days.saturday=Samedi<br />l_days.sunday=Dimanche<br />l_months.january=Janvier<br />l_months.february=Février<br />l_months.march=Mars<br />l_months.april=Avril<br />l_months.may=Mai<br />l_months.june=Juin<br />l_months.july=Juillet<br />l_months.august=Août<br />l_months.september=Septembre<br />l_months.october=Octobre<br />l_months.november=Novembre<br />l_months.december=Decembre<br />&#35; Numbers<br />l_number_dec_point=,<br />l_number_thousands_sep= &#35; Phone numbers<br />l_phone_local_indicator=33<br />l_phone_local_format=0<br />l_phone_indicator_format=+XXXX (0)<br />l_phone_number_format=X XX XX XX XX<br />&#35; GPS Locations<br />l_gps_latitude=N<br />l_gps_longitude=O<br />&#35; Multiline <br />l_multiline=i curently have a <br />multiline value. <br />It&#039;s great !</pre>
+<p>Un bref coup d&#039;oeil permet de comprendre que la partie de gauche du signe <span>=</span> représente le nom de la variable, la partie droite sa valeur. Les noms des variables sont séparés par des points délimitant des nœuds permettant de représenter
+    la position de la valeur dans l&#039;arborescence du programme d&#039;une façon linéaire. Un peu comme ce que l&#039;on peut observer dans Javascript.</p>
+<p>Les nœuds sont soit des noms de variable (ex:database) soit des caractères spéciaux (&#034;,+,*,!). Le nœud le plus à droite est forcément un nom de variable. Les autres nœuds sont soit des objets, soit des tableaux, soit une ligne d&#039;un tableau.
+    Ceci est déterminé par leur format. Si le nœud est composé de caractères alphanumériques uniquement ou des signes +,*,!, c&#039;est une ligne d&#039;un tableau. Automatiquement, le nœud précédent est un tableau. Sinon, il s&#039;agit d&#039;un objet
+    (Object en Javascript, stdClass en PHP).</p>
+<p>Les tableaux sont initialisés par un noeud numérique, un signe +, un signe * ou un signe !. Le signe + quand un tableau existe précise que la variable qui suit doit être ajoutée dans une nouvelle ligne du tableau. Le caractère * fait référence à la ligne
+    courante du tableau. Le caractère ! signifie que quoiqu&#039;il y ait eu auparavant dans le tableau, il faut le réinitialiser. Enfin, un noeud alphanumérique fait référence au n° de ligne (un table&#91;n&#93; dans la plupart des langages).</p>
+<p>Les objets sont initialisés lors de la première référence à ces derniers et on y fait référence par leur nom simplement. On peut ajouter une propriété à un objet sans répéter sa position dans l&#039;arborescence en utilisant le signe &#034; qui représente
+    alors le chemin de la ligne précédente comme on le ferait naturellement quand on écrit plusieurs lignes à la suite avec un début identique. C&#039;est le cas dans notre fichier de configuration ou j&#039;assigne la valeur myapp à database.base pour
+    ensuite y mettre la valeur myapp2 et enfin y remettre la valeur myapp. Cela n&#039;a aucun autre intérêt que d&#039;illustrer le concept mais vous comprendrez par la suite.</p>
+<p>Les valeurs sont soit du texte, soit des valeurs numériques, soit une valeur booléenne (true ou false).</p>
+<p>On peut faire référence à une autre variable dans la partie droite de la ligne plutôt que d&#039;y mettre la valeur une seconde fois grâce au signe esperluette (&amp;) comme vous pouvez le voir pour la variable rest.servers.*.user. Si la valeur est une
+    variable, la valeur est copié, si c&#039;est un objet, il est référencé.</p>
+<p>Enfin, pour insérer une valeur contenant plusieurs lignes dans une variable, on termine chaque nouvelle ligne par un backslash ().</p>
+<p>Vous êtes sûrement entrain de vous dire que c&#039;est bien compliqué, mais en fait, ces règles sont aisément déductibles à la vue d&#039;un fichier de configuration ou de langue dans ce format. Maintenant, laissez-moi vous expliquer pourquoi j&#039;ai
+    fini par utiliser ce format en lieu et place de JSon pour de la communication client-server.</p>
 <h3>Avantages</h3>
-<p>Ce format de fichier présente de nombreux avantages dans le contexte d'une application
-  web, voici les principaux :</p>
+<p>Ce format de fichier présente de nombreux avantages dans le contexte d&#039;une application web, voici les principaux :</p>
 <h4>Streamable</h4>
-<p>Un atout majeur. Là où JSON nécessite la lecture complète du contenu pour assurer
-  le fait que le fichier est bien formé, les VarStreams permettent de récupérer les
-  différentes valeurs au flux optimisant ainsi l'espace mémoire utilisé et vidant
-  les tampons au fur et à mesure du traitement.</p>
-<p>Cette nature streamable permet également de récupérer des données qui seraient fragmentées
-  dans différents fichiers chargés successivement. Par exemple, je m'en sert pour
-  charger différents fichiers de configurations. Le fichier générique utilisé poiur
-  toutes les apps. Puis un fichier spécifique à l'application web qui surcharge certaines
-  valeurs. Cela rend les VarStreams mergeable ce qui ne peut être fait aisément avec
-  JSon.</p>
-<p>Cela peut-être très intéressant dans l'utilisation des web sockets pour mettre à
-  jour un tableau de valeur facilement, ce dernier est synchronisé au flux et la
-  communication est fluide et transparente. On pourrait même imaginer de modifier
-  l'interface au flux grâce à du binding sur certaines valeurs.</p>
+<p>Un atout majeur. Là où JSON nécessite la lecture complète du contenu pour assurer le fait que le fichier est bien formé, les VarStreams permettent de récupérer les différentes valeurs au flux optimisant ainsi l&#039;espace mémoire utilisé et vidant les
+    tampons au fur et à mesure du traitement.</p>
+<p>Cette nature streamable permet également de récupérer des données qui seraient fragmentées dans différents fichiers chargés successivement. Par exemple, je m&#039;en sert pour charger différents fichiers de configurations. Le fichier générique utilisé
+    poiur toutes les apps. Puis un fichier spécifique à l&#039;application web qui surcharge certaines valeurs. Cela rend les VarStreams mergeable ce qui ne peut être fait aisément avec JSon.</p>
+<p>Cela peut-être très intéressant dans l&#039;utilisation des web sockets pour mettre à jour un tableau de valeur facilement, ce dernier est synchronisé au flux et la communication est fluide et transparente. On pourrait même imaginer de modifier l&#039;interface
+    au flux grâce à du binding sur certaines valeurs.</p>
 <h4>Human readable / writeable</h4>
-<p>Ceux qui ont déjà eu besoin d'écrire ou de lire du JSON le savent bien, avoir un
-  format d'échange facile à lire est important pour le débogage. Dans ce domaine,
-  les VarStreams sont champions.</p>
-<p>De plus, mon expérience prouve que les traducteurs sont à l'aise avec ce type de
-  fichiers, il n'ont pas de caractères spéciaux à échapper, pas de guillemets à ajouter
-  etc... Il n'ont qu'à ajouter un backslash à la fin d'une ligne si la ligne suivante
-  contient la suite de la valeur.</p>
+<p>Ceux qui ont déjà eu besoin d&#039;écrire ou de lire du JSON le savent bien, avoir un format d&#039;échange facile à lire est important pour le débogage. Dans ce domaine, les VarStreams sont champions.</p>
+<p>De plus, mon expérience prouve que les traducteurs sont à l&#039;aise avec ce type de fichiers, il n&#039;ont pas de caractères spéciaux à échapper, pas de guillemets à ajouter etc... Il n&#039;ont qu&#039;à ajouter un backslash à la fin d&#039;une ligne
+    si la ligne suivante contient la suite de la valeur.</p>
 <h4>Auto-Referencable</h4>
-<p>Dans un fichier JSON, vous ne pouvez pas faire référence à une valeur déjà présente
-  car le contenu du fichier ne sera interprété qu'à la fin du fichier. C'est une
-  grosse limitation que les VarStreams outrepassent.</p>
+<p>Dans un fichier JSON, vous ne pouvez pas faire référence à une valeur déjà présente car le contenu du fichier ne sera interprété qu&#039;à la fin du fichier. C&#039;est une grosse limitation que les VarStreams outrepassent.</p>
 <h3>Utilisation</h3>
-<p>Pour l'instant, j'ai mis le parseur Javascript sur GitHub, mon parseur PHP nécessite
-  d'être revu pour ne plus être dépendant de mon Framework. Utiliser les VarStreams
-  est simple. Il suffit de passer en paramètre d'une fonction, les données puis le
-  contexte. Le contexte doit être un objet. Retrouvez <a hreflang="en title=Voir le dépôt GitHub href=https://github.com/nfroidure/VarStream">tout le matériel nécessaire à son utilisation</a>  sur GitHub. Petit exemple :</p><pre>var myScope={};<br />var myStream=new VarStreamReader(myScope,true);<br />myStream.read('');<br />myStream.read('#comment');<br />myStream.read('# Database'<br /> +'database.type=mysql'+"
-"<br /> +'database.hosts.+.domain=mysql1.example.com'+"
-"<br /> +'database.hosts.*.master=true'+"
-"<br /> +'database.hosts.+.domain=mysql2.example.com'+"
-"<br /> +'database.hosts.*.master=false'+"
-");<br />console.log(myScope.hosts[[0]].domain);</pre>
-<p>On peut bien-sûr imaginer utiliser la fonction read comme callback d'une requête
-  Ajax ou d'un WebSocket. Avec NodeJs on peut l'utiliser pour charger dynamiquement
-  un fichier de variables ligne par ligne. A vous d'inventer vos propres cas d'utilisation
-  ;).</p>
-<p>Dès que j'en aurai le temps et l'utilité, j'écrirai la fonction d'export correspondante
-  (pour finir je l'ai faîte dans la foulée) que je n'utilise qu'en PHP actuellement.</p>
+<p>Pour l&#039;instant, j&#039;ai mis le parseur Javascript sur GitHub, mon parseur PHP nécessite d&#039;être revu pour ne plus être dépendant de mon Framework. Utiliser les VarStreams est simple. Il suffit de passer en paramètre d&#039;une fonction, les
+    données puis le contexte. Le contexte doit être un objet. Retrouvez <a hreflang="en" title="Voir le dépôt GitHub" href="https://github.com/nfroidure/VarStream">tout le matériel nécessaire à son utilisation</a> sur GitHub. Petit exemple :</p><pre>var myScope=&#123;&#125;;<br />var myStream=new VarStreamReader(myScope,true);<br />myStream.read(&#039;&#039;);<br />myStream.read(&#039;&#35;comment&#039;);<br />myStream.read(&#039;&#35; Database&#039;<br /> +&#039;database.type=mysql&#039;+&#034;
+&#034;<br /> +&#039;database.hosts.+.domain=mysql1.example.com&#039;+&#034;
+&#034;<br /> +&#039;database.hosts.*.master=true&#039;+&#034;
+&#034;<br /> +&#039;database.hosts.+.domain=mysql2.example.com&#039;+&#034;
+&#034;<br /> +&#039;database.hosts.*.master=false&#039;+&#034;
+&#034;);<br />console.log(myScope.hosts[[0]].domain);</pre>
+<p>On peut bien-sûr imaginer utiliser la fonction read comme callback d&#039;une requête Ajax ou d&#039;un WebSocket. Avec NodeJs on peut l&#039;utiliser pour charger dynamiquement un fichier de variables ligne par ligne. A vous d&#039;inventer vos propres
+    cas d&#039;utilisation ;).</p>
+<p>Dès que j&#039;en aurai le temps et l&#039;utilité, j&#039;écrirai la fonction d&#039;export correspondante (pour finir je l&#039;ai faîte dans la foulée) que je n&#039;utilise qu&#039;en PHP actuellement.</p>
 <h3>Conclusion</h3>
-<p>J'espère que cet article vous a intéressé, n'hésitez pas à me faire des remarques,
-  à donner vos critiques/avis, cela faisait trop longtemps que j’utilisais ce format
-  dans mon coin sans en faire profiter personne !</p>
+<p>J&#039;espère que cet article vous a intéressé, n&#039;hésitez pas à me faire des remarques, à donner vos critiques/avis, cela faisait trop longtemps que j’utilisais ce format dans mon coin sans en faire profiter personne !</p>

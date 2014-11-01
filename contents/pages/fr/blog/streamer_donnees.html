@@ -10,95 +10,49 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Peut-être ne le saviez-vous pas, mais XMLHttpRequest Level 2 permet d'accéder vos données avant leur chargement complet grâce à l'écouteur d'évènement onProgress. Il est temps de grandir et de l'utiliser.</h2>
-<p>Peut-être ne le saviez-vous pas, mais XMLHttpRequest Level 2 permet d'accéder vos
-  données avant leur chargement complet grâce à l'écouteur d'évènement onProgress.
-  Il est temps de grandir et de l'utiliser.</p>
+<h2>Devenez un homme, streamez vos données !</h2>
+<p>Peut-être ne le saviez-vous pas, mais XMLHttpRequest Level 2 permet d&#039;accéder vos données avant leur chargement complet grâce à l&#039;écouteur d&#039;évènement onProgress. Il est temps de grandir et de l&#039;utiliser.</p>
 
-<p>Dans le cadre de mes applications web pour entreprise, j'utilise le streaming qui
-  propose de nombreux avantages en terme de performance ressentie et de réactivité
-  des interfaces. Et pourtant, ce concept est très peu utilisé, même par les plus
-  grands. Voyons pourquoi !</p>
+<p>Dans le cadre de mes applications web pour entreprise, j&#039;utilise le streaming qui propose de nombreux avantages en terme de performance ressentie et de réactivité des interfaces. Et pourtant, ce concept est très peu utilisé, même par les plus grands.
+    Voyons pourquoi !</p>
 <h3>JSon, ce traître !</h3>
-<p>JSon est le format le plus utilisé pour charger des données dynamiquement (ce fameux
-  Ajax qu'on ne présente plus). Malgré sa popularité, JSon possède un sérieux désavantage
-  qui conduit les développeurs dans un impasse. En effet, il est impossible de déterminer,
-  tant qu'il n'est pas entièrement chargé, si le JSon reçu est valide ou non.</p>
-<p>La seule solution qui se présente aux développeurs est donc d'attendre sagement le
-  chargement complet de la ressource afin de pouvoir la parser grâce à la bien connue
-  méthode JSON.parse(data).</p>
-<p>Bref, JSon n'est pas streamable, du moins, pas facilement puisqu'il faudrait recréer
-  un parseur qui serait probablement peu performant étant donnée la compléxité de
-  JSon.</p>
+<p>JSon est le format le plus utilisé pour charger des données dynamiquement (ce fameux Ajax qu&#039;on ne présente plus). Malgré sa popularité, JSon possède un sérieux désavantage qui conduit les développeurs dans un impasse. En effet, il est impossible
+    de déterminer, tant qu&#039;il n&#039;est pas entièrement chargé, si le JSon reçu est valide ou non.</p>
+<p>La seule solution qui se présente aux développeurs est donc d&#039;attendre sagement le chargement complet de la ressource afin de pouvoir la parser grâce à la bien connue méthode JSON.parse(data).</p>
+<p>Bref, JSon n&#039;est pas streamable, du moins, pas facilement puisqu&#039;il faudrait recréer un parseur qui serait probablement peu performant étant donnée la compléxité de JSon.</p>
 <h3>Les formats streamables</h3>
-<p>J'ai déjà parlé ici de <a title="En savoir plus sur les VarStreams href=articles-remplacer_json_par_varstream.html">VarStream</a>,
-  mais vous seriez surpris de savoir combien d'autres formats son supérieurs sur
-  ce point à JSon. Parlons par exemple de <acronym title="Comma Separated Values">CSV</acronym>.
-  La plupart des données JSon sont finalement des données tabulaires qui pourraient
-  tout aussi bien être représentées en CSV sans perte de sens, mais avec une taille
-  réduite, et surtout, un format streamable. Mais on peut aussi parler de ce fameux
-  HTML ou du simple texte qui sont également streamables facilement.</p>
+<p>J&#039;ai déjà parlé ici de <a title="En savoir plus sur les VarStreams" href="articles-remplacer_json_par_varstream.html">VarStream</a>, mais vous seriez surpris de savoir combien d&#039;autres formats son supérieurs sur ce point à JSon. Parlons par
+    exemple de <acronym title="Comma Separated Values">CSV</acronym>. La plupart des données JSon sont finalement des données tabulaires qui pourraient tout aussi bien être représentées en CSV sans perte de sens, mais avec une taille réduite, et surtout,
+    un format streamable. Mais on peut aussi parler de ce fameux HTML ou du simple texte qui sont également streamables facilement.</p>
 <h3>Pourquoi streamer ?</h3>
-<p>C'est une question légitime qui m'est régulièrement posée quand je parle de streamer
-  des données via XHR. Comparons les deux approches.</p>
-<p>L'approche classique est la suivante, j'envoie une requête XHR, j'affiche un loader
-  pour faire patienter le visiteur, puis, une fois toutes mes données chargées, j'ajoute
-  le contenu à la page via le DOM. Si la requête prend une ou deux secondes à se
-  télécharger, alors le visiteur attendra autant de temps sans que rien ne se passe
-  à part une animation sans intérêt.</p>
-<p>L'approche streamée est bien plus dynamique. J'envoie une requête XHR mais qui cette
-  fois renvoie un format streamable. Dès le premier chunk de donnée reçu, le contenu
-  commence à se mettre à jour au fur et à mesure que ces dernièrs nous parviennent.
-  Notre loader est avantageusement remplacé par nos données elles-mêmes. Là où le
-  visiteur aurait attendu une seconde, ce dernier attend plutôt 1/4 de seconde pour
-  que quelque chose se passe.</p>
-<h3>La preuve par l'exemple</h3>
-<p>J'ai <a hreflang="en title=Voir la petite expérience href=http://server.elitwork.com/experiments/pagestream/index.html">créé un petit comparatif</a>  pour appuyer mes propos. Chez moi en 512k, l'exemple est très parlant. Voici les
-  résultats dans différentes situations :</p>
+<p>C&#039;est une question légitime qui m&#039;est régulièrement posée quand je parle de streamer des données via XHR. Comparons les deux approches.</p>
+<p>L&#039;approche classique est la suivante, j&#039;envoie une requête XHR, j&#039;affiche un loader pour faire patienter le visiteur, puis, une fois toutes mes données chargées, j&#039;ajoute le contenu à la page via le DOM. Si la requête prend une ou
+    deux secondes à se télécharger, alors le visiteur attendra autant de temps sans que rien ne se passe à part une animation sans intérêt.</p>
+<p>L&#039;approche streamée est bien plus dynamique. J&#039;envoie une requête XHR mais qui cette fois renvoie un format streamable. Dès le premier chunk de donnée reçu, le contenu commence à se mettre à jour au fur et à mesure que ces dernièrs nous parviennent.
+    Notre loader est avantageusement remplacé par nos données elles-mêmes. Là où le visiteur aurait attendu une seconde, ce dernier attend plutôt 1/4 de seconde pour que quelque chose se passe.</p>
+<h3>La preuve par l&#039;exemple</h3>
+<p>J&#039;ai <a hreflang="en" title="Voir la petite expérience" href="http://server.elitwork.com/experiments/pagestream/index.html">créé un petit comparatif</a> pour appuyer mes propos. Chez moi en 512k, l&#039;exemple est très parlant. Voici les résultats
+    dans différentes situations :</p>
 <ul>
-  <li>sur mon réseau local : Varstream (affichages : 6, 20ms, chargement complet: 20ms),
-    Json (affichages : 18ms, chargement complet: 18ms).</li>
-  <li>sur mon serveur distant : Varstream (affichages : 110,171,212,263,267,268ms, chargement
-    complet: 268ms), Json (affichages : 267ms, chargement complet: 267ms).</li>
-  <li>sur le distant avec une vidéo YouTube en route : Varstream (affichages : 856, 916,958,2130,2175ms,
-    chargement complet: 2175ms), Json (affichages : 1915ms, chargement complet: 1515ms).</li>
+    <li>sur mon réseau local : Varstream (affichages : 6, 20ms, chargement complet: 20ms), Json (affichages : 18ms, chargement complet: 18ms).</li>
+    <li>sur mon serveur distant : Varstream (affichages : 110,171,212,263,267,268ms, chargement complet: 268ms), Json (affichages : 267ms, chargement complet: 267ms).</li>
+    <li>sur le distant avec une vidéo YouTube en route : Varstream (affichages : 856, 916,958,2130,2175ms, chargement complet: 2175ms), Json (affichages : 1915ms, chargement complet: 1515ms).</li>
 </ul>
-<p>Les résultats en réseau local montrent que dans des conditions idéales en terme de
-  bande passante, les reflows sont plus limités puisque l'information arrive plus
-  vite. On peut également dire que le fait de streamer les données a un faible impact
-  dans de bonnes conditions.</p>
-<p>Sur le serveur distant, on se rend compte que le fait de streamer les données réduit
-  par deux le temps de disponibilité des données. L'utilisateur peut commencer à
-  lire avant le chargement complet.</p>
-<p>Il est intéressant de noter qu'en cas de surcharge de la bande passante, les résultats
-  sont encore meilleurs ce qui rend la démarche encore plus intéressante dans le
-  contexte de la mobilité, du téléchargement de mises à jour, de connexions partagées
-  etc... A savoir que c'est très variable dans le cas de la vidéo YouTube et qu'il
-  faudrait probablement faire un moyenne sur de multiples tests.</p>
-<p>Enfin, les données utilisées sont un peu banales, mais dans des cas concrets, on
-  peut espérer des gains encore plus important :</p>
+<p>Les résultats en réseau local montrent que dans des conditions idéales en terme de bande passante, les reflows sont plus limités puisque l&#039;information arrive plus vite. On peut également dire que le fait de streamer les données a un faible impact
+    dans de bonnes conditions.</p>
+<p>Sur le serveur distant, on se rend compte que le fait de streamer les données réduit par deux le temps de disponibilité des données. L&#039;utilisateur peut commencer à lire avant le chargement complet.</p>
+<p>Il est intéressant de noter qu&#039;en cas de surcharge de la bande passante, les résultats sont encore meilleurs ce qui rend la démarche encore plus intéressante dans le contexte de la mobilité, du téléchargement de mises à jour, de connexions partagées
+    etc... A savoir que c&#039;est très variable dans le cas de la vidéo YouTube et qu&#039;il faudrait probablement faire un moyenne sur de multiples tests.</p>
+<p>Enfin, les données utilisées sont un peu banales, mais dans des cas concrets, on peut espérer des gains encore plus important :</p>
 <ul>
-  <li>l'affichage de graphiques en streaming à partir de données CSV présente un intérêt
-    plus que certain. On verrait le graph se dessiner au fur et à mesure de l'arrivée
-    des données. J'ai essayé de trouver un librairie de dessins de graphiques qui
-    soit compatible avec cette approche, mais malheureusement, toutes les librairies
-    n'acceptent que des données complètes ce qui dénote bien le problème qu'a posé
-    la popularisation de JSon,</li>
-  <li>si l'on prend l'exemple de Twitter et Facebook avec leur infinite scroll à la mode,
-    on voit tout de suite l'intérêt d'afficher les données au flux,</li>
-  <li>les systèmes de template Javascript pourraient remplir le DOM au fur et à mesure
-    de l'arrivée des templates avec l'arrivée des données XHR. Rien n'empêche de
-    mettre du HTML pas complètement chargé dans un DocumentFragment, de l'ajouter
-    au DOM et de le remplacer par des données plus fraîches par la suite,</li>
-  <li>enfin avec le texte brut, c'est encore plus simple. Le visiteur verrai son div
-    se remplir au fur et à mesure de son chargement.</li>
+    <li>l&#039;affichage de graphiques en streaming à partir de données CSV présente un intérêt plus que certain. On verrait le graph se dessiner au fur et à mesure de l&#039;arrivée des données. J&#039;ai essayé de trouver un librairie de dessins de graphiques
+        qui soit compatible avec cette approche, mais malheureusement, toutes les librairies n&#039;acceptent que des données complètes ce qui dénote bien le problème qu&#039;a posé la popularisation de JSon,</li>
+    <li>si l&#039;on prend l&#039;exemple de Twitter et Facebook avec leur infinite scroll à la mode, on voit tout de suite l&#039;intérêt d&#039;afficher les données au flux,</li>
+    <li>les systèmes de template Javascript pourraient remplir le DOM au fur et à mesure de l&#039;arrivée des templates avec l&#039;arrivée des données XHR. Rien n&#039;empêche de mettre du HTML pas complètement chargé dans un DocumentFragment, de l&#039;ajouter
+        au DOM et de le remplacer par des données plus fraîches par la suite,</li>
+    <li>enfin avec le texte brut, c&#039;est encore plus simple. Le visiteur verrai son div se remplir au fur et à mesure de son chargement.</li>
 </ul>
 <h3>Une norme oubliée</h3>
-<p>Je n'ai rien inventé, le streaming, c'est la norme. Il suffit de regarder comment
-  fonctionne le chargement d'une page HTML pour se rendre compte que c'est le comportement
-  de base des navigateurs.</p>
-<p>Nous avons simplement oublié cela avec le passage à Ajax. Peut-être à cause de JSon,
-  peut-être par ignorance. Bref, il est temps de grandir, et la soupe qui le permettra,
-  c'est le streaming !</p>
-<p>Petit ajout : Suite au commentaire de Pablo, j'ai fait la <a hreflang="en title=Voir cette autre expérience href=http://server.elitwork.com/experiments/chartstream/index.html">même expérience mais avec des graphiques</a>.
-  Le résultat est intéressant.</p>
+<p>Je n&#039;ai rien inventé, le streaming, c&#039;est la norme. Il suffit de regarder comment fonctionne le chargement d&#039;une page HTML pour se rendre compte que c&#039;est le comportement de base des navigateurs.</p>
+<p>Nous avons simplement oublié cela avec le passage à Ajax. Peut-être à cause de JSon, peut-être par ignorance. Bref, il est temps de grandir, et la soupe qui le permettra, c&#039;est le streaming !</p>
+<p>Petit ajout : Suite au commentaire de Pablo, j&#039;ai fait la <a hreflang="en" title="Voir cette autre expérience" href="http://server.elitwork.com/experiments/chartstream/index.html">même expérience mais avec des graphiques</a>. Le résultat est intéressant.</p>

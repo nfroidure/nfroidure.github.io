@@ -12,6 +12,7 @@ lang=en
 location=US
 -->
 
-## Another web developer blog
+## Blog
 
-Find on this blog many developper resources i find usefull to share and more informations on my projects.
+Find on this blog many developper resources i find usefull to share and more
+ informations on my projects.

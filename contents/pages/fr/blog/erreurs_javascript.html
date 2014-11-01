@@ -10,149 +10,71 @@ keywords.+=JavaScript
 categories.+=.*
 -->
 
-<h2>Gérer les erreurs en JavaScript peut paraître simple, mais il n'est pas toujours évident de choisir entre exceptions, retours d'erreurs et callbacks d'erreurs.</h2>
-<p>Gérer les erreurs en JavaScript peut paraître simple, mais il n'est pas toujours
-  évident de choisir entre exceptions, retours d'erreurs et callbacks d'erreurs.</p>
+<h2>Gestion des erreurs en JavaScript</h2>
+<p>Gérer les erreurs en JavaScript peut paraître simple, mais il n&#039;est pas toujours évident de choisir entre exceptions, retours d&#039;erreurs et callbacks d&#039;erreurs.</p>
 
-<p>Le dernier Ch'tiJS a décidément été la source de nombreuses réflexions. L'une d'entre
-  elle concernait les erreurs. Tout est parti d'une assertion simple : les promises
-  doivent-elles attraper les exceptions et les transformer en erreurs récupérables
-  dans un then ou les laisser remonter la pile d'éxecution ?</p>
-<p>C'est que fait, par exemple, RSVP.js. La logique du resolver est englobée dans
-  <a
-  hreflang="en title=Voir le code en question href=https://github.com/tildeio/rsvp.js/blob/277eb5eab912a9c3df8228a2647fcab84374615a/lib/rsvp/promise.js#L47">un bloc <code>try...catch</code>
-    </a> qui transforme toute exception en erreur qui fait échouer la promise. Dans
-    <a
-    title="Voir l'article concernant cette implémentation href=articles-promises_javascript_ouvrons_capot.html">mon implémentation des promises</a>, j'ai choisi de ne pas utiliser cette approche
-      afin de pouvoir décider, au cas par cas, d'attraper ou non une exception envoyée
-      par le resolver d'une promise.</p>
+<p>Le dernier Ch&#039;tiJS a décidément été la source de nombreuses réflexions. L&#039;une d&#039;entre elle concernait les erreurs. Tout est parti d&#039;une assertion simple : les promises doivent-elles attraper les exceptions et les transformer en erreurs
+    récupérables dans un then ou les laisser remonter la pile d&#039;éxecution ?</p>
+<p>C&#039;est que fait, par exemple, RSVP.js. La logique du resolver est englobée dans <a hreflang="en" title="Voir le code en question" href="https://github.com/tildeio/rsvp.js/blob/277eb5eab912a9c3df8228a2647fcab84374615a/lib/rsvp/promise.js&#35;L47">un bloc <code>try...catch</code></a>    qui transforme toute exception en erreur qui fait échouer la promise. Dans <a title="Voir l&#039;article concernant cette implémentation" href="articles-promises_javascript_ouvrons_capot.html">mon implémentation des promises</a>, j&#039;ai choisi
+    de ne pas utiliser cette approche afin de pouvoir décider, au cas par cas, d&#039;attraper ou non une exception envoyée par le resolver d&#039;une promise.</p>
 <h3>Typologie des erreurs</h3>
-<p>Avant d'aller plus loin, je voudrais revenir sur la typologie des erreurs que l'on
-  peut rencontrer au cours de l'exécution d'un programme. Pour moi, il existe trois
-  classes d'erreurs :</p>
+<p>Avant d&#039;aller plus loin, je voudrais revenir sur la typologie des erreurs que l&#039;on peut rencontrer au cours de l&#039;exécution d&#039;un programme. Pour moi, il existe trois classes d&#039;erreurs :</p>
 <ul>
-  <li>les erreurs fatales : ce sont des erreurs qui résultent d'une erreur de programmation.
-    Ces dernières ont la particularité de ne pas avoir été prévues par le développeur
-    puisqu'elles résultent d'un bug. Elles laissent donc le programme dans un état
-    indéterminé. On pourrait comparer cette erreur aux erreurs HTTP 500+ ;</li>
-  <li>les erreurs d'utilisation : elles sont causées par une mauvaise utilisation du
-    programme (mauvaise saisies de l'utilisateur principalement) ;</li>
-  <li>les erreurs d'interaction : un programme interagit fréquemment avec d'autres composants
-    (le réseau, le matériel etc...). Il arrive qu'une interaction se termine de façon
-    imprévue ou incohérente. Un programme se doit d'anticiper ces erreurs et de les
-    gérer au mieux. </li>
+    <li>les erreurs fatales : ce sont des erreurs qui résultent d&#039;une erreur de programmation. Ces dernières ont la particularité de ne pas avoir été prévues par le développeur puisqu&#039;elles résultent d&#039;un bug. Elles laissent donc le programme
+        dans un état indéterminé. On pourrait comparer cette erreur aux erreurs HTTP 500+ ;</li>
+    <li>les erreurs d&#039;utilisation : elles sont causées par une mauvaise utilisation du programme (mauvaise saisies de l&#039;utilisateur principalement) ;</li>
+    <li>les erreurs d&#039;interaction : un programme interagit fréquemment avec d&#039;autres composants (le réseau, le matériel etc...). Il arrive qu&#039;une interaction se termine de façon imprévue ou incohérente. Un programme se doit d&#039;anticiper
+        ces erreurs et de les gérer au mieux. </li>
 </ul>
-<p>Attention, certaines erreurs d'interaction peuvent être dues à une erreur fatale
-  dans un programme avec lequel votre code interagit. C'est le cas quand une requête
-  XHR renvoie une erreur 500. Il faut donc veiller à ne pas confondre erreurs d'interactions
-  et erreurs fatales. Pour ce faire, il faut bien délimiter les erreurs qui sont
-  dues à votre code.</p>
-<p>On pourrait considérer que les erreurs d'utilisation sont des erreurs d'interaction
-  avec l'utilisateur. D'ailleurs, dans l'absolu, l'interaction avec des système tiers
-  peut aussi induire des entrées qui nécessitent d'être filtrées de la même façon
-  que les entrées utilisateur. Je fais néanmoins la différence ici car la réponse
-  à ces errerus sera légèrement différente.</p>
-<h3>La gestion d'erreur</h3>
-<p>J'imagine que ces types vous évoquent certaines stratégies pour leur gestion. En
-  JavaScript, on compte divers type de gestion d'erreur :</p>
+<p>Attention, certaines erreurs d&#039;interaction peuvent être dues à une erreur fatale dans un programme avec lequel votre code interagit. C&#039;est le cas quand une requête XHR renvoie une erreur 500. Il faut donc veiller à ne pas confondre erreurs d&#039;interactions
+    et erreurs fatales. Pour ce faire, il faut bien délimiter les erreurs qui sont dues à votre code.</p>
+<p>On pourrait considérer que les erreurs d&#039;utilisation sont des erreurs d&#039;interaction avec l&#039;utilisateur. D&#039;ailleurs, dans l&#039;absolu, l&#039;interaction avec des système tiers peut aussi induire des entrées qui nécessitent d&#039;être
+    filtrées de la même façon que les entrées utilisateur. Je fais néanmoins la différence ici car la réponse à ces errerus sera légèrement différente.</p>
+<h3>La gestion d&#039;erreur</h3>
+<p>J&#039;imagine que ces types vous évoquent certaines stratégies pour leur gestion. En JavaScript, on compte divers type de gestion d&#039;erreur :</p>
 <ul>
-  <li>les exceptions : elles permettent à une erreur de remonter la pile d'exécution.
-    On peut les attraper à tout moment à l'aide d'un bloc <code>try...catch</code>.
-    Si elles ne sont pas attrapées, les exceptions finissent par interrompre l'execution
-    de votre JavaScript (plus précisément de la pile d'exécution JavaScript).</li>
-  <li>les retours d'erreur : il s'agit d'exploiter le retour de fonction pour indiquer
-    qu'une erreur a eu lieu. On peut considérer que si <code>parseInt</code> retourne
-    <code>NaN</code> alors on a affaire à une erreur. Cette approche est très utilisée
-    en C pour les appels systèmes.</li>
-  <li>l'approche via une variable globale : très présente en C également avec la variable
-    <code>errno</code>. En JavaScript, on évite les variables globales, on utilisera
-    donc pas cette approche.</li>
-  <li>l'approche via callback d'erreur : ils sont principalement utilisés pour les opérations
-    asynchrones, bien que rien n'empêche leur utilisation dans du code synchrone.
-    C'est aussi l'approche qui est utilisée pour les promises. On passe un callback
-    d'erreur à la méthode then. La différence est que l'on passe autant de callbacks
-    d'erreur qu'on le souhaite.</li>
+    <li>les exceptions : elles permettent à une erreur de remonter la pile d&#039;exécution. On peut les attraper à tout moment à l&#039;aide d&#039;un bloc <code>try...catch</code>. Si elles ne sont pas attrapées, les exceptions finissent par interrompre
+        l&#039;execution de votre JavaScript (plus précisément de la pile d&#039;exécution JavaScript).</li>
+    <li>les retours d&#039;erreur : il s&#039;agit d&#039;exploiter le retour de fonction pour indiquer qu&#039;une erreur a eu lieu. On peut considérer que si <code>parseInt</code> retourne <code>NaN</code> alors on a affaire à une erreur. Cette approche
+        est très utilisée en C pour les appels systèmes.</li>
+    <li>l&#039;approche via une variable globale : très présente en C également avec la variable <code>errno</code>. En JavaScript, on évite les variables globales, on utilisera donc pas cette approche.</li>
+    <li>l&#039;approche via callback d&#039;erreur : ils sont principalement utilisés pour les opérations asynchrones, bien que rien n&#039;empêche leur utilisation dans du code synchrone. C&#039;est aussi l&#039;approche qui est utilisée pour les promises.
+        On passe un callback d&#039;erreur à la méthode then. La différence est que l&#039;on passe autant de callbacks d&#039;erreur qu&#039;on le souhaite.</li>
 </ul>
-<h3>Comment gérer chaque type d'erreur ?</h3>
+<h3>Comment gérer chaque type d&#039;erreur ?</h3>
 <h4>Les erreurs fatales</h4>
-<p>Les exceptions sont l'arme ultime pour gérer les erreurs fatales. En effet, puisque
-  les erreurs fatales sont des erreurs de programmation, continuer l'exécution du
-  programme est risqué. Cela pourrait avoir des répercussions désastreuses.</p>
-<p>JavaScript utilise intensivement les exceptions. Les erreurs de syntaxe, les mauvaises
-  utilisations de son API native sont signalées dans la grande majorité des cas par
-  des exceptions. C'est pourquoi je vous enjoins à fait de même.</p>
-<p>La plupart du temps, il s'agit de lever une exception si l'une de vos fonctions/l'un
-  de vos constructeurs reçoit en paramètre des arguments erronés :</p><pre>function repeat(n) { <br /> if(n<0) throw new Error('Bad n value.'); <br /> //...<br />}</pre>
-<p>Demander une répétition d'une opération avec une nombre négatif de répétition n'a
-  pas de sens. Lancer une exception permet d'interrompre l'exécution et de permettre
-  de déboguer facilement l'erreur dans le contexte où celle-ci est apparue.</p>
-<p>En effet, tous les outils pour développeurs permettent de placer un point d'arrêt
-  à la levée d'une exception afin de permettre de visualiser les variables à portées,
-  la pile d'exécution et bien d'autres informations très utiles.</p>
-<h4>Les erreurs d'utilisation</h4>
-<p>Les erreurs d'utilisation sont dues à l'utilisateur. La logique veut donc que l'on
-  traite ces erreurs en signalant celles-cis à l'utilisateur. C'est donc une réponse
-  par le biais de l'interfacte utilisateur qui sera privilégiée.</p>
-<p>Cependant, pour activer cette réponse, il faut en premier lieu la détecter. Cette
-  détection se fait indifféremment par retour de fonction ou par callback d'erreur.
-  D'ailleurs il est très possible que vous deviez mixer ces deux techniques pour
-  bâtir une propagation d'erreur dans la pile d'exécution et annuler certaines actions
-  suite à une erreur.</p>
-<p>L'idée à retenir est d'éviter à tout prix de gérer les erreurs des utilisateurs à
-  l'aide d'exceptions. En effet, vous prennez le risque de mettre fin à l'exécution
-  pour une erreur normale dans le cycle de vie d'une application. Les utilisateurs
-  se trompent souvent.</p>
-<p>On prendra donc soin de filtrer un entier obtenu grâce à une saisie de l'utilisateur
-  avant de l'utiliser comme argument de la fonction <code>repeat</code> définie ci-dessus.</p>
-<h4>Les erreurs d'interaction</h4>
-<p>Lorsque votre code interagit avec des éléments extérieurs, qu'il s'agisse de serveurs
-  distant ou du hardware, le bon sens veut que cela se fasse de manière asynchrone.
-  Les callbacks d'erreur sont donc indiqués pour remplir le job. C'est d'ailleurs
-  de cette façon que l'API JavaScript vous informe sur le succès ou l'échec d'une
-  opération asynchrone.</p>
-<p>Ce n'est malheureusement pas toujours le cas. Par exemple, une requête XHR synchrone
-  qui échoue à cause d'un problème réseau lance une exception. Dans ce cas précis,
-  mieux vaut être au courant afin de placer le bloc <code>try...catch</code> qui
-  vous permettra de gérer ce cas sans mettre en péril l'exécution de votre JavaScript.</p>
-<p>Vous vous dîtes peut-être qu'il peut arriver qu'une erreur de programmation mène
-  à la mauvaise utilisation d'une API asynchrone et que dans ce cas, un callback
-  d'erreur sera appelé pour une erreur fatale. Ce que j'ai totalement contre indiqué
-  tout à l'heure.</p>
-<p>Pour le cas d'une API bien pensée, cela ne devrait pas être le cas. Une API asynchrone
-  doit détecter toute mauvaise utilisation et lancer une exception au moment de son
-  lancement. Par exemple, si vous lancez une requête XHR vers une origine différente
-  de votre site, c'est une erreur de programmation. Une exception doit être lancée
-  immédiatement.</p>
-<p>L'astuce pour éviter tout effet de bord est de lancer l'opération asynchrone avant
-  d'assigner les callbacks ou écouteurs d'évènements. De cette façon vous êtes certains
-  que ces derniers ne seront jamais appelés en cas de levée d'une exception.</p>
+<p>Les exceptions sont l&#039;arme ultime pour gérer les erreurs fatales. En effet, puisque les erreurs fatales sont des erreurs de programmation, continuer l&#039;exécution du programme est risqué. Cela pourrait avoir des répercussions désastreuses.</p>
+<p>JavaScript utilise intensivement les exceptions. Les erreurs de syntaxe, les mauvaises utilisations de son API native sont signalées dans la grande majorité des cas par des exceptions. C&#039;est pourquoi je vous enjoins à fait de même.</p>
+<p>La plupart du temps, il s&#039;agit de lever une exception si l&#039;une de vos fonctions/l&#039;un de vos constructeurs reçoit en paramètre des arguments erronés :</p><pre>function repeat(n) &#123; <br /> if(n&lt;0) throw new Error(&#039;Bad n value.&#039;); <br /> //...<br />&#125;</pre>
+<p>Demander une répétition d&#039;une opération avec une nombre négatif de répétition n&#039;a pas de sens. Lancer une exception permet d&#039;interrompre l&#039;exécution et de permettre de déboguer facilement l&#039;erreur dans le contexte où celle-ci
+    est apparue.</p>
+<p>En effet, tous les outils pour développeurs permettent de placer un point d&#039;arrêt à la levée d&#039;une exception afin de permettre de visualiser les variables à portées, la pile d&#039;exécution et bien d&#039;autres informations très utiles.</p>
+<h4>Les erreurs d&#039;utilisation</h4>
+<p>Les erreurs d&#039;utilisation sont dues à l&#039;utilisateur. La logique veut donc que l&#039;on traite ces erreurs en signalant celles-cis à l&#039;utilisateur. C&#039;est donc une réponse par le biais de l&#039;interfacte utilisateur qui sera privilégiée.</p>
+<p>Cependant, pour activer cette réponse, il faut en premier lieu la détecter. Cette détection se fait indifféremment par retour de fonction ou par callback d&#039;erreur. D&#039;ailleurs il est très possible que vous deviez mixer ces deux techniques pour
+    bâtir une propagation d&#039;erreur dans la pile d&#039;exécution et annuler certaines actions suite à une erreur.</p>
+<p>L&#039;idée à retenir est d&#039;éviter à tout prix de gérer les erreurs des utilisateurs à l&#039;aide d&#039;exceptions. En effet, vous prennez le risque de mettre fin à l&#039;exécution pour une erreur normale dans le cycle de vie d&#039;une application.
+    Les utilisateurs se trompent souvent.</p>
+<p>On prendra donc soin de filtrer un entier obtenu grâce à une saisie de l&#039;utilisateur avant de l&#039;utiliser comme argument de la fonction <code>repeat</code> définie ci-dessus.</p>
+<h4>Les erreurs d&#039;interaction</h4>
+<p>Lorsque votre code interagit avec des éléments extérieurs, qu&#039;il s&#039;agisse de serveurs distant ou du hardware, le bon sens veut que cela se fasse de manière asynchrone. Les callbacks d&#039;erreur sont donc indiqués pour remplir le job. C&#039;est
+    d&#039;ailleurs de cette façon que l&#039;API JavaScript vous informe sur le succès ou l&#039;échec d&#039;une opération asynchrone.</p>
+<p>Ce n&#039;est malheureusement pas toujours le cas. Par exemple, une requête XHR synchrone qui échoue à cause d&#039;un problème réseau lance une exception. Dans ce cas précis, mieux vaut être au courant afin de placer le bloc <code>try...catch</code>    qui vous permettra de gérer ce cas sans mettre en péril l&#039;exécution de votre JavaScript.</p>
+<p>Vous vous dîtes peut-être qu&#039;il peut arriver qu&#039;une erreur de programmation mène à la mauvaise utilisation d&#039;une API asynchrone et que dans ce cas, un callback d&#039;erreur sera appelé pour une erreur fatale. Ce que j&#039;ai totalement
+    contre indiqué tout à l&#039;heure.</p>
+<p>Pour le cas d&#039;une API bien pensée, cela ne devrait pas être le cas. Une API asynchrone doit détecter toute mauvaise utilisation et lancer une exception au moment de son lancement. Par exemple, si vous lancez une requête XHR vers une origine différente
+    de votre site, c&#039;est une erreur de programmation. Une exception doit être lancée immédiatement.</p>
+<p>L&#039;astuce pour éviter tout effet de bord est de lancer l&#039;opération asynchrone avant d&#039;assigner les callbacks ou écouteurs d&#039;évènements. De cette façon vous êtes certains que ces derniers ne seront jamais appelés en cas de levée d&#039;une
+    exception.</p>
 <h3>Retour sur les promises</h3>
-<p>Avec cette toile de fond en tête, il apparaît donc évident que les exceptions ne
-  doivent pas être attrapées au sein des promises. En effet, au delà de l'avantage
-  d'une gestion au cas par cas, on voit aussi que cela pourrait compromettre la détection
-  d'une erreur fatale causant la continuation de l'exécution à partir d'un état non-prévu
-  donc indéterminé.</p>
-<p>On pourrait penser épargner l'utilisateur d'erreurs fatales qui en définitive mettent
-  fin à l'exécution, mais au final, on rend les erreurs de programmation plus difficiles
-  à détecter et les bugs plus sournois.</p>
-<p>Il faut comprendre que les erreurs fatales doivent être exceptionnelles. Un programme
-  qui arrive en production doit être dénué d'erreurs fatales dans l'absolu. Malheureusement,
-  dans le monde réel, ces erreurs peuvent survenir en production.</p>
-<p>Devons nous laisser les utilisateurs face à une application qui ne fonctionne plus ?
-  Sûrement pas. L'approche correcte pour gérer les erreurs fatales est finalement
-  assez simple. Il suffit d'utiliser un callback d'erreur générique, d'informer l'utilisateur
-  d'une erreur anormale et de redémarrer l'application. On peut aussi imaginer récupérer
-  ces erreurs fatales grâce à une requête XHR et de créer directement une issue sur
-  GitHub. Un simple exemple :</p><pre>window.onerror = function(msg,url, line) {<br /> //demande de détails<br /> var details=prompt('Une erreur fatale a eu lieu, vous pouvez donner quelques détails pour aider le webmaster :');<br /> // envoi des détails via XHR puis rafraîchissement de la page<br /> document.location.refresh();<br />}; </pre>
-<p>Ici, j'ai volontairement simplifié. Dans la pratique, on placera un timeout pour
-  laisser le temps à toutes les erreurs consécutives d'être levées avant de demander
-  du feedback et de redémarrer l'application. On peut aussi donner le temps à l'utilisateur
-  de récupérer certains contenus (un formulaire à moitié rempli, par exemple) avant
-  le rafraîchissement.</p>
-<p>L'avantage de cette approche est qu'on informe l'utilisateur d'un problème plutôt
-  que vouloir le lui cacher quitte à ce que ce dernier provoque un effet papillon
-  plus difficile à détecter.</p>
-<p>Voilà, j'espère que cet article vous a donné envie de gérer les erreurs de vos applications.
-  Je vous propose de lire ce billet sur l'<a title="Voir le billet sur BugMeBack href=http://www.insertafter.com/articles-bugmeback.html">extension BugMeBack</a>  qui propose une gestion intéressante des erreurs pour vos applications.</p>
-<p>Petit ajout : Je suis tombé sur un article similaire mais cette fois sur la <a hreflang="en title=Lire l'article href=http://www.nodewiz.biz/nodejs-error-handling-pattern"
-  />gestion des erreurs avec NodeJS</a>. À lire de toute urgence.</p>
+<p>Avec cette toile de fond en tête, il apparaît donc évident que les exceptions ne doivent pas être attrapées au sein des promises. En effet, au delà de l&#039;avantage d&#039;une gestion au cas par cas, on voit aussi que cela pourrait compromettre la détection
+    d&#039;une erreur fatale causant la continuation de l&#039;exécution à partir d&#039;un état non-prévu donc indéterminé.</p>
+<p>On pourrait penser épargner l&#039;utilisateur d&#039;erreurs fatales qui en définitive mettent fin à l&#039;exécution, mais au final, on rend les erreurs de programmation plus difficiles à détecter et les bugs plus sournois.</p>
+<p>Il faut comprendre que les erreurs fatales doivent être exceptionnelles. Un programme qui arrive en production doit être dénué d&#039;erreurs fatales dans l&#039;absolu. Malheureusement, dans le monde réel, ces erreurs peuvent survenir en production.</p>
+<p>Devons nous laisser les utilisateurs face à une application qui ne fonctionne plus ? Sûrement pas. L&#039;approche correcte pour gérer les erreurs fatales est finalement assez simple. Il suffit d&#039;utiliser un callback d&#039;erreur générique, d&#039;informer
+    l&#039;utilisateur d&#039;une erreur anormale et de redémarrer l&#039;application. On peut aussi imaginer récupérer ces erreurs fatales grâce à une requête XHR et de créer directement une issue sur GitHub. Un simple exemple :</p><pre>window.onerror = function(msg,url, line) &#123;<br /> //demande de détails<br /> var details=prompt(&#039;Une erreur fatale a eu lieu, vous pouvez donner quelques détails pour aider le webmaster :&#039;);<br /> // envoi des détails via XHR puis rafraîchissement de la page<br /> document.location.refresh();<br />&#125;; </pre>
+<p>Ici, j&#039;ai volontairement simplifié. Dans la pratique, on placera un timeout pour laisser le temps à toutes les erreurs consécutives d&#039;être levées avant de demander du feedback et de redémarrer l&#039;application. On peut aussi donner le temps
+    à l&#039;utilisateur de récupérer certains contenus (un formulaire à moitié rempli, par exemple) avant le rafraîchissement.</p>
+<p>L&#039;avantage de cette approche est qu&#039;on informe l&#039;utilisateur d&#039;un problème plutôt que vouloir le lui cacher quitte à ce que ce dernier provoque un effet papillon plus difficile à détecter.</p>
+<p>Voilà, j&#039;espère que cet article vous a donné envie de gérer les erreurs de vos applications. Je vous propose de lire ce billet sur l&#039;<a title="Voir le billet sur BugMeBack" href="http://www.insertafter.com/articles-bugmeback.html">extension BugMeBack</a>    qui propose une gestion intéressante des erreurs pour vos applications.</p>
+<p>Petit ajout : Je suis tombé sur un article similaire mais cette fois sur la <a hreflang="en" title="Lire l&#039;article" href="http://www.nodewiz.biz/nodejs-error-handling-pattern/">gestion des erreurs avec NodeJS</a>. À lire de toute urgence.</p>
