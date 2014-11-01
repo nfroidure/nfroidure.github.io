@@ -94,8 +94,8 @@ gulp.task('build_images', function(cb) {
     .once('end', end);
 
   new StreamQueue({objectMode: true},
-    gulp.src(conf.src.images + '/**/*.{png,jpg,jpeg,gif}', {buffer: buffer})
-      .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/**/*.{png,jpg,jpeg,gif}'))),
+    //gulp.src(conf.src.images + '/**/*.{png,jpg,jpeg,gif}', {buffer: buffer})
+    //  .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/**/*.{png,jpg,jpeg,gif}'))),
     gulp.src(conf.src.images + '/favicon.svg', {buffer: buffer})
       .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/favicon.svg')))
       // https://groups.google.com/forum/#!topic/nodejs/SxNKLclbM5k
