@@ -8,8 +8,9 @@ div.wrapper { clear:both; float:left; width:100%; }
   direction: rtl;
 	text-align:center;
 	padding: @vrythm @gutter (@vrythm*1 - @border) @gutter;
-	margin: 0 0 @vrythm*2 0;
+	margin: 0 0 @vrythm 0;
 	border-bottom: @border solid @c5;
+	background: @c2;
 	& * {
 	  direction: ltr	;
 	}
@@ -18,13 +19,12 @@ div.wrapper { clear:both; float:left; width:100%; }
 		vertical-align: top;
 		font-size: @basefontsize*5;
 		line-height: @vrythm*5;
-		padding: 0 0 @vrythm 0;
 	}
 
 	.ia-menu {
 		display: inline-block;
 		vertical-align: top;
-		border-right: @border solid @c2;
+		border-right: @border solid @c3;
 		padding-right: @gutter - @border;
 		margin-right: @gutter - @border;
 		font-size: @basefontsize*2;
@@ -35,12 +35,17 @@ div.wrapper { clear:both; float:left; width:100%; }
 			text-align: right;
 			a {
 				text-decoration:none;
-				color: @c2;
+				color: @c3;
 				&.selected:before {
 					content:'> ';
 				}
 			}
 		}
+	}
+
+	.ia-flags {
+		font-size: @basefontsize*2;
+		line-height:@vrythm*2;
 	}
 }
 .ia-content--main {
