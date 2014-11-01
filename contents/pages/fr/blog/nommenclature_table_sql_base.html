@@ -36,14 +36,14 @@ categories.+=.*
   <li>l'anglais est simple, n'a pas d'accents donc pas de source d'erreurs du genre :
     comment savoir si la table <code>colles</code> fait référence aux collés du collège
     du coin ou aux tubes de colle en réserve ?</li>
-  <li>Le langage <code><abbr>itle=Structured Query Language]SQL</abbr></code> est en
-    anglais, nommer ses tables en français est un curieux mélange des genres, nécessitant
-    de switcher de français à anglais en permanence.</li>
+  <li>Le langage <code><abbr title="Structured Query Language">SQL</abbr></code> est
+    en anglais, nommer ses tables en français est un curieux mélange des genres,
+    nécessitant de switcher de français à anglais en permanence.</li>
 </ul>
 <p>Utilisation de camelCase. En effet, cette syntaxe rend plus lisible les noms des
   tables en marquant les différents mots qui composent le nom d'une table apportant
   une visibilité qui n'est pas de trop pour les requêtes les plus complexes. De plus
-  cette syntaxe est assez naturelle à tout programmeur initié à la <abbr>itle=Programmation Orientée Objet]POO</abbr>.</p>
+  cette syntaxe est assez naturelle à tout programmeur initié à la <abbr title="Programmation Orientée Objet">POO</abbr>.</p>
 <p>Cela découle de l'utilisation du camelCase, mais je le précise tout de même : pas
   de tirets ou autres signes superflux. On reste sur des caractères de a à z. Cette
   règle souffre une seule exception comme vous le constaterez ci-après.</p>
@@ -75,6 +75,6 @@ categories.+=.*
 <h3>Et au niveau des requêtes ?</h3>
 <p>En revanche, pour mes requêtes, j'utilise les majuscules, distinguant ainsi les parties
   propres au language des noms des tables et champs. Voici une requête créée récemment
-  pour l'export <abbr>itle=Comma Separated Values]CSV</abbr> d'un client:</p><pre>SELECT equipments.id AS Id, organizations.label AS Client, installations.label AS Aire, CONCAT_WS(' ', equipmentModels.model, equipments.precision) AS Jeu<br /> FROM equipments<br /> LEFT JOIN equipmentModels on equipments.model=equipmentModels.id<br /> LEFT JOIN installations ON equipments.installation=installations.id<br /> LEFT JOIN organizations ON installations.organization=organizations.id<br /> WHERE equipmentModels.model LIKE '%sans réf%'</pre>
+  pour l'export <abbr title="Comma Separated Values">CSV</abbr> d'un client:</p><pre>SELECT equipments.id AS Id, organizations.label AS Client, installations.label AS Aire, CONCAT_WS(' ', equipmentModels.model, equipments.precision) AS Jeu<br /> FROM equipments<br /> LEFT JOIN equipmentModels on equipments.model=equipmentModels.id<br /> LEFT JOIN installations ON equipments.installation=installations.id<br /> LEFT JOIN organizations ON installations.organization=organizations.id<br /> WHERE equipmentModels.model LIKE '%sans réf%'</pre>
 <p>Voilà pour mes petites règles de bonne conduite SQL ! Et vous, comment nommez-vous
   vos tables ? Que pensez-vous de ces principes ?</p>

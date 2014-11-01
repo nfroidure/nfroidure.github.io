@@ -15,9 +15,11 @@ categories.+=.*
   lancer les tests grâce à cet outil. Retour d'expérience et conseils pour une utilisation
   pleine et entière.</p>
 
-<p><a>reflang=en title=Voir le dépôt de Karma href=https://github.com/karma-runner/]Karma Runner</a>  est un lanceur de tests automatisés. Sa particularité est qu'il gère tous les navigateurs
-  de Firefox à Internet Explorer 6. Ce projet est issu et utilisé par l'équipe de
-  développement d'AngularJS (un projet créé et soutenu par Google donc).</p>
+<p><a hreflang="en title=Voir le dépôt de Karma href=https://github.com/karma-runner"
+  />Karma Runner</a> est un lanceur de tests automatisés. Sa particularité est qu'il
+  gère tous les navigateurs de Firefox à Internet Explorer 6. Ce projet est issu
+  et utilisé par l'équipe de développement d'AngularJS (un projet créé et soutenu
+  par Google donc).</p>
 <h3>Installer Karma</h3>
 <p>Karma est un module pour NodeJS, il vous faudra donc installer Node en premier lieu.
   Une fois cela fait, il suffit d'installer le module NPM de karma pour pouvoir commencer :</p><pre>npm install -g karma</pre>
@@ -39,7 +41,7 @@ categories.+=.*
 <p>Pour configurer les tests d'un projet, vous avez deux solutions, utiliser l'initieur
   de projets qui vous pose toutes les questions nécessaires à la création de votre
   fichier karma.conf.json :</p><pre>karma init</pre>
-<p>Ou alors, simplement, copier/coller le <a>reflang=en title=Voir le fichier de configuration de Commandor href=https://github.com/nfroidure/Commandor/blob/master/karma.conf.js]fichier d'un projet existant</a>.
+<p>Ou alors, simplement, copier/coller le <a hreflang="en title=Voir le fichier de configuration de Commandor href=https://github.com/nfroidure/Commandor/blob/master/karma.conf.js">fichier d'un projet existant</a>.
   Typiquement, le fichier de configuration Karma est une simple déclaration des navigateurs
   que vous souhaitez tester et des plug-ins que vous souhaitez utiliser.</p>
 <p>Les informations les plus importantes sont les fichiers que vous voulez servir et
@@ -60,23 +62,24 @@ categories.+=.*
   machines virtuelles de Travis embarquent PhantomJS et Firefox par défaut. Nous
   allons donc utiliser Firefox pour afficher un joli logo indiquant que les tests
   passent bien depuis le dernier commit.</p>
-<p>Pour ce faire, il suffit de créer un fichier au format Travis nommé <a>reflang=en title=Voir le fichier Travis de Commandor href=https://github.com/nfroidure/Commandor/blob/master/.travis.yml].travis.yml</a>  et de l'ajouter à la racine de votre projet. Vous devrez aussi autoriser travis
+<p>Pour ce faire, il suffit de créer un fichier au format Travis nommé <a hreflang="en title=Voir le fichier Travis de Commandor href=https://github.com/nfroidure/Commandor/blob/master/.travis.yml">.travis.yml</a>  et de l'ajouter à la racine de votre projet. Vous devrez aussi autoriser travis
   à accéder à votre gitHub. Voilà la petite image qui indique si Commandor passe
   les tests depuis le dernier commit :</p>
-<p><img>lt=Image indiquant le statut des tests src=https://travis-ci.org/nfroidure/Commandor.png?branch=master
-  /] </p>
+<p><img alt="Image indiquant le statut des tests src=https://travis-ci.org/nfroidure/Commandor.png?branch=master"
+  /> </p>
 <p>Je l'ai ajoutée au README du projet pour monter le sérieux de ce dernier. Et voilà,
   Travis vous enverra un mail dès que vos tests échouent pour vous avertir. Si quelqu'un
   fait un pull request, Travis testera pour vous si ce PR passe bien les tests. Elle
   est pas belle la vie ?</p>
 <h3>Aller plus loin</h3>
-<p>Sur le <a>itle=Se rednre sur le salon IRC de FranceJS href=irc://irc.freenode.org#francejs]salon IRC de FranceJS</a>  on est euphoriques avec Karma et chacun partage ses expériences et astuces pour
+<p>Sur le <a title="Se rednre sur le salon IRC de FranceJS href=irc://irc.freenode.org#francejs">salon IRC de FranceJS</a>  on est euphoriques avec Karma et chacun partage ses expériences et astuces pour
   l'utiliser. Erwan Mest a même promis qu'il ferait un billet sur le lancement de
   VM IE avec Travis (:p). N'hésitez donc pas à nous rejoindre !</p>
 <p>De mon côté, j'ai bien envie de créer un lanceur pour FirefoxOS ce qui devrait être
-  assez simple. J'ai créé un <a>reflang=en title=Voir le projet du lanceur href=https://github.com/nfroidure/karma-slimerjs-launcher]lanceur</a>  pour <a>reflang=en title=Voir le site de SlimerJS href=http://slimerjs.org]SlimerJS</a>  (un <a>reflang=en title=Voir le site de PhantomJS href=http://phantomjs.org]PhantomJS</a>  basé sur Gecko), mais je n'ai pas réussi à l'utiliser avec Travis.</p>
+  assez simple. J'ai créé un <a hreflang="en title=Voir le projet du lanceur href=https://github.com/nfroidure/karma-slimerjs-launcher">lanceur</a>  pour <a hreflang="en title=Voir le site de SlimerJS href=http://slimerjs.org">SlimerJS</a>  (un <a hreflang="en title=Voir le site de PhantomJS href=http://phantomjs.org">PhantomJS</a>  basé sur Gecko), mais je n'ai pas réussi à l'utiliser avec Travis.</p>
 <p>Enfin, je suis en pleine réflexion sur la création d'un lanceur pour Android. J'ai
-  trouvé quelques pistes comme l'outil de lancement de VM en ligne de commande (<a>reflang=en title=Voir l'outil href=http://developer.android.com/tools/help/emulator.html]emulator</a>)
-  et l'outil de manipulation d'instances de l'émulateur (<a>itle=Voir l'outil href=http://developer.android.com/tools/help/monkeyrunner_concepts.html]monkey-runner</a>).
-  Je pense qu'avec tout cela, il y a moyen de faire quelque chose, n'hésitez pas
-  à me bipper si vous connaissez déjà un outil permettant de le faire.</p>
+  trouvé quelques pistes comme l'outil de lancement de VM en ligne de commande (
+  <a
+  hreflang="en title=Voir l'outil href=http://developer.android.com/tools/help/emulator.html">emulator</a>) et l'outil de manipulation d'instances de l'émulateur (<a title="Voir l'outil href=http://developer.android.com/tools/help/monkeyrunner_concepts.html">monkey-runner</a>).
+    Je pense qu'avec tout cela, il y a moyen de faire quelque chose, n'hésitez pas
+    à me bipper si vous connaissez déjà un outil permettant de le faire.</p>

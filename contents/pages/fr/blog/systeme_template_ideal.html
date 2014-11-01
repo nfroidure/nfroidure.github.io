@@ -50,7 +50,7 @@ categories.+=.*
   sens, il ne faut pas remplacer les langages de programmation dans ces systèmes
   et se contenter de faire du remplacement et non des appels de fonction, des expressions
   et toutes les autres aberrations qu'on peut trouver dans ces outils. C'est la philosophie
-  que j'ai reprise quand j'ai créé le <a>itle=Voir un article sur le système de template d'XCMS href=http://www.elitwork.com/xcms_template.html]système de template de XCMS</a>.</p>
+  que j'ai reprise quand j'ai créé le <a title="Voir un article sur le système de template d'XCMS href=http://www.elitwork.com/xcms_template.html">système de template de XCMS</a>.</p>
 <h3>Le système de template idéal</h3>
 <p>Vous l'aurez compris, je trouve qu'un système de template c'est bien, mais que les
   systèmes existants sont mauvais (y compris le mien, qui date un peu). Mais tout
@@ -68,10 +68,10 @@ categories.+=.*
 <h4>Aussi bien côté serveur que client</h4>
 <p>Un système de template doit être utilisable aussi bien côté serveur que côté client.
   Cela signifie qu'il doit pouvoir être chargé par le parseur HTML du navigateur
-  avant d'être complété grâce au DOM. C'est ce que propose <a>reflang=""en"" title=Voir le dépôt sur GitHub href=https://github.com/joewalker/domtemplate]DOM template</a>,
-  mais je ne suis pas d'accord avec ce dernier sur certains points. Il faut que le
-  HTML du template soit valide en tout point. Or, il utilise des attributs du genre
-  if="macondition" qui ne sont pas standards.</p>
+  avant d'être complété grâce au DOM. C'est ce que propose <a hreflang="" "en"
+  " title=Voir le dépôt sur GitHub href=https://github.com/joewalker/domtemplate">DOM template</a>, mais je ne suis pas d'accord avec ce dernier sur certains points.
+  Il faut que le HTML du template soit valide en tout point. Or, il utilise des attributs
+  du genre if="macondition" qui ne sont pas standards.</p>
 <p>A mon sens, le template idéal utilise les attributs data-*. On pourrait imaginer
   des templates du genre :</p><pre><div data-tpl-if="articles.length" data-tpl-loop="articles"> <br /> <article><br /> <h1 data-tpl-cdata="articles:title"></h1><br /> <p data-tpl-cdata="articles:description"></p> <br /> <p data-tpl-pcdata="articles:content"></p><br /> <p><a data-tpl-att-href="articles:href" data-tpl-att-title="i18n.read_link_title" data-tpl-content="i18n.read_link"></a></p> <br /></article><br /></div></pre>
 <p>Vous avez compris l'idée si vous êtes familier des systèmes de template. Ce HTML

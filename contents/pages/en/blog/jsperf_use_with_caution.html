@@ -14,7 +14,7 @@ categories.+=.*
 <p>JSPerf gives us a simple way to write JavaScript performance tests. Unfortunately,
   tests found aren't always well designed. Here's how to detect and avoid them.</p>
 
-<p>When i discovered <a>itle=Create Performance tests href=http://jsperf.com/]JSperf.com</a>,
+<p>When i discovered <a title="Create Performance tests href=http://jsperf.com" />JSperf.com</a>,
   i was realy impressed by its ease of use. Writing JavaScript performance tests
   just became as simple as writing JavaScript :). Knowing it, i'm often looking for
   perf tests on it to quickly have an overview of results for a particular case.</p>
@@ -23,10 +23,10 @@ categories.+=.*
   how to detect them and how to impeach them to lead developpers to mistakes.</p>
 <h3>When tests smell</h3>
 <p>One particular case you should be aware of is the use of console.* methods. Thoses
-  methods should never be found in a test since <a>itle=Look at a test on console.log speed href=http://jsperf.com/console-log-performance/6]they are really slow</a>  and will tend to equalize test results especially for critical performance test.
-  Unfortunately, it's very common to see <a>ref=https://www.google.com/search?q=site%3Ajsperf.com++%22console.log(%22&aq=f&oq=site%3Ajsperf.com++%22console.log(%22]tests using console.log</a>.</p>
+  methods should never be found in a test since <a title="Look at a test on console.log speed href=http://jsperf.com/console-log-performance/6">they are really slow</a>  and will tend to equalize test results especially for critical performance test.
+  Unfortunately, it's very common to see <a href="https://www.google.com/search?q=site%3Ajsperf.com++%22console.log(%22&aq=f&oq=site%3Ajsperf.com++%22console.log(%22">tests using console.log</a>.</p>
 <p>By the way, If you test something, test it <strong>only</strong>. The above console.log
-  test's <a>itle=View one of them href=http://jsperf.com/console-log-performance/2]prior versions</a>  were completely unusefull since they didn't test only console.log. The purpose
+  test's <a title="View one of them href=http://jsperf.com/console-log-performance/2">prior versions</a>  were completely unusefull since they didn't test only console.log. The purpose
   of a test is to reveal the overhead of the tested feature, so you should find the
   smallest footprint possible for your wrapping code.</p>
 <p>Another problem with previous revisions of this test is usage of a for loop in order
@@ -45,8 +45,8 @@ categories.+=.*
   of the code aren't executed.</p>
 <p>Another way to detect bad tests is to look at later revisions, it sometimes add some
   tests but often fix them. All in all, if you do not want to spend time checking
-  if a test is right, you can look after JavaScript Rockstars tests (<a>itle=View Addy Osmani tests href=http://jsperf.com/browse/addy-osmani]Addy Osmani</a>,
-  <a>itle=View John Resig tests href=http://jsperf.com/browse/john-resig]John Resig</a>,
+  if a test is right, you can look after JavaScript Rockstars tests (<a title="View Addy Osmani tests href=http://jsperf.com/browse/addy-osmani">Addy Osmani</a>,
+  <a title="View John Resig tests href=http://jsperf.com/browse/john-resig">John Resig</a>,
   ...).</p>
 <h3>Avoid creating bad test</h3>
 <p>Anyone can create a bad test, but there are some good practices to reduce the risk :</p>

@@ -16,15 +16,16 @@ categories.+=.*
   navigateurs. C'est alors que se pose la question des polyfills.</p>
 
 <p>Ce billet est basé sur une réflexion de fond qui a été réactivée hier à ParisWeb
-  lors de l'atelier de <a>itle=Voir son profil Twitter href=https://twitter.com/schillinger]Corinne Schillinger</a>  et <a>itle=Voir son profil Twitter href=https://twitter.com/JeremiePat]Jérémie Patonnier</a>  intitulé <a>itle=Voir la fiche de l'atelier href=http://www.paris-web.fr/2012/ateliers/html5css3-et-leffet-waouh-les-dessous-de-la-magie.php]HTML5/CSS3 et l'effet "Waouh !" : les dessous de la magie</a>.
+  lors de l'atelier de <a title="Voir son profil Twitter href=https://twitter.com/schillinger">Corinne Schillinger</a>  et <a title="Voir son profil Twitter href=https://twitter.com/JeremiePat">Jérémie Patonnier</a>  intitulé <a title="Voir la fiche de l'atelier href=http://www.paris-web.fr/2012/ateliers/html5css3-et-leffet-waouh-les-dessous-de-la-magie.php">HTML5/CSS3 et l'effet "Waouh !" : les dessous de la magie</a>.
   Commençons par présenter les polyfills.</p>
-<h3>ang=en]Polyfills : HTML5 where you want</h3>
+<h3 lang="en">Polyfills : HTML5 where you want</h3>
 <p>L'idée qui se cache dérrière les polyfills est de combler un manque dans un navigateur :
-  un élément (audio, vidéo), une <abbr>itle=Application Programming Interface]API</abbr>  (websockets) ou encore, des fonctionnalités <abbr>itle=Cascading Style Sheets 3 lang=en]CSS3</abbr>.
+  un élément (audio, vidéo), une <abbr title="Application Programming Interface">API</abbr>  (websockets) ou encore, des fonctionnalités <abbr title="Cascading Style Sheets 3 lang=en">CSS3</abbr>.
   Techniquement, cela passe par l'insertion d'un script Javascript qui se charge
-  de détecter la ou les fonctionnalités manquantes. <a>reflang=en title=Visiter HTML5Please.com href=http://html5please.com/]Un bon site</a>  donné par les intervenants lors de l'atelier permet de savoir ce qui peut être
-  utilisé et où.</p>
-<p>Ainsi grâce aux polyfills, en théorie, l'expérience <abbr>itle=Hyper Text Markup Language lang=en]HTML5</abbr>  peut être délivrée à tous les utilisateurs Internet Explorer 7 et 8 compris. Mais
+  de détecter la ou les fonctionnalités manquantes. <a hreflang="en title=Visiter HTML5Please.com href=http://html5please.com"
+  />Un bon site</a> donné par les intervenants lors de l'atelier permet de savoir
+  ce qui peut être utilisé et où.</p>
+<p>Ainsi grâce aux polyfills, en théorie, l'expérience <abbr title="Hyper Text Markup Language lang=en">HTML5</abbr>  peut être délivrée à tous les utilisateurs Internet Explorer 7 et 8 compris. Mais
   vous vous en doutez, tout n'est pas si rose.</p>
 <h3>Dans polyfill, il y a fill</h3>
 <p>C'est le principal reproche que je fais aux polyfills. En effet, ce sont des fichiers
@@ -33,7 +34,7 @@ categories.+=.*
   ces derniers est en totale contradiction avec les principaux concepts de performance
   web. D'autant plus que la plupart des polyfills ont des dépendances avec des frameworks
   Javascript qui eux-mêmes représentent un coût important.</p>
-<p>Le type de matériel utilisé par les utilisateurs d'IE7 (<abbr>itle=Personnal Computer lang=en]PC</abbr>  viellissant) et la mauvaise qualité du moteur Javascript font que ces derniers
+<p>Le type de matériel utilisé par les utilisateurs d'IE7 (<abbr title="Personnal Computer lang=en">PC</abbr>  viellissant) et la mauvaise qualité du moteur Javascript font que ces derniers
   ont une expérience peut-être identique visuellement, mais fortement dégradée et
   ralentie. Le résultat est qu'on se retrouve avec une expérience utilisateur complètement
   bancale et les utilisateurs d'IE7 qu'on souhaite récupérer bouderont purement et
@@ -75,7 +76,7 @@ categories.+=.*
   un PC moderne.</p>
 <p>Faire cela reviendrait à installer Window 7 sur un pentium des années 90. D'ailleurs,
   je voudrais tordre le coup à l'idée reçue que la seule façon de tester sur IE7
-  est de le faire dans une <abbr>itle=Virtual Machine lang=en]VM</abbr> : faux !
+  est de le faire dans une <abbr title="Virtual Machine lang=en">VM</abbr> : faux !
   Et c'est peut-être de là que viens le problème.</p>
 <p>Une VM sans programmes pourris installés (anti-virus, malwares), sans programme en
   cours d'éxecution (client mail, office, etc) et tournant sur une bête de compétition

@@ -16,10 +16,10 @@ categories.+=.*
   apprise.</p>
 
 <p>J'ai une très forte expérience dans l'utilisation des expressions régulières notamment
-  grâce à BBComposer et les <a>reflang=en title=Voir le code de ces parseurs href=https://github.com/nfroidure/BBComposer/tree/master/chrome/bbcomposer/content/languages]différents parseurs</a>  que j'ai créé pour convertir différents langages vers et depuis l'éditeur. Mais
+  grâce à BBComposer et les <a hreflang="en title=Voir le code de ces parseurs href=https://github.com/nfroidure/BBComposer/tree/master/chrome/bbcomposer/content/languages">différents parseurs</a>  que j'ai créé pour convertir différents langages vers et depuis l'éditeur. Mais
   les différentes subtilités des expressions régulières m'ont souvent amené à coder
   les parseurs à la main.</p>
-<p>Un exemple épique, le <a>reflang=en title=Voir le code concerné href=https://github.com/nfroidure/BBComposer/blob/master/chrome/bbcomposer/content/languages/spip.js#L163]parsing de tableaux avec la typographie Spip</a>.
+<p>Un exemple épique, le <a hreflang="en title=Voir le code concerné href=https://github.com/nfroidure/BBComposer/blob/master/chrome/bbcomposer/content/languages/spip.js#L163">parsing de tableaux avec la typographie Spip</a>.
   A ma connaissance, les développeurs de Spip ont fait ça à base d'expressions régulières,
   mais je doute vraiment que la tâche ait été plus aisé que d'écrire le parseur from
   scratch. Bon, à leur avantage, ils ont pu utiliser PCRE qui est somme toute un
@@ -50,7 +50,7 @@ categories.+=.*
 <p>Mais ça ne fonctionne pas non-plus :). En effet, contrairement à ce que l'on pourrait
   penser RegExp.test et String.replace n'ont pas le même comportement. Quand un masque
   est recherché, il complète une référence interne à la dernière occurrence trouvée,
-  le fameux <a>reflang=en title=En savoir plus sur ce petit farceur href=https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/RegExp/lastIndex]RegExp.lastIndex</a>.
+  le fameux <a hreflang="en title=En savoir plus sur ce petit farceur href=https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/RegExp/lastIndex">RegExp.lastIndex</a>.
   Ainsi, quand le remplacement a été effectué, cet index est mis à jour à l'endroit
   du dernier remplacement, tant et si bien que la prochaine recherche (ici regExp.test(str))
   <strong>commence à partir de cet index</strong>.</p>
@@ -66,6 +66,6 @@ categories.+=.*
 <h3>Moralité</h3>
 <p>Vous pensiez que les expressions régulières étaient l'enfer des développeurs ? Vous
   étiez loin de la réalité, c'est pire :). J'ai perdu une journée sur ce problème,
-  et c'est finalement un <a>reflang=en title=Voir ce rapport de bug href=https://bugzilla.mozilla.org/show_bug.cgi?id=837154]rapport de bug</a>  qui m'a permis de connaître la solution ce matin au réveil (merci Sean Stangl).
+  et c'est finalement un <a hreflang="en title=Voir ce rapport de bug href=https://bugzilla.mozilla.org/show_bug.cgi?id=837154">rapport de bug</a>  qui m'a permis de connaître la solution ce matin au réveil (merci Sean Stangl).
   Mon conseil est de tout de même vous mettre aux expressions régulières car elles
   sont vraiment puissantes, le tout est de bien les comprendre.</p>

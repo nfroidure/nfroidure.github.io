@@ -15,10 +15,10 @@ categories.+=.*
   "hasard", j'ai créé un format de données que je trouve supérieur et que j'ai décidé
   d'appeler VarStream.</p>
 
-<p>Aujourd'hui, ne nombreux développeurs ont choisi de privilégier <acronym>itle=Javascript Object Notation]JSON</acronym>  à <acronym>itle=eXtensible Markup Language]XML</acronym> pour de nombreuses raisons.
-  Sa légèreté est mise en avant par rapport à la lourdeur de XML. Mais JSON a lui
-  aussi des défauts finalement peu connus, des défauts qui ont fait que j'ai créé
-  VarStream, un autre format d'échange de donnée. Créé pour mon usage personnel,
+<p>Aujourd'hui, ne nombreux développeurs ont choisi de privilégier <acronym title="Javascript Object Notation">JSON</acronym>  à <acronym title="eXtensible Markup Language">XML</acronym> pour de nombreuses
+  raisons. Sa légèreté est mise en avant par rapport à la lourdeur de XML. Mais JSON
+  a lui aussi des défauts finalement peu connus, des défauts qui ont fait que j'ai
+  créé VarStream, un autre format d'échange de donnée. Créé pour mon usage personnel,
   je vous livre aujourd'hui ses principes et espère que certains d'entre vous en
   tireront avantage.</p>
 <h3>L'histoire</h3>
@@ -112,7 +112,7 @@ categories.+=.*
 <p>Pour l'instant, j'ai mis le parseur Javascript sur GitHub, mon parseur PHP nécessite
   d'être revu pour ne plus être dépendant de mon Framework. Utiliser les VarStreams
   est simple. Il suffit de passer en paramètre d'une fonction, les données puis le
-  contexte. Le contexte doit être un objet. Retrouvez <a>reflang=en title=Voir le dépôt GitHub href=https://github.com/nfroidure/VarStream]tout le matériel nécessaire à son utilisation</a>  sur GitHub. Petit exemple :</p><pre>var myScope={};<br />var myStream=new VarStreamReader(myScope,true);<br />myStream.read('');<br />myStream.read('#comment');<br />myStream.read('# Database'<br /> +'database.type=mysql'+"
+  contexte. Le contexte doit être un objet. Retrouvez <a hreflang="en title=Voir le dépôt GitHub href=https://github.com/nfroidure/VarStream">tout le matériel nécessaire à son utilisation</a>  sur GitHub. Petit exemple :</p><pre>var myScope={};<br />var myStream=new VarStreamReader(myScope,true);<br />myStream.read('');<br />myStream.read('#comment');<br />myStream.read('# Database'<br /> +'database.type=mysql'+"
 "<br /> +'database.hosts.+.domain=mysql1.example.com'+"
 "<br /> +'database.hosts.*.master=true'+"
 "<br /> +'database.hosts.+.domain=mysql2.example.com'+"

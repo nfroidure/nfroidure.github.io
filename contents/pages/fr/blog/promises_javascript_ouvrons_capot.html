@@ -15,7 +15,7 @@ categories.+=.*
   de comprendre les promises par l'implémentation.</p>
 
 <h3>Qu'est-ce qu'une promise ?</h3>
-<p>Selon le <a>reflang=en title=Voir la spécification en cours href=http://wiki.commonjs.org/wiki/Promises/A]Wiki CommonJS</a>,
+<p>Selon le <a hreflang="en title=Voir la spécification en cours href=http://wiki.commonjs.org/wiki/Promises/A">Wiki CommonJS</a>,
   une promise, en JavaScript, est un objet représentant une valeur qui pourrait être
   retournée par l'exécution d'une opération unique (souvent asynchrone). Elle peut
   donc avoir trois états ; en attente de résultat, complétée avec succès ou en échec.
@@ -26,9 +26,7 @@ categories.+=.*
   de callback :</p>
 <noscript><pre>promise.then=function(callbackSuccess, callbackError, callbackProgress){};</pre>
 </noscript>
-<script>
-  ype = text / javascript src = https: //gist.github.com/nfroidure/4bba7b16a5b5ae2c8afd.js]
-</script>
+<script type="text/javascript src=https://gist.github.com/nfroidure/4bba7b16a5b5ae2c8afd.js"></script>
 <p>Le premier callback sera appelé en cas de réalisation avec succès de l'opération,
   le second en cas d'échec et le troisième pour indiquer une éventuelle progression
   de cette opération. Ces trois fonctions de retour sont optionnelles.</p>
@@ -40,9 +38,7 @@ categories.+=.*
   associée à la promise retournée par la méthode <code>then</code> :</p>
 <noscript><pre>var p=new Promise(function myPromiseLogic(success,error,progress) {<br /> success(1);<br />}).then(function(value){<br /> return value+1;<br />}).then(function(value) {<br /> console.log(value);<br />});<br />// 2</pre>
 </noscript>
-<script>
-  ype = text / javascript src = https: //gist.github.com/nfroidure/865249904d6496982a33.js]
-</script>
+<script type="text/javascript src=https://gist.github.com/nfroidure/865249904d6496982a33.js"></script>
 <p>Ici, on crée une promise avec l'opérateur <code>new</code> qui se résoud immédiatemment
   avec la valeur 1. Dans le premier <code>then</code>, on incrémente la valeur puis
   on la retourne, dans le troisième <code>then</code>, on l'affiche.</p>
@@ -54,22 +50,18 @@ categories.+=.*
   Le code ci-dessus peut donc également être écrit ainsi :</p>
 <noscript><pre>var p=new Promise(function myPromiseLogic(success,error,progress) {<br /> success(1);<br />}).then(function(value){<br /> return new Promise(function myPromiseLogic(success,error,progress) {<br /> success(value+1);<br /> });<br />}).then(function(value) {<br /> console.log(value);<br />});<br />// output : 2</pre>
 </noscript>
-<script>
-  ype = text / javascript src = https: //gist.github.com/nfroidure/d2bde0088e6d0beb82ff.js]
-</script>
+<script type="text/javascript src=https://gist.github.com/nfroidure/d2bde0088e6d0beb82ff.js"></script>
 <h3>Implémentation</h3>
 <p>Si comme moi vous aimez voir ce qu'il se passe sous le capot pour mieux comprendre,
-  je vous propose une petite <a>reflang=en title=Voir le gist de cette implémentation href=https://gist.github.com/nfroidure/5697689]implémentation</a>  que je vais vous expliquer pas à pas. Tout d'abord, on implémente le constructeur.
+  je vous propose une petite <a hreflang="en title=Voir le gist de cette implémentation href=https://gist.github.com/nfroidure/5697689">implémentation</a>  que je vais vous expliquer pas à pas. Tout d'abord, on implémente le constructeur.
   Ce dernier a pour responsabilité le fait de prendre en argument la fonction représentant
   la "logique" de notre promise. Le but est de préparer des fonctions permettant
   à cette logique de signaler le succès, l'échec ou la progression de la tâche qu'elle
   exécute.</p>
 <noscript><pre>function Promise(logic) {<br />// create callbacks<br />// executes the logic by passing callbacks<br /> logic(success,fail,progress);<br />}</pre>
 </noscript>
-<script>
-  ype = text / javascript src = https: //gist.github.com/nfroidure/adc6ae6bfe183ef3457f.js]
-</script>
-<p>Comme vous pouvez <a>reflang=en title=Voir la ligne 12 href=https://gist.github.com/nfroidure/5697689#file-promise-js-L12]le voir ligne 12</a>,
+<script type="text/javascript src=https://gist.github.com/nfroidure/adc6ae6bfe183ef3457f.js"></script>
+<p>Comme vous pouvez <a hreflang="en title=Voir la ligne 12 href=https://gist.github.com/nfroidure/5697689#file-promise-js-L12">le voir ligne 12</a>,
   les fonctions de callback générées dans le constructeur modifient le statut de
   la promise en fonction de la réussite ou l'échec, mais aussi, tentent d'exécuter
   une fonction de callback qui pour le moment, n'existe pas. Il s'agit de la fonction
@@ -77,20 +69,20 @@ categories.+=.*
 <p>La méthode then a deux responsabilités, permettre l'exécution des callbacks qu'elle
   prend en argument et générer une nouvelle promise subordonnée à la première qu'elle
   fournira en retour.</p>
-<p>La promise nouvellement créée a une logique particulière. En effet, la <a>reflang=en title=Voir la ligne en question href=https://gist.github.com/nfroidure/5697689#file-promise-js-L33]fonction fournie au constructeur</a>  est vide est ne sert qu'à récupérer une référence vers les fonctions de callback
+<p>La promise nouvellement créée a une logique particulière. En effet, la <a hreflang="en title=Voir la ligne en question href=https://gist.github.com/nfroidure/5697689#file-promise-js-L33">fonction fournie au constructeur</a>  est vide est ne sert qu'à récupérer une référence vers les fonctions de callback
   que le constructeur va lui fournir. Cette astuce va nous permettre de lier la complétion
   de notre nouvelle promise à la promise originale.</p>
 <p>L'exécution des callback founis à la méthode then est enrobée de manière à compléter
   la nouvelle promise en conséquence. Il existe deux possibilités. Soit au moment
   de l'exécution de <code>then</code>, la promise est déjà complétée et à ce moment,
-  on exécute tout de suite <a>reflang=en title=Voir la ligne concernée href=https://gist.github.com/nfroidure/5697689#file-promise-js-L56]les callbacks</a>  adéquats, soit elle n'a pas encore eu lieu et dans ce cas, on <a>reflang=en title=Voir la ligne où ils sont attachés href=https://gist.github.com/nfroidure/5697689#file-promise-js-L52]attache ces callbacks à la promise</a>  pour qu'ils soient exécutés quand la logique appellera une des fonctions de callback
+  on exécute tout de suite <a hreflang="en title=Voir la ligne concernée href=https://gist.github.com/nfroidure/5697689#file-promise-js-L56">les callbacks</a>  adéquats, soit elle n'a pas encore eu lieu et dans ce cas, on <a hreflang="en title=Voir la ligne où ils sont attachés href=https://gist.github.com/nfroidure/5697689#file-promise-js-L52">attache ces callbacks à la promise</a>  pour qu'ils soient exécutés quand la logique appellera une des fonctions de callback
   passées par le contructeur.</p>
-<p>Vous remarquerez l'<a>reflang=en title=Voir la ligne où l'exécution a lieu href=https://gist.github.com/nfroidure/5697689#file-promise-js-L57]utilisation de setTimeout</a>  pour exécuter les callbacks de manière asynchrone. Ce n'est pas précisé par le
+<p>Vous remarquerez l'<a hreflang="en title=Voir la ligne où l'exécution a lieu href=https://gist.github.com/nfroidure/5697689#file-promise-js-L57">utilisation de setTimeout</a>  pour exécuter les callbacks de manière asynchrone. Ce n'est pas précisé par le
   brouillon de la spécification, mais je pense que c'est une bonne pratique, de cette
   manière toute résolution de promise est asynchrone.</p>
 <p>Nous allons voir comment utiliser les promises pour en tirer le meilleur parti, mais
   avant tout, je vous recommande de jeter un oeil à l'implémentation des méthodes
-  statiques <a>reflang=en title=Voir l'implémentation de Promise.all href=https://gist.github.com/nfroidure/5697689#file-promise-js-L64]Promise.all</a>  et <a>reflang=en title=Voir l'implémentation de Promise.any href=https://gist.github.com/nfroidure/5697689#file-promise-js-L94]Promise.any</a>  que nous allons bientôt utiliser.</p>
+  statiques <a hreflang="en title=Voir l'implémentation de Promise.all href=https://gist.github.com/nfroidure/5697689#file-promise-js-L64">Promise.all</a>  et <a hreflang="en title=Voir l'implémentation de Promise.any href=https://gist.github.com/nfroidure/5697689#file-promise-js-L94">Promise.any</a>  que nous allons bientôt utiliser.</p>
 <h3>Le paradigme des promises</h3>
 <p>Ok, on sait ce que sont les promises et comment fonctionne leur implémentation. Mais
   qu'est-ce qu'on peut bien faire avec ? Les promises sont vendues comme LA solution
@@ -101,26 +93,24 @@ categories.+=.*
   son code en les utilisant.</p>
 <p>D'ailleurs, les streams relèvent du même concept que les promises, il sont une "promesse"
   que des données vont arriver ou seront envoyées indépendamment de l'arrivée effective
-  synchrone ou non de celles-cis. En réalité, seule l'<acronym>itle=Application Programming Interface lang=en]API</acronym>  diffère entre les streams et les promises dans NodeJS.</p>
+  synchrone ou non de celles-cis. En réalité, seule l'<acronym title="Application Programming Interface lang=en">API</acronym>  diffère entre les streams et les promises dans NodeJS.</p>
 <p>Bref, les promises sont surtout une nouveau paradigme de programmation. Elles permettent
   d'envisager une application comme une sorte d'arbre logique de promises. Nous allons
   prendre un exemple simple, le cas d'une application avec un menu principal qui
   charge des vues différentes en fonction du bouton cliqué sur le menu. Nous allons
   devoir créer des promises d'évènements. Pour nous simplifier la tâche, j'ai créé
-  un <a>reflang=en title=Voir la fonction en question href=https://gist.github.com/nfroidure/5697689#file-promise-js-L151]générateur de promises</a>  basé sur les écouteurs d'évènements.</p>
+  un <a hreflang="en title=Voir la fonction en question href=https://gist.github.com/nfroidure/5697689#file-promise-js-L151">générateur de promises</a>  basé sur les écouteurs d'évènements.</p>
 <p>Commençons par le menu. Un menu est un promesse d'un clic sur un des boutons qui
   le composent. Nous utilisons donc la méthode <code>Promise.any</code> qui permet
   de créer une promise qui sera complétée si l'une des promises reçues en argument
   est complétée avec succès :</p>
 <noscript><pre>function menu() {<br /> // showing the menu<br /> Promise.any(<br /> getEventPromise('click',document.getElementById('view2button')),<br /> getEventPromise('click',document.getElementById('view3button'))<br /> )<br /> .then(function(event) {<br /> // view actions<br /> // here goes view code<br /> // return a promise of exit<br /> return getEventPromise('click',document.getElementById(viewId+'backbutton'))<br /> .then(function() {<br /> // hide the view<br /> });<br /> })<br /> // executing the menu<br /> .then(menu);<br />}<br />// First execution<br />menu();</pre>
 </noscript>
-<script>
-  ype = text / javascript src = https: //gist.github.com/nfroidure/00cda6f306919ed9d172.js]
-</script>
+<script type="text/javascript src=https://gist.github.com/nfroidure/00cda6f306919ed9d172.js"></script>
 <p>C'est simple comme bonjour. On a une promesse de clic, suivie de l'affichage de la
   vue et d'une promesse de sortie de la vue. Enfin, quand la sortie est effective,
   on recommence à prendre en compte les clics sur l'un des items de menu.</p>
-<p>J'ai créé <a>reflang=en title=Voir le concept sur Codepen.io href=http://codepen.io/seraphzz/pen/oHdJD]un exemple sur Codepen</a>  rapidement qui illustre le concept. Le bouton générant une fenêtre modale avec
+<p>J'ai créé <a hreflang="en title=Voir le concept sur Codepen.io href=http://codepen.io/seraphzz/pen/oHdJD">un exemple sur Codepen</a>  rapidement qui illustre le concept. Le bouton générant une fenêtre modale avec
   <code>alert</code> recrée une nouvelle promise pour pouvoir générer d'autres alertes
   alors que le bouton basé sur <code>prompt</code> de la vue suivante n'en recrée
   pas et n'est donc utilisable qu'une seule fois.</p>
@@ -132,10 +122,10 @@ categories.+=.*
   pose un problème évident de fuite de mémoire si l'on ne désenregistre pas les évènements
   associés aux promises qui ne seront pas réalisées.</p>
 <p>Pour ce faire, j'ai créé une méthode dispose pour les promises qui permet de stocker
-  en retour de la <a>reflang=en title=Voir la ligne concernée href=https://gist.github.com/nfroidure/5697689#file-promise-js-L28]fonction de logique de la promise dans le constructeur Promise</a>  une fonction qui permette d'annuler la promise. Par exemple, pour le générateur
-  de promise, la fonction dispose <a>reflang=en title=Voir la ligne href=https://gist.github.com/nfroidure/5697689#file-promise-js-L161]supprime l'écouteur d'évènement</a>.
-  Pour une requête <acronym>itle=XMLHttpRequest]XHR</acronym>, on pourrait aussi
+  en retour de la <a hreflang="en title=Voir la ligne concernée href=https://gist.github.com/nfroidure/5697689#file-promise-js-L28">fonction de logique de la promise dans le constructeur Promise</a>  une fonction qui permette d'annuler la promise. Par exemple, pour le générateur
+  de promise, la fonction dispose <a hreflang="en title=Voir la ligne href=https://gist.github.com/nfroidure/5697689#file-promise-js-L161">supprime l'écouteur d'évènement</a>.
+  Pour une requête <acronym title="XMLHttpRequest">XHR</acronym>, on pourrait aussi
   annuler cette dernière.</p>
-<p>De cette façon, dans la méthode <code>Promise.any</code>, on <a>reflang=en title=Voir la ligne de cette annulation href=https://gist.github.com/nfroidure/5697689#file-promise-js-L101]désamorce toutes les promises</a>  qui n'on pas pu être complétée avant la réalisation de la première promise avec
+<p>De cette façon, dans la méthode <code>Promise.any</code>, on <a hreflang="en title=Voir la ligne de cette annulation href=https://gist.github.com/nfroidure/5697689#file-promise-js-L101">désamorce toutes les promises</a>  qui n'on pas pu être complétée avant la réalisation de la première promise avec
   succès.</p>
-<p>Pour info : j'ai finalement créé un <a>ref=https://github.com/nfroidure/Promise title=Voir le dépôt hreflang=en]dépôt GitHub</a>  de l'implémentation de cet article et j'ai commencé un <a>ref=https://github.com/nfroidure/Liar title=Voir le dépôt hreflang=en]petit jeu nommé Liar</a>  qui utilise ces promises afin d'illustrer cet article.</p>
+<p>Pour info : j'ai finalement créé un <a href="https://github.com/nfroidure/Promise title=Voir le dépôt hreflang=en">dépôt GitHub</a>  de l'implémentation de cet article et j'ai commencé un <a href="https://github.com/nfroidure/Liar title=Voir le dépôt hreflang=en">petit jeu nommé Liar</a>  qui utilise ces promises afin d'illustrer cet article.</p>

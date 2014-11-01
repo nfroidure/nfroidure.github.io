@@ -18,9 +18,9 @@ categories.+=.*
   Grâce à son système de gestion de paquets très performant et son écosystème grandissant,
   NodeJS permet de développer des applications en un éclair.</p>
 <p>Le dernier exemple en date est le Robot IRC que j'ai développé pour la canal IRC
-  de <a>itle=En savoir plus sur FranceJS href=http://francejs.org/]FranceJS</a> qui
-  a été baptisé Marionette. Un simple <code>npm install irc</code> et nous voilà
-  capables de créer un <a>reflang=en title=Voir la doc du packet IRC href=https://node-irc.readthedocs.org/en/latest/API.html]client JavaScript pour IRC</a>  prenant en charge la majorité des évènements qui peuvent avoir lieu lorsque l'on
+  de <a title="En savoir plus sur FranceJS href=http://francejs.org" />FranceJS</a>
+  qui a été baptisé Marionette. Un simple <code>npm install irc</code> et nous voilà
+  capables de créer un <a hreflang="en title=Voir la doc du packet IRC href=https://node-irc.readthedocs.org/en/latest/API.html">client JavaScript pour IRC</a>  prenant en charge la majorité des évènements qui peuvent avoir lieu lorsque l'on
   est connecté sur IRC.</p>
 <h3>Création du client</h3>
 <p>Pour créer le client, rien de plus simple, il suffit d'utiliser le constructeur <code>irc.Client</code>  après avoir inclus la librairie :</p><pre>var irc=require('irc');<br />var client = new irc.Client(server, botName,options);</pre>
@@ -30,7 +30,7 @@ categories.+=.*
 <p>Ce code est directement extrait du code de Marionnette, la fonction <code>executeCommand</code>  prend en argument le message à analyser, l'utilisateur à son origine et la voie
   par laquelle le bot IRC doit répondre (sauf mention contraire).</p>
 <h3>Traitement des commandes</h3>
-<p>Comme attendu, il se déroule au sein de la fonction <a>reflang=en title=Voir la fonction href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L123]<code>executeCommand</code></a>.
+<p>Comme attendu, il se déroule au sein de la fonction <a hreflang="en title=Voir la fonction href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L123"><code>executeCommand</code></a>.
   Son objet est de déterminer si le premier mot du message reçu est une commande
   qu'il peut interpréter. Si une commande valide est trouvée, alors le code afférant
   est exécuté.</p>
@@ -48,25 +48,25 @@ categories.+=.*
 <p>Cela permet à des commandes comme say de fonctionner. Celle-ci permet de faire parler
   Marionnette en lui envoyant ce qu'elle doit dire par message privé, assez fun :).</p>
 <h3>Archivage des messages</h3>
-<p>L'une des premières fonctions du bot était de pouvoir <a>reflang=en title=Voir les archives href=https://github.com/nfroidure/irc-bot/tree/master/logs]archiver les messages</a>  du canal FranceJS pour l'Histoire avec un grand H :). C'est l'objet de la fonction
-  <a>reflang=en title=Voir cette fonction href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L100]logMessage</a>.</p>
+<p>L'une des premières fonctions du bot était de pouvoir <a hreflang="en title=Voir les archives href=https://github.com/nfroidure/irc-bot/tree/master/logs">archiver les messages</a>  du canal FranceJS pour l'Histoire avec un grand H :). C'est l'objet de la fonction
+  <a hreflang="en title=Voir cette fonction href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L100">logMessage</a>.</p>
 <p>Celle-ci prend en argument le type de message (qui peut être multiple grâce au BitBashing,
   j'en reparlerai ici) et les champs à ajouter au fichier journal (qui est au format
-  <acronym>itle=Comma Separated Values lang=en]CSV</acronym>).</p>
+  <acronym title="Comma Separated Values lang=en">CSV</acronym>).</p>
 <p>Cette fonction n'écrit pas directement les messages dans le log, mais les stocke
   dans un tampon. L'écriture n'est déclenchée qu'au dela d'une certaine durée (fixée
   par BUFFER_TIMEOUT) ou d'un certain nombre de lignes (BUFFER_SIZE). Cela évite
   de trop solliciter le disque dur pour de petites écritures.</p>
 <h3>Interaction avec Twitter</h3>
-<p>Pour interagir avec twitter, il suffit d'installer le <a>reflang=en title=Voir la fiche du package twitter sur npm href=https://npmjs.org/package/twitter]package twitter</a>  (<code>npm install twitter</code>).</p>
+<p>Pour interagir avec twitter, il suffit d'installer le <a hreflang="en title=Voir la fiche du package twitter sur npm href=https://npmjs.org/package/twitter">package twitter</a>  (<code>npm install twitter</code>).</p>
 <h4>Récupération des tweets</h4>
 <p>Afin d'être au courant de ce qu'il se passe sur Twitter à propros de FranceJS, j'ai
-  créé la fonction <code><a>reflang=en title=Voir la fonction href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L42]getTwitts</a></code>  qui récupère la liste des twitts avec le hashtag #FranceJS, vérifie leur fraîcheur
+  créé la fonction <code><a hreflang="en title=Voir la fonction href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L42">getTwitts</a></code>  qui récupère la liste des twitts avec le hashtag #FranceJS, vérifie leur fraîcheur
   et les envoie sur le canal le cas échéant.</p>
 <p>Celle-ci est appellée tous les <code>TWITTER_TIMEOUT</code> secondes pour vérifier
   les nouveaux tweets.</p>
 <h4>Envoie de tweets</h4>
-<p><a>reflang=en title=Voir le code de la commande href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L213]La commande tweet</a>  permet de tweetter directement avec le compte FranceJS pour peu que l'on soit administrateur.</p>
+<p><a hreflang="en title=Voir le code de la commande href=https://github.com/nfroidure/irc-bot/blob/master/bot.js#L213">La commande tweet</a>  permet de tweetter directement avec le compte FranceJS pour peu que l'on soit administrateur.</p>
 <h3>Exécution de code JavaScript sandboxé</h3>
 <p>Il peut être intéressant de pouvoir exécuter des petits bouts de code JavaScript
   sur un canal IRC pour pouvoir illustrer ses propos. Une petite recherche m'a permis
@@ -89,4 +89,4 @@ categories.+=.*
   apporter votre contribution ou de résoudre vous même les bugs qui vous bloquent.</p>
 <p>Bref, merci JavaScript, merci NodeJS !</p>
 <p>PS : Vous êtes les bienvenus pour améliorer le bot et pour venir nous dire bonjour
-  sur le <a>itle=Aller sur le canal IRC href=irc://irc.freenode.net/francejs]canal IRC de FranceJS</a>.</p>
+  sur le <a title="Aller sur le canal IRC href=irc://irc.freenode.net/francejs">canal IRC de FranceJS</a>.</p>

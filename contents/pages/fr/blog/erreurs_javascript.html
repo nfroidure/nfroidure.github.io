@@ -18,9 +18,14 @@ categories.+=.*
   elle concernait les erreurs. Tout est parti d'une assertion simple : les promises
   doivent-elles attraper les exceptions et les transformer en erreurs récupérables
   dans un then ou les laisser remonter la pile d'éxecution ?</p>
-<p>C'est que fait, par exemple, RSVP.js. La logique du resolver est englobée dans <a>reflang=en title=Voir le code en question href=https://github.com/tildeio/rsvp.js/blob/277eb5eab912a9c3df8228a2647fcab84374615a/lib/rsvp/promise.js#L47]un bloc <code>try...catch</code></a>  qui transforme toute exception en erreur qui fait échouer la promise. Dans <a>itle=Voir l'article concernant cette implémentation href=articles-promises_javascript_ouvrons_capot.html]mon implémentation des promises</a>,
-  j'ai choisi de ne pas utiliser cette approche afin de pouvoir décider, au cas par
-  cas, d'attraper ou non une exception envoyée par le resolver d'une promise.</p>
+<p>C'est que fait, par exemple, RSVP.js. La logique du resolver est englobée dans
+  <a
+  hreflang="en title=Voir le code en question href=https://github.com/tildeio/rsvp.js/blob/277eb5eab912a9c3df8228a2647fcab84374615a/lib/rsvp/promise.js#L47">un bloc <code>try...catch</code>
+    </a> qui transforme toute exception en erreur qui fait échouer la promise. Dans
+    <a
+    title="Voir l'article concernant cette implémentation href=articles-promises_javascript_ouvrons_capot.html">mon implémentation des promises</a>, j'ai choisi de ne pas utiliser cette approche
+      afin de pouvoir décider, au cas par cas, d'attraper ou non une exception envoyée
+      par le resolver d'une promise.</p>
 <h3>Typologie des erreurs</h3>
 <p>Avant d'aller plus loin, je voudrais revenir sur la typologie des erreurs que l'on
   peut rencontrer au cours de l'exécution d'un programme. Pour moi, il existe trois
@@ -148,6 +153,6 @@ categories.+=.*
   que vouloir le lui cacher quitte à ce que ce dernier provoque un effet papillon
   plus difficile à détecter.</p>
 <p>Voilà, j'espère que cet article vous a donné envie de gérer les erreurs de vos applications.
-  Je vous propose de lire ce billet sur l'<a>itle=Voir le billet sur BugMeBack href=http://www.insertafter.com/articles-bugmeback.html]extension BugMeBack</a>  qui propose une gestion intéressante des erreurs pour vos applications.</p>
-<p>Petit ajout : Je suis tombé sur un article similaire mais cette fois sur la <a>reflang=en title=Lire l'article href=http://www.nodewiz.biz/nodejs-error-handling-pattern/]gestion des erreurs avec NodeJS</a>.
-  À lire de toute urgence.</p>
+  Je vous propose de lire ce billet sur l'<a title="Voir le billet sur BugMeBack href=http://www.insertafter.com/articles-bugmeback.html">extension BugMeBack</a>  qui propose une gestion intéressante des erreurs pour vos applications.</p>
+<p>Petit ajout : Je suis tombé sur un article similaire mais cette fois sur la <a hreflang="en title=Lire l'article href=http://www.nodewiz.biz/nodejs-error-handling-pattern"
+  />gestion des erreurs avec NodeJS</a>. À lire de toute urgence.</p>

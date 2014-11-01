@@ -19,12 +19,16 @@ categories.+=.*
   les collisions dont on a besoin. Pour ma part, j'ai décidé de m'appuyer sur les
   nombreuses ressources existantes écrites en C pour implémenter ma propre gestion
   des collisions adaptée aux jeux HTML5 et dans le cas présent au jeu Tank Arena
-  que je développe durant mon temps libre et dont <a>itle=Voir l'article de présentation de Web Tank Arena href=http://www.insertafter.com/articles-tank_arena_html5.html]je vous ai déjà parlé</a>.</p>
+  que je développe durant mon temps libre et dont <a title="Voir l'article de présentation de Web Tank Arena href=http://www.insertafter.com/articles-tank_arena_html5.html">je vous ai déjà parlé</a>.</p>
 <h3>Diagramme des classes UML</h3>
-<p><a>el=lightbox title=Zoomer le diagramme href=https://github.com/nfroidure/TankArena/blob/master/uml/ClassesDiagram.png?raw=true] <img>lt=Diagramme des classes UML src=http://www.insertafter.com/images/maeso_classesdiagram.png /]</a>
+<p>
+  <a rel="lightbox title=Zoomer le diagramme href=https://github.com/nfroidure/TankArena/blob/master/uml/ClassesDiagram.png?raw=true">
+  <img alt="Diagramme des classes UML src=http://www.insertafter.com/images/maeso_classesdiagram.png"
+    />
+  </a>
 </p>
-<p>Tous les fichiers Javascript implémentant ce modèle se trouvent sur le <a>reflang=en title=Voir le code de Tank Arena href=https://github.com/nfroidure/TankArena/tree/master/javascript]dépôt GitHub de Tank Arena</a>  sous licence GNU/GPL donc n'hésitez pas à ajouter votre touche et à me proposer
-  des commits ! J'ai mis la <a>reflang=en title=Voir la première version href=http://tank.elitwork.com]première version</a>  en ligne pour éclairer la suite de cette article.</p>
+<p>Tous les fichiers Javascript implémentant ce modèle se trouvent sur le <a hreflang="en title=Voir le code de Tank Arena href=https://github.com/nfroidure/TankArena/tree/master/javascript">dépôt GitHub de Tank Arena</a>  sous licence GNU/GPL donc n'hésitez pas à ajouter votre touche et à me proposer
+  des commits ! J'ai mis la <a hreflang="en title=Voir la première version href=http://tank.elitwork.com">première version</a>  en ligne pour éclairer la suite de cette article.</p>
 <h3>Des sprites sur une carte</h3>
 <p>Comme vous pouvez le voir, l'idée est d'avoir un plan (classe <code>Map</code>) dans
   lequel se trouvent des sprites (classe <code>Sprite</code>). La classe <code>Sprite</code>  sert de base à tous les types d'objets évoluant sur la carte du jeu. La classe
@@ -79,7 +83,8 @@ categories.+=.*
   la classe <code>Shape</code> et ses sous-classes qui déterminent quels types de
   formes sont comparées et déduisent ainsi quelle fonction utiliser pour calculer
   leur collision.</p>
-<p>Le calcul des collisions est largement inspiré de ces deux tutoriels : <a>itle=Voir ce tutoriel href=http://www.siteduzero.com/tutoriel-3-254492-theorie-des-collisions.html]Théorie des collisions</a>  et <a>itle=Voir ce tutoriel href=http://gregorycorgie.developpez.com/tutoriels/physic/]Conception d'un moteur physique</a>.</p>
+<p>Le calcul des collisions est largement inspiré de ces deux tutoriels : <a title="Voir ce tutoriel href=http://www.siteduzero.com/tutoriel-3-254492-theorie-des-collisions.html">Théorie des collisions</a>  et <a title="Voir ce tutoriel href=http://gregorycorgie.developpez.com/tutoriels/physic"
+  />Conception d'un moteur physique</a>.</p>
 <h3>Conclusion</h3>
 <p>La gestion des collisions en Javascript est assez rapide, j'ai essayé cet ébauche
   de Tank Arena sur mobile et franchement, je ne constate pas de ralentissements.

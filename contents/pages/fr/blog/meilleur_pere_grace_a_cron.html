@@ -27,7 +27,7 @@ categories.+=.*
   conditions obscures pour que ça fonctionne ou pas.</p><pre>root@server:~# echo -en "a" > /dev/tty5</pre>
 <p>Bref, j'ai opté pour la solution "beep" qui est un petit binaire permettant de créer
   de véritables compositions de bips. La première chose à faire est donc de l'installer.</p><pre>root@server:~# aptitude install beep</pre>
-<p>Enfin, j'ai trouvé <a>itle=Voir le forum href=http://forum.ubuntu-fr.org/viewtopic.php?id=47239]sur ce forum</a>,
+<p>Enfin, j'ai trouvé <a title="Voir le forum href=http://forum.ubuntu-fr.org/viewtopic.php?id=47239">sur ce forum</a>,
   une ligne de commande toute prête qui joue l'air du petit bonhomme en mousse (on
   fait avec ce qu'on a :D).</p><pre>root@server:~# beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300</pre>
 <p>Il ne reste plus qu'à éditer le fichier /etc/crontab pour lui ajouter quelques règles

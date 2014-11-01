@@ -15,8 +15,8 @@ categories.+=.*
   du code en divers fichiers devient nécessaire. Cela génère une nouvelle difficulté,
   la modularisation du Javascript.</p>
 
-<p>Il existe deux approches principales pour la création de modules Javascript, <a>itle=Voir la définition Wikipédia href=http://fr.wikipedia.org/wiki/CommonJS]CommonJS</a>,
-  basé sur une approche synchrone du chargement de module et <abbr>itle=Asynchronous Module Definition lang=en]AMD</abbr>  basé sur le chargement asynchrone des modules. Voici le résultats de mes recherches
+<p>Il existe deux approches principales pour la création de modules Javascript, <a title="Voir la définition Wikipédia href=http://fr.wikipedia.org/wiki/CommonJS">CommonJS</a>,
+  basé sur une approche synchrone du chargement de module et <abbr title="Asynchronous Module Definition lang=en">AMD</abbr>  basé sur le chargement asynchrone des modules. Voici le résultats de mes recherches
   sur le sujet.</p>
 <h3>Principe de base</h3>
 <p>Que ce soit côté serveur ou côté client, le contenu d'un fichier Javascript s’exécute
@@ -40,7 +40,7 @@ categories.+=.*
   deux éléments centraux. La fonction require() qui retourne le contenu exporté au
   chargement d'un module et l'objet exports qui permet, un peu à la manière de l'exemple
   précédent, d'exporter certaines valeurs du module.</p>
-<p>La <a>reflang=en title=Voir le fichier href=https://github.com/nfroidure/VarStream/blob/master/VarStreamReader.js#L344]dernière ligne du fichier VarStreamReader</a>  de mon projet VarStream montre bien comment exporter un objet (ici l'objet VarStreamReader) :</p><pre>if(!(typeof(module)=='undefined'))<br /> module.exports = VarStreamReader;</pre>
+<p>La <a hreflang="en title=Voir le fichier href=https://github.com/nfroidure/VarStream/blob/master/VarStreamReader.js#L344">dernière ligne du fichier VarStreamReader</a>  de mon projet VarStream montre bien comment exporter un objet (ici l'objet VarStreamReader) :</p><pre>if(!(typeof(module)=='undefined'))<br /> module.exports = VarStreamReader;</pre>
 <p>La condition sert à pouvoir utiliser le fichier dans un contexte étranger à CommonJS.
   Pour charger un module, rien de plus simple, il suffit d'utiliser la fonction globale
   require() comme on peut le voir dans ce fichier qui inclus le module cité précédemment :</p>
@@ -56,7 +56,7 @@ categories.+=.*
   des temps de téléchargement et d'interprétation de chacun des trois fichiers Javascript.</p>
 <p>Un autre inconvénient de l'approche synchrone est qu'elle implique le chargement
   du fichier via la fonction <code>eval</code> nécessairement. Or comme le rapelle
-  la célèbre expression <q>ang=en]eval is evil</q>, cela pose de sérieux problèmes.
+  la célèbre expression <q lang="en">eval is evil</q>, cela pose de sérieux problèmes.
   En effet, la fonction <code>eval</code> rend le débogage beaucoup plus compliqué
   puisque le numéro de la ligne et le nom de fichier ayant provoqué l'erreur ne sont
   pas connus, de plus, la fonction <code>eval</code> n'est pas homogène sur tous
@@ -64,8 +64,9 @@ categories.+=.*
 <p>Il a donc fallu trouver une approche permettant de télécharger chaque fichier Javascript
   de la même manière que le fait le navigateur pour les fichiers Javascript inclus
   directement dans le HTML. Pour cela, l'initiative AMD implémentée dans la très
-  célèbre librairie <a>reflang=en title=En savoir plus sur cette librairie bien pratique href=http://requirejs.org/]RequireJs</a>  utilise un concept bien connu depuis l'avènement d'Ajax.</p>
-<p>En effet, RequireJs <a>reflang=en title=Voir le code de RequireJs impliqué href=https://github.com/jrburke/requirejs/blob/master/require.js#L1834]ajoute une balise <script></a>  grâce aux fonctions de manipulation du DOM. Grâce à une fonction de callback, le
+  célèbre librairie <a hreflang="en title=En savoir plus sur cette librairie bien pratique href=http://requirejs.org"
+  />RequireJs</a> utilise un concept bien connu depuis l'avènement d'Ajax.</p>
+<p>En effet, RequireJs <a hreflang="en title=Voir le code de RequireJs impliqué href=https://github.com/jrburke/requirejs/blob/master/require.js#L1834">ajoute une balise <script></a>  grâce aux fonctions de manipulation du DOM. Grâce à une fonction de callback, le
   nom, les dépendances et le contenu du module sont déclarés. Les chargements de
   scripts avec fonctions de callback étaient très utilisées pour charger du JSon
   depuis un nom de domaine tiers.</p>
@@ -75,10 +76,12 @@ categories.+=.*
   téléchargé.</p>
 <p>L'écriture d'un module AMD se présente comme suit :</p><pre>define('moduleName', [['dep1', 'dep2']], function (dep1, dep2) {<br /> // dep1 et dep2 contiennent les exports réalisés par les modules dont dépend ce même module<br /> // le contenu du module vient ici return function () {}; // Ici, le module exporte via un retour de fonction, les valeurs souhaitées. }); </pre>
 <p>On pourrait croire que tout est bien qui fini bien, mais il nous reste un gros problème
-  à résoudre. Comment utiliser les modules AMD avec NodeJS et vice-versa ? Il <a>reflang=en title=Voir les solutions passe-partout existantes href=http://www.2ality.com/2011/11/module-gap.html]existe plusieurs solutions</a>  pour rendre inter-compatibles les différents modules, mais cela reste une sorte
-  de tambouille incompréhensible. D'ailleurs, je serais ravi d'avoir vos bonnes pratiques
-  en la matière.</p>
-<p>Edit : On me <a>itle=Voir la conversation href=https://twitter.com/_Florian_R/status/236437043004207104]souffle dans l'oreille</a>  que require.js est utilisable avec NodeJs, un petit lot de consolation donc ;).</p>
+  à résoudre. Comment utiliser les modules AMD avec NodeJS et vice-versa ? Il
+  <a
+  hreflang="en title=Voir les solutions passe-partout existantes href=http://www.2ality.com/2011/11/module-gap.html">existe plusieurs solutions</a> pour rendre inter-compatibles les différents modules,
+    mais cela reste une sorte de tambouille incompréhensible. D'ailleurs, je serais
+    ravi d'avoir vos bonnes pratiques en la matière.</p>
+<p>Edit : On me <a title="Voir la conversation href=https://twitter.com/_Florian_R/status/236437043004207104">souffle dans l'oreille</a>  que require.js est utilisable avec NodeJs, un petit lot de consolation donc ;).</p>
 <h3>ECMAScript 6 : La lumière au bout du tunnel</h3>
 <p>Grâce à la dernière mouture d'ECMAScript (aussi appelé ECMAScript.next) le standard
   qui sous tend Javascript, un gestionnaire natif de modules Javascript sera disponible.

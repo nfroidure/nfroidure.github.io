@@ -14,7 +14,7 @@ categories.+=.*
 <p>Comme promis, Gulp revient à l'ordre du jour de ce Blog avec un retour d'expérience
   sur l'utilisation de Gulp et le développement de plugins.</p>
 
-<p>Suite à la <a>itle=Voir le billet de blog sur les différences entre GulpJS et GruntJS href=articles-gulp_vs_grunt.html]comparaison entre Gulp et Grunt</a>,
+<p>Suite à la <a title="Voir le billet de blog sur les différences entre GulpJS et GruntJS href=articles-gulp_vs_grunt.html">comparaison entre Gulp et Grunt</a>,
   vous avez peut-être envie d'aller plus loin dans l'utilisation de Gulp. Dans ce
   billet, je reviendrais sur les fondamentaux de Gulp, les bonnes pratiques et aussi
   la création de plugins.</p>
@@ -30,9 +30,7 @@ categories.+=.*
 <h4>Les tâches</h4>
 <p>Le principe de Gulp est très simple. Le fichier gulpfile.js contient la déclaration
   de tâches. Ces dernières sont déclarées de la manière suivante :</p>
-<script>
-  rc = https: //gist.github.com/nfroidure/9833275683d38f06134a.js]
-</script>
+<script src="https://gist.github.com/nfroidure/9833275683d38f06134a.js"></script>
 <noscript>
   <p><pre><p>// The clean task gulp.task('clean', function(cb) { rimraf(conf.build.root, cb); });</p></pre>
   </p>
@@ -42,9 +40,9 @@ categories.+=.*
 <p>Il est aussi possible de l'appeler directement dans une autre tâche avec la méthode
   <code>gulp.run</code> :</p><pre>gulp.run('clean', function() { console.log('Terminé') };</pre>
 <p>Cependant, je ne vous conseille pas l'utilisation de cette méthode car elle est encore
-  un peu boguée et <a>reflang=en title=Voir l'issue concernant ce souci href=https://github.com/robrich/orchestrator/issues/15]ne fonctionne pas comme on pourrait s'y attendre</a>.</p>
+  un peu boguée et <a hreflang="en title=Voir l'issue concernant ce souci href=https://github.com/robrich/orchestrator/issues/15">ne fonctionne pas comme on pourrait s'y attendre</a>.</p>
 <p>En réalité, il est préférable d'utiliser les dépendances qui peuvent être déclarées
-  au niveau de la déclaration d'une tâche comme <a>reflang=en title=Voir le gulpfile de ChtiJS href=https://github.com/ChtiJS/chtijs.francejs.org/blob/gulp/gulpfile.js#L160]ici pour le gulpfile de ChtiJS</a>.</p>
+  au niveau de la déclaration d'une tâche comme <a hreflang="en title=Voir le gulpfile de ChtiJS href=https://github.com/ChtiJS/chtijs.francejs.org/blob/gulp/gulpfile.js#L160">ici pour le gulpfile de ChtiJS</a>.</p>
 <h4>Les streams</h4>
 <p>Passons maintenant à la véritable particularité de Gulp. La plupart des tâches dont
   on a besoin pour un projet sont en réalité des tâches qui sont appliquées sur un
@@ -60,14 +58,10 @@ categories.+=.*
   <p><pre>gulp.src('less/**/*.less') // création d'un flux d'objets de type fichier<br /> .pipe(less()) // préprocesseur less<br /> .pipe(minify()) // minification<br /> .pipe(gulp.dest('css/')) // enregistrement des fichiers dans un autre dossier</pre>
   </p>
 </noscript>
-<script>
-  rc = https: //gist.github.com/nfroidure/9e7c7bdf6365deb13fbc.js]
-</script>
+<script src="https://gist.github.com/nfroidure/9e7c7bdf6365deb13fbc.js"></script>
 <p>Il est possible de subordonner un plugin à une condition particulière avec <code>gulp.env</code>  et <code>gulp-if</code>. Ici, selon la valeur de <code>gulp.env.prod</code>, on
   minifie ou non les CSS et on utilise Livereload ou non.</p>
-<script>
-  rc = https: //gist.github.com/nfroidure/d89133c3869109ff636e.js]
-</script>
+<script src="https://gist.github.com/nfroidure/d89133c3869109ff636e.js"></script>
 <noscript>
   <p><pre> // CSS gulp.task('build_styles', function(cb) { gulp.src(conf.src.less + '/main.less', {buffer: buffer}) .pipe(gStreamify((gLess()))) .pipe(gIf(prod, gMinifyCss())) .pipe(gIf(!prod, gLivereload(server))) .pipe(gulp.dest(conf.build.css)) .once('end', cb); });</pre>
   </p>
@@ -110,7 +104,7 @@ categories.+=.*
   <li>gulp-rename : Permet de renommer les fichier en tout point d'un pipeline de fichier</li>
   <li>gulp-stream : Permet de transformer en stream le contenu des fichiers en entrée.
     Pratique quand un plugin accepte les streams en entrée, mais retourne un buffer
-    (ce qui est le cas de gulp-browserify, j'ai une <a>reflang=en title=Voir la PR href=https://github.com/deepak1556/gulp-browserify/pull/10]PR en attente</a>    à ce sujet).</li>
+    (ce qui est le cas de gulp-browserify, j'ai une <a hreflang="en title=Voir la PR href=https://github.com/deepak1556/gulp-browserify/pull/10">PR en attente</a>    à ce sujet).</li>
   <li>gulp-streamify : Un plugin que j'ai créé pour wrapper un plugin qui ne supporte
     pas les streams afin qu'il ne casse pas le pipeline et que le mode stream soit
     donc quand même utilisable.</li>
@@ -119,32 +113,32 @@ categories.+=.*
 <p>Étant donné le faible nombre de plugins Gulp, il est fort probable que vous souhaitiez
   en créer un. Voici donc quelques conseils que je vais illustrer avec le code de
   <code>gulp-cat</code> et <code>gulp-svg2ttf</code>.</p>
-<p>Tout d'abord, un plugin est un <a>reflang=en title=Voir la ligne concernée href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L7]module NPM qui exporte une fonction</a>  qui <a>reflang=en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L27]retourne</a>  un <a>reflang=en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L8]stream d'objets</a>.
-  Idéalement, cette fonction <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L32]doit être nommée</a>  pour faciliter le débogage.</p>
+<p>Tout d'abord, un plugin est un <a hreflang="en title=Voir la ligne concernée href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L7">module NPM qui exporte une fonction</a>  qui <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L27">retourne</a>  un <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L8">stream d'objets</a>.
+  Idéalement, cette fonction <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L32">doit être nommée</a>  pour faciliter le débogage.</p>
 <p>Selon moi, il très important d'hériter des interface <code>Stream.*</code> de NodeJS
   plutôt que d'utiliser des modules comme <code>event-stream</code> ou <code>event-map</code>.
   C'est certe, un peu plus verbeux, mais ces interfaces ont été pensées pour conserver
   les bénéfices de l'usage des streams. La plupart du temps, vous utiliserez une
   instance de l'interface <code>Stream.Transform</code> qui doit être augmentée d'une
-  <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L40]méthode <code>_transform</code></a>  qui comme son nom l'indique gère la transformation du contenu du stream (ici, les
+  <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L40">méthode <code>_transform</code></a>  qui comme son nom l'indique gère la transformation du contenu du stream (ici, les
   fichiers) et d'une méthode <code>_flush</code>, optionnelle, dans le cas où vous
   souhaiteriez faire une action particulière à la fin du flux d'objets.</p>
 <p>Au sein de la méthode de transformation des fichiers, dans la plupart des cas, les
-  fichier dont le contenu est nul <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L42]seront ignorés</a>.
-  Puis, selon que le contenu du fichier est <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L60]un buffer</a>  ou <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L68]un stream</a>,
-  on <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L62]modifiera le buffer</a>  ou, on <a>itle=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L70]pipera le stream dans un nouveau stream de transformation</a>.</p>
+  fichier dont le contenu est nul <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L42">seront ignorés</a>.
+  Puis, selon que le contenu du fichier est <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L60">un buffer</a>  ou <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L68">un stream</a>,
+  on <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L62">modifiera le buffer</a>  ou, on <a title="Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L70">pipera le stream dans un nouveau stream de transformation</a>.</p>
 <p>Si l'on souhaite uniquement lire les données, pour le buffer, il suffit d'accèder
-  à la <a>reflang=en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L18]propriété contents</a>  pour en lire le contenu. Pour un stream, il faudra <a>reflang=en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L20]le dédoubler</a>  via une instance de <code>Stream.PassThrough</code> afin de garantir aux autre
+  à la <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L18">propriété contents</a>  pour en lire le contenu. Pour un stream, il faudra <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L20">le dédoubler</a>  via une instance de <code>Stream.PassThrough</code> afin de garantir aux autre
   plugins un accès à toute les données du stream.</p>
 <p>Enfin, une fois le buffer transformé ou le stream du contenu du fichier "pipé", on
-  <a>reflang=en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L24]passe l'objet représentant le fichier</a>  au plugin suivant et on <a>reflang=en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L25]appelle le callback</a>  reçu en argument de la méthode <code>_transform</code>.</p>
+  <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L24">passe l'objet représentant le fichier</a>  au plugin suivant et on <a hreflang="en title=Voir la ligne href=https://github.com/ben-eb/gulp-cat/blob/6479a502f42f76e8378ce3bd5c2b2165990f2b8b/index.js#L25">appelle le callback</a>  reçu en argument de la méthode <code>_transform</code>.</p>
 <p>Si durant ce processus, vous ne traitez que les fichiers d'un genre particulier,
-  il peut-être utile de <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L48]tester l'extension du fichier</a>  et de passer directement au plugin suivant tout fichier ne correspondant pas aux
+  il peut-être utile de <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L48">tester l'extension du fichier</a>  et de passer directement au plugin suivant tout fichier ne correspondant pas aux
   critères souhaités.</p>
-<p>De la même façon, une option permettant de <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L53]cloner les fichiers</a>  avant de les transformer peut être très utile pour <a>reflang=en title=Voir un commit illustrant cette facilité d'usage href=https://github.com/nfroidure/gulp-iconfont/commit/58f0f61c1a829eb316759b5bf26a3423e8795404]faciliter l'usage d'un plugin</a>.</p>
+<p>De la même façon, une option permettant de <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L53">cloner les fichiers</a>  avant de les transformer peut être très utile pour <a hreflang="en title=Voir un commit illustrant cette facilité d'usage href=https://github.com/nfroidure/gulp-iconfont/commit/58f0f61c1a829eb316759b5bf26a3423e8795404">faciliter l'usage d'un plugin</a>.</p>
 <p>Bien-sûr, si une transformation d'un fichier, implique le changement de type de ce
-  dernier, il est de votre responsabilité de <a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L57]changer l'extension de ce dernier</a>.</p>
-<p>Enfin, toute erreur doit être signalée par l'<a>reflang=en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L64]émission d'un évènement</a>.</p>
+  dernier, il est de votre responsabilité de <a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L57">changer l'extension de ce dernier</a>.</p>
+<p>Enfin, toute erreur doit être signalée par l'<a hreflang="en title=Voir la ligne href=https://github.com/nfroidure/gulp-svg2ttf/blob/bc06b3dd0a91f6442a64256105dfed37e9c9a327/src/index.js#L64">émission d'un évènement</a>.</p>
 <h4>Supportez les streams !</h4>
 <p>Bien-sûr, créer une API streamable n'est pas la solution de facilité. Mais je vous
   encourage grandement à le faire. Qui peut le plus, peut le moins. J'ai bien écris
@@ -155,5 +149,5 @@ categories.+=.*
   un module aussi complexe, il y a fort à parier que votre format XML peut le faire
   également.</p>
 <p>Si cependant, vous n'avez pas la main sur la bibliothèque wrappée par votre plugin,
-  utilisez <a>reflang=en title=Voir le module href=https://npmjs.org/package/bufferstreams]BufferStreams</a>  en attendant et créer une issue, ou mieux, faîtes une PR !</p>
+  utilisez <a hreflang="en title=Voir le module href=https://npmjs.org/package/bufferstreams">BufferStreams</a>  en attendant et créer une issue, ou mieux, faîtes une PR !</p>
 <p>Voilà, c'est tout pour aujourd'hui ! Vos retours ou questions sont les bienvenues :).</p>

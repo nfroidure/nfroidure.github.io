@@ -15,7 +15,7 @@ categories.+=.*
   aux frameworks JavaScript. Aujourd'hui, ce sont les animations CSS3 qui occupent
   le devant de la scène et, a priori, ça va durer.</p>
 
-<p>Ce billet est la filiation directe de mon article sur <a>itle=Lire ce billet sur les polyfills href=articles-polyfill_or_not.html]les polyfills et leur utilisation</a>.
+<p>Ce billet est la filiation directe de mon article sur <a title="Lire ce billet sur les polyfills href=articles-polyfill_or_not.html">les polyfills et leur utilisation</a>.
   Dans ce dernier, j'explique pourquoi je ne suis pas passé au doctype HTML5 pour
   les sites web classiques comme les sites vitrines ou les sites web e-commerce.
   Pour résumer : parce que je n'en ai pas besoin pour faire ce type de sites. Pourquoi
@@ -98,20 +98,20 @@ categories.+=.*
   d'évènements (IE
   <8 utilise attachEvent) et un petit getElementsByClassName. Autant
   dire que ça ne sert pas à grand chose de s
-  'embarasser de ko de librairies superflues. Je vais donc m'orienter vers MooTools qui propose de <a>reflang=en title=Télécharger ce qu'il vous faut href=http://mootools.net/core/]télécharger
-    uniquement ce dont on a besoin</a>. J'ai donc fait mes amplettes en sélectionnant
-    DomReady (avec toutes ses dépendances, notamment les events et les selecteurs)
-    et les classes (j'aime bien le confort qu'elles apportent par rapport à l'héritage
-    et notre code sera donc extensible plus facilement).</p>
+  'embarasser de ko de librairies superflues. Je vais donc m'orienter vers MooTools qui propose de <a hreflang="en title=Télécharger ce qu'il vous faut href=http://mootools.net/core"
+  />télécharger uniquement ce dont on a besoin</a>. J'ai donc fait mes amplettes en
+  sélectionnant DomReady (avec toutes ses dépendances, notamment les events et les
+  selecteurs) et les classes (j'aime bien le confort qu'elles apportent par rapport
+  à l'héritage et notre code sera donc extensible plus facilement).</p>
 <p>Il y a quelques petites choses vraiment importantes quand on implémente un carousel :</p>
 <ul>
   <li>il faut arrêter le carousel quand la souris est au dessus de lui : pour cela nous
     avons créé des fonctions resumer/pause qui permettrons d'obtenir ce comportement.
     MooTools propose des évènements personnalisés appelés mouseenter et mouseleave
-    qui permettent d'<a>itle=Voir le code concerné href=https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js#L21]obtenir exactement ce comportement</a>.</li>
+    qui permettent d'<a title="Voir le code concerné href=https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js#L21">obtenir exactement ce comportement</a>.</li>
   <li>il faut arrêter le carousel aussi quand un des éléments de ce dernier obtient le
     focus, pour ce faire, nous devons ajouter un écouteur d'évènement en prenant
-    bien garde de <a>itle=Voir la ligne concernée href=https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js#L23]mettre true pour le troisième argument</a>    (mode capture) qui permet de capturer l'évènement pour les noeuds enfants.</li>
+    bien garde de <a title="Voir la ligne concernée href=https://github.com/nfroidure/KissIsKool/blob/master/webdisplay.js#L23">mettre true pour le troisième argument</a>    (mode capture) qui permet de capturer l'évènement pour les noeuds enfants.</li>
   <li>il faut prendre en compte les hashs de manière à ce que si une personne visitant
     le site décide de trasnmettre le lien à une autre personnes, celle-ci puisse
     se retrouver sur le même contenu que lui.</li>
@@ -122,7 +122,7 @@ categories.+=.*
   grâce à une classe unselected. Ainsi, nous pourrons animer respectivement l'apparition
   et la disparition de ces deux éléments.</p>
 <h4>Animations CSS3</h4>
-<p>Nous voilà maintenant sur le terrain des animations. J'ai fait <a>reflang=en title=Voir la page d'exemple href=http://rest4.org/github/nfroidure/KissIsKool/master/webdisplay.html]une page d'exemple</a>  pour vous montrer quelques possibilités d'animation. La principale difficulté est
+<p>Nous voilà maintenant sur le terrain des animations. J'ai fait <a hreflang="en title=Voir la page d'exemple href=http://rest4.org/github/nfroidure/KissIsKool/master/webdisplay.html">une page d'exemple</a>  pour vous montrer quelques possibilités d'animation. La principale difficulté est
   que l'on a deux contenus qui cohabitent dans la même zone : l'onglet sélectionné
   et celui qui vient de disparaître. Il faut donc les superposer pour que le visiteur
   puisse voir au même endroit la disparition et l'apparition.</p>
@@ -142,4 +142,4 @@ categories.+=.*
   offre une alternative bien plus efficace. Je vais donc petit à petit convertir
   mes scripts MooTools pour ne plus manipuler que des classes et en finir avec les
   classes de type Fx qui pour moi devraient même être retirées de MooTools Core.</p>
-<p>Ces derniers seront ajoutés au fur et à mesure sur le <a>reflang=en title=Voir le dépôt sur GitHub href=https://github.com/nfroidure/KissIsKool]dépôt créé pour l'occasion</a>  et appelé KissIsKool. Vos commentaires et pull request sont les bienvenus.</p>
+<p>Ces derniers seront ajoutés au fur et à mesure sur le <a hreflang="en title=Voir le dépôt sur GitHub href=https://github.com/nfroidure/KissIsKool">dépôt créé pour l'occasion</a>  et appelé KissIsKool. Vos commentaires et pull request sont les bienvenus.</p>

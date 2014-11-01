@@ -51,7 +51,7 @@ categories.+=.*
   éventuel trou de sécurité. La directive <code>instances</code> précise le nombre
   d'instances maximales pour ce serveur. Elle permet d'éviter les attaques ddos.</p>
 <p>La directive <code>server</code> désigne le fichier à exécuter. Dans mon cas, il
-  s'agit du projet <a>itle=Voir le projet sur GitHub href=https://github.com/nfroidure/X1-GPS-Logger]X1 Intellitrac GPS Logger</a>  compilé directement sur la machine hôte avec la commande suivante :</p><pre>wget https://github.com/nfroidure/X1-GPS-Logger/archive/master.tar.gz<br />tar -xzvf master.tar.gz<br />mkdir /home/x1server/bin<br />g++ /home/x1server/X1-GPS-Logger-master/main.c -o /home/x1server/bin/x1server<br />chmod u+x /home/x1server/bin/x1server<br />rm -rf /home/x1server/X1-GPS-Logger-master /home/x1server/master.tar.gz</pre>
+  s'agit du projet <a title="Voir le projet sur GitHub href=https://github.com/nfroidure/X1-GPS-Logger">X1 Intellitrac GPS Logger</a>  compilé directement sur la machine hôte avec la commande suivante :</p><pre>wget https://github.com/nfroidure/X1-GPS-Logger/archive/master.tar.gz<br />tar -xzvf master.tar.gz<br />mkdir /home/x1server/bin<br />g++ /home/x1server/X1-GPS-Logger-master/main.c -o /home/x1server/bin/x1server<br />chmod u+x /home/x1server/bin/x1server<br />rm -rf /home/x1server/X1-GPS-Logger-master /home/x1server/master.tar.gz</pre>
 <p>La directive server_args permet de préciser les arguments à utiliser pour démarrer
   le serveur. Dans notre cas, l'argument est le dossier de destination des logs.
   Surtout, il ne faut pas oublier de créer ce dossier :</p><pre>mkdir /home/x1server/log<br />chown x1server:x1server /home/x1server/log</pre>
@@ -60,14 +60,14 @@ categories.+=.*
 <h3>Optimisations</h3>
 <p>Vous aurez peut-être remarqué la directive flags = NODELAY. Cette directive permet
   d'éviter que les entrées/sorties (notamment stdout dans notre cas) ne soient buffurisées.
-  En effet, le <a>reflang=en title=Voir la spécification du protocole href=http://www.systech.com.tw/products-detail.php?id=46]satané protocole des boitiers X1 Intellitrac</a>  impose de renvoyer intacts les 8 octets de synchronisation reçu par le serveur
+  En effet, le <a hreflang="en title=Voir la spécification du protocole href=http://www.systech.com.tw/products-detail.php?id=46">satané protocole des boitiers X1 Intellitrac</a>  impose de renvoyer intacts les 8 octets de synchronisation reçu par le serveur
   au boitier. Or, j'ai rencontré un problème de buffurisation qui provoquait l'envoi
   des octets trop tard.</p>
 <p>J'ai aussi ajouté par la suite une directive nice pour privilégier ces processus
   peu gourmands, mais dont la réactivité est essentielle. Toutes les directives d'xinetd
-  sont très bien documentées <a>reflang=en title=Voir les manpages xinetd href=http://manpages.ubuntu.com/manpages/hardy/man5/xinetd.conf.5.html]sur cette page</a>.</p>
+  sont très bien documentées <a hreflang="en title=Voir les manpages xinetd href=http://manpages.ubuntu.com/manpages/hardy/man5/xinetd.conf.5.html">sur cette page</a>.</p>
 <h3>Résultat</h3>
-<p>J'ai couplé ces logs avec un <a>reflang=en title=Voir un des fichiers PHP qui gèrent ces logs href=https://github.com/nfroidure/Rest4/blob/master/php/class.RestXgpsPositionDriver.php]petit driver</a>  pour <a>itle=Voir le site de Rest4 href=http://rest4.org/home/fr-FR/index.html]Rest4</a>.
+<p>J'ai couplé ces logs avec un <a hreflang="en title=Voir un des fichiers PHP qui gèrent ces logs href=https://github.com/nfroidure/Rest4/blob/master/php/class.RestXgpsPositionDriver.php">petit driver</a>  pour <a title="Voir le site de Rest4 href=http://rest4.org/home/fr-FR/index.html">Rest4</a>.
   Le résultat donne ceci :</p>
-<p><img>lt=Capture d'écran du logiciel de visualisation src=http://www.elitwork.com/images/refs/66.png
-  /] </p>
+<p><img alt="Capture d'écran du logiciel de visualisation src=http://www.elitwork.com/images/refs/66.png"
+  /> </p>
