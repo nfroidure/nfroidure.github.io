@@ -16,7 +16,7 @@ lang=fr
 location=FR
 -->
 
-### Présentation
+## Présentation
 
 Développeur web passionné par JavaScript je me définirai volontiers comme
  un travailleur acharné et infatigable. J'aime le travail bien fait.

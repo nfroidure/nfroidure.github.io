@@ -17,5 +17,5 @@ lang=en
 location=US
 -->
 
-# Nicolas Froidure's Homepage
+## Nicolas Froidure's Homepage
 Welcome on my home page. Choose your language!

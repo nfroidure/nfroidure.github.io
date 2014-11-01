@@ -3,9 +3,56 @@ div.separator { clear:both; }
 div.extra { clear:left; }
 div.wrapper { clear:both; float:left; width:100%; }
 
+/* Common layout */
+.ia-header {
+  direction: rtl;
+	text-align:center;
+	padding: @vrythm @gutter (@vrythm*1 - @border) @gutter;
+	margin: 0 0 @vrythm*2 0;
+	border-bottom: @border solid @c5;
+	.ia-header_title {
+		display: inline-block;
+		vertical-align: top;
+		font-size: @basefontsize*6;
+		line-height: @vrythm*6;
+	}
+
+	.ia-menu {
+		display: inline-block;
+		vertical-align: top;
+		border-right: @border solid @c2;
+		padding-right: @gutter - @border;
+		margin-right: @gutter - @border;
+		font-size: @basefontsize*2;
+		line-height: @vrythm*2;
+		.ia-menu__body, .ia-menu__item {
+			display:block;
+			list-style-type: none;
+			text-align: right;
+			a {
+				text-decoration:none;
+				color: @c2;
+			}
+		}
+	}
+}
+.ia-content--main {
+	width: @gutter*35; margin:0 auto;
+}
+.ia-footer {
+	padding: @vrythm @gutter;
+	text-align:center;
+}
+
 /* S : 1 column : */
 @media screen and (max-width: (@M + @gutter * 2 - @RWDSec)) {
 	head link { content:'S'; }
+	.ia-menu {
+		.ia-menu__title {
+			font-size: @basefontsize*5;
+			line-height: @vrythm*5;
+		}
+	}
 }
 /* n+1 columns */
 @media screen and (min-width: (@M + @gutter * 2)) {

@@ -7,12 +7,12 @@
 <section class="main-articles">
   {% for post in metadata.childs %}
   <article class="main-articles__article">
-    <h2>
+    <p><strong>
       <a href="{{post.path}}{{post.name}}.html"
         title="{{post.title}}">
         {{post.title}}
       </a>
-    </h2>
+    </strong></p>
     <p>{{post.description}}</p>
   </article>
   {% endfor %}

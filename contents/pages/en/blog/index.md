@@ -12,6 +12,6 @@ lang=fr
 location=FR
 -->
 
-# Another web developer blog
+## Another web developer blog
 
 Find on this blog many developper resources i find usefull to share and more informations on my projects.

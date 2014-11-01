@@ -7,6 +7,7 @@
     <title>{{conf.name}}{% if metadata.title %} : {{ metadata.title }}{% endif %}</title>
     <meta name="description" content="{% if metadata.description %}{{ metadata.description }}{% else %}{{conf.description}}{% endif %}">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <meta name="robots" content="index,follow">
     <link rel="stylesheet" href="{{conf.baseURL}}/css/main.css">
     <script>
@@ -26,29 +27,30 @@
     <![endif]-->
     <header class="ia-header">
         <h1 class="ia-header_title">
-          <a href="{{root.path}}{{root.name}}.html" title="{{root.shortDesc}}">
-            <img src="/images/chtijs.svg" alt="ChtiJS" />
+          <a href="{{root.path}}{{root.name}}.html" title="{{root.shortDesc}}"
+            class="ia-logo">
+            <span class="ia-logo__insert">Insert</span><span class="ia-logo__after">:after</span>
           </a>
         </h1>
 {% if metadata.standalone != true  %}
-        <nav class="ia-menu">
+        <nav class="ia-header_menu ia-menu">
         	  <ul class="ia-menu__body">
-                <li class="ia-menu__{{root.name}}">
+                <li class="ia-menu__item ia-menu__item--{{root.name}}">
                     <a href="{{root.path}}{{root.name}}.html"
                       title="{% if root.shortDesc %}{{root.shortDesc}}{% else %}{{root.title}}{% endif %}"{% if root == metadata  %}
                       class="selected"{% endif %}>{{root.shortTitle}}</a>
                 </li>{% for item in root.childs %}
-                <li class="ia-menu__{{item.name}}">
+                <li class="ia-menu__item ia-menu__item--{{item.name}}">
                     <a href="{{item.path}}{{item.name}}.html"
                       title="{% if item.shortDesc %}{{item.shortDesc}}{% else %}{{item.title}}{% endif %}"{% if item == metadata or item == metadata.parent or item == metadata.parent.parent %}
                       class="selected"{% endif %}>{{item.shortTitle}}</a>
                 </li>{% endfor %}
             </ul>
         </nav>
-    </header>
  {% endif %}
+    </header>
 
-    <section class="ia-content">
+    <section class="ia-content ia-content--main">
         {% block body %}{% endblock %}
     </section>
 
@@ -71,7 +73,17 @@
 
     <footer class="ia-footer">
         <p class="ia-footer__content">
-          © Nicolas Froidure 2012 - 2014
+          <span class="ia-social">
+            <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+             class="ia-social__item ia-social__item--twitter">
+              <span>Twitter</span>
+            </a>
+            <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+             class="ia-social__item ia-social__item--github">
+              <span>GitHub</span>
+            </a>
+          </span>
+          - © Nicolas Froidure 2012 - 2014
         </p>
     </footer>
     <script src="{{conf.baseURL}}/js/script.js"></script>

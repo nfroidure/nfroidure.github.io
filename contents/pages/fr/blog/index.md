@@ -12,7 +12,7 @@ lang=fr
 location=FR
 -->
 
-# Blog d'un développeur web à Lille
+## Blog
 
 Sur mon blog, vous trouverez de nombreux articles sur le développement web mais
  aussi sur l'administration système, l'informatique, le hacking et la

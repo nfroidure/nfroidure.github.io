@@ -14,7 +14,7 @@ lang=fr
 location=FR
 -->
 
-## Mes projets
+## Projets
 
 ### Modules JavaScript / NodeJS
 

@@ -1,0 +1,20 @@
+.ia-social {
+	.ia-social__item {
+		text-decoration:none;
+		& {
+			color: @c2;
+		}
+		&:visited {
+			color: @c2;
+		}
+	}
+	.ia-social__item span {
+		.hideText();
+	}
+	.ia-social__item--github:before {
+		.icon('\e001');
+	}
+	.ia-social__item--twitter:before {
+		.icon('\e008');
+	}
+}
