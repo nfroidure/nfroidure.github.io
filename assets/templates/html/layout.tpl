@@ -7,31 +7,21 @@
     <title>{{conf.name}}{% if metadata.title %} : {{ metadata.title }}{% endif %}</title>
     <meta name="description" content="{% if metadata.description %}{{ metadata.description }}{% else %}{{conf.description}}{% endif %}">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <meta name="robots" content="index,follow">
     <link rel="stylesheet" href="{{conf.baseURL}}/css/main.css">
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-21477946-7', 'insertafter.com');
-      ga('send', 'pageview');
-
-    </script>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <!--[if lt IE 7]>
     <script>document.location.href=http://browsehappy.com;</script>
     <![endif]-->
-    <header class="ia-header">
+    <header class="ia-header{% if metadata.standalone != true  %} ia-header--reduced{% endif %}">
         <div class="ia-header_title">
           <h1><a href="{{root.path}}{{root.name}}.html" title="{{root.shortDesc}}"
             class="ia-logo">
-            <span class="ia-logo__insert">Insert</span><span class="ia-logo__after">:after</span>
+            <span class="ia-logo__insert">INSERT</span><span class="ia-logo__after">:after</span>
           </a></h1>
-          <nav class="ia-flags{% if metadata.standalone != true  %} ia-flags--reduced{% endif %}">
+          <nav class="ia-flags">
               <ul class="ia-flags__body">{% for item in tree.childs %}
                   <li class="ia-flags__item ia-flags__item--{{item.lang}}">
                       <a href="{{item.path}}{{item.name}}.html"
@@ -93,6 +83,16 @@
         </p>
     </footer>
     <script src="{{conf.baseURL}}/js/script.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-21477946-7', 'insertafter.com');
+      ga('send', 'pageview');
+
+    </script>
 </body>
 </html>
 

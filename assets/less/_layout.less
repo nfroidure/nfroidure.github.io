@@ -17,8 +17,25 @@ div.wrapper { clear:both; float:left; width:100%; }
 	.ia-header_title {
 		display: inline-block;
 		vertical-align: top;
-		font-size: @basefontsize*5;
-		line-height: @vrythm*5;
+		h1 {
+			font-size: @basefontsize*4;
+			line-height: @vrythm*5;
+		}
+		nav {
+			font-size: @basefontsize*4;
+			line-height: @vrythm*4;
+		}
+	}
+	&.ia-header--reduced .ia-header_title {
+		h1 {
+			font-size: @basefontsize*3;
+			line-height: @vrythm*3;
+		}
+		nav {
+			font-size: @basefontsize*2;
+			line-height: @vrythm*2;
+			text-align:left;
+		}
 	}
 
 	.ia-menu {
