@@ -24,7 +24,7 @@ categories.+=.*
 <p>Les seuls bémols que je poserais sont les problèmes de connexion parfois rencontrés (rapidement traités) ainsi que le manque de serveur tout prêt ou d&#039;acteur du cloud pour nous proposer des solutions qui nous auraient permis de gagner du temps. Les
     membres de ma team utilisaient Windows, j&#039;ai donc dû paramétrer un serveur Samba pour leur donner un accès au code source de l&#039;application.</p>
 <h3>Ma team et notre App</h3>
-<p><img style="float: left; margin-right: 10px;" alt="Formulaire d&#039;enregistrement" src="http://www.insertafter.com//images/helpme3.png" /> J&#039;ai eu le plaisir de travailler avec Rocky Lal, développeur VB.net intéressé par Javascript/HTML5 et
+<p><img style="float: left; margin-right: 10px;" alt="Formulaire d&#039;enregistrement" src="/images/helpme3.png" /> J&#039;ai eu le plaisir de travailler avec Rocky Lal, développeur VB.net intéressé par Javascript/HTML5 et
     <a
     title="Voir son profil Twitter" href="https://twitter.com/&#35;&#37;21/julpics">Julien Picaud</a>, product manager dans une boîte de développement applicatif. Nous nous sommes tout de suite regroupés et nous avons décidé de développer une application mobile HTML5. Afin de coller aux critères du hackathon, nous avons tenté de
         trouver une idée au business model réaliste et utilisant un maximum d&#039;API parmi les suivantes (Orange API, HTML5 API, Facebook API).</p>
@@ -32,14 +32,14 @@ categories.+=.*
     Geolocation d&#039;Orange.</p>
 <p>L&#039;avantage de cette API est qu&#039;elle ne nécessite pas que les membres de la communauté aient une application qui tourne en continu sur leur mobile consommant de la batterie. Elle triangule la position des mobiles grâce aux antennes relais utilisées
     par les membres de la communauté.</p>
-<p><img style="float: right; margin-left: 10px;" alt="Le formulaire de demande" src="http://www.insertafter.com//images/helpme1.png" /> Lorsque le membre s&#039;enregistre, il reçoit un SMS lui demandant d&#039;accepter que nous le géolocalisions.</p>
+<p><img style="float: right; margin-left: 10px;" alt="Le formulaire de demande" src="/images/helpme1.png" /> Lorsque le membre s&#039;enregistre, il reçoit un SMS lui demandant d&#039;accepter que nous le géolocalisions.</p>
 <p>Nous voilà avec une base de compétences géolocalisées qu&#039;il ne nous reste qu&#039;à mettre à disposition des utilisateurs. C&#039;est le but du petit formulaire disponible en page d&#039;accueil.</p>
 <p>Simplissisme, il permet de préciser le type de compétences souhaitées et de joindre un message. De manière transparente, la page d&#039;accueil récupère la géolocalisation de l&#039;utilisateur grâce à l&#039;API HTML5 Geolocation. Une fois le formulaire
     soumis, le système passe en revue les membres de la communauté afin de déterminer ceux qui ont les bonnes compétences et se trouvent à proximité.</p>
 <p>Si un membre est sélectionné, un SMS contenant le type de demande, le message et la localisation de la personne lui est transmis.</p>
 <p>Nous avons également utilisé un cache manifest (HTML5 AppCache) de manière à ce que l&#039;application soit disponible rapidement même dans le cas où la connexion est très mauvaise. La communauté étant ouverte, il n&#039;est pas nécessaire d&#039;avoir
     déclaré ses compétences pour obtenir de l&#039;aide.</p>
-<h3><img style="float: left; margin-right: 10px;" alt="Ecran de confirmation" src="http://www.insertafter.com//images/helpme2.png" /> Sous le capot</h3>
+<h3><img style="float: left; margin-right: 10px;" alt="Ecran de confirmation" src="/images/helpme2.png" /> Sous le capot</h3>
 <p>Côté serveur, j&#039;ai utilisé NodeJs que je n&#039;avais jamais utilisé auparavant, une petite difficulté supplémentaire qui fût finalement aisément surmontée par rapport au timing imposé. D&#039;ailleurs la mise en place est assez intuitive et en tant
     que développeur Javascript expérimenté et avec une bonne expérience en backend, c&#039;est assez simple de se mettre dans le bain.</p>
 <p>J&#039;ai vite trouvé quelques exemples de code qui satisfaisaient mes besoins&#0160;: un serveur de fichiers web, la récupération des contenus des requêtes, l&#039;utilisation d&#039;une API REST pour les accès à l&#039;API Orange...</p>

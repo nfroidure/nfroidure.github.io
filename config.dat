@@ -11,6 +11,7 @@ src.content=./contents/pages
 ^.templates=./assets/templates/html
 ^.icons=./assets/icons
 ^.images=./assets/images
+^.illustrations=./contents/illustrations
 ^.less=./assets/less
 ^.js=./src
 

@@ -29,11 +29,11 @@ categories.+=.*
     fichiers nécessaires pour votre application (appelés dépendances).</p>
 <p>Comme vous pouvez le voir sur la capture d&#039;écran de <a hreflang="en" title="Jouer à mon Memory" href="http://memory.insertafter.com/">mon dernier projet</a>, le chargement de RequireJS et son exécution provoque bien le chargement de <code>Application.js</code>    puis de <a title="Voir l&#039;endroit où ces dépendances sont définies" href="https://github.com/nfroidure/Memory/blob/master/www/javascript/Application.js&#35;L6">ses trois dépendances</a> <code>Sounds.js</code>, <code>Commandor.js</code> et <code>View.js</code>.
     On peut remarquer que ces trois dernières sont chargées en paralèlle.</p>
-<p> <img alt="Capture d&#039;écran du chargement du Memory" src="http://www.insertafter.com//images/capture_7.png" />
+<p> <img alt="Capture d&#039;écran du chargement du Memory" src="/images/capture-memory1.png" />
 </p>
 <p>RequireJS est particulièrement utile pour le développement. Il permet de ne pas avoir à constamment ajouter/retirer des balises <code>&lt;script&gt;</code> à chaque nouveau module ajouté au projet. On peut également l&#039;utiliser pour charger des scripts
     à la volée uniquement lorsque c&#039;est nécessaire. Par exemple, dans mon Memory, je ne charge le code spécifique à chaque vue que lorsqu&#039;elle est affichée. Par exemple, ci dessous avec la vue <code>VueOptions.js</code>.</p>
-<p><img alt="Capture d&#039;écran de l&#039;affichage de la vue des options du jeu" src="http://www.insertafter.com//images/capture_8.png" /> </p>
+<p><img alt="Capture d&#039;écran de l&#039;affichage de la vue des options du jeu" src="/images/capture-memory2.png" /> </p>
 <h3>r.js et mise en production</h3>
 <p>Bien que RequireJS soit intéressant, ce n&#039;est bien souvent pas la solution pour une application en production. En effet, même asynchrone, le chargement reste bien plus lent que si l&#039;on regroupait tous les fichiers au sein d&#039;un seul et même
     fichier et que, par la même occasion, on en profitait pour le minifier.</p>
