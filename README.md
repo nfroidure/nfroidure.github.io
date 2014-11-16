@@ -15,7 +15,7 @@ npm run dev
 ```
 
 
-## Licence
-The assets, graphics, illustratiosn and text contents are copyright myself. The
- code is licenced under the MIT licence.
+## License
+The assets, graphics, illustrations and text contents are © myself. The
+ code is licensed under the MIT license.
  
