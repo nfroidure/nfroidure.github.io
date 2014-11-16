@@ -8,7 +8,7 @@
     <meta name="description" content="{% if metadata.description %}{{ metadata.description }}{% else %}{{conf.description}}{% endif %}">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <meta name="robots" content="index,follow">
-    <link rel="stylesheet" href="{{conf.baseURL}}/css/main.css">
+    <link rel="stylesheet" href="/css/main.css">
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -73,6 +73,10 @@
             <a href="https://github.com/nfroidure" title="Follow me on GitHub"
              class="ia-social__item ia-social__item--github">
               <span>GitHub</span>
+            </a>
+            <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+             class="ia-social__item ia-social__item--npm">
+              <span>NPM</span>
             </a>
             <a href="https://www.linkedin.com/profile/view?id=44165977" title="Find me on LinkedIn"
              class="ia-social__item ia-social__item--linkedin">

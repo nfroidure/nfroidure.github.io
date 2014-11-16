@@ -11,6 +11,7 @@ var gulp = require('gulp')
   , StreamQueue = require('streamqueue')
   , Duplexer = require('plexer')
   , g = require('gulp-load-plugins')()
+  , favicons = require('favicons')
   , rem2px = require('rework-rem2px')
   , queryless = require('css-queryless')
 ;
