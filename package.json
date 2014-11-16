@@ -5,7 +5,8 @@
   "main": "",
   "scripts": {
     "test": "node_modules/gulp/bin/gulp.js build --prod --noreq",
-    "trinity": "npm-check-updates -u && npm test && git commit package.json -m \"Dependencies update\" && git push"
+    "trinity": "npm-check-updates -u && npm test && git commit package.json -m \"Dependencies update\" && git push",
+    "dev": "node_modules/gulp/bin/gulp.js"
   },
   "homepage": "http://insertafter.com",
   "repository": {
