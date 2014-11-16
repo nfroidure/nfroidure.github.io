@@ -8,7 +8,7 @@ Feel free to help me to improve my blog. Typo, design, or anything else except
  blog posts.
 
 ```sh
-git clone 
+git clone git@github.com:nfroidure/blog.git
 cd blog
 npm install
 npm run dev
