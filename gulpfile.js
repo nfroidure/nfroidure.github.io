@@ -152,14 +152,6 @@ gulp.task('build_html', function(cb) {
     autoescape: true
   });
 
-  function getEndedReadable() {
-    var stream = new Stream.Readable({objectMode: true});
-    stream._read = function() {
-      stream.push(null);
-    };
-    return stream;
-  }
-
   var mdFilter = g.filter('**/*.md');
 
   var contentStream = gulp.src(conf.src.content + '/**/*.{html,md,glloq}', {buffer: buffer || true}) // Streams not supported yet
