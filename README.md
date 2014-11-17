@@ -19,7 +19,7 @@ You need to install ImageMagick to build this blog:
 # on a Debian based system
 apt-get install imagemagick
 # with OSX - http://www.imagemagick.org/script/binary-releases.php#macosx
-brew install imagemagick
+brew install imagemagick --with-librsvg
 ```
 
 ## License
