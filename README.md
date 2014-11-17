@@ -14,8 +14,14 @@ npm install
 npm run dev
 ```
 
+You need to install ImageMagick to build this blog:
+```sh
+# on a Debian based system
+apt-get install imagemagick
+# with OSX - http://www.imagemagick.org/script/binary-releases.php#macosx
+brew install imagemagick
+```
 
 ## Licence
-The assets, graphics, illustratiosn and text contents are copyright myself. The
+The assets, graphics, illustrations and text contents are copyright myself. The
  code is licenced under the MIT licence.
- 
