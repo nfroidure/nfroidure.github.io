@@ -13,5 +13,5 @@ location=US
 
 ## Welcome
 
-This is my peace of web. It's a bit about me and a lot about technologies, web
+This is my piece of Web. It's a bit about me and a lot about technologies, Web
  and all that geeky stuffs you're probably here to read ;).

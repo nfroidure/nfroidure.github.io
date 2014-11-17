@@ -14,5 +14,5 @@ location=US
 
 ## Blog
 
-Find on this blog many developper resources i find usefull to share and more
+Find on this blog many developer resources I find useful to share and more
  informations on my projects.

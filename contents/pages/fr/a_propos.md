@@ -18,13 +18,13 @@ location=FR
 
 ## Présentation
 
-Développeur web passionné par JavaScript je me définirai volontiers comme
+Développeur web passionné par JavaScript je me définirais volontiers comme
  un travailleur acharné et infatigable. J'aime le travail bien fait.
 
 Je ne suis pas un champion des relations sociales ou de la communication, mais
  mes amis apprécient ma franchise, ma droiture et ma spontanéité.
 
-En dehors du web, je suis un père de famille comblé. J'ai un penchant pour la
+En dehors du Web, je suis un père de famille comblé. J'ai un penchant pour la
  nature (jardinage, animaux) que je respecte sans être politiquement engagé,
  je me considère comme un écologiste raisonné, un citoyen du monde et un
  humaniste.
@@ -37,5 +37,5 @@ Bref, mon contact est rugueux, mais enrichissant, secouant, mais ouvert. J'aime
  contribution ou apprendre de nouvelles choses. C'est pour cela que ce blog
  existe, c'est aussi pour ça que vous allez l'aimer !
 
-A bientôt !
+À bientôt !
 
