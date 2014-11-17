@@ -22,6 +22,7 @@ apt-get install imagemagick
 brew install imagemagick
 ```
 
-## Licence
-The assets, graphics, illustrations and text contents are copyright myself. The
- code is licenced under the MIT licence.
+## License
+The assets, graphics, illustrations and text contents are © myself. The
+ code is licensed under the MIT license.
+ 

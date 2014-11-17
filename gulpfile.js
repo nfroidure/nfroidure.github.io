@@ -154,7 +154,7 @@ gulp.task('build_html', function(cb) {
 
   var mdFilter = g.filter('**/*.md');
 
-  var contentStream = gulp.src(conf.src.content + '/**/*.{html,md,glloq}', {buffer: buffer || true}) // Streams not supported yet
+  var contentStream = gulp.src(conf.src.content + '/**/*.{html,md}', {buffer: buffer || true}) // Streams not supported yet
     .pipe(g.mdvars())
     .pipe(g.vartree({
       root: tree,
