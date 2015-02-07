@@ -161,7 +161,7 @@ gulp.task('build_html', function(cb) {
       index: 'index',
       parentProp: 'parent',
       childsProp: 'childs',
-      sortProp: 'shortTitle',
+      sortProp: 'published',
       sortDesc: true
     }))
     .pipe(mdFilter)
