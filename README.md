@@ -22,6 +22,9 @@ apt-get install imagemagick
 brew install imagemagick --with-librsvg
 ```
 
+## Publishing
+To publish a new version of the blog, just run `gulp publish`
+
 ## License
 The assets, graphics, illustrations and text contents are © myself. The
  code is licensed under the MIT license.
