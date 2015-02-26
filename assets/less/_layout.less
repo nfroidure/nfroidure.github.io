@@ -78,12 +78,33 @@ div.wrapper { clear:both; float:left; width:100%; }
 /* S : 1 column : */
 @media screen and (max-width: (@M + @gutter * 2 - @RWDSec)) {
 	head link { content:'S'; }
+	.ia-header, .ia-header.ia-header--reduced {
+  	.ia-header_title {
+		  h1 {
+			  font-size: @basefontsize*1.5;
+			  line-height: @vrythm*2;
+		  }
+		}
+	}
 	.ia-menu {
 		.ia-menu__title {
 			font-size: @basefontsize*5;
 			line-height: @vrythm*5;
 		}
 	}
+  .ia-header:not(.ia-header--reduced) {
+  	.ia-flags {
+  	  margin: @vrythm*2 0 0 0;
+  	}
+  }
+	.ia-flags {
+	  .ia-flags__body {
+		  text-align:center;
+		}
+	}
+  .ia-content h2 { font-size:@basefontsize*2; }
+  .ia-content h3 { font-size:@basefontsize*1.8; }
+  .ia-content p { text-align:left; }
 }
 /* n+1 columns */
 @media screen and (min-width: (@M + @gutter * 2)) {
