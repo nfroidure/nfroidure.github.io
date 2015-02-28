@@ -14,6 +14,7 @@ var gulp = require('gulp')
   , favicons = require('favicons')
   , rem2px = require('rework-rem2px')
   , queryless = require('css-queryless')
+  , filter = require('streamfilter')
 ;
 
 // Helper to wait for n gulp pipelines
@@ -62,24 +63,9 @@ gulp.task('build_fonts', function(cb) {
       'fontName': 'iconsfont',
       'appendCodepoints': true,
       'fontHeight': 90,
-      'normalize': true
+      'normalize': true,
+      'hint': !!g.util.env.hint 
     }))
-      .pipe(g.cond(g.util.env.hint,
-        function() {
-         var input = new Stream.PassThrough({objectMode: true});
-          var ttfFilter = input.pipe(g.filter('*.ttf'));
-          var output = ttfFilter.pipe(g.spawn({
-            cmd: '/bin/sh',
-            args: [
-              '-c',
-              'cat | ttfautohint /dev/stdin /dev/stdout | cat'
-          ]})).pipe(ttfFilter.restore())
-          // Seems that gulp-filter is not streams2 ready
-          .pipe(new Stream.PassThrough({objectMode: true}));
-          return new Duplexer({objectMode: true},
-            input,
-            output);
-        }))
     .pipe(gulp.dest(conf.build.fonts))
     .once('end', cb);
 });
@@ -152,7 +138,9 @@ gulp.task('build_html', function(cb) {
     autoescape: true
   });
 
-  var mdFilter = g.filter('**/*.md');
+  var mdFilter = filter(function(file, enc, cb) {
+    cb(file.path.indexOf('.md') === file.path.length - 4);
+  }, {objectMode: true, restore: true});
 
   var contentStream = gulp.src(conf.src.content + '/**/*.{html,md}', {buffer: buffer || true}) // Streams not supported yet
     .pipe(g.mdvars())
@@ -175,7 +163,7 @@ gulp.task('build_html', function(cb) {
       smartypants: true
     }))
     .pipe(g.rename({extname: '.html'}))
-    .pipe(mdFilter.restore())
+    .pipe(mdFilter.restore)
     .once('end', function() {
       var rootItems = {};
       // Registering languages sections

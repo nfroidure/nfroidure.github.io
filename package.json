@@ -27,7 +27,6 @@
     "gulp-clean": "latest",
     "gulp-concat": "latest",
     "gulp-cond": "latest",
-    "gulp-filter": "^2.0.0",
     "gulp-iconfont": "latest",
     "gulp-imagemin": "latest",
     "gulp-jshint": "latest",
@@ -54,5 +53,8 @@
     "streamqueue": "0.1.1",
     "tiny-lr": "0.1.5",
     "varstream": "latest"
+  },
+  "dependencies": {
+    "streamfilter": "^1.0.1"
   }
 }
