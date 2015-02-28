@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{% if metadata.frontmatter %}---
+permalink: {{ metadata.frontmatter.permalink }}
+---
+{% endif %}<!DOCTYPE html>
 <html class="no-js" lang="{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}">
 <head>
     <meta charset="utf-8">

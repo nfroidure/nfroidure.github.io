@@ -142,8 +142,18 @@ gulp.task('build_html', function(cb) {
     cb(file.path.indexOf('.md') === file.path.length - 4);
   }, {objectMode: true, restore: true});
 
+  var draftFilter = filter(function(file, enc, cb) {
+    cb(file.metas.draft);
+  }, {objectMode: true, restore: false});
+
+  var ghostFilter = filter(function(file, enc, cb) {
+    cb(file.metas.ghost);
+  }, {objectMode: true, restore: true});
+
   var contentStream = gulp.src(conf.src.content + '/**/*.{html,md}', {buffer: buffer || true}) // Streams not supported yet
     .pipe(g.mdvars())
+    .pipe(draftFilter)
+    .pipe(ghostFilter)
     .pipe(g.vartree({
       root: tree,
       index: 'index',
@@ -152,6 +162,7 @@ gulp.task('build_html', function(cb) {
       sortProp: 'published',
       sortDesc: true
     }))
+    .pipe(ghostFilter.restore)
     .pipe(mdFilter)
     .pipe(g.marked({
       gfm: true,
