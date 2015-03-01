@@ -39,7 +39,7 @@ Browser related works are published under GNU/GPL licence.
 ### HTML5 games
 
 I also build HTML5 games for fun and skills, like :
-* [Sumuraÿ](http://sumuray.com/)
+* [Sumuraÿ](http://sumuray.insertafter.com/)
 * [Memory](http://memory.insertafter.com/)
 * [Break'It](http://breakit.elitwork.com/)
 * [Tank Arena](http://tank.elitwork.com/) (work in progress).
