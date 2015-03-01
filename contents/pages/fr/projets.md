@@ -38,7 +38,8 @@ J'ai créé plusieurs extensions pour Firefox, Chrome ou Opéra:
 ### Jeux HTML5
 
 Pour le plaisir, je crée des jeux HTML5 que vous pouvez retrouver sur les
- différents marketplaces ([Google Chrome Web Store](https://chrome.google.com/webstore/detail/sumuray/afjmipblhemkknjilcfkcnaflgllhgph),
+ différents marketplaces ---Google Chrome Web Store---
+  ([plus maintenant](https://twitter.com/nfroidure/status/571987728352612352)),
  [Firefox Marketplace](https://marketplace.firefox.com/app/sumura%C3%BF/)...).
  Je parle régulièrement de mes [projets de jeux HTML5](http://www.insertafter.com/articles,jeux_html5.html) sur ce blog.
 
