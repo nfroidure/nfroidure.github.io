@@ -15,7 +15,7 @@ disqus=true
 <p>Une nouvelle spécification permet d&#039;optimiser l&#039;affichage des jeux HTML5 en synchronisant ces derniers avec le moteur graphique du navigateur. Petit exemple de mise en oeuvre avec notre casse brique.</p>
 
 <p>Le <a hreflang="&quot;&quot;en&quot;&quot;" title="&quot;&quot;Voir son code sur GitHub" href="https://github.com/nfroidure/CasseBriques">code de notre casse brique</a> consiste en une fonction appelée régulièrement (toutes les 30ms) par la fonction setTimeout.
-    J&#039;expliquais dans l&#039;<a title="&quot;&quot;Voir l&#039;article en question" href="http://www.insertafter.com/articles-html5_casse_brique.html">article dédié au développement du casse brique</a> que cette manière de faire permettait de faire
+    J&#039;expliquais dans l&#039;<a title="&quot;&quot;Voir l&#039;article en question" href="html5_casse_brique.html">article dédié au développement du casse brique</a> que cette manière de faire permettait de faire
     ralentir le jeu en cas de difficulté du navigateur à afficher les différents dessins a temps.</p>
 <p>Le problème est donc que la vitesse ressentie est différente en fonction du matériel de notre utilisateur. Elle n&#039;ira pas au delà de 30ms, mais peut aller bien moins vite sur du matériel ancien. C&#039;est ici que requestAnimationFrame intervient.
     L&#039;idée est de synchroniser l&#039;affichage du jeu dans le canvas de façon à ce que le navigateur puisse optimiser au mieux sa gestion.</p>
@@ -30,4 +30,4 @@ disqus=true
     La fonction est cependant toujours appelée, mais je n&#039;y peux pas grand chose.</p>
 <p>J&#039;avoue que je n&#039;ai pas vu de forte différences entre la version avec et la version sans requestAnimationFrame, cela est sûrement dû à mon PC assez musclé ;). Je n&#039;ai pas encore testé sur mobile, j&#039;imagine que la différence sera plus
     nette. Je vais certainement réutiliser le même patron de conception pour Tank Arena dès que j&#039;aurai un peu plus de temps. La suite au prochain numéro ;).</p>
-<p>PS&#0160;: Et ce prochain numéro est <a title="&quot;&quot;Voir l&#039;article sur le support de l&#039;accéléromètre dans le casse brique" href="articles-accelerometre_casse_briques.html">le support de l&#039;accéléromètre</a>.</p>
+<p>PS&#0160;: Et ce prochain numéro est <a title="&quot;&quot;Voir l&#039;article sur le support de l&#039;accéléromètre dans le casse brique" href="accelerometre_casse_briques.html">le support de l&#039;accéléromètre</a>.</p>

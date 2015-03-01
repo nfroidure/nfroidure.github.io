@@ -11,13 +11,13 @@ document.links.*.link=Flux de mes billets (format ATOM)
 document.links.*.link_tx=S'abonner
 # Site modules
 ## Book
-siteModules.book.l_href=articles-livre_javascript
+siteModules.book.l_href=livre_javascript
 siteModules.book.l_link=Livre JavaScript
 siteModules.book.l_link_tx=Voir mon billet à propos de ce livre
 siteModules.book.l_content=Vous aimez le contenu de ce blog ? Découvrez JavaScript, un livre pour apprendre ou ré-apprendre JavaScript. 
 siteModules.book.l_img_src=/images/illustrations/livre-javascript.png
 siteModules.book.l_img_alt=Couverture du livre JavaScript, le guide complet.
-siteModules.book.l_read_href=articles-livre_javascript
+siteModules.book.l_read_href=livre_javascript
 siteModules.book.l_read_link=En savoir plus
 siteModules.book.l_read_link_tx=Lire mon retour d'expérience sur la rédaction du livre JavaScript
 ## Articles

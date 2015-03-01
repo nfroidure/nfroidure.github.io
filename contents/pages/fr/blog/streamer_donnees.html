@@ -22,7 +22,7 @@ disqus=true
 <p>La seule solution qui se présente aux développeurs est donc d&#039;attendre sagement le chargement complet de la ressource afin de pouvoir la parser grâce à la bien connue méthode JSON.parse(data).</p>
 <p>Bref, JSon n&#039;est pas streamable, du moins, pas facilement puisqu&#039;il faudrait recréer un parseur qui serait probablement peu performant étant donnée la compléxité de JSon.</p>
 <h3>Les formats streamables</h3>
-<p>J&#039;ai déjà parlé ici de <a title="En savoir plus sur les VarStreams" href="articles-remplacer_json_par_varstream.html">VarStream</a>, mais vous seriez surpris de savoir combien d&#039;autres formats son supérieurs sur ce point à JSon. Parlons par
+<p>J&#039;ai déjà parlé ici de <a title="En savoir plus sur les VarStreams" href="remplacer_json_par_varstream.html">VarStream</a>, mais vous seriez surpris de savoir combien d&#039;autres formats son supérieurs sur ce point à JSon. Parlons par
     exemple de <acronym title="Comma Separated Values">CSV</acronym>. La plupart des données JSon sont finalement des données tabulaires qui pourraient tout aussi bien être représentées en CSV sans perte de sens, mais avec une taille réduite, et surtout,
     un format streamable. Mais on peut aussi parler de ce fameux HTML ou du simple texte qui sont également streamables facilement.</p>
 <h3>Pourquoi streamer ?</h3>
