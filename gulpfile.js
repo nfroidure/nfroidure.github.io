@@ -64,7 +64,7 @@ gulp.task('build_fonts', function(cb) {
       'appendCodepoints': true,
       'fontHeight': 90,
       'normalize': true,
-      'hint': !!g.util.env.hint 
+      'hint': !!g.util.env.hint
     }))
     .pipe(gulp.dest(conf.build.fonts))
     .once('end', cb);
@@ -140,15 +140,30 @@ gulp.task('build_html', function(cb) {
 
   var mdFilter = filter(function(file, enc, cb) {
     cb(file.path.indexOf('.md') === file.path.length - 4);
-  }, {objectMode: true, restore: true});
+  }, {objectMode: true, restore: true, passtrough: true});
 
   var draftFilter = filter(function(file, enc, cb) {
     cb(file.metas.draft);
-  }, {objectMode: true, restore: false});
+  }, {objectMode: true, restore: false, passtrough: true});
 
   var ghostFilter = filter(function(file, enc, cb) {
     cb(file.metas.ghost);
-  }, {objectMode: true, restore: true});
+  }, {objectMode: true, restore: true, passtrough: true});
+
+  var redirects = g.clone.sink();
+  var redirectsFilter = filter(function(file, enc, cb) {
+    // filter blog posts only and before 2015 and add their old name
+    // no way to make redirects
+    if(
+      file.metas.disqus && file.metas.published &&
+      (new Date(file.metas.published)).getTime() < (new Date('2015-01-01')).getTime()
+    ) {
+      file.path = file.base + ('fr' === file.metas.lang ? 'articles' : 'blog') +
+        '-' + file.metas.name + '.html';
+      return cb(false);
+    }
+    cb(true);
+  }, {objectMode: true});
 
   var contentStream = gulp.src(conf.src.content + '/**/*.{html,md}', {buffer: buffer || true}) // Streams not supported yet
     .pipe(g.mdvars())
@@ -175,6 +190,9 @@ gulp.task('build_html', function(cb) {
     }))
     .pipe(g.rename({extname: '.html'}))
     .pipe(mdFilter.restore)
+    .pipe(redirects)
+    .pipe(redirectsFilter)
+    .pipe(redirects.tap())
     .once('end', function() {
       var rootItems = {};
       // Registering languages sections

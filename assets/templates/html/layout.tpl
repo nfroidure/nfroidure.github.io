@@ -9,6 +9,7 @@ permalink: {{ metadata.frontmatter.permalink }}
     <meta name="viewport" content="width=device-width">
     <title>{{conf.name}}{% if metadata.title %} : {{ metadata.title }}{% endif %}</title>
     <meta name="description" content="{% if metadata.description %}{{ metadata.description }}{% else %}{{conf.description}}{% endif %}">
+    <link rel="bookmark" href="{{conf.baseURL}}{{metadata.path}}{{metadata.name}}.html" />
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <meta name="robots" content="index,follow">
     <link rel="stylesheet" href="/css/main.css">
@@ -111,7 +112,7 @@ permalink: {{ metadata.frontmatter.permalink }}
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-21477946-7', 'insertafter.com');
+      ga('create', 'UA-21477946-7', '{{conf.domain}}');
       ga('send', 'pageview');
 
     </script>

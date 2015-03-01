@@ -55,6 +55,7 @@
     "varstream": "latest"
   },
   "dependencies": {
+    "gulp-clone": "^1.0.0",
     "streamfilter": "^1.0.1"
   }
 }
