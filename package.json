@@ -56,6 +56,8 @@
   },
   "dependencies": {
     "gulp-clone": "^1.0.0",
-    "streamfilter": "^1.0.1"
+    "streamfilter": "^1.0.1",
+    "tiny-lr": "^0.1.5",
+    "yargs": "^3.4.4"
   }
 }

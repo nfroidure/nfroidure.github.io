@@ -1,21 +1,26 @@
-var gulp = require('gulp')
-  , VarStream = require('varstream')
-  , Fs = require('fs')
-  , Path = require('path')
-  , Nunjucks = require('nunjucks')
-  , express = require('express')
-  , tinylr = require('tiny-lr')
-  , rimraf = require('rimraf')
-  , buildBranch = require('buildbranch')
-  , Stream = require('stream')
-  , StreamQueue = require('streamqueue')
-  , Duplexer = require('plexer')
-  , g = require('gulp-load-plugins')()
-  , favicons = require('favicons')
-  , rem2px = require('rework-rem2px')
-  , queryless = require('css-queryless')
-  , filter = require('streamfilter')
-;
+var Fs = require('fs');
+var Path = require('path');
+
+var Nunjucks = require('nunjucks');
+var express = require('express');
+var rimraf = require('rimraf');
+var args = require('yargs').argv;
+
+var buildBranch = require('buildbranch');
+var favicons = require('favicons');
+
+var VarStream = require('varstream');
+
+var Stream = require('stream');
+var StreamQueue = require('streamqueue');
+var Duplexer = require('plexer');
+var filter = require('streamfilter');
+
+var gulp = require('gulp');
+var g = require('gulp-load-plugins')();
+
+var rem2px = require('rework-rem2px');
+var queryless = require('css-queryless');
 
 // Helper to wait for n gulp pipelines
 function waitEnd(total, cb, n) {
@@ -27,12 +32,15 @@ function waitEnd(total, cb, n) {
 }
 
 // Loading global options (files paths)
-var conf = VarStream.parse(Fs.readFileSync(__dirname + '/config.dat'))
-  , server
-  , prod = !!g.util.env.prod
-  , noreq = !!g.util.env.noreq
-  , buffer = !g.util.env.stream
-;
+var conf = VarStream.parse(Fs.readFileSync(__dirname + '/config.dat'));
+
+// Reading args options
+var prod = !!args.prod;
+var lr = (!args.nolr) && !prod;
+var watch = (!args.nowatch) && !prod;
+var buffer = !args.stream;
+var browser = (!args.nobro) && !prod;
+var httpServer = (!args.nosrv) && !prod;
 
 if(!prod) {
   // Finding the server IP
@@ -74,19 +82,19 @@ gulp.task('build_fonts', function(cb) {
 gulp.task('build_images', function(cb) {
   var end = waitEnd(2, cb);
   gulp.src(conf.src.images + '/**/*.svg', {buffer: buffer})
-    .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/**/*.svg')))
+    .pipe(g.cond(watch, g.watch.bind(g, conf.src.images + '/**/*.svg')))
     .pipe(g.cond(prod, g.svgmin, function() {
       end();
-      return g.livereload(server);
+      return g.livereload();
     }))
     .pipe(gulp.dest(conf.build.images))
     .once('end', end);
 
   new StreamQueue({objectMode: true},
     gulp.src(conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}', {buffer: buffer})
-      .pipe(g.cond(!prod, g.watch.bind(g, conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}'))),
+      .pipe(g.cond(watch, g.watch.bind(g, conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}'))),
     gulp.src(conf.src.images + '/favicon.svg', {buffer: buffer})
-      .pipe(g.cond(!prod, g.watch.bind(g, conf.src.images + '/favicon.svg')))
+      .pipe(g.cond(watch, g.watch.bind(g, conf.src.images + '/favicon.svg')))
       // https://groups.google.com/forum/#!topic/nodejs/SxNKLclbM5k
       .pipe(g.spawn({
         cmd: '/bin/sh',
@@ -98,11 +106,11 @@ gulp.task('build_images', function(cb) {
           return 'favicon.png';
         }
     }))
-  ).pipe(g.cond(prod, function() {
-      return g.streamify(g.imagemin());
-    }, function() {
+  )
+    .pipe(g.cond(prod, g.streamify.bind(null, g.imagemin)))
+    .pipe(g.cond(lr, function() {
       end();
-      return g.livereload(server);
+      return g.livereload();
     }))
     .pipe(gulp.dest(conf.build.images))
     .once('end', end);
@@ -114,7 +122,7 @@ gulp.task('build_styles', function(cb) {
   gulp.src(conf.src.less + '/main.less', {buffer: buffer})
     .pipe(g.streamify((g.less())))
     .pipe(g.streamify((g.autoprefixer())))
-    .pipe(g.cond(prod, g.minifyCss, g.livereload.bind(null, server)))
+    .pipe(g.cond(prod, g.minifyCss, g.livereload))
     .pipe(gulp.dest(conf.build.css))
     .once('end', cb);
 });
@@ -128,11 +136,14 @@ gulp.task('build_scripts', function(cb) {
 
 // HTML
 gulp.task('build_html', function(cb) {
-  var nunjucks = Nunjucks
-    , tree = {}
-    , markedFiles = []
-    , dest = gulp.dest(conf.build.root)
-  ;
+  var nunjucks = Nunjucks;
+  var tree = {};
+  var markedFiles = [];
+  var dest = gulp.dest(conf.build.root);
+
+  if(watch) {
+    dest.pipe(g.livereload());
+  }
 
   nunjucks.configure(conf.src.templates, {
     autoescape: true
@@ -153,9 +164,9 @@ gulp.task('build_html', function(cb) {
   var redirects = g.clone.sink();
   var redirectsFilter = filter(function(file, enc, cb) {
     // filter blog posts only and before 2015 and add their old name
-    // no way to make redirects
+    // to make dumb redirects.
     if(
-      file.metas.disqus && file.metas.published &&
+      prod && file.metas.disqus && file.metas.published &&
       (new Date(file.metas.published)).getTime() < (new Date('2015-01-01')).getTime()
     ) {
       file.path = file.base + ('fr' === file.metas.lang ? 'articles' : 'blog') +
@@ -237,7 +248,9 @@ gulp.task('clean', function(cb) {
 // The build task
 gulp.task('build', ['clean', 'build_fonts', 'build_images', 'build_styles',
   'build_html'], function(cb) {
-  if(!prod) {
+
+  // Files watch
+  if(watch) {
 
     gulp.watch([
       conf.src.js + '/frontend/**/*.js',
@@ -247,15 +260,27 @@ gulp.task('build', ['clean', 'build_fonts', 'build_images', 'build_styles',
     gulp.watch([conf.src.less + '/**/*.less'], ['build_styles']);
 
     gulp.watch([
-      conf.src.content + '/**/*.md',
+      conf.src.content + '/**/*',
       conf.src.templates + '/**/*.tpl'
     ], ['build_html']);
 
     gulp.watch([conf.src.icons + '/**/*.svg'], ['build_fonts']);
 
-    require('open')(conf.baseURL+'/index.html');
-
   }
+
+  // Livereload
+  if(lr) {
+    console.log('Starting livereload.')
+    g.livereload.listen({
+      basePath: conf.build.root
+    });
+  }
+
+  // Open the browser
+  if(browser) {
+    require('open')(conf.baseURL + '/index.html');
+  }
+
   cb();
 });
 
@@ -284,17 +309,16 @@ gulp.task('publish', ['ensureprod', 'ghpages']);
 // Dev env
 gulp.task('server', function(cb) {
   // Starting the dev static server
-  var app = express();
-  app.use(express.query())
-    .use(express.static(Path.resolve(__dirname, conf.build.root)))
-    .listen(8080, function() {
-      g.util.log('Dev server listening on %d', 35729);
-      cb();
-    });
-  server = tinylr();
-  server.listen(35729);
+  if(httpServer) {
+    var app = express();
+    app.use(express.query())
+      .use(express.static(Path.resolve(__dirname, conf.build.root)))
+      .listen(8080, function() {
+        g.util.log('Dev server listening on %d', 35729);
+        cb();
+      });
+  }
 });
 
 // The default task
 gulp.task('default', ['server', 'build'].slice(prod ? 1 : 0));
-
