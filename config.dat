@@ -5,6 +5,7 @@ domain=insertafter.com
 baseURL=http://insertafter.com
 lang=fr
 location=FR
+copyright.start=2012
 
 # Src directories
 src.content=./contents/pages

@@ -141,6 +141,9 @@ gulp.task('build_html', function(cb) {
   var markedFiles = [];
   var dest = gulp.dest(conf.build.root);
 
+  // Setting copyright end
+  conf.copyright.end = (new Date()).getFullYear();
+
   if(watch) {
     dest.pipe(g.livereload());
   }

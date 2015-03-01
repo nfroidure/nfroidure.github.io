@@ -102,7 +102,7 @@ permalink: {{ metadata.frontmatter.permalink }}
               <span>LinkedIn</span>
             </a>
           </span>
-          - © Nicolas Froidure 2012 - 2014
+          - © Nicolas Froidure {{ conf.copyright.start }} - {{ conf.copyright.end }}
         </p>
     </footer>
     <script src="{{conf.baseURL}}/js/script.js"></script>
