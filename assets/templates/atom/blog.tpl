@@ -6,9 +6,8 @@
 
 		<entry>
 			<title>{{post.title}}</title>
-			<link href="{{post.path}}{{post.name}}.atom" />
-			<link rel="alternate" type="text/html" href="{{post.path}}{{post.name}}.html"/>
-			<updated>{{post.published}}</updated>
+			<link type="text/html" href="{{post.path}}{{post.name}}.html"/>
+			<updated>{% if post.pusblished %}{{ post.published }}{% else %}{{ conf.build.created }}{% endif %}</updated>
 			<summary>{{post.description}}</summary>
 		</entry>
 

@@ -101,7 +101,7 @@ permalink: {{ metadata.frontmatter.permalink }}
              class="ia-social__item ia-social__item--linkedin">
               <span>LinkedIn</span>
             </a>
-            <a href="/en/blog/index.atom" title="Don't miss my blog posts"
+            <a href="/{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}/blog/index.atom" title="Don't miss my blog posts"
              class="ia-social__item ia-social__item--feed">
               <span>LinkedIn</span>
             </a>

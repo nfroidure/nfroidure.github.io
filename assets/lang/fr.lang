@@ -3,12 +3,12 @@ description=Espace personnel de Nicolas Froidure.
 # Feeds
 document.links.+.type=application/rss+xml
 document.links.*.rel=alternate
-document.links.*.url=articles.rss
+document.links.*.url=/fr/blog/index.rss
 document.links.*.link=Flux de mes billets (format RSS)
 document.links.*.link_tx=S'abonner
 document.links.+.type=application/atom+xml
 document.links.*.rel=alternate
-document.links.*.url=articles.atom
+document.links.*.url=/fr/blog/index.atom
 document.links.*.link=Flux de mes billets (format ATOM)
 document.links.*.link_tx=S'abonner
 # Site modules
@@ -54,7 +54,7 @@ siteModules.community.l_list.+.url=https://plus.google.com/114540297266340224881
 siteModules.community.l_list.*.link=Google +
 siteModules.community.l_list.*.link_tx=Ajoutez-moi à vos cercles Google Plus
 siteModules.community.l_list.*.class=google
-siteModules.community.l_list.+.url=articles.atom
+siteModules.community.l_list.+.url=/fr/blog/index.atom
 siteModules.community.l_list.*.link=Flux de syndication
 siteModules.community.l_list.*.link_tx=Suivez la publication de mes billets sur mon blog
 siteModules.community.l_list.*.class=atom

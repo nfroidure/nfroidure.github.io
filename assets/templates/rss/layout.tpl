@@ -6,7 +6,7 @@
 		<description>{% if metadata.description %}{{ metadata.description }}{% else %}{{conf.description}}{% endif %}</description>
 		<link>{{conf.baseURL}}{{metadata.path}}{{metadata.name}}.html</link>
 		<lastBuildDate>{{ conf.build.created }}</lastBuildDate>
-		<pubDate>{% if metadata.pusblished %} {{ metadata.published }} {% else %} {{ conf.build.created }} {% endif %}</pubDate>
+		<pubDate>{% if metadata.pusblished %}{{ metadata.published }}{% else %}{{ conf.build.created }}{% endif %}</pubDate>
 		<ttl>1800</ttl>
 
 		{% block body %}{% endblock %}

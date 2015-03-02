@@ -3,12 +3,12 @@ description=Nicolas Froidure's Homepage
 # Feeds
 document.links.+.type=application/rss+xml
 document.links.*.rel=alternate
-document.links.*.url=blog.rss
+document.links.*.url=/en/blog/index.rss
 document.links.*.link=Blog feed ( RSS)
 document.links.*.link_tx=Suscribe
 document.links.+.type=application/atom+xml
 document.links.*.rel=alternate
-document.links.*.url=blog.atom
+document.links.*.url=/en/blog/index.atom
 document.links.*.link=Blog feed (ATOM)
 document.links.*.link_tx=Suscribe
 # Site modules
@@ -44,7 +44,7 @@ siteModules.community.l_list.+.url=https://plus.google.com/114540297266340224881
 siteModules.community.l_list.*.link=Google +
 siteModules.community.l_list.*.link_tx=Let me enter your Google Plus circles !
 siteModules.community.l_list.*.class=google
-siteModules.community.l_list.+.url=articles.atom
+siteModules.community.l_list.+.url=/en/blog/index.atom
 siteModules.community.l_list.*.link=Blog feed
 siteModules.community.l_list.*.link_tx=Don't miss a post !
 siteModules.community.l_list.*.class=atom

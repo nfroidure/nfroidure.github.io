@@ -216,11 +216,12 @@ gulp.task('build_html', function(cb) {
       });
       markedFiles.forEach(function(file) {
         (file.metas.types || ['html']).forEach(function(type, i, types) {
+          var curFile = file;
           if(i > 0) {
-            file = file.clone();
+            curFile = file.clone();
           }
           if('html' !== type) {
-            file.path = file.path.substr(0, file.path.length - 4) + type;
+            curFile.path = curFile.path.substr(0, curFile.path.length - 4) + type;
           }
           var nunjucksOptions = {
             env: conf.build.root,
@@ -228,24 +229,24 @@ gulp.task('build_html', function(cb) {
             tree: tree,
             conf: conf,
             type: type,
-            root: rootItems[file.metas.lang],
-            metadata: file.metas,
-            content: file.contents.toString('utf-8')
+            root: rootItems[curFile.metas.lang],
+            metadata: curFile.metas,
+            content: curFile.contents.toString('utf-8')
           };
           // Render the template
-          file.contents = Buffer(nunjucks.render(
+          curFile.contents = Buffer(nunjucks.render(
             type + '/' + (nunjucksOptions.metadata.template || 'page') + '.tpl',
             nunjucksOptions
           ));
           // Save it.
-          dest.write(file);
+          dest.write(curFile);
           // Still hacky stuffs for old endpoints
           if('html' !== type) {
-            file = file.clone();
-            file.path = file.base + ('fr' === file.metas.lang ? 'articles' : 'blog') +
+            curFile = curFile.clone();
+            curFile.path = curFile.base + ('fr' === curFile.metas.lang ? 'articles' : 'blog') +
               '.' + type;
             // Save it.
-            dest.write(file);
+            dest.write(curFile);
           }
         });
       });

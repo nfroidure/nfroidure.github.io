@@ -6,7 +6,7 @@
 	<subtitle>{% if metadata.description %}{{ metadata.description }}{% else %}{{conf.description}}{% endif %}</subtitle>
 	<link href="{{conf.baseURL}}{{metadata.path}}{{metadata.name}}.atom" rel="self" />
 	<link href="{{conf.baseURL}}{{metadata.path}}{{metadata.name}}.html" />
-	<updated>{% if metadata.pusblished %} {{ metadata.published }} {% else %} {{ conf.build.created }} {% endif %}</updated>
+	<updated>{% if metadata.pusblished %}{{ metadata.published }}{% else %}{{ conf.build.created }}{% endif %}</updated>
 
 	{% block body %}{% endblock %}
  
