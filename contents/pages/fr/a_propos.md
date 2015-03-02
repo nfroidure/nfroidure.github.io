@@ -1,8 +1,7 @@
 <!--VarStream
 title=À propos de moi
-description=Découvrez plus d''informations sur mon parcours, mes expériences,\
- mes projets, mes centres d'intérêts et mes langages de programmation de\
- prédilection.
+description=Découvrez mon côté mégalo. Cette description n'engage que moi et\
+ ne saurait être le reflet de l'avis qu'ont mes proches de moi :).
 shortTitle=À propos
 shortDesc=Learn more about me
 keywords.+=JavaScript
@@ -29,13 +28,8 @@ En dehors du Web, je suis un père de famille comblé. J'ai un penchant pour la
  je me considère comme un écologiste raisonné, un citoyen du monde et un
  humaniste.
 
-Il existe un tas de sujets sur lesquels ceux qui me connaissent savent bien
- qu'il ne faut pas me lancer. D'ailleurs, j'éviterai d'en parler ici ;).
-
-Bref, mon contact est rugueux, mais enrichissant, secouant, mais ouvert. J'aime
- beaucoup les échanges, surtout quand je pense pouvoir apporter une
- contribution ou apprendre de nouvelles choses. C'est pour cela que ce blog
- existe, c'est aussi pour ça que vous allez l'aimer !
+Je suis ouvert aux échanges que je considère comme une façon de confronter mon
+ avis à la communauté et finalement de mieux les reconstruire. C'est pour cela
+ que ce blog existe, c'est aussi pour ça que vous allez l'aimer !
 
 À bientôt !
-

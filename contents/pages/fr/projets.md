@@ -25,23 +25,28 @@ Je suis particulièrement intéressé par les parseurs (texte ou binaires), les
  streams, la création de plugins Gulp et Express/Connect.
 
 Vous pouvez retrouver ces derniers sur
- [NPM](https://www.npmjs.org/~nfroidure "Voir mon profil NPM")
+ [NPM](https://www.npmjs.org/~nfroidure "Voir mon profil NPM").
+
+### Applications Web
+
+Pour rester à jour et pour le fun, je crée régulièrement des applications web
+ dont quelques jeux HTML5 :
+* [Sumuraÿ](http://sumuray.insertafter.com/) ;
+* [Memory](http://memory.insertafter.com/) ;
+* [Break'It](http://breakit.insertafter.com/) ;
+* [Tank Arena](http://tank.elitwork.com/) (en travaux).
+
+Et d'autres choses un peu bizarres :
+* [WEB MIDI Karaoke player](http://karaoke.insertafter.com/) ;
+* [Hexadecimal Editor](http://hexa.insertafter.com/).
 
 ### Extensions Firefox / Chrome / Opéra
 
 J'ai créé plusieurs extensions pour Firefox, Chrome ou Opéra:
 * [KGen](http://kgen.elitwork.com/accueil.html) ;
 * [BBComposer](http://bbcomposer.elitwork.com/) ;
-* [BugMeBack](https://github.com/nfroidure/BugMeBack)
+* [BugMeBack](https://github.com/nfroidure/BugMeBack) ;
 * et [CanImage](http://canimage.elitwork.com/accueil.html)).
-
-### Jeux HTML5
-
-Pour le plaisir, je crée des jeux HTML5 que vous pouvez retrouver sur les
- différents marketplaces ---Google Chrome Web Store---
-  ([plus maintenant](https://twitter.com/nfroidure/status/571987728352612352)),
- [Firefox Marketplace](https://marketplace.firefox.com/app/sumura%C3%BF/)...).
- Je parle régulièrement de mes [projets de jeux HTML5](http://www.insertafter.com/articles,jeux_html5.html) sur ce blog.
 
 ### Mais aussi
 
@@ -50,3 +55,6 @@ Vous trouverez sur mon [dépôt GitHub](http://github.com/nfroidure) tous les
  Principalement des bouts de codes qui me sont utiles et qui pourraient
  profiter à d'autres.
 
+Retrouvez également les [projets open-source](https://github.com/SimpliField)
+ que je gère dans le cadre de mon travail chez
+ [SimpliField](http://simplifield.com).

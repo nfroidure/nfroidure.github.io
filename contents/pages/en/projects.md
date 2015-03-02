@@ -1,6 +1,6 @@
 <!--VarStream
 title=Projects
-description=Discover my side projects
+description=Discover my side projects (web apps, games, add-ons etc.).
 shortTitle=Projects
 shortDesc=Learn more about my projects
 keywords.+=projects
@@ -21,8 +21,20 @@ I'm involved in a lot of different projects from add-ons to games, It's a good
 As as early NodeJS user, i made several modules i
  [published on NPM](https://www.npmjs.org/~nfroidure "View my NPM profile").
 
-In particular, i like make JavaScript parsers (CSV, VarStream, SVG...), stream
- utilities, Gulp plugins and Express/Connect middlewares.
+In particular, i like make JavaScript parsers (CSV, VarStream, SVG...), work
+ with streams, make Gulp plugins and Express/Connect middlewares.
+
+### Web apps
+
+I also build HTML5 games for fun and skills, like:
+* [Sumuraÿ](http://sumuray.insertafter.com/)
+* [Memory](http://memory.insertafter.com/)
+* [Break'It](http://breakit.insertafter.com/)
+* [Tank Arena](http://tank.elitwork.com/) (work in progress).
+
+And other wierd stuff:
+* [WEB MIDI Karaoke player](http://karaoke.insertafter.com/).
+* [Hexadecimal Editor](http://hexa.insertafter.com/).
 
 ### Firefox / Chrome / Opera add-ons
 
@@ -36,15 +48,10 @@ On my freetime i like to experiment add-ons coding on modern browsers. It's
 
 Browser related works are published under GNU/GPL licence.
 
-### HTML5 games
-
-I also build HTML5 games for fun and skills, like :
-* [Sumuraÿ](http://sumuray.insertafter.com/)
-* [Memory](http://memory.insertafter.com/)
-* [Break'It](http://breakit.insertafter.com/)
-* [Tank Arena](http://tank.elitwork.com/) (work in progress).
-
 ### And many more
 
-You can get the source of all my projects in [my GitHub home](https://github.com/nfroidure).
+You can get the source of my public projects in
+ [my GitHub home](https://github.com/nfroidure).
 
+You can also find [open-source projects](https://github.com/SimpliField) I made
+ for my current employer, [SimpliField](http://simplifield.com).
