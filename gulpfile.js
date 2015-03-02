@@ -142,6 +142,7 @@ gulp.task('build_html', function(cb) {
   var dest = gulp.dest(conf.build.root);
 
   // Setting copyright end
+  conf.build.created = (new Date()).toISOString();
   conf.copyright.end = (new Date()).getFullYear();
 
   if(watch) {
@@ -214,22 +215,31 @@ gulp.task('build_html', function(cb) {
         rootItems[item.lang] = item;
       });
       markedFiles.forEach(function(file) {
-        var nunjucksOptions = {
-          env: conf.build.root,
-          prod: prod,
-          tree: tree,
-          conf: conf,
-          root: rootItems[file.metas.lang],
-          metadata: file.metas,
-          content: file.contents.toString('utf-8')
-        };
-        // Render the template
-        file.contents = Buffer(nunjucks.render(
-          (nunjucksOptions.metadata.template || 'page') + '.tpl',
-          nunjucksOptions
-        ));
-        // Save it.
-        dest.write(file);
+        (file.metas.types || ['html']).forEach(function(type, i, types) {
+          if(i > 0) {
+            file = file.clone();
+          }
+          if('html' !== type) {
+            file.path = file.path.substr(0, file.path.length - 4) + type;
+          }
+          var nunjucksOptions = {
+            env: conf.build.root,
+            prod: prod,
+            tree: tree,
+            conf: conf,
+            type: type,
+            root: rootItems[file.metas.lang],
+            metadata: file.metas,
+            content: file.contents.toString('utf-8')
+          };
+          // Render the template
+          file.contents = Buffer(nunjucks.render(
+            type + '/' + (nunjucksOptions.metadata.template || 'page') + '.tpl',
+            nunjucksOptions
+          ));
+          // Save it.
+          dest.write(file);
+        });
       });
       dest.end();
       cb();

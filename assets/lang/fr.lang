@@ -1,3 +1,5 @@
+# Main
+description=Espace personnel de Nicolas Froidure.
 # Feeds
 document.links.+.type=application/rss+xml
 document.links.*.rel=alternate

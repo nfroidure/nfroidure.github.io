@@ -9,7 +9,7 @@ copyright.start=2012
 
 # Src directories
 src.content=./contents/pages
-^.templates=./assets/templates/html
+^.templates=./assets/templates
 ^.icons=./assets/icons
 ^.images=./assets/images
 ^.illustrations=./contents/illustrations

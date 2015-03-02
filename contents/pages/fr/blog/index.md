@@ -10,6 +10,9 @@ keywords.+=Froidure
 template=blog
 lang=fr
 location=FR
+types.+=html
+types.+=atom
+types.+=rss
 -->
 
 ## Blog

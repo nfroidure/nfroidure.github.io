@@ -1,3 +1,5 @@
+# Main
+description=Nicolas Froidure's Homepage
 # Feeds
 document.links.+.type=application/rss+xml
 document.links.*.rel=alternate
