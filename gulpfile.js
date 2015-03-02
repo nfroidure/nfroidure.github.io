@@ -239,6 +239,14 @@ gulp.task('build_html', function(cb) {
           ));
           // Save it.
           dest.write(file);
+          // Still hacky stuffs for old endpoints
+          if('html' !== type) {
+            file = file.clone();
+            file.path = file.base + ('fr' === file.metas.lang ? 'articles' : 'blog') +
+              '.' + type;
+            // Save it.
+            dest.write(file);
+          }
         });
       });
       dest.end();
