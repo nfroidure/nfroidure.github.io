@@ -1,6 +1,6 @@
 # Blog : InsertAfter.com
 
-This repo contains my future blog currently under construction.
+This repo contains my current home page. Feel free to contribute!
 
 ## Contributing
 
@@ -28,4 +28,4 @@ To publish a new version of the blog, just run `gulp publish`
 ## License
 The assets, graphics, illustrations and text contents are © myself. The
  code is licensed under the MIT license.
- 
+
