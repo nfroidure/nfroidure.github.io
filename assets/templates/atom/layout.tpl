@@ -6,7 +6,7 @@
 	<title>{{conf.name}}{% if metadata.title %} : {{ metadata.title }}{% endif %}</title>
 	<subtitle>{% if metadata.description %}{{ metadata.description }}{% else %}{{conf.description}}{% endif %}</subtitle>
 	<link href="{{conf.baseURL}}{{metadata.path}}{{metadata.name}}.atom" rel="self" type="application/atom+xml" />
-	<link href="{{conf.baseURL}}{{metadata.path}}{{metadata.name}}.html" rel"alternate" type="text/html" />
+	<link href="{{conf.baseURL}}{{metadata.path}}{{metadata.name}}.html" rel="alternate" type="text/html" />
 	<updated>{% if metadata.published %}{{ metadata.published }}{% else %}{{ conf.build.created }}{% endif %}</updated>
 
 	{% block body %}{% endblock %}
