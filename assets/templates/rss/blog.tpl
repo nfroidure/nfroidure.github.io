@@ -7,7 +7,7 @@
 		<item>
 		  <title>{{post.title}}</title>
 		  <description>{{post.description}}</description>
-		  <link>{{post.path}}{{post.name}}.html</link>
+		  <link>{{conf.baseURL}}{{post.path}}{{post.name}}.html</link>
 		  <pubDate>{{ post.published }}</pubDate>
 		</item>
 

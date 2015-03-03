@@ -278,7 +278,7 @@ Trade {
 
 <p>Là où notre schéma relationnel n'aurait nécessité aucune modification, nous allons devoir modifier
  notre schéma, modifier le code en conséquence, écrire et lancer des scripts de migration. Là où d'un
- côté, nous avions un DBA qui gérer les données, leur stockage et leur structure, nous avons
+ côté, nous avions un DBA qui gérait les données, leur stockage et leur structure, nous avons
  un développeur qui doit sans cesse repenser la façon dont les données sont stockées et utilisées.</p>
 
 <p>Il faut donc former des développeurs qui prennent la cohérence des données comme acquise à leurs
@@ -297,19 +297,20 @@ Trade {
  mieux à votre projet. Cependant, je peux vous donner les critères que j'appliquerai personellement.</p>
 
 <p>Dans quel cas ne pas utiliser MongoDB :</p>
+<ul>
   <li>c'est hype, ça output du JSON&nbsp;: c'est probablement la pire raison qui puisse vous faire choisir
    MongoDB. JSON n'est qu'un format et n'a rien à voir avec le coeur du problème posé pour le choix
    d'une base de données. C'est malheureusement trop souvent le cas et je pense que ceci sera la source
    de nombreuses accumulations de dette technique.</li>
   <li>pas besoin de scaler&nbsp;: si scaler n'est pas votre priorité, n'utilisez pas MongoDB. En effet, MongoDB
-   pose plus de problèmes qu'il n'en résout uniquement pour scaler. Si ce n'est pas une nécessité,</li>
-   préférez une base de données relationnelle qui vous simplifiera vos développements.</li>
+   pose plus de problèmes qu'il n'en résout uniquement pour scaler. Si ce n'est pas une nécessité,
+   préférez une base de données relationnelle qui simplifiera vos développements.</li>
   <li>je suis un n00b en SQL, Mongo est plus simple&nbsp;: si après cet article vous n'êtes pas convaincu, je ne
    peux pas faire grand-chose de plus. Mais pour forcer le trait, je pense que le meilleur moyen de bien
    utiliser MongoDB est justement d'avoir une bonne expérience des bases de données relationnelles.</li>
-  <li>features fortement changeantes&nbsp;: typiquement, si vous faîtes de la prestation de de services, MongoDB
+  <li>features fortement changeantes&nbsp;: typiquement, si vous faîtes de la prestation de services, MongoDB
    est un mauvais choix. Surtout si vous travaillez au forfait. Votre client ne comprendra pas pourquoi
-   la moindre de ses requêtes vous demandera des efforts de conception. Si votre client est
+   la moindre de ses requêtes vous demande des efforts de conception. Si votre client est
    plutôt du genre girouette, je vous garantis des noeuds au cerveau.</li>
   <li>nombreux contextes d'utilisation&nbsp;: si la base de données est appelée à être utilisée par de nombreux
    logiciels différents par des équipes différentes, MongoDB ne sera pas utilisable. En effet, puisque
@@ -334,14 +335,6 @@ Trade {
 
 <p>Enfin, il faut prendre la scalabilité supposée de MongoDB avec des pincettes. D'une part,
  cette base de donnée reste jeune et les utilisations de grands groupes référencées sur leur
- site restent limitées des parties mineures des infrastructures des qui l'intègrent. Et d'autre
+ site restent limitées des parties mineures des infrastructures qui l'intègrent. Et d'autre
  part, les fournisseurs de type PaaS réduisent considérablement les problèmes dûs à la scalabilité
- des bases de données relationnelles, notamment les coups en administration système.</p>
-
-<p></p>
-
-
-
-
-
-
+ des bases de données relationnelles, notamment les coûts en administration système.</p>
