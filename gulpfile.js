@@ -271,6 +271,9 @@ gulp.task('clean', function(cb) {
 gulp.task('build', ['clean', 'build_fonts', 'build_images', 'build_styles',
   'build_html'], function(cb) {
 
+  // Robots.txt
+  Fs.writeFileSync(conf.build.root + '/robots.txt', 'User-agent: *\r\nAllow: /\r\n');
+
   // Files watch
   if(watch) {
 
