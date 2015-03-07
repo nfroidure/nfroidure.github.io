@@ -39,10 +39,14 @@ if(!prod) {
   conf.ip = internalIp();
   conf.baseURL = 'http://' + conf.ip + ':8080';
 }
+// Configure nunjuncks
+Nunjucks.configure(conf.src.templates, {
+  autoescape: true
+});
 
 
 // Fonts
-gulp.task('build_fonts', function(cb) {
+gulp.task('build_fonts', function() {
   return gulp.src(conf.src.icons + '/**/*.svg', {buffer: buffer})
     .pipe(g.iconfont({
       'fontName': 'iconsfont',
@@ -83,25 +87,23 @@ gulp.task('build_images', function() {
 });
 
 // CSS
-gulp.task('build_styles', function(cb) {
-
+gulp.task('build_styles', function() {
   return gulp.src(conf.src.less + '/main.less', {buffer: buffer})
-    .pipe(g.streamify((g.less())))
-    .pipe(g.streamify((g.autoprefixer())))
-    .pipe(g.cond(prod, g.minifyCss, g.livereload))
+    .pipe(g.streamify((g.less)))
+    .pipe(g.streamify((g.autoprefixer)))
+    .pipe(g.cond(prod, g.minifyCss))
+    .pipe(g.cond(lr, g.livereload))
     .pipe(gulp.dest(conf.build.css));
 });
 
 // JavaScript
 gulp.task('build_scripts', function(cb) {
-
   browserify(conf.src.scripts + '/index.js')
     .once('end', cb);
 });
 
 // HTML
 gulp.task('build_html', function(cb) {
-  var nunjucks = Nunjucks;
   var tree = {};
   var markedFiles = [];
   var dest = gulp.dest(conf.build.root);
@@ -110,13 +112,9 @@ gulp.task('build_html', function(cb) {
   conf.build.created = (new Date()).toISOString();
   conf.copyright.end = (new Date()).getFullYear();
 
-  if(watch) {
+  if(lr) {
     dest.pipe(g.livereload());
   }
-
-  nunjucks.configure(conf.src.templates, {
-    autoescape: true
-  });
 
   var mdFilter = filter(function(file, enc, cb) {
     cb(file.path.indexOf('.md') === file.path.length - 4);
@@ -199,7 +197,7 @@ gulp.task('build_html', function(cb) {
             content: curFile.contents.toString('utf-8')
           };
           // Render the template
-          curFile.contents = Buffer(nunjucks.render(
+          curFile.contents = Buffer(Nunjucks.render(
             type + '/' + (nunjucksOptions.metadata.template || 'page') + '.tpl',
             nunjucksOptions
           ));
