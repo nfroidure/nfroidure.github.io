@@ -41,6 +41,7 @@ if(!prod) {
 }
 // Configure nunjuncks
 Nunjucks.configure(conf.src.templates, {
+  watch: watch,
   autoescape: true
 });
 
