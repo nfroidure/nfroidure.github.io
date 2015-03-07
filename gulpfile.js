@@ -43,7 +43,7 @@ if(!prod) {
 
 // Fonts
 gulp.task('build_fonts', function(cb) {
-  gulp.src(conf.src.icons + '/**/*.svg', {buffer: buffer})
+  return gulp.src(conf.src.icons + '/**/*.svg', {buffer: buffer})
     .pipe(g.iconfont({
       'fontName': 'iconsfont',
       'appendCodepoints': true,
@@ -51,8 +51,7 @@ gulp.task('build_fonts', function(cb) {
       'normalize': true,
       'hint': !!g.util.env.hint
     }))
-    .pipe(gulp.dest(conf.build.fonts))
-    .once('end', cb);
+    .pipe(gulp.dest(conf.build.fonts));
 });
 
 // Images
@@ -86,12 +85,11 @@ gulp.task('build_images', function() {
 // CSS
 gulp.task('build_styles', function(cb) {
 
-  gulp.src(conf.src.less + '/main.less', {buffer: buffer})
+  return gulp.src(conf.src.less + '/main.less', {buffer: buffer})
     .pipe(g.streamify((g.less())))
     .pipe(g.streamify((g.autoprefixer())))
     .pipe(g.cond(prod, g.minifyCss, g.livereload))
-    .pipe(gulp.dest(conf.build.css))
-    .once('end', cb);
+    .pipe(gulp.dest(conf.build.css));
 });
 
 // JavaScript
@@ -229,9 +227,8 @@ gulp.task('build_html', function(cb) {
 });
 
 // The clean task
-gulp.task('clean', function(cb) {
+gulp.task('clean', function() {
   rimraf.sync(conf.build.root);
-  cb();
 });
 
 // The build task
