@@ -5,6 +5,7 @@ var Nunjucks = require('nunjucks');
 var express = require('express');
 var rimraf = require('rimraf');
 var args = require('yargs').argv;
+var internalIp = require('internal-ip');
 
 var buildBranch = require('buildbranch');
 var favicons = require('favicons');
@@ -44,23 +45,8 @@ var httpServer = (!args.nosrv) && !prod;
 
 if(!prod) {
   // Finding the server IP
-  conf.ip = '127.0.0.1';
-
-  if(g.util.env.net) {
-    var ints = require('os').getNetworkInterfaces();
-
-    Object.keys(ints).some(function(int) {
-      if(ints[int].some(function(net) {
-        if((!net.internal) && 'IPv4' == net.family) {
-          conf.ip = net.address;
-          return true;
-        }
-      })) {
-        return true;
-      }
-    });
-  }
-  conf.baseURL = 'http://'+conf.ip+':8080';
+  conf.ip = internalIp();
+  conf.baseURL = 'http://' + conf.ip + ':8080';
 }
 
 
