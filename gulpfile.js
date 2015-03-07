@@ -288,12 +288,11 @@ gulp.task('ghpages', function(cb) {
 
 });
 
-// Publish task : Cannot build before since gulp.dest doesn't ensure
-// underlying resources are closed https://github.com/wearefractal/vinyl-fs/issues/7
+// Publish
 gulp.task('ensureprod', function() {
   prod = true;
 });
-gulp.task('publish', ['ensureprod', 'ghpages']);
+gulp.task('publish', ['ensureprod', 'build', 'ghpages']);
 
 // Dev env
 gulp.task('server', function(cb) {
