@@ -23,15 +23,6 @@ var g = require('gulp-load-plugins')();
 var rem2px = require('rework-rem2px');
 var queryless = require('css-queryless');
 
-// Helper to wait for n gulp pipelines
-function waitEnd(total, cb, n) {
-  n = n || 0;
-  return function end(debug) {
-    debug && console.log(debug);
-    ++n==total && cb();
-  };
-}
-
 // Loading global options (files paths)
 var conf = VarStream.parse(Fs.readFileSync(__dirname + '/config.dat'));
 
@@ -65,18 +56,12 @@ gulp.task('build_fonts', function(cb) {
 });
 
 // Images
-gulp.task('build_images', function(cb) {
-  var end = waitEnd(2, cb);
-  gulp.src(conf.src.images + '/**/*.svg', {buffer: buffer})
-    .pipe(g.cond(watch, g.watch.bind(g, conf.src.images + '/**/*.svg')))
-    .pipe(g.cond(prod, g.svgmin, function() {
-      end();
-      return g.livereload();
-    }))
-    .pipe(gulp.dest(conf.build.images))
-    .once('end', end);
+gulp.task('build_images', function() {
 
-  new StreamQueue({objectMode: true},
+  return new StreamQueue({objectMode: true},
+    gulp.src(conf.src.images + '/**/*.svg', {buffer: buffer})
+      .pipe(g.cond(watch, g.watch.bind(g, conf.src.images + '/**/*.svg')))
+      .pipe(g.cond(prod, g.svgmin)),
     gulp.src(conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}', {buffer: buffer})
       .pipe(g.cond(watch, g.watch.bind(g, conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}'))),
     gulp.src(conf.src.images + '/favicon.svg', {buffer: buffer})
@@ -94,12 +79,8 @@ gulp.task('build_images', function(cb) {
     }))
   )
     .pipe(g.cond(prod, g.streamify.bind(null, g.imagemin)))
-    .pipe(g.cond(lr, function() {
-      end();
-      return g.livereload();
-    }))
-    .pipe(gulp.dest(conf.build.images))
-    .once('end', end);
+    .pipe(g.cond(lr, g.livereload))
+    .pipe(gulp.dest(conf.build.images));
 });
 
 // CSS
