@@ -13,7 +13,7 @@ var favicons = require('favicons');
 var VarStream = require('varstream');
 
 var Stream = require('stream');
-var StreamQueue = require('streamqueue');
+var CombineStream = require('combine-stream');
 var Duplexer = require('plexer');
 var filter = require('streamfilter');
 
@@ -62,7 +62,7 @@ gulp.task('build_fonts', function() {
 // Images
 gulp.task('build_images', function() {
 
-  return new StreamQueue({objectMode: true},
+  var stram = new CombineStream([
     gulp.src(conf.src.images + '/**/*.svg', {buffer: buffer})
       .pipe(g.cond(watch, g.watch.bind(g, conf.src.images + '/**/*.svg')))
       .pipe(g.cond(prod, g.svgmin)),
@@ -81,10 +81,14 @@ gulp.task('build_images', function() {
           return 'favicon.png';
         }
     }))
-  )
+  ])
     .pipe(g.cond(prod, g.streamify.bind(null, g.imagemin)))
     .pipe(g.cond(lr, g.livereload))
     .pipe(gulp.dest(conf.build.images));
+
+  if(prod) {
+    return stream;
+  }
 });
 
 // CSS
