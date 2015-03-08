@@ -294,6 +294,10 @@ gulp.task('ghpages', ['build'], function(cb) {
 // Publish
 gulp.task('ensureprod', function() {
   prod = true;
+  lr = false;
+  watch = false;
+  browser = false;
+  httpServer = false;
 });
 gulp.task('publish', ['ensureprod', 'ghpages']);
 
