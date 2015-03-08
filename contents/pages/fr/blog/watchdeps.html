@@ -1,0 +1,75 @@
+<!--VarStream
+title=Surveillez les dépendances de vos projets NodeJS
+description=Avec watchdeps abonnez-vous automatiquement aux dépendences de vos\
+ projets NodeJS sur GitHub.
+shortTitle=Watchdeps
+shortDesc=Découvrez comment ester informé de l'évolution des modules tiers
+published=2015-03-08T10:07:32.000Z
+lang=en
+location=US
+keywords.+=JavaScript
+keywords.+=NodeJS
+keywords.+=NPM
+keywords.+=Modules
+categories.+=.*
+disqus=true
+-->
+
+<h2>Surveillez les dépendances de vos projets NodeJS</h2>
+<p><strong lang="en">
+	TL; DR:<br />
+	<code>sudo npm install -g watchdeps</code><br />
+	<code>cd myproject && watchdeps -u username</code>
+</strong></p>
+<p>
+ Depuis que NPM a rendu la gestion de dépendences simple et pratique, nous avons
+ tendance à utiliser de plus en plus de modules. C'est une bonne chose, ne pas
+ réinventer la roue à cahque fois est une qualité recherchée chez un développeur.
+</p>
+<p style="text-align:center;">
+	<a href="http://www.mtv.com/news/2092125/attractive-things-sober-people/"
+		title="Voir la source de l'image">
+		<img src="/images/great_powers-great-responsibility.gif"
+		  alt="Avec de grand pouvoirs viennent de grandes responsabilités" /><br/>
+		Source MTV
+	</a>
+</p>
+<p>
+	En revanche, installer des modules est avant tout embarquez du code tiers.
+	Ce n'est pas si anodin. Une fois
+	<a href="choisir_module_nodejs.html"
+		title="Voir mes conseils pour choisir un moduel">que vous avez choisi
+		un module</a>, vous ne pouvez pas en rester là.
+</p>
+<p>
+	Un développeur professionnel s'assurera toujours de rester informé de
+	l'évolution des modules tiers qu'il embarque dans ses projets. Pour cela,
+	un des meilleurs moyens et de s'y abonner sur GitHub pour recevoir des
+	notifications à leur propos.
+</p>
+<p>
+	Mais je ne pouvais me résoudre à faire cela avec une souris ;) :
+</p>
+<p style="text-align:center;">
+	<a href="http://makegif.com/gQ4z"
+		title="Made with MakeGIF">
+		<img src="/images/github-watch.gif"
+		  alt="Animation montrant l'action de suivre un projet sur GitHub" />
+	</a>
+</p>
+<p>
+	J'ai donc créé un petit outil en ligne de commande que j'ai nommé
+	<a href="https://github.com/nfroidure/watchdeps">watchdeps</a>. En l'exécutant,
+	il se connecte directement à GitHub pour vous abonner à tous les modules
+	dont votre projet dépend.
+</p>
+<pre>
+	sudo npm i -g watchdeps
+	cd myproject/
+	watchdeps -u nfroidure
+	# Done!
+</pre>
+<p>
+	Et voilà ! Vous savez maintenant tout sur les modules que vou embarquez,
+	n'est-ce pas mignon ?
+</p>
