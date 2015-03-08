@@ -277,7 +277,7 @@ gulp.task('build', ['clean', 'build_fonts', 'build_images', 'build_styles',
 });
 
 // Publish task
-gulp.task('ghpages', function(cb) {
+gulp.task('ghpages', ['build'], function(cb) {
 
   buildBranch({
     ignore: ['.git', '.token', 'www', 'node_modules'],
@@ -295,7 +295,7 @@ gulp.task('ghpages', function(cb) {
 gulp.task('ensureprod', function() {
   prod = true;
 });
-gulp.task('publish', ['ensureprod', 'build', 'ghpages']);
+gulp.task('publish', ['ensureprod', 'ghpages']);
 
 // Dev env
 gulp.task('server', function(cb) {
