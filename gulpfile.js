@@ -62,7 +62,7 @@ gulp.task('build_fonts', function() {
 // Images
 gulp.task('build_images', function() {
 
-  var stram = new CombineStream([
+  var stream = new CombineStream([
     gulp.src(conf.src.images + '/**/*.svg', {buffer: buffer})
       .pipe(g.cond(watch, g.watch.bind(g, conf.src.images + '/**/*.svg')))
       .pipe(g.cond(prod, g.svgmin)),
