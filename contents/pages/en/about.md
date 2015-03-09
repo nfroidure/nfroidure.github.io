@@ -25,4 +25,3 @@ I'm mainly blogging about web technologies, historically in French, but I try
  explanations about the content I share here.
 
 I wish you'll find this blog useful and hope to see you soon!
-s
