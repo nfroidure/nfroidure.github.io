@@ -1,0 +1,160 @@
+<!--VarStream
+title=Faire mieux qu'AngularJS avec require()
+description=Le système CommonJS-like de NodeJS permet un grand nombre de\
+ subtilités. Je vous propose de les découvrir en reproduisant les\
+ fonctionnalités du système de modules d'AngularJS.
+shortTitle=Modules AngularJS-like avec require()
+shortDesc=Découvrir la puissance de require()
+published=2015-03-09T07:49:00.000Z
+lang=en
+location=US
+keywords.+=JavaScript
+keywords.+=NodeJS
+keywords.+=NPM
+keywords.+=Modules
+keywords.+=AngularJS
+categories.+=.*
+draft=true
+disqus=true
+-->
+
+<h2>Faire mieux qu'AngularJS avec require()</h2>
+<p>
+	Lors de <a href="https://www.youtube.com/watch?v=n8nvHFfEFC4"
+		title="Voir la présentation sur YouTube">ma dernière présentation</a> pour
+	<a href="http://chtijs.francejs.org/archives/2015-02-05/index.html"
+		title="Voir le résumé de cette édition">#ChtiJS10</a>, j'ai cédé au troll
+	à propos des modules AngularJS. En effet, bien qu'il m'ait paru plutôt smart
+	au début, j'ai vite compris ses limites.
+</p>
+<p>
+	En effet, le fait de devoir wrapper le moindre code JavaScript d'une série
+	de lignes qui peuvent sembler un peu déroutante pour un non initié est
+	particulièrement ennuyeux. De plus, la création de builds pour AngularJS est
+	très fastidieux du fait de l'usage de bower pour les récupérer.
+</p>
+<p>
+	Bref, à côté de la simplicité et de l'efficacité de NPM et des modules
+	CommonJS ce système fait pâle figure. La question est donc, peut-on faire les
+	même choses avec require() qu'avec le système de gestion de modules
+	d'Angular&nbsp;? La réponse est oui et voici comment&nbsp;!
+</p>
+
+<h2>Les services&nbsp;: la base</h2>
+<p>
+	Si vous avez déjà utilisé Angular, vous savez que l'une des bonnes pratiques
+	est de publier votre code sous forme de services. Les services sont une sorte
+	de singleton namespacé et configurables pour votre application&nbsp;:
+</p>
+<pre>
+	angular.module('my.app.namespace', [
+		'my.dep1.namespace', 'my.dep2.namespace'
+	]).service('MyService', ['dep1', 'dep2', function(dep1, dep2) {
+
+		var _myPrivateVar = 'secret';
+		var myServiceInstance = {
+			getPrivate: function() {
+				return _myPrivateVar;
+			},
+			myPublicVar: 'hello!',
+			myPublicFunction: function() {}
+		};
+
+		return myServiceInstance;
+	}]);
+</pre>
+<p>
+	Cette syntaxe a plusieurs buts avoués&nbsp;:
+</p>
+<ul>
+	<li>cloisonner le code en espace de noms (pour éviter les collisions),</li>
+	<li>rendre le code maintenable et réutilisable (grâce à la modularisation),</li>
+	<li>rendre le code testable (grâce à l'injection de dépendances).</li>
+</ul>
+<p>
+	Cependant, elle est assez verbeuse. Voici son équivalent sous la forme de
+	module CommonJS (pour NodeJS)&nbsp;:
+</p>
+<pre>
+	var dep1 = require('dep1');
+	var dep2 = require('./lib/dep2');
+
+	var _myPrivateVar = 'secret';
+	var myServiceInstance = {
+		getPrivate: function() {
+			return _myPrivateVar;
+		},
+		myPublicVar: 'hello!',
+		myPublicFunction: function() {}
+	};
+
+	module.exports = myServiceInstance;
+</pre>
+<p>
+	Au delà du fait qu'elle est plus concise, cette syntaxe est aussi plus claire.
+	Il n'est pas nécessaire de connaître le fonctionnement de JavaScript pour
+	comprendre ce que fait ce code.
+</p>
+<p>
+	Tout d'abord, il requiert les dépendances dont il a besoin. Ici, les espaces
+	de nom sont gérés d'une façon beaucoup plus intéressante. L'unicité de la
+	dépendance "dep2" est assurée par un dépôt centralisé de modules (ici NPM).
+	La dépendance "dep1" quand à elle est assurée par l'arborescence du projet.
+
+<p><strong lang="en">
+	TL; DR:<br />
+	<code>sudo npm install -g watchdeps</code><br />
+	<code>cd myproject && watchdeps -u username</code>
+</strong></p>
+<p>
+ Depuis que NPM a rendu la gestion de dépendences simple et pratique, nous avons
+ tendance à utiliser de plus en plus de modules. C'est une bonne chose, ne pas
+ réinventer la roue à chaque fois est une qualité recherchée chez un développeur.
+</p>
+<p style="text-align:center;">
+	<a href="http://www.mtv.com/news/2092125/attractive-things-sober-people/"
+		title="Voir la source de l'image">
+		<img src="/images/great_powers-great-responsibility.gif"
+		  alt="Avec de grand pouvoirs viennent de grandes responsabilités" /><br/>
+		Source MTV
+	</a>
+</p>
+<p>
+	En revanche, installer des modules signifie, avant tout, embarquer du code
+	 tiers. Ce n'est pas si anodin. Une fois
+	<a href="choisir_module_nodejs.html"
+		title="Voir mes conseils pour choisir un module">que vous avez choisi
+		un module</a>, vous ne pouvez pas en rester là.
+</p>
+<p>
+	Un développeur professionnel s'assurera toujours de rester informé de
+	l'évolution des modules tiers qu'il embarque dans ses projets. Pour cela,
+	un des meilleurs moyens est de s'y abonner sur GitHub pour recevoir des
+	notifications à leur propos.
+</p>
+<p>
+	Mais je ne pouvais me résoudre à faire cela avec une souris ;) :
+</p>
+<p style="text-align:center;">
+	<a href="http://makegif.com/gQ4z"
+		title="Made with MakeGIF">
+		<img src="/images/github-watch.gif"
+		  alt="Animation montrant l'action de suivre un projet sur GitHub" />
+	</a>
+</p>
+<p>
+	J'ai donc créé un petit outil en ligne de commande que j'ai nommé
+	<a href="https://github.com/nfroidure/watchdeps">watchdeps</a>. En l'exécutant,
+	il se connecte directement à GitHub pour vous abonner à tous les modules
+	dont votre projet dépend.
+</p>
+<pre>
+	sudo npm i -g watchdeps
+	cd myproject/
+	watchdeps -u nfroidure
+	# Done!
+</pre>
+<p>
+	Et voilà ! Vous savez maintenant tout sur les modules que vou embarquez,
+	n'est-ce pas mignon ?
+</p>
