@@ -19,62 +19,62 @@ disqus=true
 
 <h2>Faire mieux qu'AngularJS avec require()</h2>
 <p>
-	Lors de <a href="https://www.youtube.com/watch?v=n8nvHFfEFC4"
-		title="Voir la présentation sur YouTube">ma dernière présentation</a> pour
-	<a href="http://chtijs.francejs.org/archives/2015-02-05/index.html"
-		title="Voir le résumé de cette édition">#ChtiJS10</a>, j'ai cédé au troll
-	à propos des modules AngularJS. En effet, bien qu'il m'ait paru plutôt smart
-	au début, j'ai vite compris ses limites.
+  Lors de <a href="https://www.youtube.com/watch?v=n8nvHFfEFC4"
+    title="Voir la présentation sur YouTube">ma dernière présentation</a> pour
+  <a href="http://chtijs.francejs.org/archives/2015-02-05/index.html"
+    title="Voir le résumé de cette édition">#ChtiJS10</a>, j'ai cédé au troll
+  à propos des modules AngularJS. En effet, bien qu'il m'ait paru plutôt smart
+  au début, j'ai vite compris ses limites.
 </p>
 <p>
-	En effet, le fait de devoir wrapper le moindre code JavaScript d'une série
-	de lignes qui peuvent sembler un peu déroutante pour un non initié est
-	particulièrement ennuyeux. De plus, la création de builds pour AngularJS est
-	très fastidieux du fait de l'usage de bower pour les récupérer.
+  En effet, le fait de devoir wrapper le moindre code JavaScript d'une série
+  de lignes qui peuvent sembler un peu déroutante pour un non initié est
+  particulièrement ennuyeux. De plus, la création de builds pour AngularJS est
+  très fastidieux du fait de l'usage de bower pour les récupérer.
 </p>
 <p>
-	Bref, à côté de la simplicité et de l'efficacité de NPM et des modules
-	CommonJS ce système fait pâle figure. La question est donc, peut-on faire les
-	même choses avec <code>require()</code> qu'avec le système de gestion de
-	modules d'Angular&nbsp;? La réponse est oui et voici comment&nbsp;!
+  Bref, à côté de la simplicité et de l'efficacité de NPM et des modules
+  CommonJS ce système fait pâle figure. La question est donc, peut-on faire les
+  même choses avec <code>require()</code> qu'avec le système de gestion de
+  modules d'Angular&nbsp;? La réponse est oui et voici comment&nbsp;!
 </p>
 
 <h2>Service simple</h2>
 <p>
-	Si vous avez déjà utilisé Angular, vous savez que l'une des bonnes pratiques
-	est de publier votre code sous forme de services. Les services sont une sorte
-	de singleton namespacé et configurables pour votre application&nbsp;:
+  Si vous avez déjà utilisé Angular, vous savez que l'une des bonnes pratiques
+  est de publier votre code sous forme de services. Les services sont une sorte
+  de singleton namespacé et configurables pour votre application&nbsp;:
 </p>
 <pre>
 angular.module('my.app.namespace', [
-	'my.dep1.namespace', 'my.dep2.namespace'
+  'my.dep1.namespace', 'my.dep2.namespace'
 ]).service('MyService', [
-	'dep1', 'dep2',
-	function(dep1, dep2) {
+  'dep1', 'dep2',
+  function(dep1, dep2) {
 
-	var _myPrivateVar = 'secret';
-	var myServiceInstance = {
-		getPrivate: function() {
-			return _myPrivateVar;
-		},
-		myPublicVar: 'hello!',
-		myPublicFunction: function() {}
-	};
+  var _myPrivateVar = 'secret';
+  var myServiceInstance = {
+    getPrivate: function() {
+      return _myPrivateVar;
+    },
+    myPublicVar: 'hello!',
+    myPublicFunction: function() {}
+  };
 
-	return myServiceInstance;
+  return myServiceInstance;
 }]);
 </pre>
 <p>
-	Cette syntaxe a plusieurs buts avoués&nbsp;:
+  Cette syntaxe a plusieurs buts avoués&nbsp;:
 </p>
 <ul>
-	<li>cloisonner le code en espace de noms (pour éviter les collisions),</li>
-	<li>rendre le code maintenable et réutilisable (grâce à la modularisation),</li>
-	<li>rendre le code testable (grâce à l'injection de dépendances).</li>
+  <li>cloisonner le code en espace de noms (pour éviter les collisions),</li>
+  <li>rendre le code maintenable et réutilisable (grâce à la modularisation),</li>
+  <li>rendre le code testable (grâce à l'injection de dépendances).</li>
 </ul>
 <p>
-	Cependant, elle est assez verbeuse. Voici son équivalent sous la forme de
-	module CommonJS (pour NodeJS)&nbsp;:
+  Cependant, elle est assez verbeuse. Voici son équivalent sous la forme de
+  module CommonJS (pour NodeJS)&nbsp;:
 </p>
 <pre>
 var dep1 = require('dep1');
@@ -82,70 +82,70 @@ var dep2 = require('./lib/dep2');
 
 var _myPrivateVar = 'secret';
 var myServiceInstance = {
-	getPrivate: function() {
-		return _myPrivateVar;
-	},
-	myPublicVar: 'hello!',
-	myPublicFunction: function() {}
+  getPrivate: function() {
+    return _myPrivateVar;
+  },
+  myPublicVar: 'hello!',
+  myPublicFunction: function() {}
 };
 
 module.exports = myServiceInstance;
 </pre>
 <p>
-	Au delà du fait qu'elle est plus concise, cette syntaxe est aussi plus claire.
-	Il n'est pas nécessaire de connaître le fonctionnement de JavaScript pour
-	comprendre ce que fait ce code.
+  Au delà du fait qu'elle est plus concise, cette syntaxe est aussi plus claire.
+  Il n'est pas nécessaire de connaître le fonctionnement de JavaScript pour
+  comprendre ce que fait ce code.
 </p>
 <p>
-	Tout d'abord, il requiert les dépendances dont il a besoin. Ici, les espaces
-	de nom sont gérés d'une façon beaucoup plus intéressante. L'unicité de la
-	dépendance <code>dep2</code> est assurée par un dépôt centralisé de modules
-	(ici NPM). Celle de la dépendance <code>dep1</code> quand à elle est assurée
-	par l'arborescence du	projet.
+  Tout d'abord, il requiert les dépendances dont il a besoin. Ici, les espaces
+  de nom sont gérés d'une façon beaucoup plus intéressante. L'unicité de la
+  dépendance <code>dep2</code> est assurée par un dépôt centralisé de modules
+  (ici NPM). Celle de la dépendance <code>dep1</code> quand à elle est assurée
+  par l'arborescence du  projet.
 </p>
 <p>
-	Enfin, il exporte le contenu de <code>myServiceInstance</code> comme étant
-	le "contenu" du module. Bref, le fonctionnement classique des modules CommonJS,
-	jusqu'ici, rien d'insurmontable.
+  Enfin, il exporte le contenu de <code>myServiceInstance</code> comme étant
+  le "contenu" du module. Bref, le fonctionnement classique des modules CommonJS,
+  jusqu'ici, rien d'insurmontable.
 </p>
 <h2>Service configuré</h2>
 <p>
-	Mais un habitué d'Angular me rétorquera que les services Angular sont
-	configurables, grâce aux service providers. Ce qui en Angular, donne ça&nbsp;:
+  Mais un habitué d'Angular me rétorquera que les services Angular sont
+  configurables, grâce aux service providers. Ce qui en Angular, donne ça&nbsp;:
 </p>
 <pre>
 // Définition
 angular.module('my.app.namespace', [
-	'my.dep1.namespace', 'my.dep2.namespace'
+  'my.dep1.namespace', 'my.dep2.namespace'
 ]).provider('MyServiceProvider', [
-	'dep1', 'dep2',
-	function(dep1, dep2) {
+  'dep1', 'dep2',
+  function(dep1, dep2) {
 
-	var _myPrivateVar = 'secret';
+  var _myPrivateVar = 'secret';
 
-	this.setSecret = function(newSecret) {
-		_myPrivateVar = newSecret;
-	};
+  this.setSecret = function(newSecret) {
+    _myPrivateVar = newSecret;
+  };
 
-	this.$get(function() {
+  this.$get(function() {
 
-		var myServiceInstance = {
-			getPrivate: function() {
-				return _myPrivateVar;
-			},
-			myPublicVar: 'hello!',
-			myPublicFunction: function() {}
-		};
+    var myServiceInstance = {
+      getPrivate: function() {
+        return _myPrivateVar;
+      },
+      myPublicVar: 'hello!',
+      myPublicFunction: function() {}
+    };
 
-		return myServiceInstance;
-	});
+    return myServiceInstance;
+  });
 }]);
 
 // Configuration
 myApp.config('MyServiceProvider', [
-	'MyServiceProvider',
-	function(MyServiceProvider) {
-		MyServiceProvider.setSecret('kikoo');
+  'MyServiceProvider',
+  function(MyServiceProvider) {
+    MyServiceProvider.setSecret('kikoo');
 }]);
 
 // Utilisation par injection dans un controller/module...
@@ -153,28 +153,28 @@ myApp.config('MyServiceProvider', [
 
 </pre>
 <p>
-	Ça en fait du code. Je vous laisse voir ça en détail sur la
-	<a href="https://docs.angularjs.org/guide/providers">
-		documentation d'AngularJS</a>,
-	retenez simplement que l'idée ici est de configurer un sungleton global.
-	Chose que l'on réalise comme ceci avec CommonJS&nbsp;:
+  Ça en fait du code. Je vous laisse voir ça en détail sur la
+  <a href="https://docs.angularjs.org/guide/providers">
+    documentation d'AngularJS</a>,
+  retenez simplement que l'idée ici est de configurer un sungleton global.
+  Chose que l'on réalise comme ceci avec CommonJS&nbsp;:
 </p>
 <pre>
 // Définition getmyservice.js
 function getMyServiceInstance(mySecret) {
-	var dep1 = require('dep1');
-	var dep2 = require('./lib/dep2');
+  var dep1 = require('dep1');
+  var dep2 = require('./lib/dep2');
 
-	var _myPrivateVar = 'secret';
-	var myServiceInstance = {
-		getPrivate: function() {
-			return _myPrivateVar;
-		},
-		myPublicVar: 'hello!',
-		myPublicFunction: function() {}
-	};
+  var _myPrivateVar = 'secret';
+  var myServiceInstance = {
+    getPrivate: function() {
+      return _myPrivateVar;
+    },
+    myPublicVar: 'hello!',
+    myPublicFunction: function() {}
+  };
 
-	return myServiceInstance;
+  return myServiceInstance;
 };
 
 module.exports = getMyServiceInstance;
@@ -188,31 +188,31 @@ var myService = require('./myservice');
 myService.myPublicFunction('hello!');
 </pre>
 <p>
-	L'idée est de créer un module qui soit simplement le retour d'appel d'une
-	fonction permettant de récupérer une version configurée d'un service donné.
-	De cette façon on peut accèder à celui-ci n'importe où dans le programme
-	par simple appel à require.
+  L'idée est de créer un module qui soit simplement le retour d'appel d'une
+  fonction permettant de récupérer une version configurée d'un service donné.
+  De cette façon on peut accèder à celui-ci n'importe où dans le programme
+  par simple appel à require.
 </p>
 <p>
-	Cependant, j'ai rarement recours à cette technique car c'est une sorte de
-	singleton et à vrai dire, ce design pattern est de plus en plus décrié car
-	il fait rarement sens.
+  Cependant, j'ai rarement recours à cette technique car c'est une sorte de
+  singleton et à vrai dire, ce design pattern est de plus en plus décrié car
+  il fait rarement sens.
 </p>
 <h2>Service "wrappés"</h2>
 <p>Angular a eu la merveilleuse idée de fournir des services pour les variables
-	globales exposées par le système. Ainsi, pour accéder à <code>window</code>,
-	il suffit	d'injecter le service <code>$window</code>, idem pour
-	<code>window.location</code> avec <code>$location</code> etc.
+  globales exposées par le système. Ainsi, pour accéder à <code>window</code>,
+  il suffit  d'injecter le service <code>$window</code>, idem pour
+  <code>window.location</code> avec <code>$location</code> etc.
 </p>
 <p>
-	Pour le code en lui-même ceci n'a pas d'intérêt, mais pour les tests unitaires
-	cette façon de procéder est essentielle. Ainsi, on peut injecter un service
-	dédié au test mockant les fonctionnalités exposées par le service requis.
+  Pour le code en lui-même ceci n'a pas d'intérêt, mais pour les tests unitaires
+  cette façon de procéder est essentielle. Ainsi, on peut injecter un service
+  dédié au test mockant les fonctionnalités exposées par le service requis.
 </p>
 <p>
-	Avec <code>require()</code>, appliquer ce principe est également possible. Il suffit de
-	créer le module correspondant. Ici, nous créeons un "service" fournissant
-	un accès au constructeur <code>Date</code>&nbsp;:
+  Avec <code>require()</code>, appliquer ce principe est également possible. Il suffit de
+  créer le module correspondant. Ici, nous créeons un "service" fournissant
+  un accès au constructeur <code>Date</code>&nbsp;:
 </p>
 <pre>
 // contenu de date.js
@@ -222,22 +222,22 @@ module.exports = Date;
 var Date = require('./date');
 </pre>
 <p>
-	Il ne nous reste plus qu'à mocker les dates lors de nos tests unitaires.
+  Il ne nous reste plus qu'à mocker les dates lors de nos tests unitaires.
 </p>
 <h2>Les tests</h2>
 <p>
-	Justement, parlons-en&nbsp;! Angular a la réputation de faciliter les tests
-	unitaires, en est-il de même pour les modules CommonJS.
+  Justement, parlons-en&nbsp;! Angular a la réputation de faciliter les tests
+  unitaires, en est-il de même pour les modules CommonJS.
 </p>
 <p>
-	La réponse est non. Ce n'est pas automatique. Là où Angular vous mâche le
-	travail en vous imposant un cadre, avec CommonJS, nous l'avons vu, créer des
-	modules testables est une démarche consciente et non-obligatoire.
+  La réponse est non. Ce n'est pas automatique. Là où Angular vous mâche le
+  travail en vous imposant un cadre, avec CommonJS, nous l'avons vu, créer des
+  modules testables est une démarche consciente et non-obligatoire.
 </p>
 <p>
-	Cela reste cependant possible grâce au module <code>mockery</code>. Par
-	exemple, pour tester un module qui reposerait sur	notre service wrappant
-	<code>Date</code>, il suffirait de procéder ainsi&nbsp;:
+  Cela reste cependant possible grâce au module <code>mockery</code>. Par
+  exemple, pour tester un module qui reposerait sur  notre service wrappant
+  <code>Date</code>, il suffirait de procéder ainsi&nbsp;:
 </p>
 <pre>
 var mockery = require('mockery');
@@ -245,61 +245,61 @@ var DateMock = require('date-mock');
 
 describe('myModule', function() {
 
-	beforeEach(function() {
-  	mockery.enable({ useCleanCache: true });
+  beforeEach(function() {
+    mockery.enable({ useCleanCache: true });
     mockery.registerMock('./date', DateMock);
     DateMock.curTime = 360000;
-	});
+  });
 
-	afterEach(function() {
+  afterEach(function() {
     mockery.deregisterMock('./date');
     mockery.disable();
-	});
+  });
 
-	it('should do stuff', function() {
-		// Code des tests
-	});
+  it('should do stuff', function() {
+    // Code des tests
+  });
 
 });
 </pre>
 <p>
-	Ici <code>mockery</code> substitue à la volée le module <code>./date</code>
-	par du code qui vous permet de simuler le temps. Il est également possible de
-	simplement remplacer la variable globale Date, mais ceci peut avoir d'autres
-	effets par ailleurs, je vous conseille donc plutôt cette technique.
+  Ici <code>mockery</code> substitue à la volée le module <code>./date</code>
+  par du code qui vous permet de simuler le temps. Il est également possible de
+  simplement remplacer la variable globale Date, mais ceci peut avoir d'autres
+  effets par ailleurs, je vous conseille donc plutôt cette technique.
 </p>
 <h2>Quel rapport avec le front&nbsp;?</h2>
 <p>
-	À ce stade il se peut que vous vous demandiez comment utiliser des modules
-	CommonJS pour vos projets front. Autrefois on
-	<a href="utiliser_requirejs.html">utilisait RequireJS</a> et on créait
-	ses <a href="module_javascript.html">modules AMD</a> avec ses ptites mimines
-	(ne faîtes plus ça&nbsp;!).
+  À ce stade il se peut que vous vous demandiez comment utiliser des modules
+  CommonJS pour vos projets front. Autrefois on
+  <a href="utiliser_requirejs.html">utilisait RequireJS</a> et on créait
+  ses <a href="module_javascript.html">modules AMD</a> avec ses ptites mimines
+  (ne faîtes plus ça&nbsp;!).
 </p>
 <p>
-	Avec <a href="browserify.html"><code>browserify</code></a> ou webpack vous
-	pourrez gérer finement la façon dont vous consommerez vos modules CommonJS
-	sans efforts ;).
+  Avec <a href="browserify.html"><code>browserify</code></a> ou webpack vous
+  pourrez gérer finement la façon dont vous consommerez vos modules CommonJS
+  sans efforts ;).
 </p>
 <h2>ES6</h2>
 <p>
-	Les modules ES6 vont bientôt être la règle et vous vous posez sûrement la
-	question. Comment appliquer les préceptes ci-dessus à vos modules ES6&nbsp;?
+  Les modules ES6 vont bientôt être la règle et vous vous posez sûrement la
+  question. Comment appliquer les préceptes ci-dessus à vos modules ES6&nbsp;?
 </p>
 <p>
-	À ce jour, vos modules ES6 sont en fait transformés en modules CommonJS et
-	utilisés via <code>require()</code>. La question ne se pose donc pas vraiment.
+  À ce jour, vos modules ES6 sont en fait transformés en modules CommonJS et
+  utilisés via <code>require()</code>. La question ne se pose donc pas vraiment.
 </p>
 <p>
-	À l'avenir, en revanche, nos amis d'ECMA ont tout prévu, notamment une façon
-	d'overrider le comportement du loader de module à la volée. Ça devrait se
-	concrétiser sous la forme d'un constructeur <code>Reflect.Loader</code> mais
-	je n'en sais pas plus à ce sujet. En tout cas cette fonctionnalité pourra
-	être utilisée comme <code>mockery</code> pour modifier le comportement
-	de l'injection de dépendance d'ES6.
+  À l'avenir, en revanche, nos amis d'ECMA ont tout prévu, notamment une façon
+  d'overrider le comportement du loader de module à la volée. Ça devrait se
+  concrétiser via
+  <a href="http://babeljs.io/docs/learn-es6/#module-loaders"><code>System</code></a>.
+  Cette fonctionnalité devrait pouvoir être utilisée comme <code>mockery</code> pour
+  modifier le comportement de l'injection de dépendance d'ES6.
 </p>
 <p>
-	Voilà, j'espère que ce petit article vous a plût. Pour les angulariens, sachez
-	que Angular 2.0 va baser son ancien système de module ce qui n'est pas une
-	mauvaise nouvelles ;).
+  Voilà, j'espère que ce petit article vous a plût. Pour les angulariens, sachez
+  que Angular 2.0 va baser son ancien système de module ce qui n'est pas une
+  mauvaise nouvelles ;).
 </p>
