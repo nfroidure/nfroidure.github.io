@@ -62,6 +62,9 @@ permalink: {{ metadata.frontmatter.permalink }}
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES * * */
             var disqus_shortname = 'insertafter';
+            var disqus_config = function () { 
+              this.language = "{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}";
+            };
             
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
