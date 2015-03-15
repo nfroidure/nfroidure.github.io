@@ -2,6 +2,8 @@ var Fs = require('fs');
 var Path = require('path');
 
 var Nunjucks = require('nunjucks');
+var Moment = require('moment');
+
 var express = require('express');
 var rimraf = require('rimraf');
 var args = require('yargs').argv;
@@ -43,6 +45,8 @@ if(!prod) {
 Nunjucks.configure(conf.src.templates, {
   watch: watch,
   autoescape: true
+}).addFilter('date', function(date, lang) {
+    return Moment(date).locale(lang).format('LLLL');
 });
 
 

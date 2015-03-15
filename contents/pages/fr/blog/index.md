@@ -12,6 +12,9 @@ location=FR
 types.+=html
 types.+=atom
 types.+=rss
+# locales
+empty=Actuellement aucun billet sur ce blog.
+published_on=Publié le
 -->
 
 ## Blog

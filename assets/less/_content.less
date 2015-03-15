@@ -29,3 +29,10 @@
 .ia-content kbd { border: @border outset @c4; background-color:@c3; padding: 0 (@border-@gutter); cursor: default; }
 .ia-content kbd:hover { border: @border inset #f3f3f3; }*/
 .ia-content abbr, acronym { cursor:help; }
+
+.main-articles__article {
+	border-bottom: @border solid @c4; margin:0 0 (@vrythm - @border) 0;
+	&:first-child {
+		border-top: @border solid @c4; padding:(@vrythm - @border) 0 0 0;
+	}
+}

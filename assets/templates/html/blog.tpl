@@ -2,7 +2,7 @@
 
 {% block body %}
 {{ content | safe }}{% if not metadata.childs %}
-<p>Pas de posts actuellement !</p>
+<p>{{ metadata.empty }}</p>
 {% else %}
 <section class="main-articles">
   {% for post in metadata.childs %}
@@ -14,6 +14,7 @@
       </a>
     </strong></p>
     <p>{{post.description}}</p>
+    <p>{{ metadata.published_on }} {{post.published | date(metadata.lang)}}</p>
   </article>
   {% endfor %}
 </section>
