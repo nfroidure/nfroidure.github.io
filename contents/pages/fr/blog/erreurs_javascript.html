@@ -16,7 +16,7 @@ disqus=true
 <p>Gérer les erreurs en JavaScript peut paraître simple, mais il n&#039;est pas toujours évident de choisir entre exceptions, retours d&#039;erreurs et callbacks d&#039;erreurs.</p>
 
 <p>Le dernier Ch&#039;tiJS a décidément été la source de nombreuses réflexions. L&#039;une d&#039;entre elle concernait les erreurs. Tout est parti d&#039;une assertion simple : les promises doivent-elles attraper les exceptions et les transformer en erreurs
-    récupérables dans un then ou les laisser remonter la pile d&#039;éxecution ?</p>
+    récupérables dans un then ou les laisser remonter la pile d&#039;exécution ?</p>
 <p>C&#039;est que fait, par exemple, RSVP.js. La logique du resolver est englobée dans <a hreflang="en" title="Voir le code en question" href="https://github.com/tildeio/rsvp.js/blob/277eb5eab912a9c3df8228a2647fcab84374615a/lib/rsvp/promise.js&#35;L47">un bloc <code>try...catch</code></a>    qui transforme toute exception en erreur qui fait échouer la promise. Dans <a title="Voir l&#039;article concernant cette implémentation" href="promises_javascript_ouvrons_capot.html">mon implémentation des promises</a>, j&#039;ai choisi
     de ne pas utiliser cette approche afin de pouvoir décider, au cas par cas, d&#039;attraper ou non une exception envoyée par le resolver d&#039;une promise.</p>
 <h3>Typologie des erreurs</h3>
@@ -31,7 +31,7 @@ disqus=true
 <p>Attention, certaines erreurs d&#039;interaction peuvent être dues à une erreur fatale dans un programme avec lequel votre code interagit. C&#039;est le cas quand une requête XHR renvoie une erreur 500. Il faut donc veiller à ne pas confondre erreurs d&#039;interactions
     et erreurs fatales. Pour ce faire, il faut bien délimiter les erreurs qui sont dues à votre code.</p>
 <p>On pourrait considérer que les erreurs d&#039;utilisation sont des erreurs d&#039;interaction avec l&#039;utilisateur. D&#039;ailleurs, dans l&#039;absolu, l&#039;interaction avec des système tiers peut aussi induire des entrées qui nécessitent d&#039;être
-    filtrées de la même façon que les entrées utilisateur. Je fais néanmoins la différence ici car la réponse à ces errerus sera légèrement différente.</p>
+    filtrées de la même façon que les entrées utilisateur. Je fais néanmoins la différence ici car la réponse à ces erreurs sera légèrement différente.</p>
 <h3>La gestion d&#039;erreur</h3>
 <p>J&#039;imagine que ces types vous évoquent certaines stratégies pour leur gestion. En JavaScript, on compte divers type de gestion d&#039;erreur :</p>
 <ul>
@@ -80,3 +80,10 @@ disqus=true
 <p>L&#039;avantage de cette approche est qu&#039;on informe l&#039;utilisateur d&#039;un problème plutôt que vouloir le lui cacher quitte à ce que ce dernier provoque un effet papillon plus difficile à détecter.</p>
 <p>Voilà, j&#039;espère que cet article vous a donné envie de gérer les erreurs de vos applications. Je vous propose de lire ce billet sur l&#039;<a title="Voir le billet sur BugMeBack" href="bugmeback.html">extension BugMeBack</a>    qui propose une gestion intéressante des erreurs pour vos applications.</p>
 <p>Petit ajout : Je suis tombé sur un article similaire mais cette fois sur la <a hreflang="en" title="Lire l&#039;article" href="http://www.nodewiz.biz/nodejs-error-handling-pattern/">gestion des erreurs avec NodeJS</a>. À lire de toute urgence.</p>
+<p>
+  Petit ajout 2 : J'ai écrit <a
+    title="Lire l&#039;article"
+    href="http://www.nodewiz.biz/nodejs-error-handling-pattern/">un autre
+    article sur les erreurs en JS</a> mais cette fois avec des exemples
+  concrets.
+</p>
