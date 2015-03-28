@@ -39,7 +39,7 @@ permalink: {{ metadata.frontmatter.permalink }}
         </div>
 {% if metadata.standalone != true  %}
         <nav class="ia-header_menu ia-menu">
-        	  <ul class="ia-menu__body">
+            <ul class="ia-menu__body">
                 <li class="ia-menu__item ia-menu__item--{{root.name}}">
                     <a href="{{root.path}}{{root.name}}.html"
                       title="{% if root.shortDesc %}{{root.shortDesc}}{% else %}{{root.title}}{% endif %}"{% if root == metadata  %}
@@ -62,10 +62,10 @@ permalink: {{ metadata.frontmatter.permalink }}
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES * * */
             var disqus_shortname = 'insertafter';
-            var disqus_config = function () { 
+            var disqus_config = function () {
               this.language = "{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}";
             };
-            
+
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
