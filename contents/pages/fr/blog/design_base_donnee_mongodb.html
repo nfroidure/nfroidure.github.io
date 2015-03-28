@@ -25,7 +25,7 @@ disqus=true
 </p>
 <p>
   Dans cet article, je vous propose d'aller un peu plus loin dans les
-  techniques de conception de schema avec MondoDB. Voici quelques connseils
+  techniques de conception de schema avec MondoDB. Voici quelques conseils
   et patterns que j'ai eu à utiliser pour le backend de l'application SaaS que
   nous développons chez SimpliField.
 </p>
@@ -38,7 +38,8 @@ disqus=true
 </p>
 <p>
   Ainsi, il ne faut pas chercher à associer les ressources de votre API REST aux
-  collection MongoDB. Par exemple, avec la structure de document suivante&nbsp;
+  collection MongoDB. Prenons, par exemple, la structure de document
+  suivante&nbsp;:
 </p>
 <pre>
 {
@@ -73,19 +74,19 @@ disqus=true
 <ul>
   <li>GET /users - Pour obtenir la liste des utilisateurs&nbsp;;</li>
   <li>POST /users - Pour ajouter un utilisateur&nbsp;;</li>
-  <li>GET/PUT /users/:id - Pour lire/écrire un utilisateur&nbsp;;</li>
-  <li>GET/PUT /users/:id/preferences/:name - Pour lire/écrire une preference&nbsp;;</li>
-  <li>GET/PUT /users/:id/tags - Pour lire/écrire les tags associés&nbsp;;</li>
-  <li>GET/PUT /users/:id/locations - Pour lire/éditer les lieux de l'utilisateur&nbsp;;</li>
-  <li>GET/PUT /users/:id/coworkers - Pour lire/éditer les collèges de l'utilisateur&nbsp;;</li>
+  <li>GET|PUT /users/:id - Pour lire/écrire un utilisateur&nbsp;;</li>
+  <li>GET|PUT /users/:id/preferences/:name - Pour lire/écrire une preference&nbsp;;</li>
+  <li>GET|PUT /users/:id/tags - Pour lire/écrire les tags associés&nbsp;;</li>
+  <li>GET|PUT /users/:id/locations - Pour lire/éditer les lieux de l'utilisateur&nbsp;;</li>
+  <li>GET|PUT /users/:id/coworkers - Pour lire/éditer les collèges de l'utilisateur&nbsp;;</li>
 </ul>
 <p>
-  On voit donc clairement ici le découplage total entre collection et ressources.
+  On voit donc clairement ici le découplage total entre collections et ressources.
   Ici, on a une collection qui "contient" plusieurs ressources, mais dans
   d'autres cas, on peut avoir une ressource dont le contenu est réparti entre
   plusieurs collections. Ce serait le cas d'une ressource permettant d'accèder
   aux tags associés à tous les concepts du système (lieux, utilisateur,
-  produits...). Nous y reviendrons par la suite.
+  produits...).
 </p>
 <h3>Pas d'ODM</h3>
 <p>
@@ -136,7 +137,7 @@ LocationModel.find({
   simplement&nbsp;:
 </p>
 <pre>
-  // On s'assure que les ids donnés sont corrects
+// On s'assure que les ids donnés sont corrects
 db.collection('location').count({
   _id: {
     $in: myNewLocationsIds
@@ -162,7 +163,7 @@ db.collection('location').count({
 </p>
 <p>
   Si vous avez lu mon précédent article sur MongoDB, vous savez que la
-  conception d'une base de donnée nécessite un reflexion au moment de
+  conception d'une base de donnée nécessite une réflexion au moment de
   l'implémentation et fonction des principes de MongoDB. Utiliser le driver
   natif vous garanti de ne pas y échapper.
 </p>
@@ -177,7 +178,7 @@ db.collection('location').count({
   validation/transformation où bon vous semble, quand bon vous semble sans
   utiliser ces horribles choses que sont l'héritage et les mixins.
 </p>
-<h3>Structure documents != représentation JSON</h3>
+<h3>Documents != Représentations JSON</h3>
 <p>
   Une autre erreur à ne pas commettre est de penser que la structure des
   documents de votre collection doit être la même que celle des représentations
@@ -185,7 +186,7 @@ db.collection('location').count({
 </p>
 <p>
   En pratique, c'est souvent le contraire. Par exemple, dans la collection
-  user ci-dessus, on peut vouloir créer un point d'API qui expose l'utilisateur
+  utilisateurs ci-dessus, on peut vouloir créer un point d'API qui expose l'utilisateur
   <strong>et</strong> ses préférences. On a donc une décorrelation entre la
   représentation d'un utilisateur au niveau de l'API REST et au niveau des
   documents de la collection MongoDB.
@@ -253,7 +254,7 @@ db.collection('users').update({
 </p>
 <p>
   Bien qu'il y aura toujours des cas où ce ne sera pas possible de faire
-  autrement, toutes les stratégies sont bonne pour les éviter. Parmi elles,
+  autrement, toutes les stratégies sont bonnes pour les éviter. Parmi elles,
   la technique que j'appelle le <q>lazy embedding</q> permet de stocker ces
   relations dans les collections afin d'éviter de les requêter à chaque accès.
 </p>
