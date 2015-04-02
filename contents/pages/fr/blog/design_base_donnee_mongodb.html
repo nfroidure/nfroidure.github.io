@@ -153,7 +153,7 @@ db.collection('location').count({
     $set: {
       locations_ids: myNewLocationsIds
     }
-  });
+  }, {multi: true});
 });
 </pre>
 <p>
@@ -217,7 +217,7 @@ db.collection('users').update({
       email: 'new@email.net'
     }
   }
-});
+}, {multi: true});
 </pre>
 <p>
   Comme vous pouvez le voir une fois encore, nos collections sont taillées selon
@@ -267,7 +267,7 @@ db.collection('users').update({
 db.collection('user').find({
   _id: ObjectId('abbacacaabbacacaabbacaca')
 }, function(err, user) {
-  db.collection('locations').find({
+  db.collection('locations').update({
     query: {
       _id: {
         $in: user.locations_ids
@@ -279,7 +279,7 @@ db.collection('user').find({
     ]
   }, function(err, locations) {
     user.locations = locations;
-  });
+  }, {multi: true});
 });
 </pre>
 <p>
@@ -310,7 +310,7 @@ db.collection('user').find({
         $set: {
           _locations: locations
         }
-      }
+      }, {multi: true});
     });
   }
 });
@@ -320,7 +320,7 @@ db.collection('user').find({
   maintenant invalider les utilisateurs concernés par ce dernier&nbsp;:
 </p>
 <pre>
-db.collection('user').find({
+db.collection('user').update({
   locations_ids: {
     $elemMatch:  modifiedLocationId
   }
@@ -328,7 +328,7 @@ db.collection('user').find({
   $unset: {
     _locations: ''
   }
-});
+}, {multi: true});
 </pre>
 <p>
   Forcément, ceci présuppose que vos utilisateurs sont bien plus souvent
@@ -374,7 +374,7 @@ db.collection('users').update({
       }
     }
   }
-});
+}, {multi: true});
 </pre>
 <p>
   Cet exemple montre encore une fois l'intérêt du driver MongoDB natif. Comme
@@ -391,3 +391,10 @@ db.collection('users').update({
   En attendant, n'hésitez pas à me livrer les votres en commentaire ou à
   donner des alternatives aux techniques que je vous ai présenté.
 </p>
+<p><ins>
+  Petite précision, j'ai du faire une modification des sources présentées dans
+  cet article pour ajouter les options <code>{multi: true}</code> qui permettent
+  aux requêtes de mise à jour de fonctionner sur plusieurs entrées. C'est un peu
+  bizarre, mais ces comme ça, par défaut les requêtes de mise à jour ne
+  modifient que la première entrée.
+</ins></p>
