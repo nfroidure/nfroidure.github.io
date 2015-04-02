@@ -85,7 +85,7 @@ disqus=true
   Ici, on a une collection qui "contient" plusieurs ressources, mais dans
   d'autres cas, on peut avoir une ressource dont le contenu est réparti entre
   plusieurs collections. Ce serait le cas d'une ressource permettant d'accèder
-  aux tags associés à tous les concepts du système (lieux, utilisateur,
+  aux tags associés à tous les concepts du système (lieux, utilisateurs,
   produits...).
 </p>
 <h3>Pas d'ODM</h3>
@@ -192,14 +192,14 @@ db.collection('location').count({
   documents de la collection MongoDB.
 </p>
 <h3>
-  Rien à la racine collection
+  Rien à la racine des documents
 </h3>
 <p>
   Une autre bonne pratique est d'éviter de stocker des propriétés d'un même
-  concept à la racine d'une collection. Par exemple, vous pourriez vous demander
-  pourquoi j'ai créé une propriété <code>user</code> dans laquelle j'ai mis les
-  informations concernant l'utilisateur plutôt que de simplement mettre ces
-  propriétés à la racine.
+  concept à la racine des documents d'une collection. Par exemple, vous pourriez
+  vous demander pourquoi j'ai créé une propriété <code>user</code> dans laquelle
+  j'ai mis les informations concernant l'utilisateur plutôt que de simplement
+  mettre ces propriétés à la racine.
 </p>
 <p>
   La raison à cela est simple. Si un consommateur de l'API fait une requête
@@ -247,7 +247,7 @@ db.collection('users').update({
 <h3>Lazy embedding</h3>
 <p>
   Comme nous l'avions vu dans mon billet précédent, le point de compression
-  de performances dans une application MongoDB est la gestion des relations
+  des performances dans une application MongoDB est la gestion des relations
   inter collections. Puisqu'il n'existe pas de jointure, on fait parfois ce
   qui s'apparente au désormais bien connu <q><code>SELECT</code> dans une
   boucle</q> honni des DBA.

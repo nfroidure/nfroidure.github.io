@@ -49,7 +49,6 @@ Nunjucks.configure(conf.src.templates, {
     return Moment(date).locale(lang).format('LLLL');
 });
 
-
 // Fonts
 gulp.task('build_fonts', function() {
   return gulp.src(conf.src.icons + '/**/*.svg', {buffer: buffer})
