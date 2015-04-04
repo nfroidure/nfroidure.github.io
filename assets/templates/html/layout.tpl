@@ -64,6 +64,9 @@ permalink: {{ metadata.frontmatter.permalink }}
             var disqus_shortname = 'insertafter';
             var disqus_config = function () {
               this.language = "{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}";
+              this.callbacks.onNewComment = [function() {
+                ga('send', 'event', 'interaction', 'comment');
+              }];
             };
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
