@@ -35,11 +35,12 @@ var watch = (!args.nowatch) && !prod;
 var buffer = !args.stream;
 var browser = (!args.nobro) && !prod;
 var httpServer = (!args.nosrv) && !prod;
+var port = 33222;
 
 if(!prod) {
   // Finding the server IP
   conf.ip = internalIp();
-  conf.baseURL = 'http://' + conf.ip + ':8080';
+  conf.baseURL = 'http://' + conf.ip + ':' + port;
 }
 // Configure nunjuncks
 Nunjucks.configure(conf.src.templates, {
@@ -304,8 +305,8 @@ gulp.task('server', function(cb) {
     var app = express();
     app.use(express.query())
       .use(express.static(Path.resolve(__dirname, conf.build.root)))
-      .listen(8080, function() {
-        g.util.log('Dev server listening on %d', 35729);
+      .listen(port, function() {
+        g.util.log('Dev server listening on %d', port);
         cb();
       });
   }
