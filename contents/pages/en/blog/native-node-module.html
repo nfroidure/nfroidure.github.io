@@ -5,7 +5,7 @@ description=Suprisingly, creating a native module is not that hard. Making it \
  tricky.
 shortTitle=Native NodeJS module
 shortDesc=Learn how to creative native modules surviving compilation failures.
-published=2015-03-08T10:07:32.000Z
+published=2015-06-26T15:50:23.000Z
 lang=en
 location=US
 keywords.+=JavaScript
@@ -22,8 +22,8 @@ disqus=true
 <p>
  If you're a frontend developper, you probably already heard about icon fonts.
  If you use the Gulp build tool, you maybe already used
- [gulp-icont](https://www.npmjs.com/package/gulp-iconfont). As its maintainer,
- when i heard about the WOFF2 font format, i really wanted to get it as in
+ <a href="https://www.npmjs.com/package/gulp-iconfont">gulp-iconfont</a>. As its maintainer,
+ when i heard about the WOFF2 font format, i really wanted to get it in
  output of my gulp plugin.
 </p>
 <p>
@@ -38,20 +38,22 @@ disqus=true
 <p>
   Typically when creating a native add-on you need to create a wrapper written
   in C++ that glue the library you want to use to the V8 engine. Mine is
-  [pretty simple](https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/csrc/addon.cc).
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/csrc/addon.cc">pretty simple</a>.
   It indeed wraps the Google's
-  [woff2 project](https://github.com/google/woff2/blob/09c4eba0f679640ddddfd5315edbb72e4d7d8447/src/woff2_enc.cc#L175)
+  <a href="https://github.com/google/woff2/blob/09c4eba0f679640ddddfd5315edbb72e4d7d8447/src/woff2_enc.cc#L175">woff2 project</a>
   encoding function. This C++ function signature:
 </p>
 <pre>
-  bool ConvertTTFToWOFF2(const uint8_t *data, size_t length,
-                       uint8_t *result, size_t *result_length);
+bool ConvertTTFToWOFF2(
+  const uint8_t *data, size_t length,
+  uint8_t *result, size_t *result_length
+);
 </pre>
 <p>
   becomes this NodeJS one:
 </p>
 <pre>
-  output:Buffer function ttf2woff2(input:Buffer);
+output:Buffer function ttf2woff2(input:Buffer);
 </pre>
 <p>
   The most complex work was to figure out how to create a NodeJS Buffer from a
@@ -63,7 +65,7 @@ disqus=true
 </p>
 <p>
   Once the wrapper is made, you just have to create a file named
-  [binding.gyp](https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/binding.gyp)
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/binding.gyp">binding.gyp</a>
   that allows you to specify building instruction for the various compilers. We
   had to struggle a bit with the MacOSX one since i couldn't test by myself.
 </p>
@@ -71,8 +73,8 @@ disqus=true
   And that's it! Your module gets compiled at <code>npm install</code>. In fact,
   i had to test a few time and correct compilation errors progressively but it
   was suprisingly fast to get it up and running. For that testing matter i
-  set up a [few commands](https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L14-L15)
-  to my `package.json`.
+  set up a <a href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L14-L15">few commands</a>
+  to my <code>package.json</code>.
 </p>
 <p>
   But what about users whose OS can't build it? How to not let them down?
@@ -92,7 +94,7 @@ disqus=true
 </p>
 <p>
   I finally managed to
-  [create a wrapper](https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/jssrc/index.js)
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/jssrc/index.js">create a wrapper</a>
   for it. As you can see, i had to manually manage the allocated memory in the
   JS wrapper except for the output buffer that i had to free on the C side
   with a second function call (strange errors happens when trying to free C
@@ -100,11 +102,12 @@ disqus=true
 </p>
 <p>
   Once again, i made
-  [some scripts](https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L16-L17)
-  to simplify the build. Basically, it query the `binding.gyp` file with
-  [miniquery](https://github.com/SimpliField/miniquery) for the C/C++ files to
-  build, remove the `addon.cc` one that we do not want and then set it as args to
-  the [`emcc`](http://kripken.github.io/emscripten-site/docs/tools_reference/emcc.html)
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L16-L17">some scripts</a>
+  to simplify the build. Basically, it query the <code>binding.gyp</code> file with
+  <a href="https://github.com/SimpliField/miniquery">miniquery</a> for the C/C++
+  files to build, remove the <code>addon.cc</code> one that we do not want and then set it
+  as args to the
+  <a href="http://kripken.github.io/emscripten-site/docs/tools_reference/emcc.html">emcc</a>
   compiler.
 </p>
 <p>
@@ -118,14 +121,14 @@ disqus=true
   So, now we have our Emscripten build, let's fallback to him when the native
   NodeJS add-on compilation goes wrong. First, we must ensure that any failure
   won't impeach the module to install. We're basically doing this by
-  [overriding](https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L18)
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L18">overriding</a>
   the default installation script to exit with a 0 code whatever result the
   compiler gives.
 </p>
 <p>
   Then, as a main JavaScript file we will ensure failing to bind to the native
   add-on will result in requiring the Emscripten fallback. It is simply done by
-  [catching exceptions](https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/src/index.js)
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/src/index.js">catching exceptions</a>
   when requiring the bindings.
 </p>
 <p>It works! But what about browserifying it ?</p>
@@ -133,10 +136,11 @@ disqus=true
   Browserify
 </h3>
 <p>
-  In order to allow `gulp-iconfont` users to preview and download the resulting
+  In order to allow <code>gulp-iconfont</code> users to preview and download the resulting
   fonts made with it (and to see it it was feasible :p), i've made a
-  [full frontend font builder](http://nfroidure.github.io/svgiconfont/). So, i
-  immediatly tried to use my shinny new module to also output WOFF2 files.
+  <a href="http://nfroidure.github.io/svgiconfont/">full frontend font
+  builder</a>. So, i immediatly tried to use my shinny new module to also output
+  WOFF2 files.
 </p>
 <p>
   The fact is that it doesn't work out of the box. Browserify try to add every
@@ -145,7 +149,8 @@ disqus=true
 </p>
 <p>
   Chances are that Browserify allows to skip the parsing for some files. Plus
-  [a simple trick](https://github.com/nfroidure/ttf2woff2/blob/master/jssrc/post.js)
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/master/jssrc/post.js">a
+  simple trick</a>
   to fix the Emscripten require, i've finally been able to make the magic happen.
 </p>
 <p>
