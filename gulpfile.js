@@ -55,7 +55,7 @@ gulp.task('build_fonts', function() {
   return gulp.src(conf.src.icons + '/**/*.svg', {buffer: buffer})
     .pipe(g.iconfont({
       'fontName': 'iconsfont',
-      'appendCodepoints': true,
+      'appendUnicode': true,
       'fontHeight': 90,
       'normalize': true,
       'hint': !!g.util.env.hint
