@@ -17,13 +17,13 @@ disqus=true
 <h2>MongoDB ou la conception probabiliste</h2>
 <p>
   Comme je ne vous ai pas tout dit dans mon dernier billet sur le design de base
-  de donnée avec MongoDB, je me fend d'un second billet plus généraliste sur la
-  philosophie que je mets en oeuvre pour la gestion d'un base de donnée MongoDB.
+  de donnée avec MongoDB, je me fends d'un second billet plus généraliste sur la
+  philosophie que je mets en œuvre pour la gestion d'une base de donnée MongoDB.
 </p>
 <p>
   La majeure partie des décisions en matière d'architecture et de conception
   de schéma avec MongoDB se résume à un calcul de probabilité (les plus
-  péssimistes diront risque) d'inconsistence des données. Et ça, pour un DBA,
+  pessimistes diront risque) d'inconsistance des données. Et ça, pour un DBA,
   c'est plutôt, nouveau.
 </p>
 <p style="text-align:center;">
@@ -33,21 +33,21 @@ disqus=true
 </p>
 <p>
   D'ailleurs, quand on gratte un peu la surface, on se rend compte que ces
-  probabilités sont au coeur de la conception de MongoDB lui même. Pour
+  probabilités sont au cœur de la conception de MongoDB lui même. Pour
   illustrer ce fait, parlons un peu de l'ObjectId.
 </p>
 <h3>ObjectId, the WTF primary key</h3>
 <p>
   Les clés utilisées par MongoDB, les
   <a href="http://docs.mongodb.org/manual/reference/object-id/">ObjectIds</a>,
-  sont facilement reconnaissables sous forme de chaîne de caractère. Dérrière
+  sont facilement reconnaissables sous forme de chaîne de caractère. Derrière
   cette séquence hexadécimale de 24 caractères (ex.&nbsp;:
   babacafebabacafebabacafebabacafe) se cache bien des concepts.
 </p>
 <p>
   Contrairement aux clés auto-incrémentées que l'on observe dans la plupart,
-  sinon la totalité, des bases de données relationelles, les clés de MongoDB sont
-  générées grâce à une combinaison de quatres valeurs (un timestamp représentant
+  sinon la totalité, des bases de données relationnelles, les clés de MongoDB sont
+  générées grâce à une combinaison de quatre valeurs (un timestamp représentant
   le nombre de secondes écoulées depuis l'Epoch Unix, un identifiant "machine",
   le pid du processus qui a généré l'ObjectId et enfin un compteur incrémenté
   automatiquement à chaque création d'id avec une valeur aléatoire comme base).
@@ -93,13 +93,13 @@ disqus=true
 <h3>Transactions optimistes</h3>
 <p>
   MongoDB ne propose pas de système de transaction. C'est d'ailleurs ce qui m'a
-  rebuté de prime abord quand j'ai découvert MongoDB. Les données étant le coeur
+  rebuté de prime abord quand j'ai découvert MongoDB. Les données étant le cœur
   de tout système, ne pouvoir garantir l'état de ces dernières et risquer de les
-  voir lentement se dégrader est innenvisageable pour un concepteur de service
+  voir lentement se dégrader est inenvisageable pour un concepteur de service
   web qui se respecte.
 </p>
 <p>
-  Alors que faire&nbsp;? Faîtes comme dans la vraie vie. Quand vous prennez
+  Alors que faire&nbsp;? Faîtes comme dans la vraie vie. Quand vous prenez
   votre voiture pour aller chercher du pain, vous savez que ce n'est pas sans
   risque. Vous pourriez crever un pneu, avoir un accident etc... Malheureusement,
   vous ne pouvez pas réduire le risque à néant.
@@ -107,7 +107,7 @@ disqus=true
 <p>
   En sortant quand même de chez vous, vous arbitrez sur le fait que ces risques
   sont somme toute négligeables et que la seule façon d'arriver à vos fins
-  efficacement est de prendre ce risque. Vous le prennez cependant de manière
+  efficacement est de prendre ce risque. Vous le prenez cependant de manière
   intelligente.
 </p>
 <p>
@@ -133,7 +133,7 @@ disqus=true
 </p>
 <p>
   C'est pourquoi la conception avec MongoDB est plus complexe. Elle demande une
-  bonne reflexion et une bonne capacité à mesurer et anticiper les risques là où
+  bonne réflexion et une bonne capacité à mesurer et anticiper les risques là où
   une conception relationnelle demande simplement du formalisme.
 </p>
 <p>
@@ -165,7 +165,7 @@ db.collection('location').count({
   Quels sont les risques&nbsp;? La majorité des risques se situent souvent entre
   deux requêtes (d'où l'intérêt des techniques présentées dans l'article
   précédent pour les limiter). Le risque se situe donc entre la vérification de
-  l'existance des lieux liés et la liaison effective des lieux dans le
+  l'existence des lieux liés et la liaison effective des lieux dans le
   document correspondant à l'utilisateur.
 </p>
 <p>
@@ -178,7 +178,7 @@ db.collection('location').count({
 <p>
   En revanche, puisque le risque existe, il s'agit de ne pas l'ignorer.
   Accepter la probabilité qu'un accident survienne en allant chercher du pain
-  ne signifie pas mettre des oeillères et se retrouver dépourvu face à sa
+  ne signifie pas mettre des œillères et se retrouver dépourvu face à sa
   réalisation.
 </p>
 <p style="text-align:center;">
@@ -187,13 +187,13 @@ db.collection('location').count({
   webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 </p>
 <p>
-  Plusieurs stratégies peuvent être mises en oeuvre pour pallier à ces risques,
+  Plusieurs stratégies peuvent être mises en œuvre pour pallier à ces risques,
   parfois conjointement.
 </p>
 <h5>Résilience face à l'inconsistance</h5>
 <p>
   La première stratégie qui, selon moi, se doit d'être automatique. Votre
-  plateforme se doit de continuer de fonctionner en cas d'inconsistence. Dans
+  plateforme se doit de continuer de fonctionner en cas d'inconsistance. Dans
   le cas de l'exemple ci-dessus, si il s'avère qu'un lieu n'existe plus quand
   vous cherchez à obtenir la liste des lieux d'un utilisateur, vous devez donc
   silencieusement l'invalider et non renvoyer une erreur aux consommateurs de
@@ -202,7 +202,7 @@ db.collection('location').count({
 </p>
 <p>
   Typiquement, l'architecte logiciel se chargera d'ajouter des tests à la base
-  de code pour les risques d'inconsistence identifiés et acceptés par sa
+  de code pour les risques d'inconsistance identifiés et acceptés par sa
   conception de façon à alerter les développeurs de ces derniers. Au niveau
   code, ceci donnerait&nbsp;:
 </p>
@@ -242,14 +242,14 @@ db.users.find({
 <p>
   Votre base de donnée peu devenir inconsistante. Donc, créez des
   scripts&nbsp;! Ça peut paraître bête, mais créer des scripts pour contrôler
-  et réparer les possibles inconsistences de votre base MongoDB est un excellent
+  et réparer les possibles inconsistances de votre base MongoDB est un excellent
   moyen de lutter contre elles. Ces scripts peuvent également servir de
-  reminder de toutes les inconsistences possibles.
+  reminder de toutes les inconsistances possibles.
 </p>
 <p>
   Vous serez également bien contents de les avoir sous la main dans la cas où
-  une inconsistence surviendrait plus souvent que prévu. Afin de pouvoir les
-  utiliser comme paliatif le temps de réduire la probabilité de leur
+  une inconsistance surviendrait plus souvent que prévu. Afin de pouvoir les
+  utiliser comme palliatif le temps de réduire la probabilité de leur
   survenance grâce aux techniques que je vous ai présenté.
 </p>
 <h5>Contrôle et traitement opportuniste d'intégrité</h5>
@@ -311,7 +311,7 @@ db.users.find({
 <p>
   De plus, il est possible d'utiliser la fonction <code>setTimeout()</code> de
   JavaScript pour découpler ces vérifications du reste du code pour ne pas
-  nuire aux performances si cela s'évérait nécessaire.
+  nuire aux performances si cela s'avérait nécessaire.
 </p>
 <h5>Isolation</h5>
 <p>
@@ -320,7 +320,7 @@ db.users.find({
   différents de votre API.
 </p>
 <p>
-  La résultante de ceci est bien-sûr que le traffic sur votre plateforme change
+  La résultante de ceci est bien sûr que le trafic sur votre plateforme change
   totalement les probabilités d'inconsistance. Ainsi, si vous avez un seul
   utilisateur elles sont quasi nulles, en revanche, si des millions
   d'utilisateurs l'utilisent, elles deviennent plus probables.
@@ -329,13 +329,13 @@ db.users.find({
   Un bon moyen de limiter les inconsistances est donc la création de silos
   artificiels. Par exemple, si votre plateforme contient des organisations
   différentes et qu'aucun document n'est partagé entre deux organisations à
-  aucun moment, félicitations, vous avez divisé le risque d'inconsistence dû
-  au traffic par le nombre d'organisations existantes.
+  aucun moment, félicitations, vous avez divisé le risque d'inconsistance dû
+  au trafic par le nombre d'organisations existantes.
 </p>
 <h5>Supervision</h5>
 <p>
   Traiter silencieusement les inconsistances n'est pas suffisant. Vous devez
-  receuillir du feedback sur ces dernières de manière à pouvoir faire évoluer
+  recueillir du feedback sur ces dernières de manière à pouvoir faire évoluer
   votre système en connaissance de causes.
 </p>
 <p>
@@ -361,11 +361,11 @@ db.users.find({
 <h3>Inception</h3>
 <p>
   On pourrait ébrécher cette confiance en réfléchissant à toutes les stratégies
-  mises en oeuvre ci-dessus. Puisqu'elles-mêmes agissent sur les données,
+  mises en œuvre ci-dessus. Puisqu'elles-mêmes agissent sur les données,
   elles peuvent donc également générer des inconsistances.
 </p>
 <p>
-  Il est possible que la suppresion d'un identifiant de lieu dans la liste des
+  Il est possible que la suppression d'un identifiant de lieu dans la liste des
   lieux d'un utilisateur supprime en fait une association parfaitement légitime.
 </p>
 <p style="text-align:center;">
@@ -388,7 +388,7 @@ db.users.find({
 <h3>Conception organique</h3>
 <p>
   J'aime bien le terme de conception organique. Là où les bases de données
-  relationnelles sont comme une négation de la nature imprevisible de l'univers,
+  relationnelles sont comme une négation de la nature imprévisible de l'univers,
   MongoDB impose une conception qui rejoint l'approche naturelle. Une conception
   organique.
 </p>
