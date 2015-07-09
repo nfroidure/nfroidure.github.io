@@ -19,4 +19,21 @@
   {% endfor %}
 </section>
 {% endif %}
+{% if metadata.previousFile or metadata.nextFile %}
+<nav class="ia-pagination">
+  {% if metadata.previousFile %}
+  <a href="{{metadata.previousFile.metadata.path}}{{metadata.previousFile.metadata.name}}.html"
+    title="{{metadata.previousDesc}}" rel="Prev" class="ia-pagination_previous">
+    <span>{{metadata.previousTitle}}</span>
+  </a>
+  {% endif %}
+
+  {% if metadata.nextFile %}
+  <a href="{{metadata.nextFile.metadata.path}}{{metadata.nextFile.metadata.name}}.html"
+    title="{{metadata.nextDesc}}" rel="Next" class="ia-pagination_next">
+    <span>{{metadata.nextTitle}}</span>
+  </a>
+  {% endif %}
+</nav>
+{% endif %}
 {% endblock %}

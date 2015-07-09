@@ -1,0 +1,28 @@
+.ia-pagination {
+  text-align: right;
+  line-height: @vrythm * 2;
+  font-size: @basefontsize;
+  .ia-pagination_previous, .ia-pagination_next {
+    text-decoration:none;
+    & {
+      color: @c2;
+    }
+    &:visited {
+      color: @c2;
+    }
+    span {
+      /*.hideText();*/
+    }
+  }
+  .ia-pagination_previous:before {
+    margin: 0 0 0 (@gutter * 2);
+    .icon('\e003');
+  }
+  a + a:before {
+    content: '\a0\a0/\a0\a0';
+  }
+  .ia-pagination_next:after {
+    margin: 0 (@gutter * 2) 0 0 ;
+    .icon('\e004');
+  }
+}

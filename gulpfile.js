@@ -21,6 +21,7 @@ var filter = require('streamfilter');
 
 var gulp = require('gulp');
 var g = require('gulp-load-plugins')();
+var gulpPages = require('./gulp/gulp-pages');
 
 var rem2px = require('rework-rem2px');
 var queryless = require('css-queryless');
@@ -130,11 +131,11 @@ gulp.task('build_html', function(cb) {
   }, {objectMode: true, restore: true, passtrough: true});
 
   var draftFilter = filter(function(file, enc, cb) {
-    cb(file.metas.draft);
+    cb(file.metadata.draft);
   }, {objectMode: true, restore: false, passtrough: true});
 
   var ghostFilter = filter(function(file, enc, cb) {
-    cb(file.metas.ghost);
+    cb(file.metadata.ghost);
   }, {objectMode: true, restore: true, passtrough: true});
 
   var redirects = g.clone.sink();
@@ -142,27 +143,58 @@ gulp.task('build_html', function(cb) {
     // filter blog posts only and before 2015 and add their old name
     // to make dumb redirects.
     if(
-      prod && file.metas.disqus && file.metas.published &&
-      (new Date(file.metas.published)).getTime() < (new Date('2015-01-01')).getTime()
+      prod && file.metadata.disqus && file.metadata.published &&
+      (new Date(file.metadata.published)).getTime() < (new Date('2015-01-01')).getTime()
     ) {
-      file.path = file.base + ('fr' === file.metas.lang ? 'articles' : 'blog') +
-        '-' + file.metas.name + '.html';
+      file.path = file.base + ('fr' === file.metadata.lang ? 'articles' : 'blog') +
+        '-' + file.metadata.name + '.html';
       return cb(false);
     }
     cb(true);
   }, {objectMode: true});
 
   var contentStream = gulp.src(conf.src.content + '/**/*.{html,md}', {buffer: buffer || true}) // Streams not supported yet
-    .pipe(g.mdvars())
+    .pipe(g.mdvars({
+      prop: 'metadata'
+    }))
     .pipe(draftFilter)
     .pipe(ghostFilter)
     .pipe(g.vartree({
       root: tree,
       index: 'index',
+      prop: 'metadata',
       parentProp: 'parent',
       childsProp: 'childs',
       sortProp: 'published',
       sortDesc: true
+    }))
+    .pipe(gulpPages({
+      limit: 10,
+      prop: 'metadata',
+      parentProp: 'parent',
+      metadataCloner: function(metadata, page, file) {
+        return {
+          title: metadata.title + (page > 1 ? ' - ' + page : ''),
+          description: metadata.description,
+          shortTitle: metadata.shortTitle,
+          shortDesc: metadata.shortDesc,
+          keywords: metadata.keywords,
+          template: metadata.template,
+          lang: metadata.lang,
+          location: metadata.location,
+          types: metadata.types,
+          empty: metadata.empty,
+          published_on: metadata.published_on,
+          name: metadata.name + (1 !== page ? '-' + page : ''),
+          path: metadata.path,
+          ext: metadata.ext,
+          href: metadata.href,
+          nextTitle: metadata.nextTitle,
+          nextDesc: metadata.nextDesc,
+          previousTitle: metadata.previousTitle,
+          previousDesc: metadata.previousDesc
+        };
+      }
     }))
     .pipe(ghostFilter.restore)
     .pipe(mdFilter)
@@ -187,7 +219,7 @@ gulp.task('build_html', function(cb) {
         rootItems[item.lang] = item;
       });
       markedFiles.forEach(function(file) {
-        (file.metas.types || ['html']).forEach(function(type, i, types) {
+        (file.metadata.types || ['html']).forEach(function(type, i, types) {
           var curFile = file;
           if(i > 0) {
             curFile = file.clone();
@@ -201,8 +233,8 @@ gulp.task('build_html', function(cb) {
             tree: tree,
             conf: conf,
             type: type,
-            root: rootItems[curFile.metas.lang],
-            metadata: curFile.metas,
+            root: rootItems[curFile.metadata.lang],
+            metadata: curFile.metadata,
             content: curFile.contents.toString('utf-8')
           };
           // Render the template
@@ -215,7 +247,7 @@ gulp.task('build_html', function(cb) {
           // Still hacky stuffs for old endpoints
           if('html' !== type) {
             curFile = curFile.clone();
-            curFile.path = curFile.base + ('fr' === curFile.metas.lang ? 'articles' : 'blog') +
+            curFile.path = curFile.base + ('fr' === curFile.metadata.lang ? 'articles' : 'blog') +
               '.' + type;
             // Save it.
             dest.write(curFile);
