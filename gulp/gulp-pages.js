@@ -25,6 +25,7 @@ function gulpPages(options) {
     var childs;
     var page = 1;
     if(
+      (!file[options.prop].paginate) ||
       (!file[options.prop]) ||
       (!file[options.prop][options.childsProp]) ||
       (!file[options.prop][options.childsProp].length) ||
@@ -44,6 +45,7 @@ function gulpPages(options) {
         });
         curFile[options.prop] = (options.metadataCloner)(file[options.prop], page, file);
       }
+      curFile[options.prop][options.parentProp] = file.metadata;
       curFile[options.prop][options.childsProp] = childs.slice(0, options.limit);
       curFile[options.prop].page = page;
       childs = childs.slice(options.limit);

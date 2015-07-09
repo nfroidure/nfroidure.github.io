@@ -171,12 +171,13 @@ gulp.task('build_html', function(cb) {
     .pipe(gulpPages({
       limit: 10,
       prop: 'metadata',
+      parentProp: 'parent',
       metadataCloner: function(metadata, page, file) {
         return {
           title: metadata.title + (page > 1 ? ' - ' + page : ''),
           description: metadata.description,
           shortTitle: metadata.shortTitle,
-          shortDesc: page > 1 ? 'Go to page ' + 1 : metadata.shortDesc,
+          shortDesc: metadata.shortDesc,
           keywords: metadata.keywords,
           template: metadata.template,
           lang: metadata.lang,
@@ -184,10 +185,14 @@ gulp.task('build_html', function(cb) {
           types: metadata.types,
           empty: metadata.empty,
           published_on: metadata.published_on,
-          name: Path.basename(file.path).substr(0, file.path.length - Path.extname(metadata.ext)),
-          path: Path.dirname(file.path),
-          ext: Path.extname(metadata.ext),
-          href: metadata.href
+          name: metadata.name + (1 !== page ? '-' + page : ''),
+          path: metadata.path,
+          ext: metadata.ext,
+          href: metadata.href,
+          nextTitle: metadata.nextTitle,
+          nextDesc: metadata.nextDesc,
+          previousTitle: metadata.previousTitle,
+          previousDesc: metadata.previousDesc
         };
       }
     }))
