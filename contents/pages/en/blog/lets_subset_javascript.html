@@ -1,0 +1,115 @@
+<!--VarStream
+title=Let's subset JavaScript
+description=Currently, it's all about JavaScript and how to compile, transpile\
+ and every "ile"y things you could imagine. But what about making JavaScript\
+ smaller?
+shortTitle=JavaScript subset
+shortDesc=Why and how to subset JavaScript.
+published=2015-07-10T13:38:03.000Z
+lang=en
+location=US
+keywords.+=JavaScript
+keywords.+=Esprima
+categories.+=.*
+disqus=true
+-->
+
+<h2>Let's subset JavaScript</h2>
+<p>
+ TL;DR: Subsetting JavaScript is easy, you can do it with
+ <a href="https://github.com/SimpliField/jsub"><code>jsub</code></a>.
+</p>
+<p>
+  At <a href="http://simplifield.com">SimpliField</a>, we allow users to collect
+  and ananlyse field data and as part of it, our users can create their own
+  data models.
+</p>
+<p>
+  As a consequence, we were in need of a solution allowing to define
+  dynamically computed relationnal constraints. Things like dynamically define
+  a form field as optional based on some conditions/computations.
+</p>
+<p>
+  We ended up with a reliable solution based on a user interface and simple
+  conditions. The problem we faced was that every new feature were resulting in
+  new complexity.
+</p>
+<p>
+  Also we were defining a new language our API consumers would certainly hate
+  once our public API would be available. And friends don't let friends
+  struggling with bad APIs ;).
+</p>
+<h3>A few words about our stack</h3>
+<p>
+  We're using a full JavaScript stack (we're calling it MEANI for Mongo Express
+  Angular NodeJS and Ionic). The big win of this kind of stack is not only
+  isomorphism (i had great moments building an
+  <a href="http://slides.com/nfroidure/reaccess">end to end user access
+  management</a> for our apps).
+</p>
+<p>
+  It is mainly skill reuse. As a JavaScript developper, i can make some changes
+  to the back-end and than apply the resulting changes either in the front-end
+  and the mobile app. It is really valuable as you don't have to rely on
+  someone else to make a bunch of related changes.
+</p>
+<h3>Subsetting JavaScript</h3>
+<p style="text-align:center;">
+  <img src="" alt="Always bet in JavaScript" />
+</p>
+<p>
+  So we choose to rely on JavaScript for conditionnally displayed fields,
+  computed fields etc... The idea is simple: we need a formula language like
+  those you can find in Open Office Cacl or Microsoft Excel but we don't want to
+  reinvent the wheel.
+</p>
+<p>
+  We also want to have the minimal learning curve for developpers that will
+  interact with our API. Since JavaScript was already a first class citizen in
+  our stack, subsetting its syntax was in evidence.
+</p>
+<p>
+  Thanks to the great <a href="http://esprima.org">Esprima project</a>, a few
+  hours only were sufficient to have a first prototype of
+  <a href="https://github.com/SimpliField/jsub">jsub</a>; a tiny project aimed
+  to simply define a custom JavaScript subset.
+</p>
+<p>
+  You basically define a set of conditions that shapes syntaxically allowed
+  expressions. Then, you check script against thos conditions and get errors
+  if some in output.
+</p>
+<pre>
+var simpleMath = {
+  conditions: [{
+    type: 'Program' // allow the root node
+  }, {
+    type: 'ExpressionStatement' // allow expressions
+  }, {
+    type: 'BinaryExpression', // allow the + and - operators
+    operator: ['+', '-']
+  }, {
+    type: 'Literal',
+    raw: /^([0-9]{1,5})$/ // allow positive numbers
+  }]
+};
+
+var errors = jsub('(1 + 2) - 1', simpleMath);
+assert.equal(errors.length, 0);
+</pre>
+<h3>Benefits</h3>
+<p>
+  Having a custom syntax subsetting JavaScript provides a lot of out of the box
+  advantages:
+</p>
+<ul>
+  <li>Syntax highlighting: you can simply add highlighted syntax to your own
+    API docs</li>
+  <li>Hinting: what about a custom JSLint module to help your customers?</li>
+  <li>Parsing: syntax errors will be the same than for JavaScript;</li>
+  <li>No overhead: Just run it, especially if you are using the MEANI stack ;).</li>
+</ul>
+<p>
+  There's probably a lot more things interesting with this approach let me
+  know your thoughts.
+</p>
