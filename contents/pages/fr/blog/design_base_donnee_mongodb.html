@@ -24,15 +24,15 @@ disqus=true
 </p>
 <p>
   Dans cet article, je vous propose d'aller un peu plus loin dans les
-  techniques de conception de schema avec MondoDB. Voici quelques conseils
+  techniques de conception de schéma avec MongoDB. Voici quelques conseils
   et patterns que j'ai eu à utiliser pour le backend de l'application SaaS que
   nous développons chez SimpliField.
 </p>
 <h3>Collection != Modèle != Ressource</h3>
 <p>
   Les documents MongoDB sont stockés dans des collections. Cette appellation
-  n'est pas innocente. Il faut voir une collection comme un amât de documents
-  pas forcément uniformes et sans aucune corellation avec les concepts que
+  n'est pas innocente. Il faut voir une collection comme un amas de documents
+  pas forcément uniformes et sans aucune corrélation avec les concepts que
   vous manipulez dans vos applications.
 </p>
 <p>
@@ -74,7 +74,7 @@ disqus=true
   <li>GET /users - Pour obtenir la liste des utilisateurs&nbsp;;</li>
   <li>POST /users - Pour ajouter un utilisateur&nbsp;;</li>
   <li>GET|PUT /users/:id - Pour lire/écrire un utilisateur&nbsp;;</li>
-  <li>GET|PUT /users/:id/preferences/:name - Pour lire/écrire une preference&nbsp;;</li>
+  <li>GET|PUT /users/:id/preferences/:name - Pour lire/écrire une préférence&nbsp;;</li>
   <li>GET|PUT /users/:id/tags - Pour lire/écrire les tags associés&nbsp;;</li>
   <li>GET|PUT /users/:id/locations - Pour lire/éditer les lieux de l'utilisateur&nbsp;;</li>
   <li>GET|PUT /users/:id/coworkers - Pour lire/éditer les collèges de l'utilisateur&nbsp;;</li>
@@ -83,7 +83,7 @@ disqus=true
   On voit donc clairement ici le découplage total entre collections et ressources.
   Ici, on a une collection qui "contient" plusieurs ressources, mais dans
   d'autres cas, on peut avoir une ressource dont le contenu est réparti entre
-  plusieurs collections. Ce serait le cas d'une ressource permettant d'accèder
+  plusieurs collections. Ce serait le cas d'une ressource permettant d'accéder
   aux tags associés à tous les concepts du système (lieux, utilisateurs,
   produits...).
 </p>
@@ -168,7 +168,7 @@ db.collection('location').count({
 </p>
 <h3>Découpler données et logique</h3>
 <p>
-  Surtout, une fois débarrasés de Mongoose, ne vous précipitez pas pour créer
+  Surtout, une fois débarrassé de Mongoose, ne vous précipitez pas pour créer
   votre propre ODM. Il faut considérer le contenu de vos collections comme des
   données que vous filtrerez en entrée comme en sortie avec des fonctions pures.
 </p>
@@ -235,12 +235,12 @@ db.collection('users').update({
   au sein des documents.
 </p>
 <p>
-  De la même façon, il est préférable d'applatir les structures arborescentes
+  De la même façon, il est préférable d'aplatir les structures arborescentes
   dans un unique tableau quitte à la reconstituer en entrée et en sortie de
   votre API REST.
 </p>
 <p>
-  En effet, pour tirer parti des performances des pipes d'aggregation, c'est
+  En effet, pour tirer parti des performances des pipes d'agrégation, c'est
   une véritable nécessité.
 </p>
 <h3>Lazy embedding</h3>
@@ -284,7 +284,7 @@ db.collection('user').find({
 <p>
   L'idée du lazy embedding est de faire cette requête à la première demande,
   d'envoyer le résultat à l'utilisateur puis de la stocker pour les prochains
-  appels, ce qu donne&nbsp;:
+  appels, ce qui donne&nbsp;:
 </p>
 <pre>
 db.collection('user').find({
@@ -387,13 +387,13 @@ db.collection('users').update({
   d'autres billets.
 </p>
 <p>
-  En attendant, n'hésitez pas à me livrer les votres en commentaire ou à
+  En attendant, n'hésitez pas à me livrer les vôtres en commentaire ou à
   donner des alternatives aux techniques que je vous ai présenté.
 </p>
 <p><ins>
   Petite précision, j'ai du faire une modification des sources présentées dans
   cet article pour ajouter les options <code>{multi: true}</code> qui permettent
   aux requêtes de mise à jour de fonctionner sur plusieurs entrées. C'est un peu
-  bizarre, mais ces comme ça, par défaut les requêtes de mise à jour ne
+  bizarre, mais c'est comme ça, par défaut les requêtes de mise à jour ne
   modifient que la première entrée.
 </ins></p>
