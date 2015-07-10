@@ -25,31 +25,31 @@ disqus=true
   own data models.
 </p>
 <p>
-  As a consequence, we were in need of a solution allowing to define
-  dynamically computed relationnal constraints. Things like dynamically define
+  As a consequence, we needed a solution that allows to define
+  dynamically computed relational constraints. Things like dynamically define
   a form field as optional based on some conditions/computations.
 </p>
 <p>
   We ended up with a reliable solution based on a user interface and simple
-  conditions. The problem we faced was that every new feature were resulting in
+  conditions. The problem we faced was that every new feature resulted in
   new complexity.
 </p>
 <p>
-  Also we were defining a new language our API consumers would certainly hate
-  once our public API would be available. And friends don't let friends
-  struggling with bad APIs ;).
+  We were also defining a new language our API consumers would certainly hate,
+  once publicly available. And friends don't let friends struggling with bad
+  APIs ;).
 </p>
 <h3>A few words about our stack</h3>
 <p>
-  We're using a full JavaScript stack (we're calling it MEANI for Mongo Express
+  We're using a full JavaScript stack (we call it MEANI for Mongo Express
   Angular NodeJS and Ionic). The big win of this kind of stack is not only
-  isomorphism (i had great moments building an
-  <a href="http://slides.com/nfroidure/reaccess">end to end user access
-  management</a> for our apps).
+  isomorphism (I had great moments building the
+  <a href="http://slides.com/nfroidure/reaccess">end-to-end user's rights
+  management system</a> for our apps) but is mainly skill reuse.
 </p>
 <p>
-  It is mainly skill reuse. As a JavaScript developper, i can make some changes
-  to the back-end and than apply the resulting changes either in the front-end
+  As a JavaScript developer, I can make some changes
+  to the back-end and apply the resulting changes in both the front-end
   and the mobile app. It is really valuable as you don't have to rely on
   someone else to make a bunch of related changes.
 </p>
@@ -59,8 +59,8 @@ disqus=true
   <a href="https://brendaneich.com/2011/09/capitoljs-rivertrail/">Source: Brendan Eich's blog</a>
 </p>
 <p>
-  So we choose to rely on JavaScript for conditionnally displayed fields,
-  computed fields etc... The idea is simple: we need a formula language like
+  So we choose to rely on JavaScript for conditionally displayed fields,
+  computed fields, etc... The idea is simple: we need a formula language like
   those you can find in Open Office Calc or Microsoft Excel but we don't want to
   reinvent the wheel.
 </p>
@@ -70,15 +70,15 @@ disqus=true
   our stack, subsetting its syntax was in evidence.
 </p>
 <p>
-  Thanks to the great <a href="http://esprima.org">Esprima project</a>, a few
-  hours only were sufficient to have a first prototype of
+  Thanks to the great <a href="http://esprima.org">Esprima project</a>, only a
+  few hours were sufficient to create a first prototype of
   <a href="https://github.com/SimpliField/jsub">jsub</a>; a tiny project aimed
   to simply define a custom JavaScript subset.
 </p>
 <p>
-  You basically define a set of conditions that shapes syntaxically allowed
-  expressions. Then, you check script against those conditions and get errors,
-  if some, in output.
+  You basically define a set of conditions that shapes syntactically allowed
+  expressions. Then, you check your script against those conditions and if
+  something is going wrong, errors will simply show up.
 </p>
 <pre>
 var simpleMath = {
