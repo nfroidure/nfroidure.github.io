@@ -184,6 +184,7 @@ gulp.task('build_html', function(cb) {
           location: metadata.location,
           types: metadata.types,
           empty: metadata.empty,
+          published: metadata.published,
           published_on: metadata.published_on,
           name: metadata.name + (1 !== page ? '-' + page : ''),
           path: metadata.path,

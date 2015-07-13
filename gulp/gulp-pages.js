@@ -45,7 +45,7 @@ function gulpPages(options) {
         });
         curFile[options.prop] = (options.metadataCloner)(file[options.prop], page, file);
       }
-      curFile[options.prop][options.parentProp] = file.metadata;
+      curFile[options.prop][options.parentProp] = file[options.prop];
       curFile[options.prop][options.childsProp] = childs.slice(0, options.limit);
       curFile[options.prop].page = page;
       childs = childs.slice(options.limit);
