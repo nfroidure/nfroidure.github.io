@@ -1,5 +1,5 @@
 <!--VarStream
-title=Nicolas Froidure's blog, fullstack JavaScript Developper
+title=Nicolas Froidure's Blog, Fullstack JavaScript Developper
 description=Welcome to my website! Let's meet!
 shortTitle=Home
 shortDesc=Back to home
