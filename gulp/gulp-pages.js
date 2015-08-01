@@ -9,8 +9,10 @@ function noop(nop) { return nop; }
 
 // Plugin function
 function gulpPages(options) {
-  var stream = new Stream.PassThrough({ objectMode: true });
-  var filesBuffer = [];
+  var stream = new Stream.Duplex({ objectMode: true });
+  var inputFilesBuffer = [];
+  var outputFilesBuffer = [];
+  var finished = false;
 
   options = options || {};
   options.cwd = options.cwd || process.cwd();
@@ -19,13 +21,36 @@ function gulpPages(options) {
   options.limit = options.limit || 50;
   options.metadataCloner = options.metadataCloner || noop;
 
-  stream._transform = function gulpPagesTransform(file, unused, cb) {
-    filesBuffer.push(file);
-    return cb(null, file);
+  stream._write = function gulpPagesWrite(file, unused, cb) {
+    //console.log('PAGES WRITE', file);
+    inputFilesBuffer.push(file);
+    cb();
   };
 
-  stream._flush = function gulpPagesFlush(cb) {
-    filesBuffer.forEach(function(file) {
+  stream._read = function gulpPagesRead() {
+    var file;
+    if(finished) {
+      while(outputFilesBuffer.length) {
+        file = outputFilesBuffer.shift();
+        if(!stream.push(file)) {
+          break;
+        }
+      }
+      if(0 === outputFilesBuffer.length) {
+        stream.push(null);
+      }
+    }
+  };
+
+  stream.on('end', function gulpPagesEnd() {
+    console.log('PAGES END');
+    outputFilesBuffer.length = 0;
+  });
+
+  stream.on('finish', function gulpPagesFinish() {
+    console.log('PAGES FINISH');
+    finished = true;
+    inputFilesBuffer.forEach(function(file) {
       var curFile = file;
       var previousFile;
       var childs;
@@ -38,7 +63,7 @@ function gulpPages(options) {
         (!file[options.prop][options.childsProp].length) ||
         file[options.prop][options.childsProp].length <= options.limit
       ) {
-        return;
+        return outputFilesBuffer.push(file);
       }
       childs = file[options.prop][options.childsProp].slice(0);
       do {
@@ -60,15 +85,15 @@ function gulpPages(options) {
           previousFile[options.prop].nextFile = curFile;
           curFile[options.prop].previousFile = previousFile;
         }
-        if(file !== curFile) {
-          stream.push(curFile);
-        }
+        outputFilesBuffer.push(curFile);
         previousFile = curFile;
         curFile = null;
         page++;
       } while(childs.length > options.limit);
     });
-  };
+    inputFilesBuffer.length = 0;
+    stream._read();
+  });
 
   return stream;
 

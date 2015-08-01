@@ -24,6 +24,7 @@ var filter = require('streamfilter');
 var gulp = require('gulp');
 var g = require('gulp-load-plugins')();
 var gulpPages = require('./gulp/gulp-pages');
+var gulpRender = require('./gulp/gulp-render');
 
 var rem2px = require('rework-rem2px');
 var queryless = require('css-queryless');
@@ -120,22 +121,15 @@ gulp.task('build_scripts', function(cb) {
 // HTML
 gulp.task('build_html', function(cb) {
   var tree = {};
-  var markedFiles = [];
-  var dest = gulp.dest(conf.build.root);
   var mdFilter;
   var draftFilter;
   var ghostFilter;
   var redirects;
   var redirectsFilter;
-  var contentStream;
 
   // Setting copyright end
   conf.build.created = (new Date()).toISOString();
   conf.copyright.end = (new Date()).getFullYear();
-
-  if(lr) {
-    dest.pipe(g.livereload());
-  }
 
   mdFilter = filter(function(file, enc, cb2) {
     cb2(file.path.indexOf('.md') === file.path.length - 4);
@@ -147,7 +141,7 @@ gulp.task('build_html', function(cb) {
 
   ghostFilter = filter(function(file, enc, cb2) {
     cb2(file.metadata.ghost);
-  }, { objectMode: true, restore: true, passtrough: true });
+  }, { objectMode: true, restore: true, passtrough: false });
 
   redirects = g.clone.sink();
   redirectsFilter = filter(function(file, enc, cb2) {
@@ -164,54 +158,65 @@ gulp.task('build_html', function(cb) {
     cb2(true);
   }, { objectMode: true });
 
-  contentStream = gulp.src(
-    conf.src.content + '/**/*.{html,md}',
-    { buffer: buffer || true } // Streams not supported yet
-  )
-    .pipe(g.mdvars({
-      prop: 'metadata',
-    }))
-    .pipe(draftFilter)
-    .pipe(ghostFilter)
-    .pipe(g.vartree({
-      root: tree,
-      index: 'index',
-      prop: 'metadata',
-      parentProp: 'parent',
-      childsProp: 'childs',
-      sortProp: 'published',
-      sortDesc: true,
-    }))
-    .pipe(gulpPages({
-      limit: 20,
-      prop: 'metadata',
-      parentProp: 'parent',
-      metadataCloner: function(metadata, page) {
-        return {
-          title: metadata.title + (1 < page ? ' - ' + page : ''),
-          description: metadata.description,
-          shortTitle: metadata.shortTitle,
-          shortDesc: metadata.shortDesc,
-          keywords: metadata.keywords,
-          template: metadata.template,
-          lang: metadata.lang,
-          location: metadata.location,
-          types: metadata.types,
-          empty: metadata.empty,
-          published: metadata.published,
-          published_on: metadata.published_on,
-          name: metadata.name + (1 !== page ? '-' + page : ''),
-          path: metadata.path,
-          ext: metadata.ext,
-          href: metadata.href,
-          nextTitle: metadata.nextTitle,
-          nextDesc: metadata.nextDesc,
-          previousTitle: metadata.previousTitle,
-          previousDesc: metadata.previousDesc,
-        };
-      },
-    }))
-    .pipe(ghostFilter.restore)
+  // Shouldn't use combine stream here but it appears that a bug happen
+  // due to the ghost filter, tried to reproduce but with no luck
+  // https://github.com/nfroidure/streamfilter/commit/a924de78b931a8f1043455175f340324bfda9e03
+  // Leaving it as it in the hope i'll found it later
+  return new CombineStream([
+    gulp.src(
+      conf.src.content + '/**/*.{html,md}',
+      { buffer: buffer || true } // Streams not supported yet
+    )
+      .pipe(g.mdvars({
+        prop: 'metadata',
+      }))
+      .pipe(draftFilter)
+      .pipe(ghostFilter)
+      .on('end', console.log.bind(null, 'ghost end'))
+      .pipe(g.vartree({
+        root: tree,
+        index: 'index',
+        prop: 'metadata',
+        parentProp: 'parent',
+        childsProp: 'childs',
+        sortProp: 'published',
+        sortDesc: true,
+      }))
+      .on('end', console.log.bind(null, 'vartree end'))
+      .pipe(gulpPages({
+        limit: 20,
+        prop: 'metadata',
+        parentProp: 'parent',
+        metadataCloner: function(metadata, page) {
+          return {
+            title: metadata.title + (1 < page ? ' - ' + page : ''),
+            description: metadata.description,
+            shortTitle: metadata.shortTitle,
+            shortDesc: metadata.shortDesc,
+            keywords: metadata.keywords,
+            template: metadata.template,
+            lang: metadata.lang,
+            location: metadata.location,
+            types: metadata.types,
+            empty: metadata.empty,
+            published: metadata.published,
+            published_on: metadata.published_on,
+            name: metadata.name + (1 !== page ? '-' + page : ''),
+            path: metadata.path,
+            ext: metadata.ext,
+            href: metadata.href,
+            nextTitle: metadata.nextTitle,
+            nextDesc: metadata.nextDesc,
+            previousTitle: metadata.previousTitle,
+            previousDesc: metadata.previousDesc,
+          };
+        },
+      }))
+      .on('end', console.log.bind(null, 'pages end')),
+    ghostFilter.restore
+      .on('end', console.log.bind(null, 'ghost restore end'))
+  ])
+    .on('end', console.log.bind(null, 'combine end'))
     .pipe(mdFilter)
     .pipe(g.marked({
       gfm: true,
@@ -227,61 +232,17 @@ gulp.task('build_html', function(cb) {
     .pipe(redirects)
     .pipe(redirectsFilter)
     .pipe(redirects.tap())
-    .once('end', function() {
-      var rootItems = {};
+    .pipe(gulpRender({
+      tree: tree,
+      env: conf.build.root,
+      prod: prod,
+      conf: conf,
+    }))
+    .pipe(gulp.dest(conf.build.root));
 
-      // Registering languages sections
-      tree.childs.forEach(function(item) {
-        rootItems[item.lang] = item;
-      });
-      markedFiles.forEach(function(file) {
-        (file.metadata.types || ['html']).forEach(function(type, i) {
-          var curFile = file;
-          var nunjucksOptions;
-
-          if(0 < i) {
-            curFile = file.clone();
-          }
-          if('html' !== type) {
-            curFile.path = curFile.path.substr(0, curFile.path.length - 4) + type;
-          }
-          nunjucksOptions = {
-            env: conf.build.root,
-            prod: prod,
-            tree: tree,
-            conf: conf,
-            type: type,
-            root: rootItems[curFile.metadata.lang],
-            metadata: curFile.metadata,
-            content: curFile.contents.toString('utf-8'),
-          };
-          // Render the template
-          curFile.contents = new Buffer(Nunjucks.render(
-            type + '/' + (nunjucksOptions.metadata.template || 'page') + '.tpl',
-            nunjucksOptions
-          ));
-          // Save it.
-          dest.write(curFile);
-          // Still hacky stuffs for old endpoints
-          if('html' !== type) {
-            curFile = curFile.clone();
-            curFile.path = curFile.base + ('fr' === curFile.metadata.lang ? 'articles' : 'blog') +
-              '.' + type;
-            // Save it.
-            dest.write(curFile);
-          }
-        });
-      });
-      dest.end();
-      cb();
-    })
-    .on('readable', function() {
-      var file;
-
-      while(file = contentStream.read()) {
-        markedFiles.push(file);
-      }
-    });
+  /*  if(lr) {
+      .pipe(g.livereload());
+    }*/
 });
 
 // The clean task

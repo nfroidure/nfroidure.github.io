@@ -58,7 +58,7 @@
     "rework-rem2px": "^0.0.1",
     "rimraf": "~2.4.2",
     "sf-lint": "^1.0.2",
-    "streamfilter": "^1.0.1",
+    "streamfilter": "^1.0.2",
     "tiny-lr": "^0.1.6",
     "varstream": "^0.3.2",
     "yargs": "^3.16.1"
