@@ -7,7 +7,9 @@
     "test": "gulp build --prod --noreq --nolr --nobro --nowatch --nosrv",
     "publish": "gulp publish",
     "trinity": "npm-check-updates -u && npm test && git commit package.json -m \"Dependencies update\" && git push",
-    "dev": "gulp"
+    "dev": "gulp",
+    "lint": "eslint **/*.js *.js",
+    "cli": "env NPM_RUN_CLI=1"
   },
   "homepage": "http://insertafter.com",
   "repository": {
@@ -22,14 +24,15 @@
     "buildbranch": "^0.0.3",
     "combine-stream": "0.0.4",
     "css-queryless": "^0.1.0",
-    "express": "^4.13.1",
+    "eslint": "^1.0.0",
+    "express": "^4.13.2",
     "favicons": "^3.1.3",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-clone": "^1.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-cond": "^1.0.0",
-    "gulp-iconfont": "^3.0.2",
+    "gulp-iconfont": "^4.0.0",
     "gulp-imagemin": "^2.3.0",
     "gulp-jshint": "^1.11.2",
     "gulp-less": "^3.0.3",
@@ -42,23 +45,24 @@
     "gulp-rework": "^1.0.3",
     "gulp-spawn": "^0.3.0",
     "gulp-streamify": "^0.0.5",
-    "gulp-svgmin": "^1.1.2",
+    "gulp-svgmin": "^1.2.0",
     "gulp-util": "^3.0.6",
     "gulp-vartree": "^2.0.1",
-    "gulp-watch": "^4.3.2",
+    "gulp-watch": "^4.3.4",
     "internal-ip": "^1.0.1",
     "nunjucks": "^1.3.4",
     "open": "^0.0.5",
     "plexer": "^0.0.3",
-    "request": "^2.58.0",
+    "request": "^2.60.0",
     "rework-rem2px": "^0.0.1",
-    "rimraf": "~2.4.1",
+    "rimraf": "~2.4.2",
+    "sf-lint": "^1.0.2",
     "streamfilter": "^1.0.1",
     "tiny-lr": "^0.1.6",
     "varstream": "^0.3.2",
-    "yargs": "^3.15.0"
+    "yargs": "^3.16.1"
   },
   "dependencies": {
-    "moment": "^2.10.3"
+    "moment": "^2.10.6"
   }
 }
