@@ -43,12 +43,10 @@ function gulpPages(options) {
   };
 
   stream.on('end', function gulpPagesEnd() {
-    console.log('PAGES END');
     outputFilesBuffer.length = 0;
   });
 
   stream.on('finish', function gulpPagesFinish() {
-    console.log('PAGES FINISH');
     finished = true;
     inputFilesBuffer.forEach(function(file) {
       var curFile = file;

@@ -127,15 +127,15 @@ gulp.task('build_html', function() {
 
   mdFilter = filter(function(file, enc, cb2) {
     cb2(file.path.indexOf('.md') === file.path.length - 4);
-  }, { objectMode: true, restore: true, passtrough: true });
+  }, { objectMode: true, restore: true, passthrough: true });
 
   draftFilter = filter(function(file, enc, cb2) {
     cb2(file.metadata.draft);
-  }, { objectMode: true, restore: false, passtrough: true });
+  }, { objectMode: true, restore: false, passthrough: true });
 
   ghostFilter = filter(function(file, enc, cb2) {
     cb2(file.metadata.ghost);
-  }, { objectMode: true, restore: true, passtrough: true });
+  }, { objectMode: true, restore: true, passthrough: true });
 
   redirects = g.clone.sink();
   redirectsFilter = filter(function(file, enc, cb2) {
@@ -161,7 +161,6 @@ gulp.task('build_html', function() {
     }))
     .pipe(draftFilter)
     .pipe(ghostFilter)
-    .on('end', console.log.bind(null, 'ghost end'))
     .pipe(g.vartree({
       root: tree,
       index: 'index',
@@ -171,7 +170,6 @@ gulp.task('build_html', function() {
       sortProp: 'published',
       sortDesc: true,
     }))
-    .on('end', console.log.bind(null, 'vartree end'))
     .pipe(gulpPages({
       limit: 20,
       prop: 'metadata',
@@ -201,10 +199,7 @@ gulp.task('build_html', function() {
         };
       },
     }))
-    .on('end', console.log.bind(null, 'pages end'))
     .pipe(ghostFilter.restore)
-    .on('end', console.log.bind(null, 'ghost restore end'))
-    .on('end', console.log.bind(null, 'combine end'))
     .pipe(mdFilter)
     .pipe(g.marked({
       gfm: true,
@@ -226,11 +221,8 @@ gulp.task('build_html', function() {
       prod: prod,
       conf: conf,
     }))
-    .pipe(gulp.dest(conf.build.root));
-
-  /*  if(lr) {
-      .pipe(g.livereload());
-    }*/
+    .pipe(gulp.dest(conf.build.root))
+    .pipe(g.cond(lr, g.livereload));
 });
 
 // The clean task

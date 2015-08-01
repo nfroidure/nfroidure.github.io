@@ -43,14 +43,12 @@ function gulpRender(options) {
   };
 
   stream.on('end', function gulpRenderEnd() {
-    console.log('RENDER END');
     outputFilesBuffer.length = 0;
   });
 
   stream.on('finish', function gulpRenderFinish() {
     var rootItems = {};
 
-    console.log('RENDER FINISH');
     finished = true;
 
     // Registering languages sections
