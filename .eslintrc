@@ -111,7 +111,9 @@ rules:
     - 2
     - always
 
-  strict: 2
+  strict:
+    - 2
+    - global
 
   no-catch-shadow: 2
   no-delete-var: 2
@@ -161,6 +163,8 @@ rules:
   indent:
     - 2
     - 2
+    -
+      SwitchCase: 1
   key-spacing:
     - 2
     -

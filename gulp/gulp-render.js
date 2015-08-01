@@ -28,6 +28,7 @@ function gulpRender(options) {
 
   stream._read = function gulpRenderRead() {
     var file;
+
     if(finished) {
       while(outputFilesBuffer.length) {
         file = outputFilesBuffer.shift();
@@ -46,10 +47,10 @@ function gulpRender(options) {
     outputFilesBuffer.length = 0;
   });
 
-  stream.on('finish', function gulpRenderFinish(cb) {
-    console.log('RENDER FINISH');
+  stream.on('finish', function gulpRenderFinish() {
     var rootItems = {};
 
+    console.log('RENDER FINISH');
     finished = true;
 
     // Registering languages sections

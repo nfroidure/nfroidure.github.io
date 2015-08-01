@@ -22,13 +22,13 @@ function gulpPages(options) {
   options.metadataCloner = options.metadataCloner || noop;
 
   stream._write = function gulpPagesWrite(file, unused, cb) {
-    //console.log('PAGES WRITE', file);
     inputFilesBuffer.push(file);
     cb();
   };
 
   stream._read = function gulpPagesRead() {
     var file;
+
     if(finished) {
       while(outputFilesBuffer.length) {
         file = outputFilesBuffer.shift();
