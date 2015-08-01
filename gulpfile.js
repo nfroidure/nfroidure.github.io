@@ -59,6 +59,7 @@ Nunjucks.configure(conf.src.templates, {
 gulp.task('build_fonts', function() {
   return gulp.src(conf.src.icons + '/**/*.svg', { buffer: buffer })
     .pipe(g.iconfont({
+      formats: ['ttf', 'eot', 'woff', 'woff2'],
       fontName: 'iconsfont',
       appendUnicode: true,
       fontHeight: 90,

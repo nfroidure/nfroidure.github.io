@@ -21,6 +21,7 @@
   },
   "author": "Nicolas Froidure",
   "devDependencies": {
+    "browserify": "^11.0.1",
     "buildbranch": "^0.0.3",
     "combine-stream": "0.0.4",
     "css-queryless": "^0.1.0",
