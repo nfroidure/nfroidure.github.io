@@ -1,29 +1,29 @@
+'use strict';
+
 var Stream = require('stream');
 var path = require('path');
 var gutil = require('gulp-util');
 
-const PLUGIN_NAME = 'gulp-pages';
-
 // Utils
-function noop(noop) { return noop; }
+function noop(nop) { return nop; }
 
 // Plugin function
 function gulpPages(options) {
-  var stream = new Stream.PassThrough({objectMode: true});
+  var stream = new Stream.PassThrough({ objectMode: true });
 
   options = options || {};
   options.cwd = options.cwd || process.cwd();
   options.prop = options.prop || 'metadata';
   options.childsProp = options.childsProp || 'childs';
   options.limit = options.limit || 50;
-  options.metadataCloner = options.metadataCloner || noop;
+  options.metadataCloner = options.metadataCloner || noop;
 
-  stream._transform = function(file, unused, cb) {
+  stream._transform = function gulpPagesTransform(file, unused, cb) {
     var curFile = file;
     var previousFile;
-    var nextFile;
     var childs;
     var page = 1;
+
     if(
       (!file[options.prop].paginate) ||
       (!file[options.prop]) ||
@@ -41,7 +41,7 @@ function gulpPages(options) {
           base: file.base,
           path: file.path.substr(0, file.path.length - path.extname(file.path).length) +
             (1 !== page ? '-' + page : '') + path.extname(file.path),
-          contents: file.contents
+          contents: file.contents,
         });
         curFile[options.prop] = (options.metadataCloner)(file[options.prop], page, file);
       }
