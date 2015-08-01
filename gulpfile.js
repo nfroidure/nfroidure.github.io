@@ -183,7 +183,7 @@ gulp.task('build_html', function(cb) {
       sortDesc: true,
     }))
     .pipe(gulpPages({
-      limit: 10,
+      limit: 20,
       prop: 'metadata',
       parentProp: 'parent',
       metadataCloner: function(metadata, page) {
