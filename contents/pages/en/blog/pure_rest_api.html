@@ -1,0 +1,154 @@
+<!--VarStream
+title=Building pure REST APIs
+description=Designing good HTTP services is still a hard thing despite the many\
+ tools you can find to make them. I'm trying to define a formal approach to\
+ achitecture them.
+shortTitle=Stacks and queues
+shortDesc=Discover my tips to use stacks and queues well.
+published=2013-04-09T09:50:52.000Z
+lang=en
+location=US
+keywords.+=JavaScript
+keywords.+=Design patterns
+categories.+=.*
+disqus=true
+draft=true
+-->
+
+<h2>Building pure REST APIs</h2>
+<p>
+  I'm currently leading the backend development of a SaaS product and despite
+  the fact we have a strong server, i'm not satisfied yet. Indeed, we're using
+  the <abbr title="Mongo Express Angular NodeJS">MEAN</abbr> stack and i think
+  that Express is not the right tool to build REST APIs.
+</p>
+<h3>The truth about HTTP</h3>
+<p>
+  In order to understand why i think Express (and many of its challengers) isn't
+  suitable for web services, i first have to explain how i'm representing HTTP.
+</p>
+<h4>The server: A state machine</h4>
+<p>
+  An HTTP server is just a big state machine. Basically, it save states in
+  a database, a filesystem or any other locations. It allows you to retrieve
+  those states (OPTIONS/GET requests) and to modify them (POST/PUT/PATCH/DELETE
+  ones).
+</p>
+<p>
+  Building an HTTP server mainly consist in defining the states you want to
+  keep and where you want to store them. Once defined, you'll have to
+  define the rules determining what happens once a state changes.
+</p>
+<p>
+  First, you'll have to define <strong>when you consider a particular state
+  </strong> has changed. The basic rule for that is, as soon as i can retrieve
+  that state. If someone upload a file by performing a <code>PUT /fs/myfile
+  </code>, you can send response headers only when it is guaranteed that
+  a <code>GET /fs/myfile</code> will successfully complete. This is the
+  transactionnal part of an HTTP server.
+</p>
+<p>
+  Then, you will probably need to perform some computations based on those
+  changes. Things like sending an email, process an image etc... Those post
+  HTTP transaction computes shouldn't change the server state. But since you
+  already answered to the HTTP client everything went fine, you should guarantee
+  those computes will always happen.
+</p>
+<h4>A stateless protocol</h4>
+<p>
+  Despite the fact an HTTP server is full of states, the interesting thing to
+  notice about HTTP is that it is a stateless protocol. The client is not
+  supposed to keep any state in order to communicate with the server.
+</p>
+<p>
+  You can see HTTP requests and responses relation as a pure function until its
+  states change. Since clients have no idea of the server state, it is intesting
+  only at the server side.
+</p>
+<p>
+  A resource representation is a pure function taking the request and the
+  involved state for input and giving a response in output. For the same state
+  and the same request, you'll always get the same response.
+</p>
+<p>
+  This relationship appears at the HTTP level. Indeed, OPTIONS, GET, PUT, PATCH
+  and DELETE requests are known as idempotent (they don't really are since the
+  server state can change between two HTTP calls).
+</p>
+<p>
+  Another interesting property of HTTP is that since PUT/PATCH and DELETE
+  request contains the full recipe to build the final state of the resource its
+  changing, even if the resource state has changed, the final state will remain
+  the same for two identical consecutive requests.
+</p>
+<h3>Designing REST APIs</h3>
+<p>
+  Designing a REST API is in essence leveraging HTTP properties to gracefully
+  handle concurrent state changes while keeping the server global state
+  coherent.
+</p>
+<h4>The Consistency Dilema</h4>
+<p>
+  This is impossible. At least with high performances and availability. Indeed,
+  to ensure a coherent global state, you have to queue state changes (at least
+  those depending on other states). This is typically the relationnal databases
+  strategy.
+</p>
+<p>
+  Suscribing to this strategy involves accepting to refuse some state changes.
+  Indeed, imagine that a user wants to change the price of a product. The web
+  application would first retrieve it and prompt a form allowing him to make
+  that change.
+</p>
+<p>
+  Another user could have deleted this product so that when the user will
+  validate the form, the product will no longer exists. Most server side
+  implementation will simply return an error saying the product no longer
+  exists and the user will simply loose its changes. But another implementation
+  could simply "revive" the product or change the archived product.
+</p>
+<p>
+  But what about two users changing the product price at the same time? Should
+  we refuse edition and warn the user? Should we compute the difference between
+  the two concurrent changes? Or maybe prompt the user to do so (like git do
+  for developpers).
+</p>
+<p>
+  The final choice strongly depends on a lot of factors and, in fact, the only
+  thing i'm sure about is that you <strong>can't automate those
+  choices</strong>.
+</p>
+<p>
+  This why i strongly discourage you to create models for your states. Each
+  states change must have it's own entry point. You can till factorize your
+  code but with simple libraries of pure functions and only once you recognized
+  a highly recurrent pattern.
+</p>
+<p>
+  I never liked ORMs but it happens that Mongoose were already in use when i
+  began working for my current employer. I decided to give it a chance but,
+  unfortunately, as our codebase grown, we had several issues, the strongest
+  were great increase of inconsistencies risks and also code duplication
+  since the data validation only applies to collections and not aggregates or
+  partial updates. We also faced availability problems since Mongoose maintain
+  an object version and concurrency errors began to show up as our platform
+  usage began to grow.
+</p>
+<p>
+  Choosing a relationnal database could have help in this case for consistency
+  but we really want to scale since we expect a rapid growth of our user base.
+  MongoDB was the right choice but we had to stop using Mongoose though.
+</p>
+<p>
+  We're now creating custom queries and strategy for every endpoints of our
+  web service. Also, we learn that a good MongoDB schema is not necessary
+  a one to one relationship between API endpoints and MongoDB collections. For
+  that goal, removing Mongoose was of a great help.
+</p>
+<h4>States as a service</h4>
+<p>
+  A noticeable thing on the approach we're using is that we isolated server
+  states related code in order to avoid coupling representation
+</p>
+Indeed, encapsulating states access/writes in isolated services allows you to
+  reason in terms of pure functions for the rest.
