@@ -10,6 +10,7 @@ function noop(nop) { return nop; }
 // Plugin function
 function gulpPages(options) {
   var stream = new Stream.PassThrough({ objectMode: true });
+  var filesBuffer = [];
 
   options = options || {};
   options.cwd = options.cwd || process.cwd();
@@ -19,46 +20,54 @@ function gulpPages(options) {
   options.metadataCloner = options.metadataCloner || noop;
 
   stream._transform = function gulpPagesTransform(file, unused, cb) {
-    var curFile = file;
-    var previousFile;
-    var childs;
-    var page = 1;
+    filesBuffer.push(file);
+    return cb(null, file);
+  };
 
-    if(
-      (!file[options.prop].paginate) ||
-      (!file[options.prop]) ||
-      (!file[options.prop][options.childsProp]) ||
-      (!file[options.prop][options.childsProp].length) ||
-      file[options.prop][options.childsProp].length <= options.limit
-    ) {
-      return cb(null, file);
-    }
-    childs = file[options.prop][options.childsProp].slice(0);
-    do {
-      if(!curFile) {
-        curFile = new gutil.File({
-          cwd: file.cwd,
-          base: file.base,
-          path: file.path.substr(0, file.path.length - path.extname(file.path).length) +
-            (1 !== page ? '-' + page : '') + path.extname(file.path),
-          contents: file.contents,
-        });
-        curFile[options.prop] = (options.metadataCloner)(file[options.prop], page, file);
+  stream._flush = function gulpPagesFlush(cb) {
+    filesBuffer.forEach(function(file) {
+      var curFile = file;
+      var previousFile;
+      var childs;
+      var page = 1;
+
+      if(
+        (!file[options.prop].paginate) ||
+        (!file[options.prop]) ||
+        (!file[options.prop][options.childsProp]) ||
+        (!file[options.prop][options.childsProp].length) ||
+        file[options.prop][options.childsProp].length <= options.limit
+      ) {
+        return;
       }
-      curFile[options.prop][options.parentProp] = file[options.prop];
-      curFile[options.prop][options.childsProp] = childs.slice(0, options.limit);
-      curFile[options.prop].page = page;
-      childs = childs.slice(options.limit);
-      if(previousFile) { // Warning! Doesn't work for the last file!
-        previousFile[options.prop].nextFile = curFile;
-        curFile[options.prop].previousFile = previousFile;
-      }
-      stream.push(curFile);
-      previousFile = curFile;
-      curFile = null;
-      page++;
-    } while(childs.length > options.limit);
-    return cb();
+      childs = file[options.prop][options.childsProp].slice(0);
+      do {
+        if(!curFile) {
+          curFile = new gutil.File({
+            cwd: file.cwd,
+            base: file.base,
+            path: file.path.substr(0, file.path.length - path.extname(file.path).length) +
+              (1 !== page ? '-' + page : '') + path.extname(file.path),
+            contents: file.contents,
+          });
+          curFile[options.prop] = (options.metadataCloner)(file[options.prop], page, file);
+        }
+        curFile[options.prop][options.parentProp] = file[options.prop];
+        curFile[options.prop][options.childsProp] = childs.slice(0, options.limit);
+        curFile[options.prop].page = page;
+        childs = childs.slice(options.limit);
+        if(previousFile) { // Warning! Doesn't work for the last file!
+          previousFile[options.prop].nextFile = curFile;
+          curFile[options.prop].previousFile = previousFile;
+        }
+        if(file !== curFile) {
+          stream.push(curFile);
+        }
+        previousFile = curFile;
+        curFile = null;
+        page++;
+      } while(childs.length > options.limit);
+    });
   };
 
   return stream;
