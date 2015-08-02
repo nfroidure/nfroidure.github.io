@@ -87,7 +87,7 @@ function gulpPages(options) {
         previousFile = curFile;
         curFile = null;
         page++;
-      } while(childs.length > options.limit);
+      } while(0 < childs.length);
     });
     inputFilesBuffer.length = 0;
     stream._read();
