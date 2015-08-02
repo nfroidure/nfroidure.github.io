@@ -19,6 +19,7 @@ var CombineStream = require('combine-stream');
 var filter = require('streamfilter');
 
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var g = require('gulp-load-plugins')();
 var gulpPages = require('./gulp/gulp-pages');
 var gulpRender = require('./gulp/gulp-render');
@@ -152,7 +153,7 @@ gulp.task('build_html', function() {
     cb2(true);
   }, { objectMode: true });
 
-  gulp.src(
+  return gulp.src(
     conf.src.content + '/**/*.{html,md}',
     { buffer: buffer || true } // Streams not supported yet
   )
@@ -259,7 +260,7 @@ gulp.task('build', [
 
   // Livereload
   if(lr) {
-    console.log('Starting livereload.');
+    gutil.log('Starting livereload.');
     g.livereload.listen({
       basepath: conf.build.root,
     });
