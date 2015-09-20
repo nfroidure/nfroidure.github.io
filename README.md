@@ -2,6 +2,8 @@
 
 This repo contains my current home page. Feel free to contribute!
 
+[![Build status](https://api.travis-ci.org/nfroidure/blog.svg)](https://travis-ci.org/nfroidure/blog) [![Code Climate](https://codeclimate.com/github/nfroidure/blog.svg)](https://codeclimate.com/github/nfroidure/blog)
+
 ## Contributing
 
 Feel free to help me to improve my blog. Typo, design, or anything else except
@@ -28,4 +30,3 @@ To publish a new version of the blog, just run `gulp publish`
 ## License
 The assets, graphics, illustrations and text contents are © myself. The
  code is licensed under the MIT license.
-
