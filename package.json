@@ -22,7 +22,7 @@
   "author": "Nicolas Froidure",
   "devDependencies": {
     "browserify": "^11.1.0",
-    "buildbranch": "^0.0.3",
+    "buildbranch": "^1.0.0",
     "combine-stream": "0.0.4",
     "css-queryless": "^0.1.0",
     "eslint": "^1.5.0",

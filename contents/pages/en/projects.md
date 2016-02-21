@@ -32,6 +32,9 @@ I also build HTML5 games for fun and skills, like:
 * [Break'It](http://breakit.insertafter.com/)
 * [Tank Arena](http://tank.elitwork.com/) (work in progress).
 
+I sometimes make some apps during hackathons with friends:
+* [Trip Story](http://tripstory.insertafter.com/)
+
 And other wierd stuff:
 * [WEB MIDI Karaoke player](http://karaoke.insertafter.com/).
 * [Hexadecimal Editor](http://hexa.insertafter.com/).
@@ -41,12 +44,13 @@ And other wierd stuff:
 On my freetime i like to experiment add-ons coding on modern browsers. It's
  an occasion to free myself of the odd Internet Explorer compatibility issues
  ;). You probably already eard about some of those add-ons:
- [KGen](http://kgen.elitwork.com/),
- [BBComposer](http://bbcomposer.elitwork.com/),
+ [KGen](https://addons.mozilla.org/firefox/addon/kgen),
+ [BBComposer](https://addons.mozilla.org/firefox/addon/bbcomposer),
  [BugMeBack](https://github.com/nfroidure/BugMeBack)
- and [CanImage](http://canimage.elitwork.com/).
+ and [CanImage](https://addons.mozilla.org/firefox/addon/canimage/).
 
-Browser related works are published under GNU/GPL licence.
+But also for Thunderbird:
+* [CapsKiller](https://addons.mozilla.org/thunderbird/addon/caps-killer/).
 
 ### And many more
 

@@ -36,6 +36,9 @@ Pour rester à jour et pour le fun, je crée régulièrement des applications we
 * [Break'It](http://breakit.insertafter.com/) ;
 * [Tank Arena](http://tank.elitwork.com/) (en travaux).
 
+Je crée parfois des apps pendant des hackathons:
+* [Trip Story](http://tripstory.insertafter.com/)
+
 Et d'autres choses un peu bizarres :
 * [WEB MIDI Karaoke player](http://karaoke.insertafter.com/) ;
 * [Hexadecimal Editor](http://hexa.insertafter.com/).
@@ -43,10 +46,13 @@ Et d'autres choses un peu bizarres :
 ### Extensions Firefox / Chrome / Opéra
 
 J'ai créé plusieurs extensions pour Firefox, Chrome ou Opéra:
-* [KGen](http://kgen.elitwork.com/accueil.html) ;
-* [BBComposer](http://bbcomposer.elitwork.com/) ;
+* [KGen](https://addons.mozilla.org/firefox/addon/kgen) ;
+* [BBComposer](https://addons.mozilla.org/firefox/addon/bbcomposer) ;
 * [BugMeBack](https://github.com/nfroidure/BugMeBack) ;
-* et [CanImage](http://canimage.elitwork.com/accueil.html)).
+* et [CanImage](https://addons.mozilla.org/firefox/addon/canimage/).
+
+Mais aussi pour Thunderbird:
+* [CapsKiller](https://addons.mozilla.org/thunderbird/addon/caps-killer/).
 
 ### Mais aussi
 
