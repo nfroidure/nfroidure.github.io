@@ -36,6 +36,28 @@ permalink: {{ metadata.frontmatter.permalink }}
                   </li>{% endfor %}
               </ul>
           </nav>
+          <nav class="ia-social">
+            <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+             class="ia-social__item ia-social__item--twitter">
+              <span>Twitter</span>
+            </a>
+            <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+             class="ia-social__item ia-social__item--github">
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+             class="ia-social__item ia-social__item--npm">
+              <span>NPM</span>
+            </a>
+            <a href="https://www.linkedin.com/profile/view?id=44165977" title="Find me on LinkedIn"
+             class="ia-social__item ia-social__item--linkedin">
+              <span>LinkedIn</span>
+            </a>
+            <a href="/{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}/blog/index.atom" title="Don't miss my blog posts"
+             class="ia-social__item ia-social__item--feed">
+              <span>LinkedIn</span>
+            </a>
+          </nav>
         </div>
 {% if metadata.standalone != true  %}
         <nav class="ia-header_menu ia-menu">
@@ -90,7 +112,7 @@ permalink: {{ metadata.frontmatter.permalink }}
 
     <footer class="ia-footer">
         <p class="ia-footer__content">
-          <span class="ia-social">
+          <nav class="ia-social">
             <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
              class="ia-social__item ia-social__item--twitter">
               <span>Twitter</span>
@@ -111,7 +133,7 @@ permalink: {{ metadata.frontmatter.permalink }}
              class="ia-social__item ia-social__item--feed">
               <span>ATOM feed</span>
             </a>
-          </span>
+          </nav>
           - © Nicolas Froidure {{ conf.copyright.start }} - {{ conf.copyright.end }}
         </p>
     </footer>
