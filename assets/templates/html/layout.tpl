@@ -103,13 +103,13 @@ permalink: {{ metadata.frontmatter.permalink }}
              class="ia-social__item ia-social__item--npm">
               <span>NPM</span>
             </a>
-            <a href="https://www.linkedin.com/profile/view?id=44165977" title="Find me on LinkedIn"
+            <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
              class="ia-social__item ia-social__item--linkedin">
               <span>LinkedIn</span>
             </a>
             <a href="/{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}/blog/index.atom" title="Don't miss my blog posts"
              class="ia-social__item ia-social__item--feed">
-              <span>LinkedIn</span>
+              <span>ATOM feed</span>
             </a>
           </span>
           - © Nicolas Froidure {{ conf.copyright.start }} - {{ conf.copyright.end }}
@@ -128,4 +128,3 @@ permalink: {{ metadata.frontmatter.permalink }}
     </script>
 </body>
 </html>
-
