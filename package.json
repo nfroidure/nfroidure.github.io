@@ -5,6 +5,7 @@
   "main": "",
   "scripts": {
     "test": "gulp build --prod --noreq --nolr --nobro --nowatch --nosrv",
+    "build": "gulp build --prod",
     "publish": "gulp publish",
     "trinity": "npm-check-updates -u && npm test && git commit package.json -m \"Dependencies update\" && git push",
     "dev": "gulp",
