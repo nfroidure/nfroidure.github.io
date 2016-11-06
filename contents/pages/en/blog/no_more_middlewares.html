@@ -1,0 +1,198 @@
+<!--VarStream
+title=No more middlewares, please
+description=Why i think middlewares are a bad thing, how i am replacing them.
+shortTitle=No more middlewares!
+shortDesc=See why i won't use middlewares anymore
+published=2016-11-05T19:50:20.000Z
+lang=en
+location=US
+keywords.+=JavaScript
+keywords.+=Middlewares
+categories.+=.*
+disqus=true
+-->
+
+<h2>No more middlewares, please</h2>
+<p>
+  When it comes to programming, there is a trap on which every programmer fall:
+  elegant code. I'm often surprised to see even experienced developpers qualifying
+  a code snippet as elegant or beautiful.
+</p>
+<p>
+  From my point of view, each time i found an API interface allowing me to create
+  some elegant code, it ended up as a nightmare codebase, full of
+  unmaintainable spaghetti code.
+</p>
+<p>
+  Most of those nice, elegant and cool APIs fallen in disgrace in developpers
+  minds:
+</p>
+<ul>
+  <li>
+    <a href="https://www.reddit.com/r/javascript/comments/1sk8vm/method_chaining_good_or_bad_thing/cdyebjh/">Method Chaining</a>:
+    I think it is the first reason why JQuery will finally die, if not yet done.
+  </li>
+  <li>
+    <a href="https://blog.pivotal.io/labs/labs/all-evidence-points-to-oop-being-bullshit">POO</a>:
+    Not that object and classes are harmful but thinking everything in term of
+    objects/classes is a non-sense. Can't remind the time i find out that a
+    fully OOP application was easily maintainable.
+  </li>
+  <li>
+    <a href="http://www.yegor256.com/2014/12/01/orm-offensive-anti-pattern.html">ORM/ODM</a>:
+    Even OOP guys find it harmful. I spent horrible moments using Mongoose. Would
+    not recommend it to my worst ennemy.
+  </li>
+  <li>
+    <a href="https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750#.8k7i3x68a">Mixins</a>:
+    Everything is in the name. Mixing is the best way to get messy code.
+  </li>
+</ul>
+<p>
+  My current statement is: <strong>if you find some code elegant, it has great
+  chances to be the next bullshit you'll step in</strong>.
+</p>
+<p style="text-align:center">
+  <iframe src="//giphy.com/embed/p3uxGU2jLsgLK" width="480" height="511" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+  <br><a href="http://giphy.com/gifs/elegance-p3uxGU2jLsgLK">via GIPHY</a>
+</p>
+<h3>Here be middlewares</h3>
+<p>
+  As a JavaScript developper i heavily used Express with NodeJS. At
+  first, i found its middleware system really elegant. Well, at first.
+</p>
+<p>
+  <strong>When it comes to debugging, it is just a nightmare.</strong> Your
+  <strong>stack traces are unreadable</strong>. When you open a controller,
+  you have to check what happens before it is invoked and what will be done
+  next to fully understand its behavior.
+</p>
+<p>
+  You end up with <strong>lots of a god objects</strong>, <code>req</code>,
+  <code>res</code> and <code>app</code> for instance, that may or may not contain:
+  a query, some cookies, encoded or decoded body, that method or this other one...
+  It not only makes you mad when it comes to work on an Express application but
+  also <strong>makes the code reuse very difficult</strong>.
+</p>
+<p>
+  Indeed, to reuse a controller, you have to find out every middlewares it depends
+  on and set them up in the Express application within you want to reuse it. Problem:
+  There is great chances that the same middleware is already in use but with a
+  different version. And it is not the same shitty property that is set on that
+  shitty god object.
+</p>
+<p>
+  This is why i think <strong>middlewares are an anti-pattern</strong>. Your
+  controller should contain the complete workflow that allows you to get a
+  response from an HTTP request. Transforming the following usual code:
+</p>
+<script src="https://gist.github.com/nfroidure/3c0a5858518663be186a1a64d160ee31.js"></script>
+<noscript><pre>
+  module.exports = (app) => {
+
+    // where ther hell is this config set?
+    const config = app.get('config');
+    // How can i see what this timer do?
+    const timer = app.get('timer');
+
+    app.post((req, res, next) => {
+      const data = {};
+      // Which middleware set up this query params?
+      if(req.query.ms) {
+        data.when = timer.now();
+      } else {
+        data.when = new Date(timer.now()).toISOString();
+      }
+      // How this body was set, in which middleware?
+      if(config.repeatBody) {
+        data.body = req.body;
+      }
+      res.jsonBody = data; // Which consequences setting that jsonBody has?
+      next(); // What happens then? New headers? Body transformations?
+    })
+
+  };
+</pre></noscript>
+<p>
+  Into something way more expressive:
+</p>
+<script src="https://gist.github.com/nfroidure/43a0eeb06549aeb32dd23c91fa5e0f11.js"></script>
+<noscript><pre>// No middleware, just pur functions
+const getBodyFromReq from 'pureBodyParser';
+const getQueryFromReq from 'pureQueryParser';
+const sendToRes from 'pureResponseMaker';
+
+// Use dependency injection for required services
+// app/config/timer just come from this function caller
+module.exports = ({ app, config, timer}) => {
+
+  app.post((req, res) => {
+    // Promise based workflow instead of a middleware chain
+    // could have been async/await too
+    Promise.all([
+      // No surprise, the body comes from the pureBodyParser module
+      // But i can already guess it allows JSON or YAML
+      getBodyFromReq.bind(null, req, ['json', 'yaml']),
+      // And so on for the query
+      getQueryFromReq.bind(null, req),
+    ])
+    .then(_buildResponse.bind(null, {timer, config})
+    // No surprise, the response is sent by the pureResponseMaker module
+    // But i can already guess it could output JSON or YAML
+    .sendToRes(sendToRes.bind(null, req, res, ['json', 'yaml'], 200));
+  });
+
+};
+
+// the pure function that process the request
+// could be reused in a completly different context
+// a frontend service worker or a websocket server
+function _buildResponse({timer, config}, [body, query]) => {
+    const data = {};
+    if(query.ms) {
+      data.when = timer.now();
+    } else {
+      data.when = new Date(timer.now()).toISOString();
+    }
+    if(config.repeatBody) {
+      data.body = req.body;
+    }
+    return data;
+  }
+</pre></noscript>
+<p>
+  Since the controller is strongly tied to its dependencies, you could just
+  copy paste it into your other projects and npm install the various modules
+  it actually uses. Magic? No, simple, atomic, reliable code. Nothing elegant,
+  no hype, just stupid code telling what it does.
+</p>
+<p>
+  One could argue that it introduces huge boilerplates. We are switching from a
+  24 lines controller to a 42 one. My advice is that <strong>the glue code
+  that strongly tie the controller with its actual underlying logic can
+  be considered as comments that ends up to be code</strong>.
+</p>
+<p>
+  The middleware based code, to be inclusive, should add comments telling where
+  all that magic happens. But the fact is that commenting is a shitty way to
+  help others to grasp your code. I personnally use it only to explain
+  something i cannot show with meaningful code. Most of the time, it's all about
+  business constraints or legacy issues.
+</p>
+<p>
+  Also, nothing impeach you to group several stages of your worflow into a
+  single pure function if you figure out that a particular step sequence is
+  used in most controllers. Importing this function will always show the way
+  for readers to find out their content.
+</p>
+<p>
+  Finally, this workflow approach is in my opinion way more adapted to HTTP.
+  Indeed, <strong>what is an HTTP endpoint except a function that takes a request and
+  returns a response?</strong> Why would we have to deal with something else then
+  functions decomposing it into simple steps?
+</p>
+<p>
+  As a conclusion, i would say that <strong>good code is not smart or elegant</strong>.
+  It is readable, reliable, naive in a word: simple. And you probably know how
+  hard it is to do simple ;).
+</p>
