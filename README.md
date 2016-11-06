@@ -25,7 +25,7 @@ brew install imagemagick --with-librsvg
 ```
 
 ## Publishing
-To publish a new version of the blog, just run `gulp publish`
+To publish a new version of the blog, just run `npm run publish`
 
 ## License
 The assets, graphics, illustrations and text contents are © myself. The
