@@ -15,7 +15,7 @@ disqus=true
 <h2>No more middlewares, please</h2>
 <p>
   When it comes to programming, there is a trap on which every programmer fall:
-  elegant code. I'm often surprised to see even experienced developpers qualifying
+  elegant code. I'm often surprised to see even experienced developers qualifying
   a code snippet as elegant or beautiful.
 </p>
 <p>
@@ -24,7 +24,7 @@ disqus=true
   unmaintainable spaghetti code.
 </p>
 <p>
-  Most of those nice, elegant and cool APIs fallen in disgrace in developpers
+  Most of those nice, elegant and cool APIs fallen in disgrace in developers
   minds:
 </p>
 <ul>
@@ -41,7 +41,7 @@ disqus=true
   <li>
     <a href="http://www.yegor256.com/2014/12/01/orm-offensive-anti-pattern.html">ORM/ODM</a>:
     Even OOP guys find it harmful. I spent horrible moments using Mongoose. Would
-    not recommend it to my worst ennemy.
+    not recommend it to my worst enemy.
   </li>
   <li>
     <a href="https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750#.8k7i3x68a">Mixins</a>:
@@ -58,7 +58,7 @@ disqus=true
 </p>
 <h3>Here be middlewares</h3>
 <p>
-  As a JavaScript developper i heavily used Express with NodeJS. At
+  As a JavaScript developer i heavily used Express with NodeJS. At
   first, i found its middleware system really elegant. Well, at first.
 </p>
 <p>
@@ -90,7 +90,7 @@ disqus=true
 <noscript><pre>
   module.exports = (app) => {
 
-    // where ther hell is this config set?
+    // where the hell is this config set?
     const config = app.get('config');
     // How can i see what this timer do?
     const timer = app.get('timer');
@@ -117,7 +117,7 @@ disqus=true
   Into something way more expressive:
 </p>
 <script src="https://gist.github.com/nfroidure/43a0eeb06549aeb32dd23c91fa5e0f11.js"></script>
-<noscript><pre>// No middleware, just pur functions
+<noscript><pre>// No middleware, just pure functions
 const getBodyFromReq from 'pureBodyParser';
 const getQueryFromReq from 'pureQueryParser';
 const sendToRes from 'pureResponseMaker';
@@ -175,12 +175,12 @@ function _buildResponse({timer, config}, [body, query]) => {
 <p>
   The middleware based code, to be inclusive, should add comments telling where
   all that magic happens. But the fact is that commenting is a shitty way to
-  help others to grasp your code. I personnally use it only to explain
+  help others to grasp your code. I personally use it only to explain
   something i cannot show with meaningful code. Most of the time, it's all about
   business constraints or legacy issues.
 </p>
 <p>
-  Also, nothing impeach you to group several stages of your worflow into a
+  Also, nothing impeach you to group several stages of your workflow into a
   single pure function if you figure out that a particular step sequence is
   used in most controllers. Importing this function will always show the way
   for readers to find out their content.
