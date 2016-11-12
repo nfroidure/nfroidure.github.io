@@ -2,7 +2,8 @@
 title=Designing HTTP REST APIs with NodeJS
 description=Designing good HTTP services is still a hard thing despite the many\
  tools you can find to make them with NodeJS. I'm trying to define a formal\
- approach to achitecture them by embracing the HTTP protocol nature.
+ approach to achitecture them by embracing the HTTP protocol nature and the\
+ RESTful principles.
 shortTitle=HTTP API Design
 shortDesc=See how i design HTTP APIs with NodeJS
 published=2016-11-12T09:50:52.000Z
@@ -13,7 +14,7 @@ keywords.+=REST
 keywords.+=HTTP
 categories.+=.*
 disqus=true
-draft=true
+draft=false
 -->
 
 <h2>Designing HTTP REST APIs</h2>
@@ -25,6 +26,9 @@ draft=true
   explaining the challenges of designing a HTTP REST API and how i'm trying to
   do it.
 </p>
+<p><strong>
+  TL.DR. HTTP/REST API complexity does not worth creating a framework.
+</strong></p>
 <h3>Design considerations</h3>
 <h4>The server: A state dealer</h4>
 <p>
@@ -37,7 +41,7 @@ draft=true
 <p>
   Building an HTTP server mainly consist in defining the states you want to
   keep and where you want to store them. Once defined, you'll have to
-  define the rules determining what happens once a state changes.
+  define the rules determining what happens when a state changes.
 </p>
 <h4>Retrieving states</h4>
 <p>
@@ -47,12 +51,12 @@ draft=true
 </p>
 <p>
   States are rarely provided as is from their storage. They are often
-  transformed into a representations, this is known as
+  transformed into a representation, this is known as
   <a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">representationnal
   state transfert (REST)</a>.
 </p>
 <p>
-  It worth noting a resource representation can be see as a pure function:<br />
+  It is worth noting a resource representation can be seen as a pure function:<br />
   <code>response = f(request, ...states)</code><br />
   Answering a GET HTTP request is as simple as decoding the request, retrieve
   the involved states and build a representation of the actual resource.
@@ -102,7 +106,7 @@ draft=true
 <p>
   Then, you will probably need to perform some computations based on those
   changes. Things like sending an email, processing an image, syncing with
-  thrid parties etc...
+  third parties etc...
 </p>
 <p>
   Those post HTTP transaction computes shouldn't change the server state. But since you
@@ -117,13 +121,13 @@ draft=true
 </p>
 <p>
   The big part in designing those triggers is to ensure the acknowledged data
-  is valid and won't suffer from a lack of information. Content validation is a
+  is valid and won't suffer of a lack of information. Content validation is a
   a major concern here.
 </p>
 <p>
   You also have to deal with the possible outage of the various systems your
   triggers rely on. This is why i mostly try to handle it with idempotent calls.
-  That way worker can retry computing an event until it eventually work.
+  That way, workers can retry computing an event until it eventually works.
   This is not always possible though, by example for sending e-mails.
 </p>
 <h4>A stateless protocol</h4>
@@ -147,8 +151,8 @@ draft=true
 </p>
 <p>
   Indeed, OPTIONS, GET, PUT and DELETE requests are known as idempotent. PATCH
-  and POST ones are not. I avoid using POST but i often use PATCH while ensuring
-  mine are idempotent (this is while i strongly discourage you using
+  and POST ones are not. I avoid using POST but i often create PATCH endpoints while
+  ensuring mines are idempotent (this is while i strongly discourage you using
   <a href="http://jsonpatch.com/">JSON patch</a> since its current implementation
   forbids doing idempotent patches).
 </p>
@@ -164,8 +168,8 @@ draft=true
   <code>states = f(request) response = f(request, ...states))</code>
 </p>
 <p>
-  All in all, desiging a REST API is mainly about describing very simple
-  asynchronous workflows into a few key steps were simple functions composition
+  All in all, designing a REST API is mainly about describing very simple
+  asynchronous workflows into a few key steps were simple function composition
   can easily do the job.
 </p>
 <h4>Keeping states consistent</h4>
@@ -196,11 +200,11 @@ draft=true
 </p>
 <p>
   The final choice strongly depends on a lot of factors and, in fact, the only
-  thing i'm sure about is that you <strong>can't automate those
+  thing i'm sure about is that you <strong>can't fully automate those
   choices</strong>.
 </p>
 <p>
-  Each server enpoint has its own constraint, its own reason to exist and needs
+  Each server endpoint has its own constraint, its own reason to exist and needs
   you to implement its own, original workflow based on your business contraints.
 </p>
 <h3>Coding REST APIs with NodeJS</h3>
@@ -211,12 +215,12 @@ draft=true
   that shinny new framework plugin system?
 </p>
 <p>
-  In my quest to find the holy graal of the REST API frameworks, i ended up
+  In my quest to find the holy grail of the REST API frameworks, i ended up
   building my own: <a href="https://github.com/nfroidure/whook">Whook</a>.
 </p>
-<p>
+<p style="text-align: center;">
   <img src="http://static.fjcdn.com/pictures/Monty_4501e1_493629.jpg"
-    alt="Double Face Palm: Becaus you forgot to get in the wooden rabbit" />
+    alt="Double Face Palm: Because you forgot to get in the wooden rabbit" />
 </p>
 <p>
   Guess what, i <strong>failed</strong>. I thought <strong>existing framework
@@ -230,23 +234,23 @@ draft=true
 </p>
 <p>
   Currently, i'm leaving behind the last Express pieces by using simple libraries
-  provinding pure functions most of the time.
+  providing pure functions most of the time.
 </p>
 <p>
   In my quest to design great REST APIs with NodeJS, i finally ended up with
-  a few simple pattern and principles i want to share with you.
+  a few simple patterns and principles i want to share with you:
 </p>
 <h4>Process lifetime</h4>
 <p>
-  As we saw above, an HTTP is constantly dealing with external states. Those
-  states can be database servers, redis server, other REST APIs, the current
-  time etc...
+  As we saw above, an HTTP server is constantly dealing with external states.
+  Those states can be database servers, key/value stores, other REST APIs, the
+  current time etc...
 </p>
 <p>
   This has a lot to do with the process lifetime. Indeed, before accepting
   connections we must ensure the database connection is correctly set.
-  Also, when shutting down a server, we must ensure that every request were
-  fullfilled.
+  Also, when shutting down a server, we must ensure that every requests were
+  fulfilled.
 </p>
 <p>
   For those concerns, i created
@@ -261,7 +265,7 @@ draft=true
   being sure all its needed services are available.
 </p>
 <p>
-  Since it injects services thanks to a simple object, i has no footprint on the
+  Since it injects services thanks to a simple object, it has no footprint on the
   enpoint handlers. That way i can reuse it in any other application.
 </p>
 <h4>Documentation driven API</h4>
@@ -273,7 +277,7 @@ draft=true
   When creating endpoints, i begin by writing a module describing its inputs
   and outputs. It is not necessarily a Swagger definition but an
   <a href="https://github.com/nfroidure/TripStory/blob/master/backend/app/trips/trips.metadata.js">intermediate
-  description that could produce a Swagger file</a>.
+  description that could produce a Swagger definition file</a>.
 </p>
 <p>
   That way we avoid documentation drifting. Never rely on a human when it comes
@@ -290,9 +294,9 @@ draft=true
   that allows to create a simple routing function without having to rely on a
   complete framework.
 </p>
-<h4>Workflow based enpoint handlers</h4>
+<h4>Workflow based endpoint handlers</h4>
 <p>
-  For every endpoint i create a unique workflow based on a promise chain
+  For each endpoints, i create an unique workflow based on a promise chain
   whose stages basically are:
 </p>
 <ul>
@@ -323,8 +327,8 @@ draft=true
     JSONSchema to create them since it can be used to produce a Swagger file;
   </li>
   <li>
-    transformers: pure reentrant functions that transform states to representations and
-    representations to states;
+    transformers: pure re-entrant functions that transform states to
+    representations and representations to states;
   </li>
   <li>
     services: injected code to deal with application states;
@@ -356,7 +360,7 @@ draft=true
   current Vary header value in and return its new value instead of requesting
   a <code>res</code> object. It would avoid all
   <a href="https://github.com/jshttp/vary/blob/master/index.js#L108-L123">those
-   unnecessary checks</a> while making it more usable.
+   unnecessary checks</a> while making it usable for more use cases.
 </p>
 <h4>A step toward universal APIs</h4>
 <p>
@@ -366,11 +370,11 @@ draft=true
 </p>
 <p>
   It will be very hard, maybe impossible, to reuse your ORM code into the
-  browser simply, neither to make predictive HTTP response in a service worker
+  browser, neither to make predictive HTTP responses in a service worker
   with a codebase relying on middlewares or your preferred framework plugin
   system.
 </p>
 <p>
-  I hope you find this post more clear and which i will help improve the way we
+  I hope you find this post more clear and whish it will help improve the way we
   are creating REST web services with NodeJS.
 </p>
