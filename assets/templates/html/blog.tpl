@@ -1,5 +1,10 @@
 {% extends type + '/layout.tpl' %}
 
+{% block head %}
+<link rel="alternate" type="application/atom+xml"
+  title="{{metadata.title}} (Atom)" href="{{metadata.path}}{{metadata.name}}.atom" />
+{% endblock %}
+
 {% block body %}
 {{ content | safe }}{% if not metadata.childs %}
 <p>{{ metadata.empty }}</p>

@@ -14,6 +14,7 @@ permalink: {{ metadata.frontmatter.permalink }}
     <meta name="robots" content="index,follow">
     <link rel="stylesheet" href="/css/main.css">
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    {% block head %}{% endblock %}
 </head>
 <body>
     <!--[if lt IE 7]>
@@ -55,7 +56,7 @@ permalink: {{ metadata.frontmatter.permalink }}
             </a>
             <a href="/{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}/blog/index.atom" title="Don't miss my blog posts"
              class="ia-social__item ia-social__item--feed">
-              <span>LinkedIn</span>
+              <span>Atom feed</span>
             </a>
           </nav>
         </div>
