@@ -50,7 +50,7 @@ permalink: {{ metadata.frontmatter.permalink }}
              class="ia-social__item ia-social__item--npm">
               <span>NPM</span>
             </a>
-            <a href="https://www.linkedin.com/profile/view?id=44165977" title="Find me on LinkedIn"
+            <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
              class="ia-social__item ia-social__item--linkedin">
               <span>LinkedIn</span>
             </a>
