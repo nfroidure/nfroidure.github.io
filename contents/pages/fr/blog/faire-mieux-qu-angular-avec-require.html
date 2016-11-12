@@ -303,3 +303,24 @@ describe('myModule', function() {
   que Angular 2.0 va supprimer son ancien système de module ce qui n'est pas une
   mauvaise nouvelles ;).
 </p>
+<ins datetime="2016-11-12T09:37:02.193Z">
+<p>
+  Petite mise à jour pour ajouter qu'il est possible d'appliquer ceci aux
+  applications Angular également pour simplifier les tests et se passer de
+  Karma,
+  <a href="https://github.com/SimpliField/angular-sf-load/blob/7ae1467c4ce914fdc8fed940d96a39c6b4cce026/src/load.service.specs.js#L8-L18"voici un exemple</a>.
+</p>
+<p>
+  Le système d'injection d'Angular reste sympa malgré tout pour gérer les
+  états globaux, mais son principal souci est d'être trop intrusif sur la façon
+  de gérer le code à mon goût. C'est pourquoi j'ai créé
+  <a href="https://github.com/nfroidure/knifecycle">Knifecycle</a> qui reprend
+  ses concepts mais de façon moins intrusive et surtout applicable pour le
+  backend (prise en compte du graceful shutdown).
+</p>
+<p>
+  Enfin, le système d'injection d'Angular2 a tiré pas mal de leçons des erreurs
+  précédentes et même si je ne suis pas fan d'Angular2 je reconnais qu'il y a eu
+  des progrès de ce côté.
+</p>
+</ins>
