@@ -350,17 +350,13 @@ draft=false
 <p>
   I'd like to end this post by a call to the JavaScript community: please,
   release purely functionnal modules whenever possible. Projects like
-  <a href="https://github.com/jshttp">jshttp</a> are nice but could be much
-  more useful with a more functionnal approach.
+  <a href="https://github.com/jshttp">jshttp</a> are nice and allows a shift to
+  a more functionnal approach.
 </p>
 <p>
   We should stop assuming a <code>req</code>, <code>res</code> or <code>app</code>
-  object and instead create pure function. As an example, the
-  <a href="https://github.com/jshttp/vary">vary</a> project should take the
-  current Vary header value in and return its new value instead of requesting
-  a <code>res</code> object. It would avoid all
-  <a href="https://github.com/jshttp/vary/blob/master/index.js#L108-L123">those
-   unnecessary checks</a> while making it usable for more use cases.
+  object and instead create pure function that manipulate headers, query strings
+  or contents directly.
 </p>
 <h4>A step toward universal APIs</h4>
 <p>
