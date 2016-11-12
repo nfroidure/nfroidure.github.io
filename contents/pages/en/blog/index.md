@@ -20,7 +20,7 @@ types.+=atom
 types.+=rss
 # locales
 empty=Currently no post on the blog.
-published_on=Pulished on
+published_on=Published on
 -->
 
 ## Blog
