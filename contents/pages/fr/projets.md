@@ -61,6 +61,6 @@ Vous trouverez sur mon [dépôt GitHub](http://github.com/nfroidure) tous les
  Principalement des bouts de codes qui me sont utiles et qui pourraient
  profiter à d'autres.
 
-Retrouvez également les [projets open-source](https://github.com/SimpliField)
- que je gère dans le cadre de mon travail chez
- [SimpliField](http://simplifield.com).
+Retrouvez également les projets open-source que j'ai créé dans le cadre de mes
+ emplois successifs chez [7Digital](https://github.com/7Digital) et
+ [SimpliField](https://github.com/SimpliField)..

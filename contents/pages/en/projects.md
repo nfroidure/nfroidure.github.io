@@ -57,5 +57,5 @@ But also for Thunderbird:
 You can get the source of my public projects in
  [my GitHub home](https://github.com/nfroidure).
 
-You can also find [open-source projects](https://github.com/SimpliField) I made
- for my current employer, [SimpliField](http://simplifield.com).
+You can also find open-source projects I made for my successive employers:
+[7Digital](https://github.com/7Digital) and [SimpliField](https://github.com/SimpliField).
