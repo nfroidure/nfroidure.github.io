@@ -2,7 +2,7 @@
 title=Designing HTTP REST APIs with NodeJS
 description=Designing good HTTP services is still a hard thing despite the many\
  tools you can find to make them with NodeJS. I'm trying to define a formal\
- approach to achitecture them by embracing the HTTP protocol nature and the\
+ approach to architecture them by embracing the HTTP protocol nature and the\
  RESTful principles.
 shortTitle=HTTP API Design
 shortDesc=See how i design HTTP APIs with NodeJS
@@ -23,7 +23,7 @@ draft=false
   blog post and wonder what led me to this mindset about middlewares. I would
   like to explain here why i think that Express (but also its contesters like
   Hapi or Restify) are not that good when it comes to build REST APIs by
-  explaining the challenges of designing a HTTP REST API and how i'm trying to
+  explaining the challenges of designing a HTTP REST API and how I'm trying to
   do it.
 </p>
 <p><strong>
@@ -52,8 +52,8 @@ draft=false
 <p>
   States are rarely provided as is from their storage. They are often
   transformed into a representation, this is known as
-  <a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">representationnal
-  state transfert (REST)</a>.
+  <a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">representational
+  state transfer (REST)</a>.
 </p>
 <p>
   It is worth noting a resource representation can be seen as a pure function:<br />
@@ -82,7 +82,7 @@ draft=false
 <h5>Acknowledgment</h5>
 <p>
   This is when the status code and the HTTP headers are sent to the client.
-  When a server acknowlegde a resource change, the implicit contract is that
+  When a server acknowledge a resource change, the implicit contract is that
   any other request involving its underlying states will take those changes
   in count.
 </p>
@@ -90,7 +90,7 @@ draft=false
   If someone upload a file by performing a <code>PUT /fs/myfile</code> request,
   you can send response headers only when it is guaranteed that a
   <code>GET /fs/myfile</code> will successfully complete. This is the
-  transactionnal part of an HTTP server.
+  transactional part of an HTTP server.
 </p>
 <p>
   This might not be true for large systems on short time frames or for two
@@ -121,8 +121,8 @@ draft=false
 </p>
 <p>
   The big part in designing those triggers is to ensure the acknowledged data
-  is valid and won't suffer of a lack of information. Content validation is a
-  a major concern here.
+  is valid and won't suffer of a lack of information. Content validation is a 
+  major concern here.
 </p>
 <p>
   You also have to deal with the possible outage of the various systems your
@@ -163,7 +163,7 @@ draft=false
   will be the same for two identical requests.
 </p>
 <p>
-  So we end up with a crystal clear vison of modificative and idempotent HTTP
+  So we end up with a crystal clear vision of modificative and idempotent HTTP
   requests<br />
   <code>states = f(request) response = f(request, ...states))</code>
 </p>
@@ -176,11 +176,11 @@ draft=false
 <p>
   This is impossible. At least with high performances and availability. Indeed,
   to ensure a coherent global state, you have to queue state changes (at least
-  those depending on other states). This is typically the relationnal databases
+  those depending on other states). This is typically the relational databases
   strategy.
 </p>
 <p>
-  Suscribing to this strategy involves accepting to refuse some state changes.
+  Subscribing to this strategy involves accepting to refuse some state changes.
   Indeed, imagine that a user wants to change the price of a product. The web
   application would first retrieve it and prompt a form allowing him to make
   that change.
@@ -196,16 +196,16 @@ draft=false
   But what about two users changing the product price at the same time? Should
   we refuse edition and warn the user? Should we compute the difference between
   the two concurrent changes? Or maybe prompt the user to do so (like git do
-  for developpers).
+  for developers).
 </p>
 <p>
   The final choice strongly depends on a lot of factors and, in fact, the only
-  thing i'm sure about is that you <strong>can't fully automate those
+  thing I'm sure about is that you <strong>can't fully automate those
   choices</strong>.
 </p>
 <p>
   Each server endpoint has its own constraint, its own reason to exist and needs
-  you to implement its own, original workflow based on your business contraints.
+  you to implement its own, original workflow based on your business constraints.
 </p>
 <h3>Coding REST APIs with NodeJS</h3>
 <p>
@@ -229,11 +229,11 @@ draft=false
 </p>
 <p>
   In fact, i managed to use ExpressJS successfully many times and i think it can
-  still be useful for quickly prototyping NodeJS backends. But the thruth is
+  still be useful for quickly prototyping NodeJS backends. But the truth is
   that i spent most of my time reducing the Express features i used overtime.
 </p>
 <p>
-  Currently, i'm leaving behind the last Express pieces by using simple libraries
+  Currently, I'm leaving behind the last Express pieces by using simple libraries
   providing pure functions most of the time.
 </p>
 <p>
@@ -266,7 +266,7 @@ draft=false
 </p>
 <p>
   Since it injects services thanks to a simple object, it has no footprint on the
-  enpoint handlers. That way i can reuse it in any other application.
+  endpoint handlers. That way i can reuse it in any other application.
 </p>
 <h4>Documentation driven API</h4>
 <p>
@@ -283,7 +283,7 @@ draft=false
   That way we avoid documentation drifting. Never rely on a human when it comes
   to documenting anything.
 </p>
-<h4>Single enpoint routing</h4>
+<h4>Single endpoint routing</h4>
 <p>
   Since an HTTP endpoint is a unique and original workflow you have to
   implement, i prefer using only one handler per endpoint and use async functions
@@ -319,7 +319,7 @@ draft=false
 </p>
 <ul>
   <li>
-    metada: configuration describing routes, their input/ouput and any other
+    metadata: configuration describing routes, their input/ouput and any other
     information allowing to generate a documentation;
   </li>
   <li>
@@ -339,19 +339,19 @@ draft=false
   </li>
 </ul>
 <p>
-  I take care to avoid coupling endpoint worflows with route declaration in
+  I take care to avoid coupling endpoint workflows with route declaration in
   order to keep my workflows the purest possible. You can see those principles
   in action into the <a href="https://github.com/nfroidure/TripStory">Trip Story</a>
-  project we made for an hackathon (worth noting it till uses Express ;) ). It
-  is a step backward though but i promise i'll soon release a new side project
+  project we made for an hackathon (worth nothing it till uses Express ;) ). It
+  is a step backward though but i promise I'll soon release a new side project
   with all those principles in action.
 </p>
 <h3>As a conclusion</h3>
 <p>
   I'd like to end this post by a call to the JavaScript community: please,
-  release purely functionnal modules whenever possible. Projects like
+  release purely functional modules whenever possible. Projects like
   <a href="https://github.com/jshttp">jshttp</a> are nice and allows a shift to
-  a more functionnal approach.
+  a more functional approach.
 </p>
 <p>
   We should stop assuming a <code>req</code>, <code>res</code> or <code>app</code>
@@ -361,7 +361,7 @@ draft=false
 <h4>A step toward universal APIs</h4>
 <p>
   With the raise of service workers, the need to reuse backend code in the
-  browser will be crucial. Adopting a more functionnal approach will allow to
+  browser will be crucial. Adopting a more functional approach will allow to
   take best advantages of the existing codebases.
 </p>
 <p>
@@ -371,6 +371,6 @@ draft=false
   system.
 </p>
 <p>
-  I hope you find this post more clear and whish it will help improve the way we
+  I hope you find this post more clear and wish it will help improve the way we
   are creating REST web services with NodeJS.
 </p>
