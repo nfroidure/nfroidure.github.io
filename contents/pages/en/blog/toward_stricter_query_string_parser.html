@@ -1,0 +1,92 @@
+<!--VarStream
+title=Toward a stricter query string parser
+description=With most query string parsers, a lot of URIs can point to the same\
+ content. It not only mess you cache system but make your logs less expressive.\
+ To avoid those problems i just wrote a stricter query string parser.
+shortTitle=A stricter query string parser
+shortDesc=Find a better way to deal wouth query strings
+published=2016-12-12T19:50:52.000Z
+lang=en
+location=US
+keywords.+=API
+keywords.+=query string
+keywords.+=HTTP
+categories.+=.*
+disqus=true
+draft=false
+-->
+
+<h2>Toward a stricter query string parser</h2>
+<p><strong>
+  TL.DR. Having a stricter query string policy adds value to APIs. Checkout
+  <a href="https://github.com/nfroidure/strict-qs">strict-qs</a>.
+</strong></p>
+<p>
+  I my journey to the NodeJS HTTP server of my choice, i just reached a new
+  milestone. Indeed, in the ancient ages, when PHP was my language of choice,
+  i made a simple framework called <a href="https://github.com/Rest4">Rest4</a>.
+</p>
+<p>
+  One of its features was to strictly check for query params type, order and
+  existance. I felt a bit unpowered when i figured out that most NodeJS
+  frameworks followed a non restrictive path when it comes to parse query
+  strings.
+</p>
+<p>
+  When no checks are done on query strings, you can end up with a lot of URIs
+  pointing to the same resource. By example, in most applications the following
+  URIs would serve the same resource:<br />
+  <code>/articles?q=test</code>, <code>/articles?q=test&amp;page=1</code>,
+  <code>/articles?page=1&amp;q=test</code>, <code>/articles?q=test&amp;page=invalid</code>,
+  <code>/articles?q=test&amp;page</code>, <code>/articles?q=test&amp;page=1&amp;dummy=lol</code>.<br />
+  This have a lot of undesired effects.
+</p>
+<h3>Content duplication</h3>
+<p>
+  If you are serving webpages you may want to avoid
+  being downgraded in
+  <a href="https://support.google.com/webmasters/answer/66359?hl=en">search engines</a>.
+  There is other way to prevent it but with a strict query string policy it
+  comes out of the box.
+</p>
+<h3>Harder caching</h3>
+<p>
+  If you want to use the resource URI as a key in a Redis cache to speed up your
+  API, you won't be able to use the URI as is without being vulnerable to cache
+  flooding. You'll first have to create a canonical URI to store your contents
+  and its extra compute will be done every time you will access your cache. Also
+  public proxies often have their own interpretation of HTTP caching specs,
+  providing unique URIs ensure you a better handling of your HTTP requests by
+  them.
+</p>
+<h3>Messy logs</h3>
+<p>
+  Logs get harder to reduce/compare/read until you reorder query
+  strings yourself before logging. Even if you do that, your upstream tools
+  (say NGinX, HAProxy, Fastly...) won't take advantage of it.
+</p>
+<h3>Defensive programming</h3>
+<p>
+  Consider the following URI:<br />
+  <code>/articles?q=test&amp;page=1&amp;page=1&amp;page=1&amp;page=1</code>.<br />
+  With a simple query parser, it will lead to an array of pages which is probably
+  not what you want. It leads to unexpected behavior and lots of attacks are
+  based on it.
+</p>
+<p>
+  Just created <a href="https://github.com/nfroidure/strict-qs">strict-qs</a>
+  to match those issues. It simply builds an object whose properties are query
+  parameters of the types you would expect. If you try it, let me know ;).
+</p>
+<p>
+  You'll still have to validate it with a JSONSchema validator since i wanted it to
+  do one thing and do it well. There is plenty of JSONScema validators, i currently
+  use <a href="https://github.com/epoberezkin/ajv">AJV</a>.
+</p>
+<p>
+  Finally, there is still some work to achieve in order to ensure unicity of
+  paths too. The following URIs would also lead to the same resource:<br />
+  <code>/articles/1</code>, <code>/articles/0001</code>, <code>/articles/1/</code>
+  I think i will update <a href="https://github.com/nfroidure/siso">siso</a> to
+  handle this problem too.
+</p>
