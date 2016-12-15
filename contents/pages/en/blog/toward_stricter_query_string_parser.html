@@ -27,34 +27,40 @@ draft=false
   i made a simple framework called <a href="https://github.com/Rest4">Rest4</a>.
 </p>
 <p>
-  One of its features was to strictly check for query params type, order and
+  One of its features was to strictly check for query params types, order and
   existence. I felt a bit unpowered when i figured out that most NodeJS
-  frameworks followed a non restrictive path when it comes to parse query
+  frameworks follow a non restrictive path when it comes to parse query
   strings.
 </p>
 <p>
   When no checks are done on query strings, you can end up with a lot of URIs
   pointing to the same resource. By example, in most applications the following
   URIs would serve the same resource:<br />
-  <code>/articles?q=test</code>, <code>/articles?q=test&amp;page=1</code>,
-  <code>/articles?page=1&amp;q=test</code>, <code>/articles?q=test&amp;page=invalid</code>,
-  <code>/articles?q=test&amp;page</code>, <code>/articles?q=test&amp;page=1&amp;dummy=lol</code>.<br />
-  This have a lot of undesired effects.
+  <code>/articles?q=test</code>,<br />
+  <code>/articles?q=test&amp;page=1</code>,<br />
+  <code>/articles?page=1&amp;q=test</code>,<br />
+  <code>/articles?q=test&amp;page=invalid</code>,<br />
+  <code>/articles?q=test&amp;page</code>,<br />
+  <code>/articles?q=test&amp;page=1&amp;dummy=lol</code>.<br />
+  This has a lot of undesired effects.
 </p>
 <h3>Content duplication</h3>
 <p>
   If you are serving webpages you may want to avoid
   being downgraded in
   <a href="https://support.google.com/webmasters/answer/66359?hl=en">search engines</a>.
-  There is other way to prevent it but with a strict query string policy it
+  There are other ways to prevent this but with a strict query string policy it
   comes out of the box.
 </p>
 <h3>Harder caching</h3>
 <p>
   If you want to use the resource URI as a key in a Redis cache to speed up your
-  API, you won't be able to use the URI as is without being vulnerable to cache
-  flooding. You'll first have to create a canonical URI to store your contents
-  and its extra compute will be done every time you will access your cache. Also
+  API, you won't be able to use the URI as is, without being vulnerable to cache
+  flooding.
+</p>
+<p>
+  You'll first have to create a canonical URI to store your contents
+  and this extra compute will be done every time you will access your cache. Also
   public proxies often have their own interpretation of HTTP caching specs,
   providing unique URIs ensure you a better handling of your HTTP requests by
   them.
@@ -87,6 +93,6 @@ draft=false
   Finally, there is still some work to achieve in order to ensure unicity of
   paths too. The following URIs would also lead to the same resource:<br />
   <code>/articles/1</code>, <code>/articles/0001</code>, <code>/articles/1/</code>
-  I think i will update <a href="https://github.com/nfroidure/siso">siso</a> to
-  handle this problem too.
+  I updated <a href="https://github.com/nfroidure/siso">siso</a> to handle this
+  problem too.
 </p>
