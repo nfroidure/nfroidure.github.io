@@ -14,12 +14,17 @@
   <article class="main-articles__article">
     <p><strong>
       <a href="{{post.path}}{{post.name}}.html"
-        title="{{post.title}}">
+        title="{{post.shortDesc}}">
         {{post.title}}
       </a>
     </strong></p>
+    {% if post.template == 'presentation' %}
+    <p><strong>{{ post.title }}</strong></p>
+    <iframe src="{{ post.embed }}" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    {% else %}
     <p>{{post.description}}</p>
     <p>{{ metadata.published_on }} {{post.published | date(metadata.lang)}}</p>
+    {% endif %}
   </article>
   {% endfor %}
 </section>
