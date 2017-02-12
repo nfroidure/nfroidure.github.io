@@ -21,5 +21,4 @@ build.root=./www
 ^.css=./www/css
 ^.fonts=./www/fonts
 ^.images=./www/images
-^.frontjs=./www/js
-
+^.js=./www/js

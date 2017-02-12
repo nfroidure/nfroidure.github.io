@@ -22,3 +22,32 @@ location=US
 <h2>Ooops! 404</h2>
 
 <p style="text-align:center"><img src="http://media.giphy.com/media/12mPcp41D9a1i0/giphy.gif"></p>
+
+<div id="suggestions"></div>
+<script type="text/javascript" src="js/bundle.js"></script>
+<script type="text/javascript">
+  var search = (
+    document.location.pathname
+    .substr(0, document.location.pathname.length - 4) // remove .html
+    .replace(/[\/\.\-\_]/g, ' ') + // Remove stop words
+    document.location.search.substr(1).split('&')
+    .map(function(a) { return a.split('=')[1] || ''; })
+    .join(' ')
+  ).trim().replace(/ [ ]+/g, ' ').replace('404', '');
+  var results = searchIndex.search(search);
+
+  if(results.length) {
+    document.getElementById('suggestions')
+    .innerHTML = '<h3>Suggestions for: «' + search + '»</h3>\r\n' +
+    results.map(function(id) {
+      var result = searchIndex.documents[id.ref];
+      return '<p>' +
+             '<a href="' + result.path.replace('contents/pages', '') + '">' +
+             ' ' + result.title + '<br />' +
+             '</a>' +
+             ' ' + result.description +
+             '</p>';
+    })
+    .join('\r\n');
+  }
+</script>

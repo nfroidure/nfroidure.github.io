@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var babel = require('babel-core');
 
 var Nunjucks = require('nunjucks');
 var moment = require('moment');
@@ -13,6 +14,7 @@ var internalIp = require('internal-ip');
 
 var buildBranch = require('buildbranch');
 
+var Transform = require('stream').Transform;
 var VarStream = require('varstream');
 
 var CombineStream = require('combine-stream');
@@ -23,6 +25,7 @@ var gutil = require('gulp-util');
 var g = require('gulp-load-plugins')();
 var gulpPages = require('./gulp/gulp-pages');
 var gulpRender = require('./gulp/gulp-render');
+var gulpSearchIndex = require('./gulp/gulp-searchIndex');
 
 var browserify = require('browserify');
 
@@ -37,6 +40,7 @@ var buffer = !args.stream;
 var browser = (!args.nobro) && !prod;
 var httpServer = (!args.nosrv) && !prod;
 var port = 33222;
+let searchIndexStream = null;
 
 if(!prod) {
   // Finding the server IP
@@ -108,9 +112,40 @@ gulp.task('build_styles', function() {
 });
 
 // JavaScript
-gulp.task('build_scripts', function(cb) {
-  browserify(conf.src.scripts + '/index.js')
-    .once('end', cb);
+gulp.task('build_js', ['build_html'], function(cb) {
+  var files = [];
+
+  new CombineStream([
+    searchIndexStream,
+    gulp.src(conf.src.js + '/*.js'),
+  ])
+  .pipe(new Transform({
+    objectMode: true,
+    transform: (file, unused, cb) => {
+      file.contents = new Buffer(
+        babel.transform(
+          file.contents,
+          {
+            filename: file.path,
+            presets: ['babel-preset-es2015'],
+          }
+      ).code);
+      cb(null, file);
+    },
+  }))
+  .pipe(gulp.dest(conf.build.js))
+  .on('finish', () => {
+    var dest = gulp.dest(conf.build.js)
+    .on('finish', cb);
+    dest.write(new gutil.File({
+      path: 'bundle.js',
+      contents: browserify(conf.build.js + '/index.js', {
+        debug: true,
+        standalone: 'searchIndex',
+      }).bundle(),
+    }));
+    dest.end();
+  });
 });
 
 // HTML
@@ -152,8 +187,7 @@ gulp.task('build_html', function() {
     }
     cb2(true);
   }, { objectMode: true });
-
-  return gulp.src(
+  let contentsStream = gulp.src(
     conf.src.content + '/**/*.{html,md}',
     { buffer: buffer || true } // Streams not supported yet
   )
@@ -221,9 +255,11 @@ gulp.task('build_html', function() {
       env: conf.build.root,
       prod: prod,
       conf: conf,
-    }))
-    .pipe(gulp.dest(conf.build.root))
+    }));
+  contentsStream.pipe(gulp.dest(conf.build.root))
     .pipe(g.cond(lr, g.livereload));
+  searchIndexStream = contentsStream.pipe(gulpSearchIndex({}));
+  return contentsStream;
 });
 
 // The clean task
@@ -233,7 +269,7 @@ gulp.task('clean', function() {
 
 // The build task
 gulp.task('build', [
-  'clean', 'build_fonts', 'build_images', 'build_styles', 'build_html',
+  'clean', 'build_fonts', 'build_images', 'build_styles', 'build_js',
 ], function(cb) {
 
   // Robots.txt
@@ -241,18 +277,14 @@ gulp.task('build', [
 
   // Files watch
   if(watch) {
-
-    gulp.watch([
-      conf.src.js + '/frontend/**/*.js',
-      conf.src.js + '/frontend.js',
-    ], ['build_js']);
-
     gulp.watch([conf.src.less + '/**/*.less'], ['build_styles']);
 
     gulp.watch([
       conf.src.content + '/**/*',
       conf.src.templates + '/**/*.tpl',
-    ], ['build_html']);
+      conf.src.js + '/src/**/*.js',
+      conf.src.js + '/src.js',
+    ], ['build_js']);
 
     gulp.watch([conf.src.icons + '/**/*.svg'], ['build_fonts']);
 
