@@ -256,10 +256,9 @@ gulp.task('build_html', function() {
       prod: prod,
       conf: conf,
     }));
-  contentsStream.pipe(gulp.dest(conf.build.root))
-    .pipe(g.cond(lr, g.livereload));
   searchIndexStream = contentsStream.pipe(gulpSearchIndex({}));
-  return contentsStream;
+  return contentsStream.pipe(gulp.dest(conf.build.root))
+      .pipe(g.cond(lr, g.livereload));
 });
 
 // The clean task
