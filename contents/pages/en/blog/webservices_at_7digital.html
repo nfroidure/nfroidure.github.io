@@ -1,0 +1,224 @@
+<!--VarStream
+title=Project Webservices at 7Digital
+description=A sum-up of my last 6 months working at 7Digital
+shortTitle=Webservices at 7Digital
+shortDesc=A presentation of the architecture of the 7Digital Project's Webservices
+template=presentation
+embed=//slides.com/nfroidure/projects-webservices-7digital/embed
+published=2017-02-07T13:09:30.000Z
+lang=en
+location=US
+keywords.+=7Digital
+keywords.+=JavaScript
+keywords.+=Webservices
+keywords.+=Rest
+keywords.+=HTTP
+categories.+=.*
+disqus=true
+draft=false
+-->
+
+<p>
+  Script of the presentation:
+</p>
+
+
+<h3>A bit of context</h3>
+
+<p>
+  As you may have noticed, the project team at 7 Digital has a very different
+  way to ship software than the product team.<br />
+  Indeed, what make us working so diffrently is mainly timelines. We have to
+  ship features on a regular basis in order to get feedback from our partners.
+</p>
+
+<h4>Custom projects</h4>
+
+<p>
+  Our customer projects require us to slightly change our webservices behavior.
+  From custom APIs to third party integrations. We need to be able to build
+  several custom platforms at the same time without degrading our service's
+  quality.
+</p>
+
+<h4>Transitionning</h4>
+
+<p>
+  All of it has to be done gradually, implying a lot of backward compatibility
+  considerations on an old codebase with no tests at all.
+</p>
+
+<h4>Contractors</h4>
+
+<p>
+  We also have to manage relationship with contractors and keep sure we can
+  provide them the environment quick enough to be sure they won't be stuck
+  on their working days.
+</p>
+
+<h4>Project oriented</h4>
+
+<p>
+  We're building projects over a product. It sometimes enforce us to implement
+  features that will then ship into our core features.
+</p>
+
+<h3>Modularization</h3>
+
+<p>
+  To address our projects specifities we had to create an highly modular
+  codebase thanks to a few common patterns.
+</p>
+
+<h4>One repository per concern</h4>
+
+<p>
+  First of all, we created several normalized repositories: infrastruture,
+  webservices, frontends. Each repository of the same category shares
+  the same CLI/directory tree interface to avoid having to figure out what is
+  where for each project.
+</p>
+
+<h4>A docker image per repository</h4>
+
+<p>
+  The subsequent fact of it is that each repository's goal is to contain the
+  recipe to build a single Docker container.
+</p>
+
+<h4>Modularization issues</h4>
+
+<p>
+  But the modularization comes with its own costs and we had to automate their
+  evolution to avoid falling into a messy codebase with disparate configurations
+  for each project/microservice.
+</p>
+
+<h4>An automated update process</h4>
+
+<p>
+  Basically, what we're doing is maintaining a set of versionned macros that
+  applies to a project once the module containing them is updated.
+</p>
+
+<h4>Automatically Customized Documentation</h4>
+
+<p>
+  Since building customer projects is like picking features in an existing
+  toolbox plus creating specific ones, we automated the documentation in
+  a way that allows us to spend 0 time on bundling it or already documented
+  feratures. We just focus on new features.
+</p>
+
+<h3>Code Architecture</h3>
+
+<h4>Dependency Injection with Inversion of Control</h4>
+
+<p>
+  We're using an open-source tool I made that implement Dependency Injection with
+  inversion of cntrols and looks similar to what's done in Angular. There is a
+  small difference though, since it also handle service shutdown. Indeed, to
+  ensure high availability we must shutdown services like PostgreSQL only when
+  every connections to the HTTP server where closed.
+</p>
+
+<h4>Pure functions for the win</h4>
+
+<p>
+  A side effect of using services to enclode global states is that we can use
+  pure functions everywhere else. I won't cover functionnal programming here
+  but you should really have a look at its patterns.
+</p>
+
+<h4>Documentation Driven APIs</h4>
+
+<p>
+  Like any developper, i prefer write code than documentation. But i also prefer
+  using documented code. To concile those two paradoxal needs, i manage to
+  tie documentation and code. By writing the documentation, you write code
+  (<a href="https://github.com/nfroidure/siso">routing</a>,
+  <a href="https://github.com/nfroidure/strict-qs">input filtering</a>,
+  <a href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js">client API generation</a>,
+  ...).
+</p>
+
+<h4>Workflow oriented controller</h4>
+
+<p>
+  I am not an MVC fan. Indeed, experience prooves that answering to an HTTP
+  request is often more a unique worflow specific to a given endpoint.
+  I would say i am using a Workflow Stages Service pattern where Workflow
+  is a bunch of asynchronous sequential operation, Stages is about running
+  pure function or services functions and Service is just dealing with
+  system's or third party global states.
+</p>
+
+<h4>Cache ready</h4>
+
+<p>
+  I think enforcing URLs uniqueness in the stricter manner possible is a
+  very important thing. I made caching strategy efficient. What's the point of
+  taking trains to go to the office if your code is wasting resources?
+  I want to code green and URI unicity is maybe the best improvement you can
+  achieve for that matter.
+</p>
+
+<p>
+  It can be less convenient for frontends that are forced to follow a strict
+  pattern when using the API but since we are generating the client API they
+  don't even know that those restrictions exists ;).
+</p>
+
+<p>
+  Some old URIs contents are still varying but fortunately when frontends will
+  all use the generated client API we will be able to change URIs transparently.
+</p>
+
+<h4>Still a work in progress</h4>
+
+<p>
+  Which leads us to the fact there is still some work in progress under the
+  hoods. From JSONSchema defition to the RESTful shift, the road is long.
+</p>
+
+<h3>Deployment</h3>
+
+<h4>One repository to rule them all</h4>
+
+<p>
+  Building and deploying several projects at the same time requires to be
+  rigourous and rely on single sources of truth. To handle this, every single
+  utility script, deployment configuration lies in a single centralized
+  repository per project.
+</p>
+
+<h4>Cloud Hosting Powers</h4>
+
+<p>
+  We managed to create scripts that aggregate each webservices/frontends
+  definitions and output a platform agnostic project definition we can
+  then convert into many targets: AWS, Google Cloud Engine or even a
+  simple instance running Docker or PM2 if necessary.
+</p>
+
+<h4>Back to the future</h4>
+
+<p>
+  Since each project has its own hosting budget, traffic expectations,
+  we want to provide more targets for deployment to precisely fit
+  needs at the better cost.
+</p>
+
+<h4>Quality Insurance</h4>
+
+<p>
+  There is a lot of checks before shipping to UAT or production dramatically
+  reducing risks to deploy non working versions. Most of the BDD tests i made
+  also helped to ensure backward compatibility with the old APIs.
+</p>
+
+<h3>Thanks</h3>
+
+<p>
+  Thanks you for your attention. If you have any question, please ask ;).
+</P>
