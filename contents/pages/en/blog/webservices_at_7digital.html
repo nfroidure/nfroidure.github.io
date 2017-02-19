@@ -106,8 +106,8 @@ draft=false
 <p>
   Since building customer projects is like picking features in an existing
   toolbox plus creating specific ones, we automated the documentation in
-  a way that allows us to spend 0 time on bundling it or already documented
-  feratures. We just focus on new features.
+  a way that allows us to spend 0 time on bundling it or on already documented
+  features. We just focus on new features.
 </p>
 
 <h3>Code Architecture</h3>
@@ -116,7 +116,7 @@ draft=false
 
 <p>
   We're using an open-source tool I made that implement Dependency Injection with
-  inversion of cntrols and looks similar to what's done in Angular. There is a
+  inversion of controls and looks similar to what's done in Angular. There is a
   small difference though, since it also handle service shutdown. Indeed, to
   ensure high availability we must shutdown services like PostgreSQL only when
   every connections to the HTTP server where closed.
@@ -125,7 +125,7 @@ draft=false
 <h4>Pure functions for the win</h4>
 
 <p>
-  A side effect of using services to enclode global states is that we can use
+  A side effect of using services to enclose global states is that we can use
   pure functions everywhere else. I won't cover functionnal programming here
   but you should really have a look at its patterns.
 </p>
@@ -135,10 +135,10 @@ draft=false
 <p>
   Like any developper, i prefer write code than documentation. But i also prefer
   using documented code. To concile those two paradoxal needs, i manage to
-  tie documentation and code. By writing the documentation, you write code
+  tie documentation and code. By writing the documentation, you create
   (<a href="https://github.com/nfroidure/siso">routing</a>,
   <a href="https://github.com/nfroidure/strict-qs">input filtering</a>,
-  <a href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js">client API generation</a>,
+  <a href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js">clients API</a>,
   ...).
 </p>
 
@@ -149,7 +149,7 @@ draft=false
   request is often more a unique worflow specific to a given endpoint.
   I would say i am using a Workflow Stages Service pattern where Workflow
   is a bunch of asynchronous sequential operation, Stages is about running
-  pure function or services functions and Service is just dealing with
+  pure functions or services functions and Service is just dealing with
   system's or third party global states.
 </p>
 
@@ -192,12 +192,18 @@ draft=false
   repository per project.
 </p>
 
+<p>
+  Every repositories involved in a project are embedded into the infrastruture
+  repository as a Git submodule in order to be able to setup the development
+  environnement by clone a single repository.
+</p>
+
 <h4>Cloud Hosting Powers</h4>
 
 <p>
   We managed to create scripts that aggregate each webservices/frontends
   definitions and output a platform agnostic project definition we can
-  then convert into many targets: AWS, Google Cloud Engine or even a
+  then convert for many targets: AWS, Google Cloud Engine or even a
   simple instance running Docker or PM2 if necessary.
 </p>
 
@@ -205,7 +211,7 @@ draft=false
 
 <p>
   Since each project has its own hosting budget, traffic expectations,
-  we want to provide more targets for deployment to precisely fit
+  we want to provide more targets for deployments to precisely fit
   needs at the better cost.
 </p>
 
