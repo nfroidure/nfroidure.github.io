@@ -1,0 +1,143 @@
+<!--VarStream
+title=Génération automatique de clients d'APIs
+description=Personne de devrait perdre du temps à écrire du code \
+qui peut être généré automatiquement. Voici comment je m'y prends \
+pour les clients d'APIs.
+shortTitle=Génération d'API clientes
+shortDesc=Apprennez comment générer vos clients d'API
+published=2017-02-19T15:00:00.000Z
+lang=fr
+location=FR
+keywords.+=REST
+keywords.+=Client
+keywords.+=API
+keywords.+=Génération
+categories.+=.*
+disqus=true
+-->
+
+<h2>Génération automatique de clients d'APIs</h2>
+<p><strong>
+  TL; DR:<br />
+  Générez du code simple et allez à l'essentiel.
+</strong></p>
+<p>
+  Il paraîtrait fou de nos jours avec des outils Comme HapiJS, ExpressJS ou
+  même avec un routeur perso comme le mien de créer des APIs non-documentées.
+  L'initiative <a href="https://www.openapis.org/">OpenAPI</a> (anciennement
+  la spécification Swagger) nous offre aujourd'hui une façon formelle et
+  largement supportée de définir des APIs.
+</p>
+<p>
+  Les développeurs frontends ont besoin de prendre connaissance des APIs qu'ils
+  utilisent mais nous devons aller encore plus loin en leur proposant une API
+  cliente générée automatiquement.
+</p>
+<p>
+  Le projet <a href="http://swagger.io/swagger-codegen/">Swagger Codegen</a>,
+  propose de nombreux générateurs prêts à l'usage pour de nombreux
+  environnements et languages cibles.
+</p>
+<p>
+  J'ai dû récemment générer un client d'API pour AngularJS (qu'au passage je
+  trouve meilleur qu'Angular2).
+</p>
+<p>
+  Malheureusement, les générateurs existant ne me satisfaisaient pas. Ils
+  proposent une interface en POO (patron de conception inadapté selon moi) et
+  ajoutent un niveau de complexité inutile en éclatant l'API dans plusieurs
+  fichiers.
+</p>
+<p>
+  Ils créent des fonctions ayant un paramètre pour chaque valeur déclarée dans
+  le swagger créant des signatures de fonctions à rallonge dont il faut se
+  souvenir l'ordre des arguments. Comme notre application utilisait ES6, je
+  voulais également tirer parti du destructuring pour avoir un interface plus
+  moderne pour notre client d'API.
+</p>
+<p>
+  J'ai donc décidé de créer notre propre générateur en prenant en compte ce
+  qui fait d'un client d'API un bon client :
+</p>
+<h3>Du code généré ne doit pas être modifié à la main</h3>
+<p>
+  En effet, si l'on peut générer du code une fois, on peut le faire mille fois.
+  Pour moi, générer le client d'API devrait être fait à chaque build.
+</p>
+<p>
+  Dans mon cas, j'ai créé rapidement un chargeur Webpack pour les fichiers
+  <code>*.swagger.json</code> me permettant d'importer notre client d'API dans
+  Angular grâce à une simple ligne de code comme suit
+  <code>require('./api.swagger.json');</code>.
+</p>
+<p>
+  L'avantage de ne pas avoir à changer le code à la main est que de ce fait on
+  se fiche totalement que le code ne soit pas élégant ou que les fichiers
+  générés soient trop long ou mal indentés. Seule la surface de l'API a une
+  vraie importance.
+</p>
+<h3>L'API doit masquer les détails HTTP</h3>
+<p>
+  Rien n'est pire que d'avoir des dizaines de milliers de lignes de code qui
+  dépendent de vos appels HTTP. D'expérience, maintenir une API REST
+  retro-compatible est un véritable cauchemar pour la productivité,
+  surtout quand on part d'un existant peu structuré.
+</p>
+<p>
+  Sauf si votre API est publique, vous pouvez vous épargner de nombreuses
+  peines en masquant les détails de vos appels HTTP et en les englobant dans une
+  simple fonction dont l'unique argument est un objet dont les propriétés sont
+  les paramètres acceptés par votre appel HTTP.
+</p>
+<p>
+  Par exemple, dans mon client HTTP, <code>GET /articles/{articleId}?token=x<code>
+  devient simplement <code>getArticle({ articleId, token })</code>. Si demain,
+  le paramètre <code>token</code> devait être ajouté dans le header
+  <code>Authorization</code> au lieu des paramètres de requête, ce serait
+  transparent pour les frontends.
+</p>
+<p>
+  Ils n'auraient qu'à réimporter le fichier OpenAPI et à simplement builder le
+  projet de nouveau sans rien avoir à faire de plus.
+</p>
+<p>
+  Je suis, en quelques sorte, pompier de vielle application Express depuis
+  quelques années. Je transforme des APIs réalisées à la hâte en API RESTful
+  progressivement en essayant de ne rien casser. Bénéficier de ce type de
+  flexibilité est du pain béni. Par exemple, transformer les appels POST en
+  appels PUT avec un UUID généré via le client devient simple comme bonjour.
+</p>
+<h3>Une surface d'API minimaliste</h3>
+<p>
+  Je n'ai fait qu'exporter un service Angular nommé <code>API</code>. C'est un
+  simple objet ayant une méthode pour chaque id d'opération du fichier
+  Swagger. Pas de POO, pas de gestion de l'authentification, simplement un gros
+  mapping des appels HTTP possibles en fonctions.
+</p>
+<p>
+  Utiliser ce client dans l'application hôte revient donc à créer un autre
+  service par dessus ajoutant la logique d'accés spécifique à l'application.
+</p>
+<h3>Et si on s'amusait un peu?</h3>
+<p>
+  Bon, générer du code c'est plus cool que de l'écrire. Mais pourquoi ne pas
+  saisir l'occasion pour recycler une vielle idée ? Pourquoi ne pas créer un
+  nouveau genre de template ? J'ai déjà exploré la puissance des arbres AST avec
+  <a href="./lets_subset_javascript.html" hreflang="fr">jsub</a> mais je voulais
+  expérimenter un autre concept basé là dessus que j'ai nommé template AST.
+</p>
+<p>
+  L'idée est de créer des templates pour générer des fichiers JavaScript mais
+  qui sont eux-même des fichiers JavaScript valides. De cette façon, les outils
+  de linting, d'analyse de syntaxe et tous ceux qui sont habituellement
+  compatibles avec du bon vieux JS fonctionnent.
+</p>
+<p>
+  J'ai donc créé <a href="https://github.com/nfroidure/asttpl">astpl</a>
+  et je vous laisse voir le template de notre client d'API AngularJS avec cet
+  <a href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js#L82-L131">exemple</a>.
+</p>
+<p>
+  Et voilà ! J'espère que je vous ai donné envie de générer vos client d'APIs
+  et que mes quelques conseils vous éviteront certains déboires ;).
+</p>

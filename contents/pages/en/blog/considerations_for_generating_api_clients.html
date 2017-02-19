@@ -1,0 +1,137 @@
+<!--VarStream
+title=Considerations for Automatic Generation of API Clients
+description=No one should loose time writing code that can be generated \
+automatically. Here are some tips on how i did it.
+shortTitle=API Clients Generation
+shortDesc=Learn how to generate API clients
+published=2017-02-19T15:00:00.000Z
+lang=en
+location=US
+keywords.+=REST
+keywords.+=Client
+keywords.+=API
+keywords.+=Generation
+categories.+=.*
+disqus=true
+-->
+
+<h2>Considerations for Automatic Generation of API Clients</h2>
+<p><strong>
+  TL; DR:<br />
+  Generating simple, unopiniated, API clients is the way to go.
+</strong></p>
+<p>
+  Nowadays, with APIs built on top of HapiJS, ExpressJS or even your custom
+  router like in my case, there is no more field for building undocumented APIs.
+  The <a href="https://www.openapis.org/">OpenAPI</a> initiative (formerly known
+  as Swagger) is now providing a strong and heavily supported API
+  documentation format.
+</p>
+<p>
+  Currently frontend developpers expect having a clear and straigforward
+  way to consume your APIs. But providing a documentation is not enough in my
+  opinion. We must take the opportunity of formal API descriptions to also
+  generate client APIs.
+</p>
+<p>
+  In fact, if you look at <a href="http://swagger.io/swagger-codegen/">Swagger
+  Codegen</a>, you'll find there are a lot of clients generators ready to use.
+</p>
+<p>
+  I recently had to generate a client API for that good old AngularJS framework
+  (which is far better than Angular2 in my opinion).
+</p>
+<p>
+  Sadly, the AngularJS client API codegen is generating an API interface
+  leveraging POO (an irrelevant pattern for this case in my opinion) and
+  introducing unecessary complexities like spawning several files for a single
+  API.
+</p>
+<p>
+  Also, it creates as many function arguments for each endpoint than the
+  possible parameters enforcing us to remember their order and creating
+  function calls with a huge signature. In the context of an ES6 based
+  AngularJS application, i wanted to use ES6 destructuring for a nicer API
+  interface.
+</p>
+<p>
+  I decided to create one that would be aligned with the following architecture
+  requirements for generating a good API client:
+</p>
+<h3>Automatically generated code should never be modified by hands</h3>
+<p>
+  Indeed, if we can generate some code once, we can do it again forever. So,
+  generating the client API should be part of your frontend build process.
+</p>
+<p>
+  In my case, i quickly created a Webpack loader matching the
+  <code>*.swagger.json</code> allowing me to simply import the client API into
+  the AngularJS application with a single line of code
+  <code>require('./api.swagger.json');</code>.
+</p>
+<p>
+  The good news with choosing to never change the generated code is that we
+  do not care anymore about generating elegant or readable code. We just
+  want to create an appropriate surface API.
+</p>
+<h3>API surface should hide HTTP details</h3>
+<p>
+  There is nothing worse than having thousands of line of frontend applications
+  that depends on a particular HTTP implementation. Maintaining HTTP APIs
+  retrocompatibility is a real pain (believe me, you do not want to write HTTP
+  proxies for older versions support...).
+</p>
+<p>
+  Until your API is public, you can avoid a lot of work by using a client API
+  that masks HTTP calls by simply providing your functions with a single argument
+  where you can put your parameters as object properties.
+</p>
+<p>
+  For instance, in my API client, <code>GET /articles/{articleId}?token=x<code>
+  simply becomes <code>getArticle({ articleId, token })</code>. What if the
+  token need to be set in the <code>Authorization</code> header instead of in
+  the query string?
+</p>
+<p>
+  It will just be transparent for frontends, they will only have to generate
+  the Swagger definition again, include it in their project and continue using
+  the endpoint as if nothing changed.
+</p>
+<p>
+  I kind of specialized on working on plain old ExpressJS projects and managing
+  to make them RESTful progressively. Having that flexibility to smoothly
+  change endpoints helps a lot. For example, transforming each POST into a PUT
+  with client generated UUIDs become really easy.
+</p>
+<h3>API surface should be minimalist</h3>
+<p>
+  For the AngularJS client API I just export a service called <code>API</code>
+  and having as much methods as there are operation ids on the swagger file. No
+  POO, no token management, just map functions to HTTP calls.
+</p>
+<p>
+  Using this client basically means creating another service on top of it that
+  adds custom behaviors for the host application logic.
+</p>
+<h3>Why not having some fun?</h3>
+<p>
+  Well. Generating code is less boring than writing it but i wanted to test
+  an old idea. Why not making JavaScript templates in a new way? I already
+  leveraged the AST power with <a href="./lets_subset_javascript.html">jsub</a>
+  but I wanted to make something I called AST templating.
+</p>
+<p>
+  The idea was to create templates that would be pure syntactically valid
+  JavaScript files. That way, linters, syntax analyzers and all the usual
+  JavaScript tools would just work on it.
+</p>
+<p>
+  This i how i created <a href="https://github.com/nfroidure/asttpl">astpl</a>
+  and you can see how our API client looks like in its
+  <a href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js#L82-L131">real world tests</a>.
+</p>
+<p>
+  Et voilà! I hope you will enjoy creating your own API clients. I plan to
+  create another template for React applications since the raw JavaScript
+  codegen does not looks good either.
+</p>
