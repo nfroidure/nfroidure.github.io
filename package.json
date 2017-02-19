@@ -34,7 +34,7 @@
     "babel-core": "^6.22.1",
     "babel-preset-es2015": "^6.22.0",
     "browserify": "^11.1.0",
-    "buildbranch": "^1.0.0",
+    "buildbranch": "^2.0.0",
     "combine-stream": "0.0.4",
     "coveralls": "2.11.15",
     "css-queryless": "^0.1.0",

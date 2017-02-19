@@ -311,6 +311,7 @@ gulp.task('ghpages', function(cb) {
   buildBranch({
     ignore: ['.git', '.token', 'www', 'node_modules'],
     domain: conf.domain,
+    noVerify: true,
   }, function(err) {
     if(err) {
       throw err;
