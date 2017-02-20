@@ -118,6 +118,24 @@ disqus=true
   Utiliser ce client dans l'application hôte revient donc à créer un autre
   service par dessus ajoutant la logique d'accés spécifique à l'application.
 </p>
+<h3>Effets de bord sympas</h3>
+<p>
+  Depuis que je fais du développement d'API Rest dirigé par la documentation
+  (depuis <a href="https://github.com/Rest4/Rest4-php/blob/master/php/class.RestAuthDigestDriver.php#L7-L30">assez
+  longtemps</a> en fait), je prend soin de forcer un order précis pour les
+  paramètres de requête (<span lang="en">query parameters</span>).
+</p>
+<p>
+  Ceci me permet d'optimiser le cache en assurant l'unicité des URLs pour une
+  même ressource. Cependant, cela peut ennuyer les développeurs fronts qui
+  n'aiment pas les APIs strictes. Pour plus d'info, vous pouvez jeter un oeil
+  à <a href="https://github.com/nfroidure/strict-qs">strict-qs</a>.
+</p>
+<p>
+  L'avantage de générer soit même le code du client d'API front est que l'on
+  peut gérer tout cela de manière transparente pour les développeurs front qui
+  ne sont plus confrontés à des erreurs dues à leur utilisation de l'API Rest.
+</p>
 <h3>Et si on s'amusait un peu?</h3>
 <p>
   Bon, générer du code c'est plus cool que de l'écrire. Mais pourquoi ne pas

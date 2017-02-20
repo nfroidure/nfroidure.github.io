@@ -113,6 +113,26 @@ disqus=true
   Using this client basically means creating another service on top of it that
   adds custom behaviors for the host application logic.
 </p>
+<h3>Nice side effects</h3>
+<p>
+  Since I started creating my REST APIs in a Documentation Driven way (I was
+  till doing it
+  <a href="https://github.com/Rest4/Rest4-php/blob/master/php/class.RestAuthDigestDriver.php#L7-L30">with
+  PHP</a> at that time), I enforce a particular order for query parameters.
+</p>
+<p>
+  It allows to ensure URLs are always unique for the same content. That way
+  various cache layers are optimized (even public proxies that cannot assume
+  the query parameters do not matters). You can read my
+  <a href="toward_stricter_query_string_parser.html">post on strict-qs<a> for
+  more informations about this.
+</p>
+<p>
+  That said, it can be annoying for frontends developper to work with such
+  strict APIs. The benefits of generating the client APIs is that we can
+  take care of it for them so that they never face REST APIs missuse issues
+  anymore.
+</p>
 <h3>Why not having some fun?</h3>
 <p>
   Well. Generating code is less boring than writing it but i wanted to test
