@@ -3,7 +3,10 @@ permalink: {{ metadata.frontmatter.permalink }}
 ---
 {% endif %}<!DOCTYPE html>
 <html class="no-js" lang="{% if metadata.lang %}{{metadata.lang}}{% else %}{{conf.lang}}{% endif %}">
-<head>
+<head>{#
+Nice overview of what to put here:
+https://github.com/joshbuchea/HEAD
+#}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
