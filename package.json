@@ -6,7 +6,9 @@
     "data": {
       "files": "src/**/*.js"
     },
-    "configs": ["www"]
+    "configs": [
+      "www"
+    ]
   },
   "scripts": {
     "build": "gulp --prod",
@@ -18,6 +20,7 @@
     "preversion": "npm t && npm run lint",
     "publish": "gulp publish --prod",
     "test": "gulp build --prod --noreq --nolr --nobro --nowatch --nosrv",
+    "test:urls": "reachable-urls contents/**/*.md contents/**/*.html",
     "trinity": "npm-check-updates -u && npm test && git commit package.json -m \"Dependencies update\" && git push"
   },
   "homepage": "http://insertafter.com",
@@ -75,6 +78,7 @@
     "nunjucks": "^2.0.0",
     "open": "^0.0.5",
     "plexer": "^1.0.1",
+    "reachable-urls": "^0.9.0",
     "request": "^2.62.0",
     "rework-rem2px": "^0.0.1",
     "rimraf": "~2.4.3",
