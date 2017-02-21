@@ -28,7 +28,7 @@ draft=false
 <p>
   As you may have noticed, the project team at 7 Digital has a very different
   way to ship software than the product team.<br />
-  Indeed, what make us working so diffrently is mainly timelines. We have to
+  Indeed, what make us working so differently is mainly timelines. We have to
   ship features on a regular basis in order to get feedback from our partners.
 </p>
 
@@ -41,7 +41,7 @@ draft=false
   quality.
 </p>
 
-<h4>Transitionning</h4>
+<h4>Transitioning</h4>
 
 <p>
   All of it has to be done gradually, implying a lot of backward compatibility
@@ -66,14 +66,14 @@ draft=false
 <h3>Modularization</h3>
 
 <p>
-  To address our projects specifities we had to create an highly modular
+  To address our projects specificities we had to create an highly modular
   codebase thanks to a few common patterns.
 </p>
 
 <h4>One repository per concern</h4>
 
 <p>
-  First of all, we created several normalized repositories: infrastruture,
+  First of all, we created several normalized repositories: infrastructure,
   webservices, frontends. Each repository of the same category shares
   the same CLI/directory tree interface to avoid having to figure out what is
   where for each project.
@@ -97,7 +97,7 @@ draft=false
 <h4>An automated update process</h4>
 
 <p>
-  Basically, what we're doing is maintaining a set of versionned macros that
+  Basically, what we're doing is maintaining a set of versioned macros that
   applies to a project once the module containing them is updated.
 </p>
 
@@ -126,15 +126,15 @@ draft=false
 
 <p>
   A side effect of using services to enclose global states is that we can use
-  pure functions everywhere else. I won't cover functionnal programming here
+  pure functions everywhere else. I won't cover functional programming here
   but you should really have a look at its patterns.
 </p>
 
 <h4>Documentation Driven APIs</h4>
 
 <p>
-  Like any developper, i prefer write code than documentation. But i also prefer
-  using documented code. To concile those two paradoxal needs, i manage to
+  Like any developer, i prefer write code than documentation. But i also prefer
+  using documented code. To conciliate those two paradoxical needs, i manage to
   tie documentation and code. By writing the documentation, you create
   (<a href="https://github.com/nfroidure/siso">routing</a>,
   <a href="https://github.com/nfroidure/strict-qs">input filtering</a>,
@@ -145,8 +145,8 @@ draft=false
 <h4>Workflow oriented controller</h4>
 
 <p>
-  I am not an MVC fan. Indeed, experience prooves that answering to an HTTP
-  request is often more a unique worflow specific to a given endpoint.
+  I am not an MVC fan. Indeed, experience proves that answering to an HTTP
+  request is often more a unique workflow specific to a given endpoint.
   I would say i am using a Workflow Stages Service pattern where Workflow
   is a bunch of asynchronous sequential operation, Stages is about running
   pure functions or services functions and Service is just dealing with
@@ -178,7 +178,7 @@ draft=false
 
 <p>
   Which leads us to the fact there is still some work in progress under the
-  hoods. From JSONSchema defition to the RESTful shift, the road is long.
+  hoods. From JSONSchema definition to the RESTful shift, the road is long.
 </p>
 
 <h3>Deployment</h3>
@@ -187,15 +187,15 @@ draft=false
 
 <p>
   Building and deploying several projects at the same time requires to be
-  rigourous and rely on single sources of truth. To handle this, every single
+  rigorous and rely on single sources of truth. To handle this, every single
   utility script, deployment configuration lies in a single centralized
   repository per project.
 </p>
 
 <p>
-  Every repositories involved in a project are embedded into the infrastruture
+  Every repositories involved in a project are embedded into the infrastructure
   repository as a Git submodule in order to be able to setup the development
-  environnement by clone a single repository.
+  environment by clone a single repository.
 </p>
 
 <h4>Cloud Hosting Powers</h4>
