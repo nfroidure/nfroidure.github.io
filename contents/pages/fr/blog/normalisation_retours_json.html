@@ -1,0 +1,168 @@
+<!--VarStream
+title=Normalisation des retours JSON
+description=Peu de gens pensent à normaliser les JSON en début de\
+ projet. C'et dommage car c'est le meilleur moment pour.
+shortTitle=Normalisation JSON
+shortDesc=Voir comment créer des JSON qui roxxent
+published=2017-03-03T10:07:32.000Z
+lang=fr
+location=FR
+keywords.+=JSON
+keywords.+=REST
+keywords.+=Architecture
+categories.+=.*
+disqus=true
+-->
+
+<h2>Normalisation des retours JSON</h2>
+<p><strong lang="en">
+  TL; DR:<br />
+  <pre>
+{
+  itemsType: 'users',
+  items: [1, 2, ...otherUsersIds],
+  users: {
+    '1' : {
+      content: {
+        id: 1,
+        name: 'Popol',
+        organization_id: 1
+      },
+      avatarURL: '//img.ur/trololol.png'
+    },
+    ...otherUsers
+  },
+  organisations: {
+    '1': {
+      content: {
+        id: 1,
+        name: 'Popol inc.',
+        owner_id: 1
+      }
+    }
+  }
+}
+  </pre>
+</strong></p>
+<p>
+ Cela fait un moment que je souhaite écrire ce billet,
+ notamment à l'usage de référence pour les personnes à qui
+ je parle de ma façon de designer les retours de mes APIs.
+</p>
+<p>
+  Si vous n'avez pas ragequit ce blog à la suite de son TL;DR,
+  laissez moi vous expliquer pourquoi j'ai fini par utiliser
+  cette structure pour mes retours JSON.
+</p>
+<h3>Normalisation</h3>
+<p>
+  À ne pas confondre avec standardisation ou structuration. Ici,
+  j'entends le terme normalisation comme on l'entendrait dans une
+  base de donnée relationnelle mais pour un seul retour JSON.
+</p>
+<p>
+  Souvent, dans de nombreuses API, la décision est prise d'embarquer
+  des ressources relatives à une ressource retournée par un point
+  d'API. Par exemple, un <code>GET /users/:userId</code> pourrait
+  retourner aussi l'organisation ou les organisations de ce dernier.
+</p>
+<p>
+  Certains diront que c'est le moment où il faut envisager d'utiliser
+  GraphQL. Je ne serais pas aussi catégorique. Je ne vois pas de
+  souci majeur à ajuster légèrement un retour pour apporter des
+  informations supplémentaire. Après tout les principes RESTful
+  autotorisent plusieurs représentations d'une même ressource donc
+  pourquoi s'en priver ?
+</p>
+<p>
+  En revanche, l'erreur à ne pas commettre est d'embarquer les
+  ressources liées directement comme propriété de ce dernier. En
+  effet, ceci a pour effet que si deux utilisateurs ont la même
+  organisation, celle-ci se retrouve en double dans le retour JSON.
+</p>
+<p>
+  Vous comprenez donc certainement mieux le TL;DR de ce billet.
+  La structure que j'utilise dans mes JSON permet d'éviter ce
+  problème.
+</p>
+<p>
+  Vous remarquerez également que la liste des items d'une
+  collection n'est pas directement dans la collection, mais
+  seuls leurs identifiants apparaissent. La raison est que
+  cela permet d'avoir des collections qui se répètent. Par
+  exemple, un point d'API <code>GET /usersQueue</code>
+  pourrait lister plusieurs fois le même utilisateur car
+  ce dernier aurait réservé plusieurs slots dans une file
+  d'attente. Autre avantage, le user propriétaire
+  de l'organisation de mon exemple peut être retrouvé
+  facilement dans le JSON.
+</p>
+<p>
+  Vous pourriez me rétorquer “Et pourquoi pas JSON Reference ?”.
+  Pour rappel,
+  <a href="https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03">JSON
+  reference</a> est une spécification qui vise à pouvoir utiliser
+  des références à d'autres valeurs du JSON lui-même afin de pouvoir
+  créer des références circulaires.
+</p>
+<p>
+  Trois raisons m'en empêchent :
+</p>
+<ul>
+  <li>la première est que je souhaite
+  pouvoir désérialiser mes JSON avec le parseur natif sur tous les
+  navigateurs. Cela, bien entendu, pour des raisons de performances.
+  Un navigateur passe son temps à désérialiser du JSON, il est donc
+  hors de question de faire cela en JS avec un polyfill de JSON
+  reference;<li>
+  <li>la seconde est que je veux également pouvoir croiser mes
+  objets de façon transversalle. En maintenant des stores
+  d'objets je peux dupliquer les références sur toute mon
+  application et ainsi optimiser la consommation mémoire de
+  l'application entière. Avec ce format, un simple
+  <code>Object.assign</code> dans mon
+  <a href="./generation_api_cliente.html">wrapper d'API</a> suffit;<li>
+  <li>la dernière est que je ne veut pas polluer mes objets et
+  me permet de transitionner en douceur sur le pint suivant.<li>
+</p>
+<h3>
+  Ségrégation
+</h3>
+<p>
+  En général, la représentation d'une ressource contient deux
+  sortes d'informations. Les données normalisées (encore ;))
+  sont souvent stockées dans la base de données. Il s'agit de
+  l'essence de la ressource. C'est souvent ces données que
+  votre CRUD va agir dans une application. C'est également
+  celle-là que vos appels PUT enverront.
+</p>
+<p>
+  C'est pour cela que je les ségrègre dans une propriété
+  <code>content</code>. La convention est que son contenu
+  est ce qui peut-être modifié directement par les
+  utilisateurs. Ainsi, pas de filtre à appliquer, dans le
+  front pour extraire les données modifiables.
+</p>
+<p>
+  Le second type de données sont ce que j'apelle les
+  données calculées. Ces dernières sont utiles uniquement
+  pour l'affichage de la ressource et ne peuvent être
+  modifiées directement. C'est le cas du lien d'avatar
+  dans mon exemple, mais c'est aussi le cas des dates
+  d'enregistrement dans les bases de données.
+</p>
+<h3>
+  Composition des JSON Schemas
+</h3>
+<p>
+  J'aime beaucoup JSON Schema mais il faut bien l'avouer :
+  rien n'est plus saoulant que de les definir. Cette façon
+  de faire permet de réutiliser les définitions simplement
+  afin de construire sa définition Swagger de façon la moins
+  répétitive possible.
+</p>
+<p>
+  Et voilà ;). Vous savez tout ! N'hésitez pas à me fournir
+  vos astuces personelles pour améliorer encore cette
+  technique !
+</p>
