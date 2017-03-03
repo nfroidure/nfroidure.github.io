@@ -1,7 +1,7 @@
 <!--VarStream
 title=Normalisation des retours JSON
 description=Peu de gens pensent à normaliser les JSON en début de\
- projet. C'et dommage car c'est le meilleur moment pour.
+ projet. C'est dommage car c'est le meilleur moment pour.
 shortTitle=Normalisation JSON
 shortDesc=Voir comment créer des JSON qui roxxent
 published=2017-03-03T10:07:32.000Z
@@ -70,8 +70,8 @@ disqus=true
   Certains diront que c'est le moment où il faut envisager d'utiliser
   GraphQL. Je ne serais pas aussi catégorique. Je ne vois pas de
   souci majeur à ajuster légèrement un retour pour apporter des
-  informations supplémentaire. Après tout les principes RESTful
-  autotorisent plusieurs représentations d'une même ressource donc
+  informations supplémentaires. Après tout les principes RESTful
+  autorisent plusieurs représentations d'une même ressource donc
   pourquoi s'en priver ?
 </p>
 <p>
@@ -114,16 +114,16 @@ disqus=true
   navigateurs. Cela, bien entendu, pour des raisons de performances.
   Un navigateur passe son temps à désérialiser du JSON, il est donc
   hors de question de faire cela en JS avec un polyfill de JSON
-  reference;<li>
+  reference;</li>
   <li>la seconde est que je veux également pouvoir croiser mes
   objets de façon transversalle. En maintenant des stores
   d'objets je peux dupliquer les références sur toute mon
   application et ainsi optimiser la consommation mémoire de
   l'application entière. Avec ce format, un simple
   <code>Object.assign</code> dans mon
-  <a href="./generation_api_cliente.html">wrapper d'API</a> suffit;<li>
-  <li>la dernière est que je ne veut pas polluer mes objets et
-  me permet de transitionner en douceur sur le pint suivant.<li>
+  <a href="./generation_api_cliente.html">wrapper d'API</a> suffit;</li>
+  <li>la dernière est que je ne veux pas polluer mes objets, ce
+  qui me permet de transitionner en douceur sur le point suivant.</li>
 </p>
 <h3>
   Ségrégation
@@ -132,7 +132,7 @@ disqus=true
   En général, la représentation d'une ressource contient deux
   sortes d'informations. Les données normalisées (encore ;))
   sont souvent stockées dans la base de données. Il s'agit de
-  l'essence de la ressource. C'est souvent ces données que
+  l'essence de la ressource. C'est souvent sur ces données que
   votre CRUD va agir dans une application. C'est également
   celle-là que vos appels PUT enverront.
 </p>
@@ -156,13 +156,13 @@ disqus=true
 </h3>
 <p>
   J'aime beaucoup JSON Schema mais il faut bien l'avouer :
-  rien n'est plus saoulant que de les definir. Cette façon
+  rien n'est plus saoulant que de les définir. Cette façon
   de faire permet de réutiliser les définitions simplement
   afin de construire sa définition Swagger de façon la moins
   répétitive possible.
 </p>
 <p>
   Et voilà ;). Vous savez tout ! N'hésitez pas à me fournir
-  vos astuces personelles pour améliorer encore cette
+  vos astuces personnelles pour améliorer encore cette
   technique !
 </p>
