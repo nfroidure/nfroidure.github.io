@@ -1,0 +1,262 @@
+<!--VarStream
+title=Normalizing JSON Data from REST APIs
+description=Very few developper takes the time to think about\
+ how they structure their JSON at the very beginning of the\
+ project, it is the best moment to do so though.
+shortTitle=JSON Normalization
+shortDesc=See how to create rocking JSONs
+published=2017-03-03T10:07:32.000Z
+lang=en
+location=US
+keywords.+=JSON
+keywords.+=REST
+keywords.+=Architecture
+categories.+=.*
+disqus=true
+-->
+
+<h2>Normalizing JSON Data from REST APIs</h2>
+<p><strong lang="en">
+  TL; DR:<br />
+  <pre>
+{
+  items: [1, 2, ...otherUsersIds],
+  users: {
+    '1' : {
+      content: {
+        id: 1,
+        name: 'Popol',
+        organization_id: 1
+      },
+      avatarURL: '//img.ur/trololol.png'
+    },
+    ...otherUsers
+  },
+  organisations: {
+    '1': {
+      content: {
+        id: 1,
+        name: 'Popol inc.',
+        owner_id: 1
+      }
+    }
+  }
+}
+  </pre>
+</strong></p>
+<p>
+  I always wanted to write down this post on how I design JSON
+  data on the REST APIs I build. At least for a reference to give
+  to people that ask me why i'm doing it that way.
+</p>
+<p>
+  If you didn't ragequit right after reading the TL;DR, then here is
+  everything you have to know to understand the reasons behind those
+  choices.
+</p>
+<h3>Normalization</h3>
+<p>
+  It is not about structuration or standardization, but really
+  normalization like you would apply it to relational databases.
+  Except that here, we are normalizing a single JSON.
+</p>
+<p>
+  As you may know, in a lot of APIs, some additional resources are
+  embedded with a given resource representation. Mainly, those have
+  relations with it. For instance, a <code>GET /users/:userId</code>
+  endpoint could embed the user's organization representation.
+</p>
+<p>
+  One could say that it is a sign you need to use GraphQL. I wont be
+  that categoric. I think it is convenient to add some related data in
+  your JSON representations. In fact, RESTful principles allows several
+  representations of the same resource.
+</p>
+<p>
+  But a common mistake when doing so is to add the linked resource to
+  the originating one as a property of it. It leads to content duplication.
+  Indeed, if 2 users have the same organization, it will be embedded twice.
+</p>
+<p>
+  You should now better understand this post's TL;DR. The JSON structure I use
+  is avoiding duplication for linked resources.
+</p>
+<p>
+  You'll also notice the the collection items aren't directly
+  put in the corresponding array. Only identifiers are there.
+  The reason behind that is to allow having repeating collections.
+  For instance, a <code>GET /usersQueue</code> endpoint could
+  have the same user two times in the queue. The JSON format I
+  use allows that without duplicating it. Finally, if a user
+  owns the organization of the above example, then, you can
+  easily find him from the organization owner identifier.
+</p>
+<p>
+  You may wonder why I did not use
+  <a href="https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03">JSON
+  reference</a>. The are 3 reasons for it:
+</p>
+<ul>
+  <li>first of all, I really want to use the native JSON deserialiser
+  on every browsers. For performance reasons of course. A browser is
+  constantly parsing JSON data so I do not want to use a polyfill and
+  do it with JS. With my way to set JSON data, resources are directly
+  addressable though a hash, not more computing needed after parsing
+  the JSON;</li>
+  <li>also, having directly usable hashes, allows to combine them
+  in order to optimize the front-end memory consumption. By
+  maintaining objects stores, I can ensure the uniqueness of
+  a single object across the whole application. With a simple
+  <code>Object.assign</code> in my
+  <a href="./considerations_for_generating_api_clients.html">API wrapper</a>
+  or the use of weak sets where possible there are huge
+  performance gains;</li>
+  <li>finally, I do not want to pollute objects with their related
+  resources which leads us to seggregation.</li>
+</p>
+<h3>
+  Seggregation
+</h3>
+<p>
+  Most resource representations contains two kinds of data.
+  Normalized data are the ones you would store in a relationnal
+  database. It is the source of truth, basically, the data CRUD
+  operates on. In other words, the data PUT calls send to
+  change a resource.
+</p>
+<p>
+  This is why I put it in a <code>content</code> property.
+  It is a convention to point out the data you could
+  modify in your frontends forms. It simplifies front-end
+  development since they do not have to filter data.
+  They just pick-up the content and build their forms
+  around it.
+</p>
+<p>
+  The other data are calculated ones. Those are only
+  useful for display concerns. This is the case for
+  the above avatar URL or for example for database
+  modification/creation timestamps.
+</p>
+<h3>
+  JSON schemas composition
+</h3>
+<p>
+  I really like JSON schema. That said, I do not like to
+  write them down ;). My JSON format allows to reuse
+  definitions to avoid writing specific JSON schemas for
+  each resource. Here is how I would define the above data
+  format as a JSON Schema:
+</p>
+<pre>
+  const userSchema = require('user');
+  const organizationSchema = require('organization');
+  const { idSchema, idPattern } = require('utils');
+
+  module.exports = {
+    title: 'Users collection',
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      items: {
+        title: 'User\'s identifiers for the queryed collection.',
+        type: 'array',
+        items: idSchema,
+      },
+      users: {
+        title: 'Users hash',
+        description: 'A hash containing users in the items collection.',
+        type: 'object',
+        patternProperties: {
+          idPattern: userSchema,
+        }
+      },
+      organizations: {
+        title: 'Organizations hash',
+        description: 'A hash containing organizations linked to users in the collection.',
+        type: 'object',
+        patternProperties: {
+          idPattern: organizationSchema,
+        },
+      },
+    },
+  };
+</pre>
+<p>
+  That's it! I hope you find that way of designing
+  JSON data useful. Feel free to comment with your own
+  tips!
+</p>
+<p>
+  <strong>Last minute addition :</strong><br/>
+  Kévin Dunglas, a compatriot strongly involved in PHP/REST
+  communities, cited the following standards a a replacement
+  for the structure I showed here:
+</p>
+<ul>
+  <li>
+    <a href="http://json-ld.org/">JSON-LD :</a> an
+    alternative to using JSON Reference. What make me
+    discarding it is the fact it nests actual data
+    with its definition. It adds an overhead when
+    serializing/deserializing and transporting the
+    data.
+  </li>
+  <li>
+    <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra :</a>
+    it is a layer over JSON-LD, discarding it per the above
+    facts. It goes forward in a direction I do not approve.
+  </li>
+  <li>
+    <a href="http://stateless.co/hal_specification.html">HAL :</a>
+    I didn't know it but just follow the link and scroll to the
+    first JSON. Do you enjoy reading it ? I do not write APIs
+    for bots, but rather for humans. That said, bots can have a
+    look to my Swagger definition.
+  </li>
+</ul>
+<p>
+  I did not mention Hypermedia APIs for brevity but of course
+  we should all use it. That said, nowaday, any JSON brower
+  can detect an URI without having to explicitely define it
+  in the JSON. Anyway, bots can again read the Swagger definition
+  if they are not smart enough to detect an URL.
+</p>
+<p>
+  Swagger/OpenAPI are open standards allowing a lot of benefits
+  from generating client to generating documentation. They
+  benefit from a large set of tools built specifically for it.
+  It is my standard of choice since it allows a clean separation
+  between data and schemas while allowing developpers to add
+  their own value over it.
+</p>
+<p>
+  I have a lot of respect for people involved in standardization.
+  Any standard should, at least, be considered when designing
+  systems. But I keep for myself the right to choose the one
+  fitting my needs/wills. I wouldn't use XML again, neither
+  <a href="https://www.ibm.com/support/knowledgecenter/SS9H2Y_7.1.0/com.ibm.dp.doc/json_jsonx.html">JSONX</a>
+  ;). Do not blindly follow standards but choose the one
+  empowering you.
+</p>
+<p>
+  I like Swagger because it is clear and light. It is like
+  JavaScript: it helps reaching your goal without creating
+  barriers. To be honnest, i'm not that optimist about the
+  OpenAPI initiative. I fear it takes a direction that is
+  not compatible anymore with my concerns. But, maybe,
+  another standard will come to rule all of them.
+</p>
+<p style="text-align: center">
+  <img src="https://imgs.xkcd.com/comics/standards.png" /><br />
+  <a href="https://xkcd.com/927/">Source: XKCD</a>
+</p>
+<p>
+  Finally, keep in mind that using standards is not the only
+  way to go. Innovating often means the opposite. There are
+  plenty of examples out there but let me cite the last one
+  that just blown my mind and led me to reconsider, once
+  again, a rock solid certitude:
+</p>
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">So much devs refers to practices as ugly or conceptually wieird when real measurement of systems is efficiency on the short and long run.</p>&mdash; Nicolas Froidure (@nfroidure) <a href="https://twitter.com/nfroidure/status/832923111355973632">18 février 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

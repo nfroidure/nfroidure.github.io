@@ -19,7 +19,6 @@ disqus=true
   TL; DR:<br />
   <pre>
 {
-  itemsType: 'users',
   items: [1, 2, ...otherUsersIds],
   users: {
     '1' : {
@@ -159,10 +158,128 @@ disqus=true
   rien n'est plus saoulant que de les définir. Cette façon
   de faire permet de réutiliser les définitions simplement
   afin de construire sa définition Swagger de façon la moins
-  répétitive possible.
+  répétitive possible. Voici comment je définirai le JSON
+  Schema de la représentation utilisée en fil rouge de ce
+  billet :
 </p>
+<pre>
+  const userSchema = require('user');
+  const organizationSchema = require('organization');
+  const { idSchema, idPattern } = require('utils');
+
+  module.exports = {
+    title: 'Users collection',
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      items: {
+        title: 'User\'s identifiers for the queryed collection.',
+        type: 'array',
+        items: idSchema,
+      },
+      users: {
+        title: 'Users hash',
+        description: 'A hash containing users in the items collection.',
+        type: 'object',
+        patternProperties: {
+          idPattern: userSchema,
+        }
+      },
+      organizations: {
+        title: 'Organizations hash',
+        description: 'A hash containing organizations linked to users in the collection.',
+        type: 'object',
+        patternProperties: {
+          idPattern: organizationSchema,
+        },
+      },
+    },
+  };
+</pre>
 <p>
   Et voilà ;). Vous savez tout ! N'hésitez pas à me fournir
-  vos astuces personnelles pour améliorer encore cette
-  technique !
+  vos astuces personnelles pour structurer et normaliser
+  vos retours JSON !
 </p>
+<p>
+  <strong>Ajout de dernière minute :</strong><br/>
+  Kévin Dunglas, un nordiste très actif dans les communautés
+  PHP/REST a cité sur Twitter les standards suivants comme
+  substitutifs à la structure présentée dans cet article :
+</p>
+<ul>
+  <li>
+    <a href="http://json-ld.org/">JSON-LD :</a> une
+    alternative à l'utilisation de JSON Reference cité
+    ci-dessus. Je n'ai pas choisi ce format car pour moi
+    il mélange définition des données avec les données
+    elle-mêmes. Au délà de l'overhead en taille causé
+    par l'utilisation des URIs en lieu et place des
+    identifiants ainsi que celui causé par l'ajout
+    d'informations de typage, je le trouve moins
+    lisible. De plus, il rend moins efficace la
+    désérialisation du JSON car on compare des chaînes
+    de caractères bien plus longues et l'on doit
+    constituer les hashs après la désérialisation.
+  </li>
+  <li>
+    <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra :</a>
+    permet d'ajouter plus d'informations de "type" par dessus
+    JSON-LD comme les opérations que l'on peut réaliser sur la
+    ressource. Le fait d'étendre JSON-LD l'écarte de fait dans
+    mon cas, il va plus loin, mais dans la mauvaise direction
+    selon moi.
+  </li>
+  <li>
+    <a href="http://stateless.co/hal_specification.html">HAL :</a>
+    je ne connaisais pas. Allez sur le site scrollez sur le premier
+    JSON et voyez si vous avez envie de lire ce dernier. Je ne
+    crée pas les APIs pour les robots, mais pour les humains.
+    Pour les robots, une fois encore, il y a le fichier Swagger.
+  </li>
+</ul>
+<p>
+  Je n'ai pas parlé de l'hypermédia, mais cela va de soi. Les
+  JSON doivent être hypermédia et la concision les a exclu de
+  cet article. Cependant, aujourd'hui, n'importe quel explorateur
+  de JSON sait afficher les URL où qu'elles se trouvent et le
+  fichier Swagger saura spécifier aux robots les URLs qu'ils
+  peuvent explorer.
+</p>
+<p>
+  Swagger/OpenAPI sont des standards ouverts et permettent un
+  grand nombre de choses : génération de l'API cliente pour tout
+  un tas de cibles, tooling et génération de documentation.
+  C'est le standard ouvert que j'ai décidé d'utiliser car il
+  apporte une bonne séparation entre définition et données
+  tout en laissant toute latitude au développeurs pour
+  apporter leur propre valeur ajoutée.
+</p>
+<p>
+  J'ai beaucoup de respect pour ceux qui créent les standards
+  et je pense que tous les standards valent la peine d'être
+  considérés. Je me réserve en revanche le choix des armes.
+  N'oublions pas qu'XML est un standard, tout comme
+  <a href="https://www.ibm.com/support/knowledgecenter/SS9H2Y_7.1.0/com.ibm.dp.doc/json_jsonx.html">JSONX</a>
+  ;). Il ne faut pas suivre bêtement un standard, mais choisir
+  celui qui nous convient, celui qui nous permet d'être
+  productif. Swagger est clairement mon choix de prédilection.
+  Il est à l'image de JavaScript. Il va droit au but et reste
+  suffisament simple à l'usage. D'ailleurs, je suis réservé
+  sur les évolutions apportées par OpenAPI, j'ai peur que
+  cela ne soit plus le cas. Mais bon, d'ici là, peut-être
+  qu'un nouveau standard pointera le bout de son nez ;).
+</p>
+<p style="text-align: center">
+  <img src="https://imgs.xkcd.com/comics/standards.png" /><br />
+  <a href="https://xkcd.com/927/">Source: XKCD</a>
+</p>
+<p>
+  Enfin, utiliser un standard n'est même pas une obligation.
+  Innover c'est souvent tout l'inverse. Les exemples ne manquent
+  pas, mais voici le dernier en date qui m'a complétement scié
+  et m'a pousser une fois encore à remettre en question mes
+  idées reçues :
+</p>
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">So much devs refers to practices as ugly or conceptually wieird when real measurement of systems is efficiency on the short and long run.</p>&mdash; Nicolas Froidure (@nfroidure) <a href="https://twitter.com/nfroidure/status/832923111355973632">18 février 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
