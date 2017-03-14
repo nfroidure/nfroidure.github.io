@@ -1,6 +1,6 @@
 <!--VarStream
 title=Normalizing JSON Data from REST APIs
-description=Very few developper takes the time to think about\
+description=Very few developer takes the time to think about\
  how they structure their JSON at the very beginning of the\
  project, it is the best moment to do so though.
 shortTitle=JSON Normalization
@@ -47,16 +47,16 @@ disqus=true
 <p>
   I always wanted to write down this post on how I design JSON
   data on the REST APIs I build. At least for a reference to give
-  to people that ask me why i'm doing it that way.
+  to people that ask me why I'm doing it that way.
 </p>
 <p>
-  If you didn't ragequit right after reading the TL;DR, then here is
+  If you didn't rage quit right after reading the TL;DR, then here is
   everything you have to know to understand the reasons behind those
   choices.
 </p>
 <h3>Normalization</h3>
 <p>
-  It is not about structuration or standardization, but really
+  It is not about structuring or standardization, but really
   normalization like you would apply it to relational databases.
   Except that here, we are normalizing a single JSON.
 </p>
@@ -82,7 +82,7 @@ disqus=true
   is avoiding duplication for linked resources.
 </p>
 <p>
-  You'll also notice the the collection items aren't directly
+  You'll also notice the collection items aren't directly
   put in the corresponding array. Only identifiers are there.
   The reason behind that is to allow having repeating collections.
   For instance, a <code>GET /usersQueue</code> endpoint could
@@ -97,7 +97,7 @@ disqus=true
   reference</a>. The are 3 reasons for it:
 </p>
 <ul>
-  <li>first of all, I really want to use the native JSON deserialiser
+  <li>first of all, I really want to use the native JSON deserializer
   on every browsers. For performance reasons of course. A browser is
   constantly parsing JSON data so I do not want to use a polyfill and
   do it with JS. With my way to set JSON data, resources are directly
@@ -112,14 +112,14 @@ disqus=true
   or the use of weak sets where possible there are huge
   performance gains;</li>
   <li>finally, I do not want to pollute objects with their related
-  resources which leads us to seggregation.</li>
+  resources which leads us to segregation.</li>
 </p>
 <h3>
-  Seggregation
+  Segregation
 </h3>
 <p>
   Most resource representations contains two kinds of data.
-  Normalized data are the ones you would store in a relationnal
+  Normalized data are the ones you would store in a relational
   database. It is the source of truth, basically, the data CRUD
   operates on. In other words, the data PUT calls send to
   change a resource.
@@ -127,7 +127,7 @@ disqus=true
 <p>
   This is why I put it in a <code>content</code> property.
   It is a convention to point out the data you could
-  modify in your frontends forms. It simplifies front-end
+  modify in your front-ends forms. It simplifies front-end
   development since they do not have to filter data.
   They just pick-up the content and build their forms
   around it.
@@ -159,7 +159,7 @@ disqus=true
     additionalProperties: false,
     properties: {
       items: {
-        title: 'User\'s identifiers for the queryed collection.',
+        title: 'User\'s identifiers for the queried collection.',
         type: 'array',
         items: idSchema,
       },
@@ -190,7 +190,7 @@ disqus=true
 <p>
   <strong>Last minute addition :</strong><br/>
   Kévin Dunglas, a compatriot strongly involved in PHP/REST
-  communities, cited the following standards a a replacement
+  communities, cited the following standards a replacement
   for the structure I showed here:
 </p>
 <ul>
@@ -217,8 +217,8 @@ disqus=true
 </ul>
 <p>
   I did not mention Hypermedia APIs for brevity but of course
-  we should all use it. That said, nowaday, any JSON brower
-  can detect an URI without having to explicitely define it
+  we should all use it. That said, nowadays, any JSON browser
+  can detect an URI without having to explicitly define it
   in the JSON. Anyway, bots can again read the Swagger definition
   if they are not smart enough to detect an URL.
 </p>
@@ -227,7 +227,7 @@ disqus=true
   from generating client to generating documentation. They
   benefit from a large set of tools built specifically for it.
   It is my standard of choice since it allows a clean separation
-  between data and schemas while allowing developpers to add
+  between data and schemas while allowing developers to add
   their own value over it.
 </p>
 <p>
@@ -242,7 +242,7 @@ disqus=true
 <p>
   I like Swagger because it is clear and light. It is like
   JavaScript: it helps reaching your goal without creating
-  barriers. To be honnest, i'm not that optimist about the
+  barriers. To be honest, I'm not that optimist about the
   OpenAPI initiative. I fear it takes a direction that is
   not compatible anymore with my concerns. But, maybe,
   another standard will come to rule all of them.
@@ -258,5 +258,5 @@ disqus=true
   that just blown my mind and led me to reconsider, once
   again, a rock solid certitude:
 </p>
-<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">So much devs refers to practices as ugly or conceptually wieird when real measurement of systems is efficiency on the short and long run.</p>&mdash; Nicolas Froidure (@nfroidure) <a href="https://twitter.com/nfroidure/status/832923111355973632">18 février 2017</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">So much devs refers to practices as ugly or conceptually weird when real measurement of systems is efficiency on the short and long run.</p>&mdash; Nicolas Froidure (@nfroidure) <a href="https://twitter.com/nfroidure/status/832923111355973632">18 février 2017</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
