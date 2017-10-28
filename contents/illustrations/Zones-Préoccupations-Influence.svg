@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="149.57779mm"
+   height="143.93333mm"
+   viewBox="0 0 530.00004 510"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Zones-Préoccupations-Influence.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.82344961"
+     inkscape:cx="249.78219"
+     inkscape:cy="245.71427"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1295"
+     inkscape:window-height="744"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-542.3622)">
+    <g
+       id="g4304">
+      <g
+         id="g4294">
+        <circle
+           r="104.1095"
+           cy="747.25745"
+           cx="316.62042"
+           id="circle3338"
+           style="opacity:1;fill:#008080;fill-opacity:0.2;stroke:#008080;stroke-width:0.70073706;stroke-opacity:1" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="316.39343"
+           y="751.19019"
+           id="text4161"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             x="316.39343"
+             y="751.19019"
+             id="tspan4165">Zone d'influence</tspan></text>
+      </g>
+      <g
+         id="g4299">
+        <circle
+           style="opacity:1;fill:#008080;fill-opacity:0.2;stroke:#008080;stroke-width:1.4583571;stroke-opacity:1"
+           id="circle3340"
+           cx="266.82986"
+           cy="800.10516"
+           r="216.67021" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="239.88603"
+           y="913.92023"
+           id="text4173"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             x="239.88603"
+             y="913.92023"
+             id="tspan4181">Zone des préoccupations</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

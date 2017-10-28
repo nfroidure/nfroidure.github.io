@@ -19,7 +19,7 @@
       </a>
     </strong></p>
     {% if post.template == 'presentation' %}
-    <p><strong>{{ post.title }}</strong></p>
+    <p>{{ post.description }}</p>
     <iframe src="{{ post.embed }}" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     {% else %}
     <p>{{post.description}}</p>

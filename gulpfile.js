@@ -76,6 +76,9 @@ gulp.task('build_images', function() {
     gulp.src(conf.src.images + '/**/*.svg', { buffer: buffer })
       .pipe(g.cond(watch, g.watch.bind(g, conf.src.images + '/**/*.svg')))
       .pipe(g.cond(prod, g.svgmin)),
+    gulp.src(conf.src.illustrations + '/**/*.svg', { buffer: buffer })
+      .pipe(g.cond(watch, g.watch.bind(g, conf.src.illustrations + '/**/*.svg')))
+      .pipe(g.cond(prod, g.svgmin)),
     gulp.src(conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}', { buffer: buffer })
       .pipe(g.cond(watch, g.watch.bind(g, conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}'))),
     gulp.src(conf.src.images + '/favicon.svg', { buffer: buffer })
