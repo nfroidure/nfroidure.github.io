@@ -22,7 +22,8 @@ En tant qu'amoureux du JavaScript, je maintiens de nombreuses librairies
  JavaScript ainsi qu'un bon nombre de modules NodeJS.
 
 Je suis particulièrement intéressé par les parseurs (texte ou binaires), les
- streams, la création de plugins Gulp et Express/Connect.
+ streams, la création de plugins et d'outils
+ pour les développeurs.
 
 Vous pouvez retrouver ces derniers sur
  [NPM](https://www.npmjs.org/~nfroidure "Voir mon profil NPM").
@@ -62,5 +63,6 @@ Vous trouverez sur mon [dépôt GitHub](http://github.com/nfroidure) tous les
  profiter à d'autres.
 
 Retrouvez également les projets open-source que j'ai créé dans le cadre de mes
- emplois successifs chez [7Digital](https://github.com/7Digital) et
+ emplois successifs chez
+ [Sencrop](https://github.com/Sencrop), [7Digital](https://github.com/7Digital) et
  [SimpliField](https://github.com/SimpliField)..

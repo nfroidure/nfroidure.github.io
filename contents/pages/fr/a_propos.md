@@ -15,21 +15,35 @@ lang=fr
 location=FR
 -->
 
-## Présentation
+## A propos de moi
 
-Développeur web passionné par JavaScript je me définirais volontiers comme
- un travailleur acharné et infatigable. J'aime le travail bien fait.
+Développeur Web depuis plus d'une
+ décennie, je continue de me former et
+ de suivre l'évolution de ce métier qui
+ me passionne.
 
-Je ne suis pas un champion des relations sociales ou de la communication, mais
- mes amis apprécient ma franchise, ma droiture et ma spontanéité.
+Je suis plus particulièrement intéressé
+ par la création de produits innovants.
+ C'est le domaine dans lequel
+ je trouve le plus de sens.
 
-En dehors du Web, je suis un père de famille comblé. J'ai un penchant pour la
- nature (jardinage, animaux) que je respecte sans être politiquement engagé,
- je me considère comme un écologiste raisonné, un citoyen du monde et un
- humaniste.
+Si mon parcours vous intéresse, vous
+ pouvez consulter mon
+ [profil LinkedIn](https://www.linkedin.com/in/nfroidure/)
+ que je prends le temps de mettre à
+ jour au fil de mes diverses expériences.
 
-Je suis ouvert aux échanges que je considère comme une façon de confronter mon
- avis à la communauté et finalement de mieux les reconstruire. C'est pour cela
- que ce blog existe, c'est aussi pour ça que vous allez l'aimer !
+J'ai ouvert ce blog afin de partager
+ mes découvertes, un peu comme un aide
+ mémoire qui peut servir à tous.
 
-À bientôt !
+Mon objectif est de parler des fondamentaux
+ architecturaux en premier lieu plutôt que
+ de technologies en particulier. Quand je
+ parle d'une technologie c'est avant tout
+ pour illustrer les concepts qu'elle
+ implémente.
+
+J'espère que vous aurez autant de plaisir
+ à le lire que j'en ai à l'écrire et
+ vous souhaite une bonne lecture !

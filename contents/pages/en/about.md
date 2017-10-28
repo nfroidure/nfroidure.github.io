@@ -15,8 +15,8 @@ location=US
 
 ## About
 
-I'm a curious web developper in love with JavaScript, HTML, CSS, HTTP, REST and
- Node.js. I'm a hard worker, a bit direct but skillfull. Rigorous but generous.
+I'm a curious web developer in love with JavaScript, HTML, CSS, HTTP, REST and
+ Node.js. I'm a hard worker, a bit direct but skillful. Rigorous but generous.
  I like to invent and share.
 
 I'm mainly blogging about web technologies, historically in French, but I try

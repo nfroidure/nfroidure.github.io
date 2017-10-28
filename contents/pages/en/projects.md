@@ -22,7 +22,8 @@ As as early NodeJS user, i made several modules i
  [published on NPM](https://www.npmjs.org/~nfroidure "View my NPM profile").
 
 In particular, i like make JavaScript parsers (CSV, VarStream, SVG...), work
- with streams, make Gulp plugins and Express/Connect middlewares.
+ with streams, make plugins and tools
+ for developers.
 
 ### Web apps
 
@@ -41,9 +42,9 @@ And other wierd stuff:
 
 ### Firefox / Chrome / Opera add-ons
 
-On my freetime i like to experiment add-ons coding on modern browsers. It's
+In my spare time I like to experiment add-ons coding on modern browsers. It's
  an occasion to free myself of the odd Internet Explorer compatibility issues
- ;). You probably already eard about some of those add-ons:
+ ;). You probably already heard about some of those add-ons:
  [KGen](https://addons.mozilla.org/firefox/addon/kgen),
  [BBComposer](https://addons.mozilla.org/firefox/addon/bbcomposer),
  [BugMeBack](https://github.com/nfroidure/BugMeBack)
@@ -58,4 +59,5 @@ You can get the source of my public projects in
  [my GitHub home](https://github.com/nfroidure).
 
 You can also find open-source projects I made for my successive employers:
+[Sencrop](https://github.com/Sencrop),
 [7Digital](https://github.com/7Digital) and [SimpliField](https://github.com/SimpliField).
