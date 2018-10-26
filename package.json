@@ -7,21 +7,29 @@
       "files": "src/**/*.js"
     },
     "configs": [
+      "www",
+      "main"
+    ],
+    "ignore": [
       "www"
     ]
   },
   "scripts": {
     "build": "gulp --prod",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
+    "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
     "dev": "gulp",
     "lint": "eslint src/**/*.js",
-    "metapak": "metapak || echo 'Please `npm install --save-dev metapak`' && exit 0",
+    "metapak": "metapak",
     "postinstall": "npm run metapak",
-    "preversion": "npm t && npm run lint",
+    "precz": "npm t && npm run lint && npm run metapak -- -s",
+    "prepublish": "gulp --prod",
+    "preversion": "npm t && npm run lint && npm run metapak -- -s",
     "publish": "gulp publish --prod",
     "test": "gulp build --prod --noreq --nolr --nobro --nowatch --nosrv",
     "test:urls": "reachable-urls contents/**/*.md contents/**/*.html",
-    "trinity": "npm-check-updates -u && npm test && git commit package.json -m \"Dependencies update\" && git push"
+    "version": "npm run changelog && git add CHANGELOG.md"
   },
   "homepage": "http://insertafter.com",
   "repository": {
@@ -31,7 +39,11 @@
   "bugs": {
     "url": "https://github.com/nfroidure/blog/issues"
   },
-  "author": "Nicolas Froidure",
+  "author": {
+    "name": "Nicolas Froidure",
+    "email": "nicolas.froidure@insertafter.com",
+    "url": "http://insertafter.com/en/index.html"
+  },
   "devDependencies": {
     "asttpl": "^1.0.0",
     "babel-core": "^6.22.1",
@@ -39,8 +51,11 @@
     "browserify": "^11.1.0",
     "buildbranch": "^2.0.0",
     "combine-stream": "0.0.4",
+    "commitizen": "^3.0.4",
+    "conventional-changelog-cli": "^2.0.5",
     "coveralls": "2.11.15",
     "css-queryless": "^0.1.0",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "3.4.0",
     "eslint-config-simplifield": "4.1.1",
     "express": "^4.13.3",
@@ -71,8 +86,8 @@
     "internal-ip": "^1.0.1",
     "istanbul": "0.4.5",
     "lunr": "^0.7.2",
-    "metapak": "0.0.15",
-    "metapak-nfroidure": "0.0.10",
+    "metapak": "2.0.0",
+    "metapak-nfroidure": "8.0.0",
     "mocha": "3.2.0",
     "mocha-lcov-reporter": "1.2.0",
     "nunjucks": "^2.0.0",
@@ -94,5 +109,18 @@
   "license": "MIT",
   "engines": {
     "node": ">=6.9.5"
+  },
+  "contributors": [],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "greenkeeper": {
+    "ignore": [
+      "commitizen",
+      "cz-conventional-changelog",
+      "conventional-changelog-cli"
+    ]
   }
 }
