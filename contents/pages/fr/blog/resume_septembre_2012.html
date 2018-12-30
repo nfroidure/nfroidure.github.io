@@ -12,55 +12,222 @@ disqus=true
 -->
 
 <h2>Mes trouvailles de septembre 2012</h2>
-<p>Ce mois-ci, j&#039;ai vu passer assez de petites choses pour faire un point rapide sur les dernières nouveautés et actualités du développement web.</p>
+<p>
+  Ce mois-ci, j&#039;ai vu passer assez de petites choses pour faire un point
+  rapide sur les dernières nouveautés et actualités du développement web.
+</p>
 
-<p>Tout d&#039;abord, parlons un peu des exploits de bidouilleurs de l&#039;extrême&#0160;:</p>
+<p>
+  Tout d&#039;abord, parlons un peu des exploits de bidouilleurs de
+  l&#039;extrême&#0160;:
+</p>
 <ul>
-    <li>Les WebSockets, vous utilisez&#0160;? Vous aimez&#0160;? Eh bien, c&#039;était possible quasiment depuis la création du web&#0160;! La preuve par l&#039;<a hreflang="en" title="Voir le projet sur GitHub" href="https://github.com/videlalvaro/gifsockets">exemple avec GifSockets</a>.</li>
+  <li>
+    Les WebSockets, vous utilisez&#0160;? Vous aimez&#0160;? Eh bien,
+    c&#039;était possible quasiment depuis la création du web&#0160;! La preuve
+    par l&#039;<a
+      hreflang="en"
+      title="Voir le projet sur GitHub"
+      href="https://github.com/videlalvaro/gifsockets"
+      >exemple avec GifSockets</a
+    >.
+  </li>
 </ul>
 <p>Quelques infos sur l&#039;état d&#039;HTML5&#0160;:</p>
 <ul>
-    <li>le flexible box model a changé. Difficile de trouver des ressources à jour sur ce thème, voici donc deux liens qui l&#039;expliquent comme il faut&#0160;: <a title="Voir le tuto sur MSDN" href="http://msdn.microsoft.com/fr-fr/library/ie/hh673531(v=vs.85).aspx">d&#039;abord sur MSDN</a>        et <a hreflang="en" title="Voir le billet de blog sur le flexible box model" href="http://www.the-haystack.com/2012/01/04/learn-you-a-flexbox/">un autre</a> plus underground et en anglais. Je ferai peut-être un article si j&#039;ai le temps car
-        je l&#039;utilise quasiment depuis sa création et c&#039;est vraiment l&#039;avenir de l&#039;intégration web à mon sens. D&#039;ailleurs, il serait temps qu&#039;Opera se bouge le ...</li>
-    <li>plus récent, <a hreflang="en" title="Voir l&#039;animation de la fontaine" href="http://ie.microsoft.com/testdrive/Graphics/WorkerFountains/Default.html">une fontaine</a> dont chaque jet est animé par un WebWorker (sorte de thread Javascript) puis
-        dessiné dans le thread principal via l&#039;élément Canvas à chaque évènement. L&#039;animation en elle-même n&#039;a pas grand intérêt, mais le principe est très prometteur. En effet, il a un double avantage&#0160;: exploiter tous les coeurs
-        de la machine, dissocier le calcul des coordonnées de l&#039;affichage. Je pense à Tank Arena et je me dit que je pourrai utiliser un WebWorker pour calculer les déplacements et cela serait une première isolation me permettant de déplacer au besoin
-        ces calculs sur un serveur avec les WebSocket ou chez un joueur hôte via WebRTC. Je ne sais pas si cette approche existe dans les moteurs de jeu actuellement disponibles.</li>
-    <li>mon avis sur le <a hreflang="en" title="Voir le troll pourri" href="http://techcrunch.com/2012/09/11/mark-zuckerberg-our-biggest-mistake-with-mobile-was-betting-too-much-on-html5/">troll de Zuckerberg</a> à propos de HTML5. Premièrement, ce qu&#039;il
-        a dit semble plus mitigé que ce que les anti-HTML5 ont relevé, mais de plus, pour utiliser l&#039;application Facebook, je peux vous assurer que la merde, c&#039;est pas HTML5, mais les serveurs de Facebook et probablement leur façon d&#039;échanger
-        entre client et serveur. Pour avoir moi-même développé un client HTML5, je peux vous assurer que c&#039;est plus le serveur qui nuit à l&#039;expérience utilisateur. Il faut alors optimiser le format d&#039;échange de données (BisonJS pour les
-        fans de JSon ou pourquoi pas les <a hreflang="en" title="Voir le module NPM" href="https://npmjs.org/package/varstream">VarStreams</a> pour un chargement progressif de la timeline) et surtout bien coder côté serveur et bien optimiser l&#039;infra.
-        Pour moi sur un seul serveur avec une charge de PMI-PME, c&#039;est plus simple, mais je pense que Facebook a surtout un gros problème d&#039;infrastructure qui a du mal à affronter la charge en restant réactive. C&#039;est un peu normal vu leur
-        traffic, par contre, c&#039;est pas sympa de s&#039;en prendre à HTML5 et d&#039;en faire un bouc émissaire.</li>
-    <li>j&#039;ai testé pour vous&#0160;: Windows 8 est effectivement prêt pour HTML5. Microsoft semble en revanche moins prêt pour le défi business qui l&#039;attend avec l&#039;explosion du mobile. Bon, par contre, ça ne signifie pas qu&#039;il sont devenus
-        meilleurs, ils restent sur ce point alignés avec les autres grand du logiciel que sont Apple et iOS. Il est temps que Mozilla entre dans la danse avec Firefox OS pour amener un peu de liberté dans le mobile. A ce sujet, je me demande si les distributions
-        Linux aussi ne vont pas devoir s&#039;adapter.</li>
-    <li>a propos de FirefoxOS&#0160;: vous pouvez tester, tout est <a hreflang="en" title="Voir le tutoriel pour tester Firefox OS" href="https://developer.mozilla.org/en-US/docs/Mozilla/Boot_to_Gecko/Using_the_B2G_desktop_client">expliqué sur ce tutoriel</a>.</li>
-    <li>j&#039;ai fait une présentation sur HTML5 versus les applications natives à la CCI d&#039;Arras, <a title="Voir la présentation" href="http://lucky.elitwork.com/presentations/mobilewebapps/index.html">voici le slide</a>. J&#039;ai fait ça avec
-        <a
-        hreflang="en" title="Découvrir le projet Impress.js" href="http://bartaz.github.com/impress.js/">Impress.js</a> et je le recommande chaudement pour réaliser rapidement une présentation dans un format directement pushable sur le web. Je compte le réutiliser pour une présentation sur mon framework REST et pour la création de présentations sur
-            bornes tactiles.</li>
-    <li>vous vous posez des questions sur ce qu&#039;il y a sous le capot des moteurs Js&#0160;? Cet article sur le <a title="Voir le journal" href="http://linuxfr.org/users/enjolras/journaux/javascript-performances-et-firefox">Javascript dans Firefox</a>        est fait pour vous&#0160;!</li>
-    <li><a title="Voir l&#039;article" href="http://www.pcinpact.com/news/74100-chrome-22-google-ajoute-pointer-lock-et-souvre-voie-fps.htm">API PointerLock</a>&#0160;: Contrôlez la souris&#0160;!</li>
+  <li>
+    le flexible box model a changé. Difficile de trouver des ressources à jour
+    sur ce thème,
+    <a
+      hreflang="en"
+      title="Voir le billet de blog sur le flexible box model"
+      href="http://www.the-haystack.com/2012/01/04/learn-you-a-flexbox/"
+      >voici donc un lien qui l&#039;explique comme il faut</a
+    >
+    en anglais. Je ferai peut-être un article si j&#039;ai le temps car je
+    l&#039;utilise quasiment depuis sa création et c&#039;est vraiment
+    l&#039;avenir de l&#039;intégration web à mon sens. D&#039;ailleurs, il
+    serait temps qu&#039;Opera se bouge le ...
+  </li>
+  <li>
+    plus récent, une fontaine dont chaque jet est animé par un WebWorker (sorte
+    de thread Javascript) puis dessiné dans le thread principal via
+    l&#039;élément Canvas à chaque évènement. L&#039;animation en elle-même
+    n&#039;a pas grand intérêt, mais le principe est très prometteur. En effet,
+    il a un double avantage&#0160;: exploiter tous les coeurs de la machine,
+    dissocier le calcul des coordonnées de l&#039;affichage. Je pense à Tank
+    Arena et je me dit que je pourrai utiliser un WebWorker pour calculer les
+    déplacements et cela serait une première isolation me permettant de déplacer
+    au besoin ces calculs sur un serveur avec les WebSocket ou chez un joueur
+    hôte via WebRTC. Je ne sais pas si cette approche existe dans les moteurs de
+    jeu actuellement disponibles.
+  </li>
+  <li>
+    mon avis sur le
+    <a
+      hreflang="en"
+      title="Voir le troll pourri"
+      href="http://techcrunch.com/2012/09/11/mark-zuckerberg-our-biggest-mistake-with-mobile-was-betting-too-much-on-html5/"
+      >troll de Zuckerberg</a
+    >
+    à propos de HTML5. Premièrement, ce qu&#039;il a dit semble plus mitigé que
+    ce que les anti-HTML5 ont relevé, mais de plus, pour utiliser
+    l&#039;application Facebook, je peux vous assurer que la merde, c&#039;est
+    pas HTML5, mais les serveurs de Facebook et probablement leur façon
+    d&#039;échanger entre client et serveur. Pour avoir moi-même développé un
+    client HTML5, je peux vous assurer que c&#039;est plus le serveur qui nuit à
+    l&#039;expérience utilisateur. Il faut alors optimiser le format
+    d&#039;échange de données (BisonJS pour les fans de JSon ou pourquoi pas les
+    <a
+      hreflang="en"
+      title="Voir le module NPM"
+      href="https://npmjs.org/package/varstream"
+      >VarStreams</a
+    >
+    pour un chargement progressif de la timeline) et surtout bien coder côté
+    serveur et bien optimiser l&#039;infra. Pour moi sur un seul serveur avec
+    une charge de PMI-PME, c&#039;est plus simple, mais je pense que Facebook a
+    surtout un gros problème d&#039;infrastructure qui a du mal à affronter la
+    charge en restant réactive. C&#039;est un peu normal vu leur traffic, par
+    contre, c&#039;est pas sympa de s&#039;en prendre à HTML5 et d&#039;en faire
+    un bouc émissaire.
+  </li>
+  <li>
+    j&#039;ai testé pour vous&#0160;: Windows 8 est effectivement prêt pour
+    HTML5. Microsoft semble en revanche moins prêt pour le défi business qui
+    l&#039;attend avec l&#039;explosion du mobile. Bon, par contre, ça ne
+    signifie pas qu&#039;il sont devenus meilleurs, ils restent sur ce point
+    alignés avec les autres grand du logiciel que sont Apple et iOS. Il est
+    temps que Mozilla entre dans la danse avec Firefox OS pour amener un peu de
+    liberté dans le mobile. A ce sujet, je me demande si les distributions Linux
+    aussi ne vont pas devoir s&#039;adapter.
+  </li>
+  <li>
+    j&#039;ai fait une présentation sur HTML5 versus les applications natives à
+    la CCI d&#039;Arras,
+  </li>
+  <li>
+    vous vous posez des questions sur ce qu&#039;il y a sous le capot des
+    moteurs Js&#0160;? Cet article sur le
+    <a
+      title="Voir le journal"
+      href="http://linuxfr.org/users/enjolras/journaux/javascript-performances-et-firefox"
+      >Javascript dans Firefox</a
+    >
+    est fait pour vous&#0160;!
+  </li>
+  <li>
+    <a
+      title="Voir l&#039;article"
+      href="http://www.pcinpact.com/news/74100-chrome-22-google-ajoute-pointer-lock-et-souvre-voie-fps.htm"
+      >API PointerLock</a
+    >&#0160;: Contrôlez la souris&#0160;!
+  </li>
 </ul>
 <p>Un peu de programmation&#0160;:</p>
 <ul>
-    <li><a title="Voir son profil Twitter" href="https://twitter.com/naholyr">&#64;naholyr</a> a fait un excellent article sur le <a title="Voir son article" href="http://naholyr.fr/2012/09/profiler-son-application-nodejs/">profilage d&#039;applications NodeJS</a>.
-        Je vous recommande d&#039;ailleurs chaudement le blog et le personnage qui sont intéressants et très au fait de NodeJs en général.</li>
-    <li>Mettre une <a title="Lire ce billet" href="http://www.armetiz.info/node-js-mise-production-simple/">application NodeJs en production</a> rapidement.</li>
-    <li><a hreflang="en" title="Lire ce billet fort intéressant" href="https://www.hackerschool.com/blog/7-understanding-c-by-learning-assembly">Comprendre le C en apprenant l&#039;assembleur</a>, rien que ça&#0160;!</li>
-    <li>Comment stocker et représenter des prix en Javascript&#0160;? Pour moi, l&#039;objet Number est approprié, Il suffit de les formater avant de les afficher. <a hreflang="en" title="Voir la méthode Javascript créée par mes soins" href="https://gist.github.com/3608274">Voici une méthode</a>        faîte spécialement pour répondre à cette question de <a title="Voir son blog" href="http://fabiencanu.fr">Fabien Canu</a> que certains d&#039;entre vous doivent connaître. Cette méthode est perfectible notamment pour représenter les grand nombres
-        et pour être facilement localisable.</li>
-    <li>Sympa&#0160;: gérer ses <a hreflang="en" title="Voir le tutoriel" href="http://www.howtoforge.com/creating-advanced-mysql-based-virtual-hosts-on-lighttpd-debian-squeeze">VirtualHosts LightHTTPD</a> dans une base de donnée MySQL.</li>
-    <li>Merci MooTools&#0160;! <a hreflang="en" title="Voir le billet expliquant tout ça" href="http://mootools.net/blog/2012/08/13/optimizing-mootools-builds-sans-internet-explorer/">Composez un MooTools</a> sans tout le code spécifique à IE.</li>
+  <li>
+    <a title="Voir son profil Twitter" href="https://twitter.com/naholyr"
+      >&#64;naholyr</a
+    >
+    a fait un excellent article sur le
+    <a
+      title="Voir son article"
+      href="http://naholyr.fr/2012/09/profiler-son-application-nodejs/"
+      >profilage d&#039;applications NodeJS</a
+    >. Je vous recommande d&#039;ailleurs chaudement le blog et le personnage
+    qui sont intéressants et très au fait de NodeJs en général.
+  </li>
+  <li>
+    Mettre une
+    <a
+      title="Lire ce billet"
+      href="http://www.armetiz.info/node-js-mise-production-simple/"
+      >application NodeJs en production</a
+    >
+    rapidement.
+  </li>
+  <li>
+    <a
+      hreflang="en"
+      title="Lire ce billet fort intéressant"
+      href="https://www.hackerschool.com/blog/7-understanding-c-by-learning-assembly"
+      >Comprendre le C en apprenant l&#039;assembleur</a
+    >, rien que ça&#0160;!
+  </li>
+  <li>
+    Comment stocker et représenter des prix en Javascript&#0160;? Pour moi,
+    l&#039;objet Number est approprié, Il suffit de les formater avant de les
+    afficher.
+    <a
+      hreflang="en"
+      title="Voir la méthode Javascript créée par mes soins"
+      href="https://gist.github.com/3608274"
+      >Voici une méthode</a
+    >
+    faîte spécialement pour répondre à cette question de
+    <a title="Voir son blog" href="http://fabiencanu.fr">Fabien Canu</a> que
+    certains d&#039;entre vous doivent connaître. Cette méthode est perfectible
+    notamment pour représenter les grand nombres et pour être facilement
+    localisable.
+  </li>
+  <li>
+    Sympa&#0160;: gérer ses
+    <a
+      hreflang="en"
+      title="Voir le tutoriel"
+      href="http://www.howtoforge.com/creating-advanced-mysql-based-virtual-hosts-on-lighttpd-debian-squeeze"
+      >VirtualHosts LightHTTPD</a
+    >
+    dans une base de donnée MySQL.
+  </li>
+  <li>
+    Merci MooTools&#0160;!
+    <a
+      hreflang="en"
+      title="Voir le billet expliquant tout ça"
+      href="https://mootools.net/blog/2012/08/13/optimizing-mootools-builds-sans-internet-explorer"
+      >Composez un MooTools</a
+    >
+    sans tout le code spécifique à IE.
+  </li>
 </ul>
 <p>Du fun&#0160;:</p>
 <ul>
-    <li>un <a hreflang="en" title="Voir le jeu" href="http://cssdeck.com/labs/html5-doodle-jump/8">Doodle Jump</a> en Javascript.</li>
-    <li>un jeu 3D réalisé avec WebGL nommé <a hreflang="en" title="Voir le site du jeu" href="http://hexgl.bkcore.com/">HexGL</a>.</li>
-    <li>un <a hreflang="en" title="Voir l&#039;émulateur" href="http://hulkholden.github.com/n64js/">émulateur Nintendo 64</a> en Javascript&#0160;:D</li>
+  <li>
+    un
+    <a
+      hreflang="en"
+      title="Voir le jeu"
+      href="http://cssdeck.com/labs/html5-milo-jump-game"
+      >Doodle Jump</a
+    >
+    en Javascript.
+  </li>
+  <li>
+    un jeu 3D réalisé avec WebGL nommé
+    <a hreflang="en" title="Voir le site du jeu" href="http://hexgl.bkcore.com/"
+      >HexGL</a
+    >.
+  </li>
+  <li>
+    un
+    <a
+      hreflang="en"
+      title="Voir l&#039;émulateur"
+      href="http://hulkholden.github.com/n64js/"
+      >émulateur Nintendo 64</a
+    >
+    en Javascript&#0160;:D
+  </li>
 </ul>
-<p>Un peu d&#039;humour pour finir&#0160;:
-    <br /><img alt="Un homme qui mange un ver vivant" src="/images/omfg-man-vs-wild.gif" />
-    <br />Quand je dois faire du sysadmin sur Windows Server&#0160;! via <a title="Voir son profil Twitter" href="https://twitter.com/Karlesnine">&#64;Karlesnine</a>
+<p>
+  Un peu d&#039;humour pour finir&#0160;: <br /><img
+    alt="Un homme qui mange un ver vivant"
+    src="/images/omfg-man-vs-wild.gif"
+  />
+  <br />Quand je dois faire du sysadmin sur Windows Server&#0160;! via
+  <a title="Voir son profil Twitter" href="https://twitter.com/Karlesnine"
+    >&#64;Karlesnine</a
+  >
 </p>

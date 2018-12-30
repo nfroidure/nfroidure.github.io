@@ -14,37 +14,142 @@ disqus=true
 -->
 
 <h2>Gestion de flotte X1 Intellitrac avec xinetd sur Debian GNU Linux</h2>
-<p>Le super server xinetd est vraiment très pratique pour des petits projets ne dépassant pas un certain nombre de clients. Voici une petite illustration de son utilité pour la localisation de flotte de véhicules.</p>
+<p>
+  Le super server xinetd est vraiment très pratique pour des petits projets ne
+  dépassant pas un certain nombre de clients. Voici une petite illustration de
+  son utilité pour la localisation de flotte de véhicules.
+</p>
 
-<p>J&#039;ai récemment dû revenir sur un ancien projet pour lequel j&#039;avais utilisé xinetd et un petit programme C++ de mon cru pour logger une flotte de véhicule.</p>
-<p>J&#039;ai dû pratiquer quelques optimisations pour lesquelles un retour s&#039;impose car xinetd est très mal documenté, cela aidera peut-être certains d&#039;entre vous.</p>
-<p> </p>
+<p>
+  J&#039;ai récemment dû revenir sur un ancien projet pour lequel j&#039;avais
+  utilisé xinetd et un petit programme C++ de mon cru pour logger une flotte de
+  véhicule.
+</p>
+<p>
+  J&#039;ai dû pratiquer quelques optimisations pour lesquelles un retour
+  s&#039;impose car xinetd est très mal documenté, cela aidera peut-être
+  certains d&#039;entre vous.
+</p>
+<p></p>
 <h3>Qu&#039;est-ce qu&#039;xinetd</h3>
-<p>Xinetd est un super serveur destiné à remplacer inetd qui est peu sécurisé. Un super serveur est une implémentation générique d&#039;un serveur qui se base sur des fichiers de configuration pour fournir des services sans forcément devoir réécrire toute
-    une gestion des sockets et des forks de processus. Une chance étant donné la complexité de la chose.</p>
-<p>Pour installer xinetd sur une machine de type Debian, une ligne de commande suffit :</p><pre>aptitude install xinetd</pre>
-<p>Ce que fait xinetd est simple, il écoute les connexions entrantes pour le service donné et démarre un nouveau processus avec la ligne de commande fournie avec la directive server. Une fois le processus démarré, il pipe le stream montant du socket vers
-    l&#039;entrée standard et le descandant vers la sortie standard du nouveau processus. Toute la logique du socket est masquée et on se retrouve à travailler, tout bêtement, avec stdin et stdout.</p>
-<p>Seul petit bémol, xinetd redirige stderr vers le socket également. Pour cette raison, je vous déconseille d&#039;écrire vers stderr vos erreurs, mais plutôt de les envoyer vers syslog. Ceci est d&#039;ailleurs plus logique puisque votre programme devient
-    un démon dès lors qu&#039;il est lancé par xinetd.</p>
+<p>
+  Xinetd est un super serveur destiné à remplacer inetd qui est peu sécurisé. Un
+  super serveur est une implémentation générique d&#039;un serveur qui se base
+  sur des fichiers de configuration pour fournir des services sans forcément
+  devoir réécrire toute une gestion des sockets et des forks de processus. Une
+  chance étant donné la complexité de la chose.
+</p>
+<p>
+  Pour installer xinetd sur une machine de type Debian, une ligne de commande
+  suffit :
+</p>
+<pre>aptitude install xinetd</pre>
+<p>
+  Ce que fait xinetd est simple, il écoute les connexions entrantes pour le
+  service donné et démarre un nouveau processus avec la ligne de commande
+  fournie avec la directive server. Une fois le processus démarré, il pipe le
+  stream montant du socket vers l&#039;entrée standard et le descandant vers la
+  sortie standard du nouveau processus. Toute la logique du socket est masquée
+  et on se retrouve à travailler, tout bêtement, avec stdin et stdout.
+</p>
+<p>
+  Seul petit bémol, xinetd redirige stderr vers le socket également. Pour cette
+  raison, je vous déconseille d&#039;écrire vers stderr vos erreurs, mais plutôt
+  de les envoyer vers syslog. Ceci est d&#039;ailleurs plus logique puisque
+  votre programme devient un démon dès lors qu&#039;il est lancé par xinetd.
+</p>
 <h3>Création d&#039;un service : cas X1 Intellitrac</h3>
-<p>Dans mon cas précis, je me suis servi d&#039;xinetd pour gérer une flotte d&#039;une trentaine de véhicules équipés du boitier GPS X1 Intellitrac. Tout d&#039;abord, nous allons créer un utilisateur unix appelé x1server :</p><pre>adduser x1server</pre>
-<p>Puis, nous allons ajouter le service xinetd à /etc/services en déclarant le port 1337 :</p><pre>echo &#034;<br />&#35; Local services<br />x1server 1337/tcp &#35; X1 Intellitrac GPS tracking server&#034; &gt; /etc/services;</pre>
-<p>Créons également le service xinetd. Pour ce faire, il faut créer un fichier de configuration dans le répertoire /etc/xinetd.d/. Dans mon cas, le fichier ressemble à cela :</p><pre>echo &#034;&#35; default: on<br />&#35; description: X1 Intellitrac GPS tracking server<br />service x1server<br />&#123;<br /> port= 1337<br /> socket_type= stream<br /> wait= no<br /> user= x1server<br /> server= /home/x1server/bin/x1server<br /> server_args /home/x1server/log<br /> log_on_success+= USERID<br /> log_on_failure+= USERID<br /> instances= 30<br /> disable= no<br /> flags= NODELAY<br /> nice= -20<br />&#125;&#034; &gt;&gt; /etc/xinet.d/x1server</pre>
-<p>Le port utilisé est 1337, nous le précisons avec la directive <code>port</code>. La directive <code>user</code> permet d&#039;éxecuter le processus pour un utilisateur particuler ce qui permet de sandboxer ce dernier et éviter les effets de bord d&#039;un
-    éventuel trou de sécurité. La directive <code>instances</code> précise le nombre d&#039;instances maximales pour ce serveur. Elle permet d&#039;éviter les attaques ddos.</p>
-<p>La directive <code>server</code> désigne le fichier à exécuter. Dans mon cas, il s&#039;agit du projet <a title="Voir le projet sur GitHub" href="https://github.com/nfroidure/X1-GPS-Logger">X1 Intellitrac GPS Logger</a> compilé directement sur la machine
-    hôte avec la commande suivante :</p><pre>wget https://github.com/nfroidure/X1-GPS-Logger/archive/master.tar.gz<br />tar -xzvf master.tar.gz<br />mkdir /home/x1server/bin<br />g++ /home/x1server/X1-GPS-Logger-master/main.c -o /home/x1server/bin/x1server<br />chmod u+x /home/x1server/bin/x1server<br />rm -rf /home/x1server/X1-GPS-Logger-master /home/x1server/master.tar.gz</pre>
-<p>La directive server_args permet de préciser les arguments à utiliser pour démarrer le serveur. Dans notre cas, l&#039;argument est le dossier de destination des logs. Surtout, il ne faut pas oublier de créer ce dossier :</p><pre>mkdir /home/x1server/log<br />chown x1server:x1server /home/x1server/log</pre>
+<p>
+  Dans mon cas précis, je me suis servi d&#039;xinetd pour gérer une flotte
+  d&#039;une trentaine de véhicules équipés du boitier GPS X1 Intellitrac. Tout
+  d&#039;abord, nous allons créer un utilisateur unix appelé x1server :
+</p>
+<pre>adduser x1server</pre>
+<p>
+  Puis, nous allons ajouter le service xinetd à /etc/services en déclarant le
+  port 1337 :
+</p>
+<pre>echo &#034;<br />&#35; Local services<br />x1server 1337/tcp &#35; X1 Intellitrac GPS tracking server&#034; &gt; /etc/services;</pre>
+<p>
+  Créons également le service xinetd. Pour ce faire, il faut créer un fichier de
+  configuration dans le répertoire /etc/xinetd.d/. Dans mon cas, le fichier
+  ressemble à cela :
+</p>
+<pre>echo &#034;&#35; default: on<br />&#35; description: X1 Intellitrac GPS tracking server<br />service x1server<br />&#123;<br /> port= 1337<br /> socket_type= stream<br /> wait= no<br /> user= x1server<br /> server= /home/x1server/bin/x1server<br /> server_args /home/x1server/log<br /> log_on_success+= USERID<br /> log_on_failure+= USERID<br /> instances= 30<br /> disable= no<br /> flags= NODELAY<br /> nice= -20<br />&#125;&#034; &gt;&gt; /etc/xinet.d/x1server</pre>
+<p>
+  Le port utilisé est 1337, nous le précisons avec la directive
+  <code>port</code>. La directive <code>user</code> permet d&#039;éxecuter le
+  processus pour un utilisateur particuler ce qui permet de sandboxer ce dernier
+  et éviter les effets de bord d&#039;un éventuel trou de sécurité. La directive
+  <code>instances</code> précise le nombre d&#039;instances maximales pour ce
+  serveur. Elle permet d&#039;éviter les attaques ddos.
+</p>
+<p>
+  La directive <code>server</code> désigne le fichier à exécuter. Dans mon cas,
+  il s&#039;agit du projet
+  <a
+    title="Voir le projet sur GitHub"
+    href="https://github.com/nfroidure/X1-GPS-Logger"
+    >X1 Intellitrac GPS Logger</a
+  >
+  compilé directement sur la machine hôte avec la commande suivante :
+</p>
+<pre>wget https://github.com/nfroidure/X1-GPS-Logger/archive/master.tar.gz<br />tar -xzvf master.tar.gz<br />mkdir /home/x1server/bin<br />g++ /home/x1server/X1-GPS-Logger-master/main.c -o /home/x1server/bin/x1server<br />chmod u+x /home/x1server/bin/x1server<br />rm -rf /home/x1server/X1-GPS-Logger-master /home/x1server/master.tar.gz</pre>
+<p>
+  La directive server_args permet de préciser les arguments à utiliser pour
+  démarrer le serveur. Dans notre cas, l&#039;argument est le dossier de
+  destination des logs. Surtout, il ne faut pas oublier de créer ce dossier :
+</p>
+<pre>mkdir /home/x1server/log<br />chown x1server:x1server /home/x1server/log</pre>
 <h3>Envoyez le bousin !</h3>
-<p>Il ne reste plus qu&#039;à redémarrer le serveur xinetd pour démarrer le service correspondant :</p><pre>/etc/init.d/xinetd restart</pre>
+<p>
+  Il ne reste plus qu&#039;à redémarrer le serveur xinetd pour démarrer le
+  service correspondant :
+</p>
+<pre>/etc/init.d/xinetd restart</pre>
 <h3>Optimisations</h3>
-<p>Vous aurez peut-être remarqué la directive flags = NODELAY. Cette directive permet d&#039;éviter que les entrées/sorties (notamment stdout dans notre cas) ne soient buffurisées. En effet, le <a hreflang="en" title="Voir la spécification du protocole"
-    href="http://www.systech.com.tw/products-detail.php?id=46">satané protocole des boitiers X1 Intellitrac</a> impose de renvoyer intacts les 8 octets de synchronisation reçu par le serveur au boitier. Or, j&#039;ai rencontré un problème de buffurisation
-    qui provoquait l&#039;envoi des octets trop tard.</p>
-<p>J&#039;ai aussi ajouté par la suite une directive nice pour privilégier ces processus peu gourmands, mais dont la réactivité est essentielle. Toutes les directives d&#039;xinetd sont très bien documentées <a hreflang="en" title="Voir les manpages xinetd"
-    href="http://manpages.ubuntu.com/manpages/hardy/man5/xinetd.conf.5.html">sur cette page</a>.</p>
+<p>
+  Vous aurez peut-être remarqué la directive flags = NODELAY. Cette directive
+  permet d&#039;éviter que les entrées/sorties (notamment stdout dans notre cas)
+  ne soient buffurisées. En effet, le
+  <a
+    hreflang="en"
+    title="Voir la spécification du protocole"
+    href="http://www.nomadicsolutions.biz/produit/x1-intellitrac/"
+    >satané protocole des boitiers X1 Intellitrac</a
+  >
+  impose de renvoyer intacts les 8 octets de synchronisation reçu par le serveur
+  au boitier. Or, j&#039;ai rencontré un problème de buffurisation qui
+  provoquait l&#039;envoi des octets trop tard.
+</p>
+<p>
+  J&#039;ai aussi ajouté par la suite une directive nice pour privilégier ces
+  processus peu gourmands, mais dont la réactivité est essentielle. Toutes les
+  directives d&#039;xinetd sont très bien documentées
+  <a
+    hreflang="en"
+    title="Voir les manpages xinetd"
+    href="http://manpages.ubuntu.com/manpages/cosmic/en/man5/xinetd.conf.5.html"
+    >sur cette page</a
+  >.
+</p>
 <h3>Résultat</h3>
-<p>J&#039;ai couplé ces logs avec un <a hreflang="en" title="Voir un des fichiers PHP qui gèrent ces logs" href="https://github.com/nfroidure/Rest4/blob/master/php/class.RestXgpsPositionDriver.php">petit driver</a> pour <a title="Voir le site de Rest4" href="http://rest4.org/home/fr-FR/index.html">Rest4</a>.
-    Le résultat donne ceci :</p>
-<p><img alt="Capture d&#039;écran du logiciel de visualisation" src="/images/capture-vigisystem.png" /> </p>
+<p>
+  J&#039;ai couplé ces logs avec un
+  <a
+    hreflang="en"
+    title="Voir un des fichiers PHP qui gèrent ces logs"
+    href="https://github.com/nfroidure/Rest4/blob/master/php/class.RestXgpsPositionDriver.php"
+    >petit driver</a
+  >
+  pour
+  <a title="Voir le dépôt de code de Rest4" href="https://github.com/Rest4/Rest4-php"
+    >Rest4</a
+  >. Le résultat donne ceci :
+</p>
+<p>
+  <img
+    alt="Capture d&#039;écran du logiciel de visualisation"
+    src="/images/capture-vigisystem.png"
+  />
+</p>

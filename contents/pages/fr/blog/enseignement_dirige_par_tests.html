@@ -14,38 +14,141 @@ disqus=true
 -->
 
 <h2>L&#039;enseignement dirigé par les tests</h2>
-<p>Les tests unitaires et fonctionnels ont véritablement révolutionné le développement professionnel, pourquoi pas également celui de l&#039;enseignement et de la formation ?</p>
+<p>
+  Les tests unitaires et fonctionnels ont véritablement révolutionné le
+  développement professionnel, pourquoi pas également celui de
+  l&#039;enseignement et de la formation ?
+</p>
 
-<p><a title="Voir son profil Twitter" href="https://twitter.com/remi_grumeau">Remi Grumeau</a>, un développeur lillois, m&#039;a récemment sollicité sur l&#039;idée d&#039;un DevCamp spécial mobile dont le but serait de créer et publier sur GitHub des modules
-    open-source. J&#039;ai aussi été sollicité pour être jury aux <a title="Voir le site de ce concours" href="http://www.open-du-web.fr/">OpenDuWeb</a>. À première vue, rien à voir avec le titre de ce post.</p>
-<p>Je me suis donc mis à imaginer comment de tels evènements devraient être organisés et j&#039;ai donc pensé aux exigences que nous devrions avoir sur la qualité des modules ainsi créés de manière à pouvoir rendre ces derniers utiles.</p>
-<p>J&#039;ai donc pensé qu&#039;il serait intéressant de faire un travail en amont afin de déterminer quels modules il manque dans le paysage open-source voire consulter la communauté JavaScript.</p>
-<p>J&#039;ai donc commencé ma petite liste ; module UMD, philosophie Unix (faire une chose mais la faire bien), tests unitaires ou fonctionnels. Problème&#0160;: faire cela en deux jours, ça m&#039;a paru un peu compliqué surtout que la plupart des gens
-    qui viennent dans un DevCamp veulent avant tout apprendre.</p>
+<p>
+  <a title="Voir son profil Twitter" href="https://twitter.com/remi_grumeau"
+    >Remi Grumeau</a
+  >, un développeur lillois, m&#039;a récemment sollicité sur l&#039;idée
+  d&#039;un DevCamp spécial mobile dont le but serait de créer et publier sur
+  GitHub des modules open-source. J&#039;ai aussi été sollicité pour être jury
+  aux
+  <a title="Voir le site de ce concours" href="http://www.open-du-web.fr/"
+    >OpenDuWeb</a
+  >. À première vue, rien à voir avec le titre de ce post.
+</p>
+<p>
+  Je me suis donc mis à imaginer comment de tels evènements devraient être
+  organisés et j&#039;ai donc pensé aux exigences que nous devrions avoir sur la
+  qualité des modules ainsi créés de manière à pouvoir rendre ces derniers
+  utiles.
+</p>
+<p>
+  J&#039;ai donc pensé qu&#039;il serait intéressant de faire un travail en
+  amont afin de déterminer quels modules il manque dans le paysage open-source
+  voire consulter la communauté JavaScript.
+</p>
+<p>
+  J&#039;ai donc commencé ma petite liste ; module UMD, philosophie Unix (faire
+  une chose mais la faire bien), tests unitaires ou fonctionnels.
+  Problème&#0160;: faire cela en deux jours, ça m&#039;a paru un peu compliqué
+  surtout que la plupart des gens qui viennent dans un DevCamp veulent avant
+  tout apprendre.
+</p>
 <h3>Paver la voie vers l&#039;apprentissage de la programmation</h3>
-<p>Rapidement, je me suis dit, que l&#039;idéal serait de mettre à profit les techniques de développement dirigées par les tests. Au lieu de rédiger des spécifications, autant créer directement les tests qui permettent de vérifier le résultat qu&#039;on
-    attend.</p>
-<p>Du coup, le processus devient&#0160;: on crée un projet GitHub avec un README documentant l&#039;API souhaitée et le workflow, on crée des stubs pour chaque fonction et les tests unitaires sensés checker le bon fonctionnement de l&#039;API. Le but du
-    concours ou DevCamp étant de développer le module correspondant aux tests fournis.</p>
-<p>Lors de l&#039;évènement, si certains mauvais tests sont détectés, on alloue un point au développeur qui a relevé le problème via la soumission d&#039;une issue, on crée un pull request et on informe tous les participants de la mise à jour des tests.
-    Si le développeur révèle l&#039;issue et envoi un pull request associé et valide, on lui attribue deux points.</p>
-<p>Le premier qui passe tous les tests se voit allouer un certain nombre de points. Idem pour les suivants mais de manière dégressive. Pour vérifier le fonctionnement du module, pas la peine d&#039;utiliser ses mimines, il suffit d&#039;intégrer Travis au
-    projet GitHub (j&#039;en ai parlé dans <a title="Voir le billet en question" href="tester_javascript_frontend.html">mon post précédent sur les tests front</a>) et les PR seront automatiquement testés.</p>
-<p>Le processus de détermination du vainqueur ne peut être contesté puisque transparent, les développeurs sont mis à l&#039;épreuve dans un contexte professionnel et pas seulement dans le contexte d&#039;un hackathon où chacun fait sa popote dans son coin.</p>
-<p>Quand le temps imparti est terminé, on fait un JSPerf avec les versions de chacun et on attribue des points à ceux qui font les meilleures performances. Le calcul du résultat peut d&#039;ailleurs être automatisé par la même occasion.</p>
-<p>Je pense que dans ce cadre, les concours du genre, le <a title="Voir le site de cet autre concours" href="http://lemeilleurdevdefrance.com/">meilleur développeur de France</a> ou les Open du Web pourraient se faire sans forcément se déplacer, avec une
-    véritable légitimité et une utilité avérée.</p>
+<p>
+  Rapidement, je me suis dit, que l&#039;idéal serait de mettre à profit les
+  techniques de développement dirigées par les tests. Au lieu de rédiger des
+  spécifications, autant créer directement les tests qui permettent de vérifier
+  le résultat qu&#039;on attend.
+</p>
+<p>
+  Du coup, le processus devient&#0160;: on crée un projet GitHub avec un README
+  documentant l&#039;API souhaitée et le workflow, on crée des stubs pour chaque
+  fonction et les tests unitaires sensés checker le bon fonctionnement de
+  l&#039;API. Le but du concours ou DevCamp étant de développer le module
+  correspondant aux tests fournis.
+</p>
+<p>
+  Lors de l&#039;évènement, si certains mauvais tests sont détectés, on alloue
+  un point au développeur qui a relevé le problème via la soumission d&#039;une
+  issue, on crée un pull request et on informe tous les participants de la mise
+  à jour des tests. Si le développeur révèle l&#039;issue et envoi un pull
+  request associé et valide, on lui attribue deux points.
+</p>
+<p>
+  Le premier qui passe tous les tests se voit allouer un certain nombre de
+  points. Idem pour les suivants mais de manière dégressive. Pour vérifier le
+  fonctionnement du module, pas la peine d&#039;utiliser ses mimines, il suffit
+  d&#039;intégrer Travis au projet GitHub (j&#039;en ai parlé dans
+  <a title="Voir le billet en question" href="tester_javascript_frontend.html"
+    >mon post précédent sur les tests front</a
+  >) et les PR seront automatiquement testés.
+</p>
+<p>
+  Le processus de détermination du vainqueur ne peut être contesté puisque
+  transparent, les développeurs sont mis à l&#039;épreuve dans un contexte
+  professionnel et pas seulement dans le contexte d&#039;un hackathon où chacun
+  fait sa popote dans son coin.
+</p>
+<p>
+  Quand le temps imparti est terminé, on fait un JSPerf avec les versions de
+  chacun et on attribue des points à ceux qui font les meilleures performances.
+  Le calcul du résultat peut d&#039;ailleurs être automatisé par la même
+  occasion.
+</p>
+<p>
+  Je pense que dans ce cadre, les concours du genre, le
+  <a
+    title="Voir le site de cet autre concours"
+    href="http://lemeilleurdevdefrance.com/"
+    >meilleur développeur de France</a
+  >
+  ou les Open du Web pourraient se faire sans forcément se déplacer, avec une
+  véritable légitimité et une utilité avérée.
+</p>
 <h3>Joindre l&#039;utile à l&#039;agréable</h3>
-<p>En effet, c&#039;est une question que je me suis toujours posé, particulièrement au niveau de l&#039;enseignement. Pourquoi les travaux qui sont demandés aux élèves ne sont pas (toujours) utiles, publiés et utilisables&#0160;?</p>
-<p>Je ne pense pas que ça soit un problèmes de compétence des enseignants ou des élèves. C&#039;est avant tout un problème de méthode. L&#039;open-source gagnerait à ce que chaque étudiant puisse dans le cadre de son apprentissage apporter sa pierre à l&#039;édifice.</p>
-<p>D&#039;où cette idée d&#039;enseignement de la programmation dirigé par les tests. Le contenu d&#039;un cours deviendrait&#0160;:</p>
+<p>
+  En effet, c&#039;est une question que je me suis toujours posé,
+  particulièrement au niveau de l&#039;enseignement. Pourquoi les travaux qui
+  sont demandés aux élèves ne sont pas (toujours) utiles, publiés et
+  utilisables&#0160;?
+</p>
+<p>
+  Je ne pense pas que ça soit un problèmes de compétence des enseignants ou des
+  élèves. C&#039;est avant tout un problème de méthode. L&#039;open-source
+  gagnerait à ce que chaque étudiant puisse dans le cadre de son apprentissage
+  apporter sa pierre à l&#039;édifice.
+</p>
+<p>
+  D&#039;où cette idée d&#039;enseignement de la programmation dirigé par les
+  tests. Le contenu d&#039;un cours deviendrait&#0160;:
+</p>
 <ul>
-    <li>explication théorique des concepts associés au sujet étudié (ex.: protocole POP3) ;</li>
-    <li>création d&#039;un ou plusieurs modules sur ce même sujet selon les tests créés par l&#039;enseignant (ex: client, serveur, proxy ... POP3) ;</li>
-    <li>mise en commun des modules, tests de performance et briefing sur les erreurs rencontrées et les solutions les plus performantes.</li>
+  <li>
+    explication théorique des concepts associés au sujet étudié (ex.: protocole
+    POP3) ;
+  </li>
+  <li>
+    création d&#039;un ou plusieurs modules sur ce même sujet selon les tests
+    créés par l&#039;enseignant (ex: client, serveur, proxy ... POP3) ;
+  </li>
+  <li>
+    mise en commun des modules, tests de performance et briefing sur les erreurs
+    rencontrées et les solutions les plus performantes.
+  </li>
 </ul>
-<p>Cela demande un important travail de préparation au départ, mais rien n&#039;empêche de mutualiser les travaux ou de réutiliser ces derniers d&#039;une année sur l&#039;autre. La création de contenus pour des concours de programmation peut aussi être
-    publiée de manière réutilisable par les enseignants. Un enseignant peut aussi utiliser les tests d&#039;un projet open-source existant, de cette manière si un étudiant trouve une façon très élégante de s&#039;y conformer, cela peut bénéficier à ce
-    projet open-source via un pull request.</p>
-<p>Bref, que pensez-vous de cette approche&#0160;? Suis-je le seul geek Bisounours&#0160;? Votre avis m&#039;interesse&#0160;!</p>
-<p>PS&#0160;: Du même tonneau, retrouvez les <a title="Voir les défis de FranceJS" href="http://francejs.org/concours.html">défis JavaScript de FranceJS</a>.</p>
+<p>
+  Cela demande un important travail de préparation au départ, mais rien
+  n&#039;empêche de mutualiser les travaux ou de réutiliser ces derniers
+  d&#039;une année sur l&#039;autre. La création de contenus pour des concours
+  de programmation peut aussi être publiée de manière réutilisable par les
+  enseignants. Un enseignant peut aussi utiliser les tests d&#039;un projet
+  open-source existant, de cette manière si un étudiant trouve une façon très
+  élégante de s&#039;y conformer, cela peut bénéficier à ce projet open-source
+  via un pull request.
+</p>
+<p>
+  Bref, que pensez-vous de cette approche&#0160;? Suis-je le seul geek
+  Bisounours&#0160;? Votre avis m&#039;interesse&#0160;!
+</p>
+<p>
+  PS&#0160;: Du même tonneau, retrouvez les
+  <a title="Voir les défis de FranceJS" href="http://francejs.org/concours.html"
+    >défis JavaScript de FranceJS</a
+  >.
+</p>

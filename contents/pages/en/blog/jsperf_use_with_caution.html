@@ -15,35 +15,103 @@ disqus=true
 -->
 
 <h2>Detecting Bad JavaScript Performance Tests On JSPerf</h2>
-<p>JSPerf gives us a simple way to write JavaScript performance tests. Unfortunately, tests found aren&#039;t always well designed. Here&#039;s how to detect and avoid them.</p>
+<p>
+  JSPerf gives us a simple way to write JavaScript performance tests.
+  Unfortunately, tests found aren&#039;t always well designed. Here&#039;s how
+  to detect and avoid them.
+</p>
 
-<p>When i discovered <a title="Create Performance tests" href="http://jsperf.com/">JSperf.com</a>, i was realy impressed by its ease of use. Writing JavaScript performance tests just became as simple as writing JavaScript&#0160;:). Knowing it, i&#039;m often
-    looking for perf tests on it to quickly have an overview of results for a particular case.</p>
-<p>Sadly, it rarely fit my needs, whislt it often reflect a poor understanding of what performance testing means. Here is a summary of my experience with those tests, how to detect them and how to impeach them to lead developpers to mistakes.</p>
+<p>
+  When i discovered
+  <a title="Create Performance tests" href="https://jsperf.com/">JSperf.com</a>,
+  i was realy impressed by its ease of use. Writing JavaScript performance tests
+  just became as simple as writing JavaScript&#0160;:). Knowing it, i&#039;m
+  often looking for perf tests on it to quickly have an overview of results for
+  a particular case.
+</p>
+<p>
+  Sadly, it rarely fit my needs, whislt it often reflect a poor understanding of
+  what performance testing means. Here is a summary of my experience with those
+  tests, how to detect them and how to impeach them to lead developpers to
+  mistakes.
+</p>
 <h3>When tests smell</h3>
-<p>One particular case you should be aware of is the use of console.* methods. Thoses methods should never be found in a test since <a title="Look at a test on console.log speed" href="http://jsperf.com/console-log-performance/6">they are really slow</a>    and will tend to equalize test results especially for critical performance test. Unfortunately, it&#039;s very common to see <a href="https://www.google.com/search?q=site&#37;3Ajsperf.com++&#37;22console.log(&#37;22&amp;aq=f&amp;oq=site&#37;3Ajsperf.com++&#37;22console.log(&#37;22">tests using console.log</a>.</p>
-<p>By the way, If you test something, test it <strong>only</strong>. The above console.log test&#039;s <a title="View one of them" href="http://jsperf.com/console-log-performance/2">prior versions</a> were completely unusefull since they didn&#039;t test
-    only console.log. The purpose of a test is to reveal the overhead of the tested feature, so you should find the smallest footprint possible for your wrapping code.</p>
-<p>Another problem with previous revisions of this test is usage of a for loop in order to make the test more &#034;massive&#034;: JSPerf do it for you, stop wasting your time.</p>
-<p>Another common issue is when code is valid, but not well formed. It often lead to strange test results. So, take time to read the test code if you plan to exploit it&#039;s results. Common mistakes of that kind are&#0160;:</p>
+<p>
+  One particular case you should be aware of is the use of console.* methods.
+  Thoses methods should never be found in a test since
+  <a
+    title="Look at a test on console.log speed"
+    href="https://jsperf.com/console-log-performance/6"
+    >they are really slow</a
+  >
+  and will tend to equalize test results especially for critical performance
+  test. Unfortunately, it&#039;s very common to see
+  <a
+    href="https://www.google.com/search?q=site&#37;3Ajsperf.com++&#37;22console.log(&#37;22&amp;aq=f&amp;oq=site&#37;3Ajsperf.com++&#37;22console.log(&#37;22"
+    >tests using console.log</a
+  >.
+</p>
+<p>
+  By the way, If you test something, test it <strong>only</strong>. The above
+  console.log test&#039;s
+  <a title="View one of them" href="https://jsperf.com/console-log-performance/2"
+    >prior versions</a
+  >
+  were completely unusefull since they didn&#039;t test only console.log. The
+  purpose of a test is to reveal the overhead of the tested feature, so you
+  should find the smallest footprint possible for your wrapping code.
+</p>
+<p>
+  Another problem with previous revisions of this test is usage of a for loop in
+  order to make the test more &#034;massive&#034;: JSPerf do it for you, stop
+  wasting your time.
+</p>
+<p>
+  Another common issue is when code is valid, but not well formed. It often lead
+  to strange test results. So, take time to read the test code if you plan to
+  exploit it&#039;s results. Common mistakes of that kind are&#0160;:
+</p>
 <ul>
-    <li>forgetting to execute a function (<code>myFunction;</code> instead of <code>myFunction();</code>),</li>
-    <li>abnormal return or break instruction,</li>
-    <li>bad logic,</li>
-    <li>undefined identifiers,</li>
-    <li>etc...</li>
+  <li>
+    forgetting to execute a function (<code>myFunction;</code> instead of
+    <code>myFunction();</code>),
+  </li>
+  <li>abnormal return or break instruction,</li>
+  <li>bad logic,</li>
+  <li>undefined identifiers,</li>
+  <li>etc...</li>
 </ul>
-<p>Those mistakes are leading most of the time to better performances since some parts of the code aren&#039;t executed.</p>
-<p>Another way to detect bad tests is to look at later revisions, it sometimes add some tests but often fix them. All in all, if you do not want to spend time checking if a test is right, you can look after JavaScript Rockstars tests (<a title="View Addy Osmani tests"
-    href="http://jsperf.com/browse/addy-osmani">Addy Osmani</a>, <a title="View John Resig tests" href="http://jsperf.com/browse/john-resig">John Resig</a>, ...).</p>
+<p>
+  Those mistakes are leading most of the time to better performances since some
+  parts of the code aren&#039;t executed.
+</p>
+<p>
+  Another way to detect bad tests is to look at later revisions, it sometimes
+  add some tests but often fix them. All in all, if you do not want to spend
+  time checking if a test is right, you can look after JavaScript Rockstars
+  tests (Addy Osmani, John Resig, ...).
+</p>
 <h3>Avoid creating bad test</h3>
-<p>Anyone can create a bad test, but there are some good practices to reduce the risk&#0160;:</p>
+<p>
+  Anyone can create a bad test, but there are some good practices to reduce the
+  risk&#0160;:
+</p>
 <ul>
-    <li>if you&#039;re a noob&#0160;: <strong>don&#039;t write tests,</strong>
-    </li>
-    <li>read your code many times before submitting,</li>
-    <li>test your code in the JavaScript console first,</li>
-    <li>if you made shit, mark it as shit (comment with a link to the modified revisions),</li>
-    <li>if someone mark it as shit, don&#039;t be hurt. Testing is not about you, <strong>it&#039;s about truth</strong>.</li>
+  <li>
+    if you&#039;re a noob&#0160;: <strong>don&#039;t write tests,</strong>
+  </li>
+  <li>read your code many times before submitting,</li>
+  <li>test your code in the JavaScript console first,</li>
+  <li>
+    if you made shit, mark it as shit (comment with a link to the modified
+    revisions),
+  </li>
+  <li>
+    if someone mark it as shit, don&#039;t be hurt. Testing is not about you,
+    <strong>it&#039;s about truth</strong>.
+  </li>
 </ul>
-<p>That&#039;s it, this post is over. If you&#039;ve got some other good practices or another way to detect bad tests let me know!</p>
+<p>
+  That&#039;s it, this post is over. If you&#039;ve got some other good
+  practices or another way to detect bad tests let me know!
+</p>

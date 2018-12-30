@@ -36,7 +36,7 @@ disqus=true
 <h3>Cas concret: Un marketplace</h3>
 
 <p>J'ai choisi le cas concret d'une place de marché car c'est selon moi celui qui
- mettra le plus en exergue les différences de conception SQL et NoSQL.<p>
+ mettra le plus en exergue les différences de conception SQL et NoSQL.</p>
 
 <p>Une place de marché est finalement assez simple. Nous avons des concepts que l'on
  retrouve dans à peu près toutes les applications&nbsp;:</p>
@@ -57,13 +57,13 @@ disqus=true
 
 <p>Je simplifie, ici, volontairement la chose pour complexifier par itérations successives.</p>
 
-<h3>Modèle pour bases de données relationnelles</h4>
+<h3>Modèle pour bases de données relationnelles</h3>
 
 <p>Typiquement, ce type d'architecture sera modélisée comme suit&nbsp;:</p>
 
 <pre>
-User(id, name, organisations[]:Organisation, home:Place, phone:Contact, mail:Contact, country:<Country>)
-Organisation(id, name, owner:User.id, place:Place, country:<Country>)
+User(id, name, organisations[]:Organisation, home:Place, phone:Contact, mail:Contact, country:&lt;Country&gt;)
+Organisation(id, name, owner:User.id, place:Place, country:&lt;Country&gt;)
 Place(id, address, lat, lng)
 Contact(id, type, value)
 Country(id, name)
@@ -207,6 +207,7 @@ Trade {
   <li>duplication de certaines informations,</li>
   <li>mélange des genres,</li>
   <li>éclatement de certains concepts.</li>
+</ul>
 
 <h4>Duplication</h4>
 
@@ -247,7 +248,8 @@ Trade {
 <p>Vous aurez probablement noté le maximum de 50, énoncé ci-dessus. Il est déduit à la louche d'une autre
  contrainte imposée par MongoDB, la taille maixmale d'un document. Avec le modèle proposé ci-dessus,
  il est impossible d'ajouter des utilisateurs indéfiniment sans mettre en place des astuces comme
- le <a href="http://docs.mongodb.org/ecosystem/use-cases/storing-comments/#hybrid-schema-design" title="En savoir plus sur cette technique" hreflang="en">bucketting</a>.</p>
+ le <a href="http://docs.mongodb.org/ecosystem/use-cases/storing-comments/#hybrid-schema-design" title="En savoir plus sur cette technique" hreflang="en">bucketting</a>.
+</p>
 
 <h4>Éclatement des concepts</h4>
 

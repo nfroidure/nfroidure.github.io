@@ -17,20 +17,21 @@ draft=false
 -->
 
 <h2>Toward a stricter query string parser</h2>
-<p><strong>
-  TL.DR. Having a stricter query string policy adds value to APIs. Checkout
-  <a href="https://github.com/nfroidure/strict-qs">strict-qs</a>.
-</strong></p>
+<p>
+  <strong>
+    TL.DR. Having a stricter query string policy adds value to APIs. Checkout
+    <a href="https://github.com/nfroidure/strict-qs">strict-qs</a>.
+  </strong>
+</p>
 <p>
   I my journey to the NodeJS HTTP server of my choice, i just reached a new
-  milestone. Indeed, in the ancient ages, when PHP was my language of choice,
-  i made a simple framework called <a href="https://github.com/Rest4">Rest4</a>.
+  milestone. Indeed, in the ancient ages, when PHP was my language of choice, i
+  made a simple framework called <a href="https://github.com/Rest4">Rest4</a>.
 </p>
 <p>
   One of its features was to strictly check for query params types, order and
   existence. I felt a bit unpowered when i figured out that most NodeJS
-  frameworks follow a non restrictive path when it comes to parse query
-  strings.
+  frameworks follow a non restrictive path when it comes to parse query strings.
 </p>
 <p>
   When no checks are done on query strings, you can end up with a lot of URIs
@@ -46,11 +47,11 @@ draft=false
 </p>
 <h3>Content duplication</h3>
 <p>
-  If you are serving webpages you may want to avoid
-  being downgraded in
-  <a href="https://support.google.com/webmasters/answer/66359?hl=en">search engines</a>.
-  There are other ways to prevent this but with a strict query string policy it
-  comes out of the box.
+  If you are serving webpages you may want to avoid being downgraded in
+  <a href="https://support.google.com/webmasters/answer/66359?hl=en"
+    >search engines</a
+  >. There are other ways to prevent this but with a strict query string policy
+  it comes out of the box.
 </p>
 <h3>Harder caching</h3>
 <p>
@@ -59,40 +60,41 @@ draft=false
   flooding.
 </p>
 <p>
-  You'll first have to create a canonical URI to store your contents
-  and this extra compute will be done every time you will access your cache. Also
-  public proxies often have their own interpretation of HTTP caching specs,
-  providing unique URIs ensure you a better handling of your HTTP requests by
-  them.
+  You'll first have to create a canonical URI to store your contents and this
+  extra compute will be done every time you will access your cache. Also public
+  proxies often have their own interpretation of HTTP caching specs, providing
+  unique URIs ensure you a better handling of your HTTP requests by them.
 </p>
 <h3>Messy logs</h3>
 <p>
-  Logs get harder to reduce/compare/read until you reorder query
-  strings yourself before logging. Even if you do that, your upstream tools
-  (say NGinX, HAProxy, Fastly...) won't take advantage of it.
+  Logs get harder to reduce/compare/read until you reorder query strings
+  yourself before logging. Even if you do that, your upstream tools (say NGinX,
+  HAProxy, Fastly...) won't take advantage of it.
 </p>
 <h3>Defensive programming</h3>
 <p>
   Consider the following URI:<br />
-  <code>/articles?q=test&amp;page=1&amp;page=1&amp;page=1&amp;page=1</code>.<br />
-  With a simple query parser, it will lead to an array of pages which is probably
-  not what you want. It leads to unexpected behavior and lots of attacks are
-  based on it.
+  <code>/articles?q=test&amp;page=1&amp;page=1&amp;page=1&amp;page=1</code
+  >.<br />
+  With a simple query parser, it will lead to an array of pages which is
+  probably not what you want. It leads to unexpected behavior and lots of
+  attacks are based on it.
 </p>
 <p>
-  Just created <a href="https://github.com/nfroidure/strict-qs">strict-qs</a>
-  to match those issues. It simply builds an object whose properties are query
+  Just created <a href="https://github.com/nfroidure/strict-qs">strict-qs</a> to
+  match those issues. It simply builds an object whose properties are query
   parameters of the types you would expect. If you try it, let me know ;).
 </p>
 <p>
-  You'll still have to validate it with a JSONSchema validator since i wanted it to
-  do one thing and do it well. There is plenty of JSONSchema validators, i currently
-  use <a href="https://github.com/epoberezkin/ajv">AJV</a>.
+  You'll still have to validate it with a JSONSchema validator since i wanted it
+  to do one thing and do it well. There is plenty of JSONSchema validators, i
+  currently use <a href="https://github.com/epoberezkin/ajv">AJV</a>.
 </p>
 <p>
   Finally, there is still some work to achieve in order to ensure unicity of
   paths too. The following URIs would also lead to the same resource:<br />
-  <code>/articles/1</code>, <code>/articles/0001</code>, <code>/articles/1/</code>
-  I updated <a href="https://github.com/nfroidure/siso">siso</a> to handle this
-  problem too.
+  <code>/articles/1</code>, <code>/articles/0001</code>,
+  <code>/articles/1/</code> I updated
+  <a href="https://github.com/nfroidure/siso">siso</a> to handle this problem
+  too.
 </p>

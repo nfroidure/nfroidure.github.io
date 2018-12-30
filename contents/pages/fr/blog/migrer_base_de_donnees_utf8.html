@@ -13,11 +13,37 @@ disqus=true
 -->
 
 <h2>Migrer toute une base de données vers UTF8</h2>
-<p>Vous avez peut-être commencé votre application avec les caractères latins et pour des besoins d&#039;internationalisation, vous souhaitez passer vos bases en UTF8 ? La solution tient en un seul script.</p>
+<p>
+  Vous avez peut-être commencé votre application avec les caractères latins et
+  pour des besoins d&#039;internationalisation, vous souhaitez passer vos bases
+  en UTF8 ? La solution tient en un seul script.
+</p>
 
-<p>Dans la série, je mets à disposition mes petits bouts de code sur GitHub, voici maintenant le tour de mes scripts d&#039;administration système. L&#039;un d&#039;entre eux me permet de passer toute une base de donnée en UTF8 grâce à un simple script.
-    L&#039;opération était fastidieuse avec PHPMyAdmin et la ligne de commande, c&#039;est quand même plus fluide.</p>
-<p>Pour récupérer le script :</p><pre>root&#64;server:~&#35; wget https://raw.github.com/nfroidure/MysqlUtils/master/setdatabasecollate.sh</pre>
-<p>Ce petit script s&#039;utilise tout simplement :</p><pre>root&#64;server:~&#35; setdatabasecollate.sh elitwork root yes<br />Enter password of user : root <br /> <br />&#35; Setting UTF8 for database elitwork<br />&#35;&#35; Converting table kikoolol<br />&#35;&#35;&#35; Converting field href (varchar(50))<br />&#35;&#35;&#35; Converting field title (varchar(200))<br />&#35;&#35;&#35; Converting field description (varchar(200))<br />&#35;&#35;&#35; Converting field shorttitle (varchar(100))<br />&#35;&#35;&#35; Converting field shortdesc (varchar(150))<br />&#35;&#35; Converting table kikoolol2<br />&#35;&#35;&#35; Converting field contain (longtext)<br />&#35;&#35;&#35; Converting field context (varchar(30))</pre>
-<p>Comme vous pouvez le remarquer, le script prend en argument le nom de la base à convertir, le nom de l&#039;utilisateur (optionnel) et une option &#034;verbose&#034; qui permet d&#039;afficher ce que le script fait.</p>
-<p>Comme vous pouvez le voir, il détecte les champs de type texte et leur assigne leur nouveau format. N&#039;hésitez pas à proposer des améliorations en <a hreflang="en" title="Voir le projet sur GitHub" href="https://github.com/nfroidure/MysqlUtils">forkant le projet</a>.</p>
+<p>
+  Dans la série, je mets à disposition mes petits bouts de code sur GitHub,
+  voici maintenant le tour de mes scripts d&#039;administration système.
+  L&#039;un d&#039;entre eux me permet de passer toute une base de donnée en
+  UTF8 grâce à un simple script. L&#039;opération était fastidieuse avec
+  PHPMyAdmin et la ligne de commande, c&#039;est quand même plus fluide.
+</p>
+<p>Pour récupérer le script :</p>
+<pre>
+root&#64;server:~&#35; wget https://raw.github.com/nfroidure/MysqlUtils/master/setdatabasecollate.sh</pre
+>
+<p>Ce petit script s&#039;utilise tout simplement :</p>
+<pre>root&#64;server:~&#35; setdatabasecollate.sh elitwork root yes<br />Enter password of user : root <br /> <br />&#35; Setting UTF8 for database elitwork<br />&#35;&#35; Converting table kikoolol<br />&#35;&#35;&#35; Converting field href (varchar(50))<br />&#35;&#35;&#35; Converting field title (varchar(200))<br />&#35;&#35;&#35; Converting field description (varchar(200))<br />&#35;&#35;&#35; Converting field shorttitle (varchar(100))<br />&#35;&#35;&#35; Converting field shortdesc (varchar(150))<br />&#35;&#35; Converting table kikoolol2<br />&#35;&#35;&#35; Converting field contain (longtext)<br />&#35;&#35;&#35; Converting field context (varchar(30))</pre>
+<p>
+  Comme vous pouvez le remarquer, le script prend en argument le nom de la base
+  à convertir, le nom de l&#039;utilisateur (optionnel) et une option
+  &#034;verbose&#034; qui permet d&#039;afficher ce que le script fait.
+</p>
+<p>
+  Comme vous pouvez le voir, il détecte les champs de type texte et leur assigne
+  leur nouveau format. N&#039;hésitez pas à proposer des améliorations en
+  <a
+    hreflang="en"
+    title="Voir le projet sur GitHub"
+    href="https://github.com/nfroidure/MysqlUtils"
+    >forkant le projet</a
+  >.
+</p>

@@ -21,36 +21,45 @@ disqus=true
   philosophie que je mets en œuvre pour la gestion d'une base de donnée MongoDB.
 </p>
 <p>
-  La majeure partie des décisions en matière d'architecture et de conception
-  de schéma avec MongoDB se résume à un calcul de probabilité (les plus
-  pessimistes diront risque) d'inconsistance des données. Et ça, pour un DBA,
-  c'est plutôt, nouveau.
+  La majeure partie des décisions en matière d'architecture et de conception de
+  schéma avec MongoDB se résume à un calcul de probabilité (les plus pessimistes
+  diront risque) d'inconsistance des données. Et ça, pour un DBA, c'est plutôt,
+  nouveau.
 </p>
 <p style="text-align:center;">
-  <iframe src="//giphy.com/embed/13zwRQ9VProCJO" width="480" height="270"
-    frameBorder="0" style="max-width:100%;" class="giphy-embed"
-    webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <iframe
+    src="//giphy.com/embed/13zwRQ9VProCJO"
+    width="480"
+    height="270"
+    frameborder="0"
+    style="max-width:100%;"
+    class="giphy-embed"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
 </p>
 <p>
   D'ailleurs, quand on gratte un peu la surface, on se rend compte que ces
-  probabilités sont au cœur de la conception de MongoDB lui même. Pour
-  illustrer ce fait, parlons un peu de l'ObjectId.
+  probabilités sont au cœur de la conception de MongoDB lui même. Pour illustrer
+  ce fait, parlons un peu de l'ObjectId.
 </p>
 <h3>ObjectId, the WTF primary key</h3>
 <p>
   Les clés utilisées par MongoDB, les
-  <a href="http://docs.mongodb.org/manual/reference/object-id/">ObjectIds</a>,
+  <a href="https://docs.mongodb.com/manual/reference/method/ObjectId/">ObjectIds</a>,
   sont facilement reconnaissables sous forme de chaîne de caractère. Derrière
   cette séquence hexadécimale de 24 caractères (ex.&nbsp;:
   babacafebabacafebabacafebabacafe) se cache bien des concepts.
 </p>
 <p>
   Contrairement aux clés auto-incrémentées que l'on observe dans la plupart,
-  sinon la totalité, des bases de données relationnelles, les clés de MongoDB sont
-  générées grâce à une combinaison de quatre valeurs (un timestamp représentant
-  le nombre de secondes écoulées depuis l'Epoch Unix, un identifiant "machine",
-  le pid du processus qui a généré l'ObjectId et enfin un compteur incrémenté
-  automatiquement à chaque création d'id avec une valeur aléatoire comme base).
+  sinon la totalité, des bases de données relationnelles, les clés de MongoDB
+  sont générées grâce à une combinaison de quatre valeurs (un timestamp
+  représentant le nombre de secondes écoulées depuis l'Epoch Unix, un
+  identifiant "machine", le pid du processus qui a généré l'ObjectId et enfin un
+  compteur incrémenté automatiquement à chaque création d'id avec une valeur
+  aléatoire comme base).
 </p>
 <p>
   La question légitime que vous êtes probablement entrain de vous poser est
@@ -62,23 +71,26 @@ disqus=true
   synchroniser toutes les instances de MongoDB.
 </p>
 <p>
-  En effet, il est déjà difficile <a
+  En effet, il est déjà difficile
+  <a
     href="http://highscalability.com/blog/2015/3/9/the-architecture-of-algolias-distributed-search-network.html"
     hreflang="en"
     title="Voir un article sur l'infrastructure d'Algolia traitant de ce sujet"
-    >d'incrémenter un simple un entier</a> entre les diverses instances
-    d'un cluster alors imaginez si c'était le cas pour toutes les collections
-    de MongoDB. Le parti pris est donc de créer cette clé unique d'une façon
-    telle qu'il devient impossible de créer la même clé sur deux instances
-    différentes.
+    >d'incrémenter un simple un entier</a
+  >
+  entre les diverses instances d'un cluster alors imaginez si c'était le cas
+  pour toutes les collections de MongoDB. Le parti pris est donc de créer cette
+  clé unique d'une façon telle qu'il devient impossible de créer la même clé sur
+  deux instances différentes.
 </p>
 <p>
   Ou presque ;). Il existe bel et bien une probabilité que ceci arrive, mais
-  cette dernière est tellement faible qu'elle devient négligeable. En effet,
-  il faudrait que deux machines, ayant chacune un processus avec le même pid
-  (ou <a href="http://fr.wikipedia.org/wiki/Identifiant_de_processus">identifiant
-  de processus</a>) et le même identifiant machine, créent dans la même
-  milliseconde, un ObjectId alors que leur compteur interne a la même valeur.
+  cette dernière est tellement faible qu'elle devient négligeable. En effet, il
+  faudrait que deux machines, ayant chacune un processus avec le même pid (ou
+  <a href="https://fr.wikipedia.org/wiki/Identifiant_de_processus"
+    >identifiant de processus</a
+  >) et le même identifiant machine, créent dans la même milliseconde, un
+  ObjectId alors que leur compteur interne a la même valeur.
 </p>
 <p>
   Dans la conception d'API REST, cette caractéristique devient même un précieux
@@ -86,7 +98,9 @@ disqus=true
   directement sur le client qui consomme cette même API. Ainsi, tirer avantage
   des requêtes créationnelles idempotentes du type PUT et PATCH devient un jeu
   d'enfant. En embarquant une bibliothèque permettant de
-  <a href="https://github.com/justaprogrammer/ObjectId.js">générer des ObjectIds</a>
+  <a href="https://github.com/justaprogrammer/ObjectId.js"
+    >générer des ObjectIds</a
+  >
   on peu s'assurer de l'unicité des ressources créées côté mobile malgré les
   très probables coupures intempestives typiques des connexions itinérantes.
 </p>
@@ -99,10 +113,10 @@ disqus=true
   web qui se respecte.
 </p>
 <p>
-  Alors que faire&nbsp;? Faîtes comme dans la vraie vie. Quand vous prenez
-  votre voiture pour aller chercher du pain, vous savez que ce n'est pas sans
-  risque. Vous pourriez crever un pneu, avoir un accident etc... Malheureusement,
-  vous ne pouvez pas réduire le risque à néant.
+  Alors que faire&nbsp;? Faîtes comme dans la vraie vie. Quand vous prenez votre
+  voiture pour aller chercher du pain, vous savez que ce n'est pas sans risque.
+  Vous pourriez crever un pneu, avoir un accident etc... Malheureusement, vous
+  ne pouvez pas réduire le risque à néant.
 </p>
 <p>
   En sortant quand même de chez vous, vous arbitrez sur le fait que ces risques
@@ -116,15 +130,15 @@ disqus=true
   pour réduire ce risque.
 </p>
 <p>
-   Vous avez également une roue de secours, une trousse de premier soins, un
-   chasuble peut-être même une couverture au cas où vous seriez bloqué par la
-   neige. Vous avez pris des mesures pour anticiper ce risque, pour être prêt
-   si par malchance il se réalisait.
+  Vous avez également une roue de secours, une trousse de premier soins, un
+  chasuble peut-être même une couverture au cas où vous seriez bloqué par la
+  neige. Vous avez pris des mesures pour anticiper ce risque, pour être prêt si
+  par malchance il se réalisait.
 </p>
 <p>
-  Bref, vous faîtes une transaction optimiste. Selon toute vraisemblance dans
-  20 minutes vous serez de retour chez vous avec du pain. Et vous pourrez passer
-  à l'opération suivante, préparer le petit déjeuner.
+  Bref, vous faîtes une transaction optimiste. Selon toute vraisemblance dans 20
+  minutes vous serez de retour chez vous avec du pain. Et vous pourrez passer à
+  l'opération suivante, préparer le petit déjeuner.
 </p>
 <p>
   Là où les bases relationnelles sont basées sur le fait qu'avec les
@@ -165,8 +179,8 @@ db.collection('location').count({
   Quels sont les risques&nbsp;? La majorité des risques se situent souvent entre
   deux requêtes (d'où l'intérêt des techniques présentées dans l'article
   précédent pour les limiter). Le risque se situe donc entre la vérification de
-  l'existence des lieux liés et la liaison effective des lieux dans le
-  document correspondant à l'utilisateur.
+  l'existence des lieux liés et la liaison effective des lieux dans le document
+  correspondant à l'utilisateur.
 </p>
 <p>
   Pour que ce risque se réalise, il faudrait que l'un de ces lieux soit supprimé
@@ -176,15 +190,22 @@ db.collection('location').count({
   utilisant Mongoose ;) (voir billet précédent).
 </p>
 <p>
-  En revanche, puisque le risque existe, il s'agit de ne pas l'ignorer.
-  Accepter la probabilité qu'un accident survienne en allant chercher du pain
-  ne signifie pas mettre des œillères et se retrouver dépourvu face à sa
-  réalisation.
+  En revanche, puisque le risque existe, il s'agit de ne pas l'ignorer. Accepter
+  la probabilité qu'un accident survienne en allant chercher du pain ne signifie
+  pas mettre des œillères et se retrouver dépourvu face à sa réalisation.
 </p>
 <p style="text-align:center;">
-  <iframe src="//giphy.com/embed/TfQT6fwCQD30I" width="480" height="239"
-  frameBorder="0" style="max-width:100%;" class="giphy-embed"
-  webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <iframe
+    src="//giphy.com/embed/TfQT6fwCQD30I"
+    width="480"
+    height="239"
+    frameborder="0"
+    style="max-width:100%;"
+    class="giphy-embed"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
 </p>
 <p>
   Plusieurs stratégies peuvent être mises en œuvre pour pallier à ces risques,
@@ -193,9 +214,9 @@ db.collection('location').count({
 <h5>Résilience face à l'inconsistance</h5>
 <p>
   La première stratégie qui, selon moi, se doit d'être automatique. Votre
-  plateforme se doit de continuer de fonctionner en cas d'inconsistance. Dans
-  le cas de l'exemple ci-dessus, si il s'avère qu'un lieu n'existe plus quand
-  vous cherchez à obtenir la liste des lieux d'un utilisateur, vous devez donc
+  plateforme se doit de continuer de fonctionner en cas d'inconsistance. Dans le
+  cas de l'exemple ci-dessus, si il s'avère qu'un lieu n'existe plus quand vous
+  cherchez à obtenir la liste des lieux d'un utilisateur, vous devez donc
   silencieusement l'invalider et non renvoyer une erreur aux consommateurs de
   votre API. Vous devez aussi logger cette erreur avec une flag reconnaissable
   pour votre supervision.
@@ -234,30 +255,32 @@ db.users.find({
 });
 </pre>
 <p>
-  Ici, le système de querying de MongoDB nous épargne la peine de prendre le
-  cas en charge dans le code. <strong>Il doit cependant, je le répète, être
-  pris en charge par les tests.</strong>
+  Ici, le système de querying de MongoDB nous épargne la peine de prendre le cas
+  en charge dans le code.
+  <strong
+    >Il doit cependant, je le répète, être pris en charge par les tests.</strong
+  >
 </p>
 <h5>Contrôle d'intégrité périodique</h5>
 <p>
-  Votre base de donnée peu devenir inconsistante. Donc, créez des
-  scripts&nbsp;! Ça peut paraître bête, mais créer des scripts pour contrôler
-  et réparer les possibles inconsistances de votre base MongoDB est un excellent
-  moyen de lutter contre elles. Ces scripts peuvent également servir de
-  reminder de toutes les inconsistances possibles.
+  Votre base de donnée peu devenir inconsistante. Donc, créez des scripts&nbsp;!
+  Ça peut paraître bête, mais créer des scripts pour contrôler et réparer les
+  possibles inconsistances de votre base MongoDB est un excellent moyen de
+  lutter contre elles. Ces scripts peuvent également servir de reminder de
+  toutes les inconsistances possibles.
 </p>
 <p>
   Vous serez également bien contents de les avoir sous la main dans la cas où
   une inconsistance surviendrait plus souvent que prévu. Afin de pouvoir les
-  utiliser comme palliatif le temps de réduire la probabilité de leur
-  survenance grâce aux techniques que je vous ai présenté.
+  utiliser comme palliatif le temps de réduire la probabilité de leur survenance
+  grâce aux techniques que je vous ai présenté.
 </p>
 <h5>Contrôle et traitement opportuniste d'intégrité</h5>
 <p>
   Mais il y a mieux :). Dans notre exemple de code tolérant à l'inconsistance,
   je vois une belle opportunité de gérer à postériori les inconsistances. En
-  effet, puisque nous avons fait les requêtes permettant de voir l'inconsistance,
-  pourquoi ne pas la corriger&nbsp;?
+  effet, puisque nous avons fait les requêtes permettant de voir
+  l'inconsistance, pourquoi ne pas la corriger&nbsp;?
 </p>
 <pre>
 // Récupération des identifiants des lieux de l'utilisateur
@@ -304,14 +327,14 @@ db.users.find({
 });
 </pre>
 <p>
-  On peut s'inquiéter de l'empreinte de cette correction d'inconsistance sur
-  les performances du système. Il faut cependant tempérer cette crainte par le
-  fait que les inconsistances dans un système bien conçu sont rares.
+  On peut s'inquiéter de l'empreinte de cette correction d'inconsistance sur les
+  performances du système. Il faut cependant tempérer cette crainte par le fait
+  que les inconsistances dans un système bien conçu sont rares.
 </p>
 <p>
   De plus, il est possible d'utiliser la fonction <code>setTimeout()</code> de
-  JavaScript pour découpler ces vérifications du reste du code pour ne pas
-  nuire aux performances si cela s'avérait nécessaire.
+  JavaScript pour découpler ces vérifications du reste du code pour ne pas nuire
+  aux performances si cela s'avérait nécessaire.
 </p>
 <h5>Isolation</h5>
 <p>
@@ -329,8 +352,8 @@ db.users.find({
   Un bon moyen de limiter les inconsistances est donc la création de silos
   artificiels. Par exemple, si votre plateforme contient des organisations
   différentes et qu'aucun document n'est partagé entre deux organisations à
-  aucun moment, félicitations, vous avez divisé le risque d'inconsistance dû
-  au trafic par le nombre d'organisations existantes.
+  aucun moment, félicitations, vous avez divisé le risque d'inconsistance dû au
+  trafic par le nombre d'organisations existantes.
 </p>
 <h5>Supervision</h5>
 <p>
@@ -339,51 +362,75 @@ db.users.find({
   votre système en connaissance de causes.
 </p>
 <p>
-  La supervision et l'analyse des logs doit être une priorité. Par chance,
-  les inconsistances sont sensées être rares. C'est pourquoi, ceci ne devrait
-  pas être trop compliqué à gérer. Je suis pour ma part, partisan de l'envoi de
-  mail à chaque inconsistance tant que c'est soutenable (l'idée est de tout
-  faire pour que ça le reste ;) ).
+  La supervision et l'analyse des logs doit être une priorité. Par chance, les
+  inconsistances sont sensées être rares. C'est pourquoi, ceci ne devrait pas
+  être trop compliqué à gérer. Je suis pour ma part, partisan de l'envoi de mail
+  à chaque inconsistance tant que c'est soutenable (l'idée est de tout faire
+  pour que ça le reste ;) ).
 </p>
 <p>
   Toutes ces stratégies permettent de gérer l'incertitude pour obtenir un
   système scalable. Ce qui est clair, c'est que cette nouvelle façon
   d'appréhender la gestion des données m'a clairement fait sortir de ma zone de
-  confort, mais l'essentiel est d'avoir retrouvé un niveau de confiance
-  presque équivalent à celui induit par l'utilisation d'une base de données
+  confort, mais l'essentiel est d'avoir retrouvé un niveau de confiance presque
+  équivalent à celui induit par l'utilisation d'une base de données
   relationnelle.
 </p>
 <p style="text-align:center;">
-  <iframe src="//giphy.com/embed/11hBwImYRDczsY" width="480" height="200"
-    frameBorder="0" style="max-width: 100%" class="giphy-embed"
-    webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <iframe
+    src="//giphy.com/embed/11hBwImYRDczsY"
+    width="480"
+    height="200"
+    frameborder="0"
+    style="max-width: 100%"
+    class="giphy-embed"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
 </p>
 <h3>Inception</h3>
 <p>
   On pourrait ébrécher cette confiance en réfléchissant à toutes les stratégies
-  mises en œuvre ci-dessus. Puisqu'elles-mêmes agissent sur les données,
-  elles peuvent donc également générer des inconsistances.
+  mises en œuvre ci-dessus. Puisqu'elles-mêmes agissent sur les données, elles
+  peuvent donc également générer des inconsistances.
 </p>
 <p>
   Il est possible que la suppression d'un identifiant de lieu dans la liste des
   lieux d'un utilisateur supprime en fait une association parfaitement légitime.
 </p>
 <p style="text-align:center;">
-  <iframe src="//giphy.com/embed/kHB6Lr7KzkIOA" width="480" height="224"
-    frameBorder="0" style="max-width:100%;" class="giphy-embed"
-    webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <iframe
+    src="//giphy.com/embed/kHB6Lr7KzkIOA"
+    width="480"
+    height="224"
+    frameborder="0"
+    style="max-width:100%;"
+    class="giphy-embed"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
 </p>
 <p>
   En effet, on a vu qu'il était possible que deux identifiants MongoDB soient
   créés en même temps et soient identiques. Il est donc possible qu'un lieu soit
-  créé avec l'un de ces identifiants et associé à l'utilisateur alors même
-  qu'on est entrain de supprimer cet identifiant par ailleurs pour rétablir une
+  créé avec l'un de ces identifiants et associé à l'utilisateur alors même qu'on
+  est entrain de supprimer cet identifiant par ailleurs pour rétablir une
   intégrité supposée :).
 </p>
 <p style="text-align:center;">
-  <iframe src="//giphy.com/embed/10mMBqSrBJtTFK" width="480" height="258"
-  frameBorder="0" style="max-width:100%" class="giphy-embed"
-  webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <iframe
+    src="//giphy.com/embed/10mMBqSrBJtTFK"
+    width="480"
+    height="258"
+    frameborder="0"
+    style="max-width:100%"
+    class="giphy-embed"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
 </p>
 <h3>Conception organique</h3>
 <p>
@@ -399,20 +446,41 @@ db.users.find({
   que mal.
 </p>
 <p style="text-align:center;">
-  <iframe src="//giphy.com/embed/H4DSFgvCo3edW" width="480" height="286"
-    frameBorder="0" style="max-width:100%;" class="giphy-embed"
-    webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-  <iframe src="//giphy.com/embed/q0crcmaHckLVS" width="480" height="357"
-    frameBorder="0" style="max-width:100%;" class="giphy-embed"
-    webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+  <iframe
+    src="//giphy.com/embed/H4DSFgvCo3edW"
+    width="480"
+    height="286"
+    frameborder="0"
+    style="max-width:100%;"
+    class="giphy-embed"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
+  <iframe
+    src="//giphy.com/embed/q0crcmaHckLVS"
+    width="480"
+    height="357"
+    frameborder="0"
+    style="max-width:100%;"
+    class="giphy-embed"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
 </p>
 <p>
-  J'aime ces points de jonction entre la science et la vie. N'est-ce pas
-  ainsi qu'on explique désormais la plupart des mystères de l'univers&nbsp;?
+  J'aime ces points de jonction entre la science et la vie. N'est-ce pas ainsi
+  qu'on explique désormais la plupart des mystères de l'univers&nbsp;?
 </p>
 <p style="text-align:center;">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/Bze72H4il78"
-    frameborder="0" allowfullscreen></iframe>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/Bze72H4il78"
+    frameborder="0"
+    allowfullscreen
+  ></iframe>
 </p>
 <p>
   Toutes les bonnes choses ont une fin, je pense que je reparlerai de MongoDB

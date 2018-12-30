@@ -17,31 +17,107 @@ disqus=true
 -->
 
 <h2>BugMeBack : La solution pour venir à bout de vos bugs ?</h2>
-<p>Le problème avec les bugs, c&#039;est qu&#039;ils ont la facheuse tendance à être détectés par des novices. C&#039;est alors le parcours du combattant pour se les faire expliquer. BugMeBack va vous aider !</p>
+<p>
+  Le problème avec les bugs, c&#039;est qu&#039;ils ont la facheuse tendance à
+  être détectés par des novices. C&#039;est alors le parcours du combattant pour
+  se les faire expliquer. BugMeBack va vous aider !
+</p>
 
-<p>Décidément, ParisWeb 2012 aura généré son lot de réflexions. Suite à la conférence &#034;Freelance, tu aurais besoin d&#039;un petit recadrage&#034;, j&#039;ai repensé à cette discussion que nous avions eu sur la difficulté qu&#039;ont les développeurs
-    web à se faire rapporter des bugs qui soient de véritables bugs. C&#039;est à dire :</p>
+<p>
+  Décidément, ParisWeb 2012 aura généré son lot de réflexions. Suite à la
+  conférence &#034;Freelance, tu aurais besoin d&#039;un petit recadrage&#034;,
+  j&#039;ai repensé à cette discussion que nous avions eu sur la difficulté
+  qu&#039;ont les développeurs web à se faire rapporter des bugs qui soient de
+  véritables bugs. C&#039;est à dire :
+</p>
 <ul>
-    <li>reproductibles : si on ne peut pas le reproduire, alors il n&#039;y a pas de bug.</li>
-    <li>détaillés : combien d&#039;entre nous ont eu le droit à des &#034;ça marche pas&#034; sans autre explication. On est alors obligés de creuser avec parfois plusieurs échanges de mails.</li>
-    <li>etc...</li>
+  <li>
+    reproductibles : si on ne peut pas le reproduire, alors il n&#039;y a pas de
+    bug.
+  </li>
+  <li>
+    détaillés : combien d&#039;entre nous ont eu le droit à des &#034;ça marche
+    pas&#034; sans autre explication. On est alors obligés de creuser avec
+    parfois plusieurs échanges de mails.
+  </li>
+  <li>etc...</li>
 </ul>
-<p>Bref, les bugs reportés par madame Michu, c&#039;est un peu la foire à la saucisse.</p>
+<p>
+  Bref, les bugs reportés par madame Michu, c&#039;est un peu la foire à la
+  saucisse.
+</p>
 <h3>La solution : BugMeBack</h3>
-<p>C&#039;est pourquoi j&#039;ai passé cette après-midi à concocter une petite extension pour Google Chrome (et peut-être pour Firefox plus tard). L&#039;idée est de demander à nos utilisateurs toutes les petites informations qui vont bien afin de nous permettre
-    de répondre au mieux à leur demande de correction de bogue.</p>
-<p>Pour ce faire, un petit bouton permet d&#039;ouvrir un formulaire qui permet de soumettre un bug sans oublier toutes les informations nécessaires pour le résoudre. J&#039;ai triché de manière éhontée sur le formulaire de soumission de bug de Bugzilla
-    comme vous pouvez vous en rendre compte sur la capture d&#039;écran qui suit.</p>
-<p><img alt="Capture d&#039;écran de BugMeBack" src="/images/bugmeback.png" /> </p>
-<p>Petit bonus, l&#039;url, la taille de la fenêtre et une capture d&#039;écran du contenu de celle-ci sont attachés au bug. J&#039;ai encore un peu de bidouille à faire avec les <a hreflang="en" title="Voir l&#039;API console" href="http://developer.chrome.com/extensions/experimental.devtools.console.html">API expérimentales de Google Chrome</a>    pour récupérer également le contenu de la console d&#039;erreur automatiquement.</p>
+<p>
+  C&#039;est pourquoi j&#039;ai passé cette après-midi à concocter une petite
+  extension pour Google Chrome (et peut-être pour Firefox plus tard).
+  L&#039;idée est de demander à nos utilisateurs toutes les petites informations
+  qui vont bien afin de nous permettre de répondre au mieux à leur demande de
+  correction de bogue.
+</p>
+<p>
+  Pour ce faire, un petit bouton permet d&#039;ouvrir un formulaire qui permet
+  de soumettre un bug sans oublier toutes les informations nécessaires pour le
+  résoudre. J&#039;ai triché de manière éhontée sur le formulaire de soumission
+  de bug de Bugzilla comme vous pouvez vous en rendre compte sur la capture
+  d&#039;écran qui suit.
+</p>
+<p>
+  <img alt="Capture d&#039;écran de BugMeBack" src="/images/bugmeback.png" />
+</p>
+<p>
+  Petit bonus, l&#039;url, la taille de la fenêtre et une capture d&#039;écran
+  du contenu de celle-ci sont attachés au bug. J&#039;ai encore un peu de
+  bidouille à faire avec les API expérimentales de Google Chrome pour récupérer
+  également le contenu de la console d&#039;erreur automatiquement.
+</p>
 <h3>Automatisation</h3>
-<p>Par défaut, un résumé du bug sera proposé en copier/coller, mais pour les plus braves d&#039;entre vous, je vous propose d&#039;ajouter une balise link à vos sites web qui vous permettra de récupéer le contenu du bug via une requête REST. Voici le format
-    de la balise link que je vous propose :</p><pre>&lt;link rel=&#034;bugreport&#034; type=&#034;application/json&#034; href=&#034;https://app.ecogom.fr.ewk/bug.json&#034; /&gt;</pre>
-<p>Avec cette balise présente dans vos pages, BugMeBack fera une requête de type POST avec pour contenu le rapport de bug. Il me reste encore à créer le driver Rest qui permettra cette interaction et je la mettrai sur tous mes sites web. N&#039;hésitez pas
-    à me proposer vos idées ou propositions d&#039;amélioration puisque pour le moment, rien n&#039;est écrit dans le marbre.</p>
-<p>Vous pouvez installer cette extension <a title="Visiter le store" href="https://chrome.google.com/webstore/detail/bugmeback/hgmagcomobmjhaomdoihiggpdekaehmg">depuis le Chrome Web Store</a>. <a hreflang="en" title="Voir le dépôt GitHub" href="https://github.com/nfroidure/BugMeBack">Le projet est bien-sûr sur GitHub</a>,
-    tous les codeurs sont invités à la fête !</p>
-<p><strong>Edition du billet le 31 octobre 2012 :</strong> suite à une <a hreflang="en" title="Lire la discussion" href="http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2012-October/037745.html">proposition au WhatWG</a>, on m&#039;a suggéré d&#039;utiliser
-    la balise link plutôt qu&#039;une balise meta ce qui se justifie, j&#039;ai donc changé cet article en conséquence ainsi que l&#039;extension BugMeBack.</p>
-<p><strong>Edition du 12 novembre 2012 :</strong> l&#039;extension a été <a title="Télécharger BugMeBack pour Opéra" href="https://addons.opera.com/en/extensions/details/bugmeback/?display=fr">portée sur Opéra</a>, il ne reste plus que Firefox, à moins qu&#039;un
-    volontaire ne se déclare pour Internet Explorer également.</p>
+<p>
+  Par défaut, un résumé du bug sera proposé en copier/coller, mais pour les plus
+  braves d&#039;entre vous, je vous propose d&#039;ajouter une balise link à vos
+  sites web qui vous permettra de récupéer le contenu du bug via une requête
+  REST. Voici le format de la balise link que je vous propose :
+</p>
+<pre>
+&lt;link rel=&#034;bugreport&#034; type=&#034;application/json&#034; href=&#034;https://example.com/bug.json&#034; /&gt;</pre
+>
+<p>
+  Avec cette balise présente dans vos pages, BugMeBack fera une requête de type
+  POST avec pour contenu le rapport de bug. Il me reste encore à créer le driver
+  Rest qui permettra cette interaction et je la mettrai sur tous mes sites web.
+  N&#039;hésitez pas à me proposer vos idées ou propositions d&#039;amélioration
+  puisque pour le moment, rien n&#039;est écrit dans le marbre.
+</p>
+<p>
+  Vous pouvez installer cette extension
+  <a
+    title="Visiter le store"
+    href="https://chrome.google.com/webstore/detail/bugmeback/hgmagcomobmjhaomdoihiggpdekaehmg"
+    >depuis le Chrome Web Store</a
+  >.
+  <a
+    hreflang="en"
+    title="Voir le dépôt GitHub"
+    href="https://github.com/nfroidure/BugMeBack"
+    >Le projet est bien-sûr sur GitHub</a
+  >, tous les codeurs sont invités à la fête !
+</p>
+<p>
+  <strong>Edition du billet le 31 octobre 2012 :</strong> suite à une
+  <a
+    hreflang="en"
+    title="Lire la discussion"
+    href="http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2012-October/037745.html"
+    >proposition au WhatWG</a
+  >, on m&#039;a suggéré d&#039;utiliser la balise link plutôt qu&#039;une
+  balise meta ce qui se justifie, j&#039;ai donc changé cet article en
+  conséquence ainsi que l&#039;extension BugMeBack.
+</p>
+<p>
+  <strong>Edition du 12 novembre 2012 :</strong> l&#039;extension a été
+  <a
+    title="Télécharger BugMeBack pour Opéra"
+    href="https://addons.opera.com/en/extensions/details/bugmeback/?display=fr"
+    >portée sur Opéra</a
+  >, il ne reste plus que Firefox, à moins qu&#039;un volontaire ne se déclare
+  pour Internet Explorer également.
+</p>

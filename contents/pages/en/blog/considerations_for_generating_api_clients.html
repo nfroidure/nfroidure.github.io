@@ -16,26 +16,29 @@ disqus=true
 -->
 
 <h2>Considerations for Automatic Generation of API Clients</h2>
-<p><strong>
-  TL; DR:<br />
-  Generating simple, unopinionated, API clients is the way to go.
-</strong></p>
+<p>
+  <strong>
+    TL; DR:<br />
+    Generating simple, unopinionated, API clients is the way to go.
+  </strong>
+</p>
 <p>
   Nowadays, with APIs built on top of HapiJS, ExpressJS or even your custom
   router like in my case, there is no more field for building undocumented APIs.
   The <a href="https://www.openapis.org/">OpenAPI</a> initiative (formerly known
-  as Swagger) is now providing a strong and heavily supported API
-  documentation format.
+  as Swagger) is now providing a strong and heavily supported API documentation
+  format.
 </p>
 <p>
-  Currently frontend developers expect having a clear and straightforward
-  way to consume your APIs. But providing a documentation is not enough in my
-  opinion. We must take the opportunity of formal API descriptions to also
-  generate client APIs.
+  Currently frontend developers expect having a clear and straightforward way to
+  consume your APIs. But providing a documentation is not enough in my opinion.
+  We must take the opportunity of formal API descriptions to also generate
+  client APIs.
 </p>
 <p>
-  In fact, if you look at <a href="http://swagger.io/swagger-codegen/">Swagger
-  Codegen</a>, you'll find there are a lot of clients generators ready to use.
+  In fact, if you look at
+  <a href="https://swagger.io/tools/swagger-codegen/">Swagger Codegen</a>, you'll find
+  there are a lot of clients generators ready to use.
 </p>
 <p>
   I recently had to generate a client API for that good old AngularJS framework
@@ -49,10 +52,9 @@ disqus=true
 </p>
 <p>
   Also, it creates as many function arguments for each endpoint than the
-  possible parameters enforcing us to remember their order and creating
-  function calls with a huge signature. In the context of an ES6 based
-  AngularJS application, i wanted to use ES6 destructuring for a nicer API
-  interface.
+  possible parameters enforcing us to remember their order and creating function
+  calls with a huge signature. In the context of an ES6 based AngularJS
+  application, i wanted to use ES6 destructuring for a nicer API interface.
 </p>
 <p>
   I decided to create one that would be aligned with the following architecture
@@ -70,9 +72,9 @@ disqus=true
   <code>require('./api.swagger.json');</code>.
 </p>
 <p>
-  The good news with choosing to never change the generated code is that we
-  do not care anymore about generating elegant or readable code. We just
-  want to create an appropriate surface API.
+  The good news with choosing to never change the generated code is that we do
+  not care anymore about generating elegant or readable code. We just want to
+  create an appropriate surface API.
 </p>
 <h3>API surface should hide HTTP details</h3>
 <p>
@@ -83,31 +85,31 @@ disqus=true
 </p>
 <p>
   Until your API is public, you can avoid a lot of work by using a client API
-  that masks HTTP calls by simply providing your functions with a single argument
-  where you can put your parameters as object properties.
+  that masks HTTP calls by simply providing your functions with a single
+  argument where you can put your parameters as object properties.
 </p>
 <p>
-  For instance, in my API client, <code>GET /articles/{articleId}?token=x<code>
-  simply becomes <code>getArticle({ articleId, token })</code>. What if the
-  token need to be set in the <code>Authorization</code> header instead of in
-  the query string?
+  For instance, in my API client,
+  <code>GET /articles/{articleId}?token=x</code> simply becomes
+  <code>getArticle({ articleId, token })</code>. What if the token need to be
+  set in the <code>Authorization</code> header instead of in the query string?
 </p>
 <p>
-  It will just be transparent for frontends, they will only have to generate
-  the Swagger definition again, include it in their project and continue using
-  the endpoint as if nothing changed.
+  It will just be transparent for frontends, they will only have to generate the
+  Swagger definition again, include it in their project and continue using the
+  endpoint as if nothing changed.
 </p>
 <p>
   I kind of specialized on working on plain old ExpressJS projects and managing
-  to make them RESTful progressively. Having that flexibility to smoothly
-  change endpoints helps a lot. For example, transforming each POST into a PUT
-  with client generated UUIDs become really easy.
+  to make them RESTful progressively. Having that flexibility to smoothly change
+  endpoints helps a lot. For example, transforming each POST into a PUT with
+  client generated UUIDs become really easy.
 </p>
 <h3>API surface should be minimalist</h3>
 <p>
-  For the AngularJS client API I just export a service called <code>API</code>
-  and having as much methods as there are operation ids on the swagger file. No
-  POO, no token management, just map functions to HTTP calls.
+  For the AngularJS client API I just export a service called
+  <code>API</code> and having as much methods as there are operation ids on the
+  swagger file. No POO, no token management, just map functions to HTTP calls.
 </p>
 <p>
   Using this client basically means creating another service on top of it that
@@ -117,28 +119,31 @@ disqus=true
 <p>
   Since I started creating my REST APIs in a Documentation Driven way (I was
   till doing it
-  <a href="https://github.com/Rest4/Rest4-php/blob/master/php/class.RestAuthDigestDriver.php#L7-L30">with
-  PHP</a> at that time), I enforce a particular order for query parameters.
+  <a
+    href="https://github.com/Rest4/Rest4-php/blob/master/php/class.RestAuthDigestDriver.php#L7-L30"
+    >with PHP</a
+  >
+  at that time), I enforce a particular order for query parameters.
 </p>
 <p>
   It allows to ensure URLs are always unique for the same content. That way
-  various cache layers are optimized (even public proxies that cannot assume
-  the query parameters do not matters). You can read my
+  various cache layers are optimized (even public proxies that cannot assume the
+  query parameters do not matters). You can read my
   <a href="toward_stricter_query_string_parser.html">post on strict-qs</a> for
   more informations about this.
 </p>
 <p>
-  That said, it can be annoying for frontends developer to work with such
-  strict APIs. The benefits of generating the client APIs is that we can
-  take care of it for them so that they never face REST APIs misuse issues
-  anymore.
+  That said, it can be annoying for frontends developer to work with such strict
+  APIs. The benefits of generating the client APIs is that we can take care of
+  it for them so that they never face REST APIs misuse issues anymore.
 </p>
 <h3>Why not having some fun?</h3>
 <p>
-  Well. Generating code is less boring than writing it but i wanted to test
-  an old idea. Why not making JavaScript templates in a new way? I already
-  leveraged the AST power with <a href="./lets_subset_javascript.html">jsub</a>
-  but I wanted to make something I called AST templating.
+  Well. Generating code is less boring than writing it but i wanted to test an
+  old idea. Why not making JavaScript templates in a new way? I already
+  leveraged the AST power with
+  <a href="./lets_subset_javascript.html">jsub</a> but I wanted to make
+  something I called AST templating.
 </p>
 <p>
   The idea was to create templates that would be pure syntactically valid
@@ -146,9 +151,13 @@ disqus=true
   JavaScript tools would just work on it.
 </p>
 <p>
-  This i how i created <a href="https://github.com/nfroidure/asttpl">astpl</a>
-  and you can see how our API client looks like in its
-  <a href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js#L82-L131">real world tests</a>.
+  This i how i created
+  <a href="https://github.com/nfroidure/asttpl">astpl</a> and you can see how
+  our API client looks like in its
+  <a
+    href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js#L82-L131"
+    >real world tests</a
+  >.
 </p>
 <p>
   Et voilà! I hope you will enjoy creating your own API clients. I plan to

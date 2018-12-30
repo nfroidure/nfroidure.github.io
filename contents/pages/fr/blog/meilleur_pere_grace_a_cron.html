@@ -13,15 +13,59 @@ disqus=true
 -->
 
 <h2>Comment devenir un meilleur père grâce à Cron</h2>
-<p>Décrocher de l&#039;écran en plein milieu d&#039;une session de code est difficile. Mais arriver en retard à la garderie, c&#039;est pas cool. Heureusement cron et Patrick Sébastien sont là !</p>
+<p>
+  Décrocher de l&#039;écran en plein milieu d&#039;une session de code est
+  difficile. Mais arriver en retard à la garderie, c&#039;est pas cool.
+  Heureusement cron et Patrick Sébastien sont là !
+</p>
 
-<p>Ma femme le sait bien, c&#039;est difficile de communiquer avec moi quand je code. Le problème, c&#039;est que je dois conduire mes deux petites filles à la garderie et surtout aller les chercher.</p>
-<p>Après plusieurs remontrances suites à quelques retards, j&#039;ai décidé de devenir un meilleur père en tirant avantage de ma machine de développement. Tout d&#039;abord, j&#039;ai cherché un moyen de faire sonner mon PC sous Debian GNU/Linux en ligne
-    de commande.</p>
-<p>La commande echo couplée à quelques options permet d&#039;émettre un bip, mais cela ne marche pas toujours. Les bips peuvent être désactivés et il y a tout un tas de conditions obscures pour que ça fonctionne ou pas.</p><pre>root&#64;server:~&#35; echo -en &#034;a&#034; &gt; /dev/tty5</pre>
-<p>Bref, j&#039;ai opté pour la solution &#034;beep&#034; qui est un petit binaire permettant de créer de véritables compositions de bips. La première chose à faire est donc de l&#039;installer.</p><pre>root&#64;server:~&#35; aptitude install beep</pre>
-<p>Enfin, j&#039;ai trouvé <a title="Voir le forum" href="http://forum.ubuntu-fr.org/viewtopic.php?id=47239">sur ce forum</a>, une ligne de commande toute prête qui joue l&#039;air du petit bonhomme en mousse (on fait avec ce qu&#039;on a :D).</p><pre>root&#64;server:~&#35; beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300</pre>
-<p>Il ne reste plus qu&#039;à éditer le fichier /etc/crontab pour lui ajouter quelques règles permettant de déclencher notre petit air de rassemblement pour un gros calin famille comme dirait mon aînée. La garderie est ouverte le matin de 9h à 12h du lundi
-    au vendredi et l&#039;après midi de 13h45 à 17h00 les lundi, mardi et vendredi. Je vous laisse deviner le sens des règles ci-dessous.</p><pre>root&#64;server:~&#35; echo &#034;<br />&#35; Garderie ZAZA &amp; EMMA<br />45 8 * * 1-5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />45 11 * * 1-5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />35 13 * * 1,2,5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />45 16 * * 1,2,5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />&#35;&#034; &gt;&gt; /etc/crontab</pre>
-<p>On redémarre le démon crond :</p><pre>root&#64;server:~&#35; /etc/init.d/cron restart</pre>
-<p>Et voilà, plus de soucis à se faire pour la garderie, à condition de ne pas être en rendez-vous clientèle !</p>
+<p>
+  Ma femme le sait bien, c&#039;est difficile de communiquer avec moi quand je
+  code. Le problème, c&#039;est que je dois conduire mes deux petites filles à
+  la garderie et surtout aller les chercher.
+</p>
+<p>
+  Après plusieurs remontrances suites à quelques retards, j&#039;ai décidé de
+  devenir un meilleur père en tirant avantage de ma machine de développement.
+  Tout d&#039;abord, j&#039;ai cherché un moyen de faire sonner mon PC sous
+  Debian GNU/Linux en ligne de commande.
+</p>
+<p>
+  La commande echo couplée à quelques options permet d&#039;émettre un bip, mais
+  cela ne marche pas toujours. Les bips peuvent être désactivés et il y a tout
+  un tas de conditions obscures pour que ça fonctionne ou pas.
+</p>
+<pre>root&#64;server:~&#35; echo -en &#034;a&#034; &gt; /dev/tty5</pre>
+<p>
+  Bref, j&#039;ai opté pour la solution &#034;beep&#034; qui est un petit
+  binaire permettant de créer de véritables compositions de bips. La première
+  chose à faire est donc de l&#039;installer.
+</p>
+<pre>root&#64;server:~&#35; aptitude install beep</pre>
+<p>
+  Enfin, j&#039;ai trouvé
+  <a
+    title="Voir le forum"
+    href="http://forum.ubuntu-fr.org/viewtopic.php?id=47239"
+    >sur ce forum</a
+  >, une ligne de commande toute prête qui joue l&#039;air du petit bonhomme en
+  mousse (on fait avec ce qu&#039;on a :D).
+</p>
+<pre>
+root&#64;server:~&#35; beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300</pre
+>
+<p>
+  Il ne reste plus qu&#039;à éditer le fichier /etc/crontab pour lui ajouter
+  quelques règles permettant de déclencher notre petit air de rassemblement pour
+  un gros calin famille comme dirait mon aînée. La garderie est ouverte le matin
+  de 9h à 12h du lundi au vendredi et l&#039;après midi de 13h45 à 17h00 les
+  lundi, mardi et vendredi. Je vous laisse deviner le sens des règles
+  ci-dessous.
+</p>
+<pre>root&#64;server:~&#35; echo &#034;<br />&#35; Garderie ZAZA &amp; EMMA<br />45 8 * * 1-5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />45 11 * * 1-5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />35 13 * * 1,2,5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />45 16 * * 1,2,5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />&#35;&#034; &gt;&gt; /etc/crontab</pre>
+<p>On redémarre le démon crond :</p>
+<pre>root&#64;server:~&#35; /etc/init.d/cron restart</pre>
+<p>
+  Et voilà, plus de soucis à se faire pour la garderie, à condition de ne pas
+  être en rendez-vous clientèle !
+</p>

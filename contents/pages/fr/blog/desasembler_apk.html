@@ -13,15 +13,60 @@ disqus=true
 -->
 
 <h2>Décompiler/désassembler un paquet Android (.apk)</h2>
-<p>Grâce à la combinaison de deux outils simples et pratiques, il est possible d&#039;obtenir un code source assez fidèle à celui d&#039;origine pour un paquet Android.</p>
+<p>
+  Grâce à la combinaison de deux outils simples et pratiques, il est possible
+  d&#039;obtenir un code source assez fidèle à celui d&#039;origine pour un
+  paquet Android.
+</p>
 
-<p>Les applications Android sont packagées sous la forme d&#039;une archive compressée .apk. A l&#039;intérieur, le bytecode des fichiers Java sous la forme de fichiers d&#039;extension .dex (bytecode généré pour Dalvik, la machine virtuelle Java utilisée
-    par Android). Premier problème, les fichiers XML de description de l&#039;interface et des ressources ne sont pas lisible à l&#039;oeil nu puisque compilés eux aussi.</p>
-<p>La première chose à faire est donc de les passer à la moulinette de Android <a hreflang="en" title="Télécharger l&#039;outil" href="http://ibotpeaches.github.io/Apktool/">APK Tool</a> qui va gentiment vous restituer les fichiers XML sous un format
-    texte.</p>
-<p>Maintenant passons aux fichiers Dex. Sous cette forme, il n&#039;existe pas encore d&#039;outils permettant de décompiler ces fichiers. Il va donc falloir passer par un intermédiaire pour obtenir du bytecode comptatible avec la machine virtuelle Java
-    habituelle.</p>
-<p>Cet outil, c&#039;est <a hreflang="en" title="Télécharger dex2jar" href="http://code.google.com/p/dex2jar/">dex2jar</a>. Grâce à ce dernier, vous serez en mesure de récupérer un code source Java relativement fidèle à l&#039;original en utilisant <a hreflang="en"
-    title="Télécharger cet outil" href="http://java.decompiler.free.fr/?q=jdgui">jd-gui</a>.</p>
-<p>Le <span lang="en">proof of concept</span> de cet article est ce petit <a hreflang="en" title="Voir ce client" href="https://github.com/nfroidure/SimpleRestAndroidClient">client REST</a> que j&#039;ai eu le malheur de développer sur un coin de table tant
-    et si bien que je n&#039;avais plus que le fichier apk.</p>
+<p>
+  Les applications Android sont packagées sous la forme d&#039;une archive
+  compressée .apk. A l&#039;intérieur, le bytecode des fichiers Java sous la
+  forme de fichiers d&#039;extension .dex (bytecode généré pour Dalvik, la
+  machine virtuelle Java utilisée par Android). Premier problème, les fichiers
+  XML de description de l&#039;interface et des ressources ne sont pas lisible à
+  l&#039;oeil nu puisque compilés eux aussi.
+</p>
+<p>
+  La première chose à faire est donc de les passer à la moulinette de Android
+  <a
+    hreflang="en"
+    title="Télécharger l&#039;outil"
+    href="http://ibotpeaches.github.io/Apktool/"
+    >APK Tool</a
+  >
+  qui va gentiment vous restituer les fichiers XML sous un format texte.
+</p>
+<p>
+  Maintenant passons aux fichiers Dex. Sous cette forme, il n&#039;existe pas
+  encore d&#039;outils permettant de décompiler ces fichiers. Il va donc falloir
+  passer par un intermédiaire pour obtenir du bytecode comptatible avec la
+  machine virtuelle Java habituelle.
+</p>
+<p>
+  Cet outil, c&#039;est
+  <a
+    hreflang="en"
+    title="Télécharger dex2jar"
+    href="http://code.google.com/p/dex2jar/"
+    >dex2jar</a
+  >. Grâce à ce dernier, vous serez en mesure de récupérer un code source Java
+  relativement fidèle à l&#039;original en utilisant
+  <a
+    hreflang="en"
+    title="Télécharger cet outil"
+    href="http://jd.benow.ca/"
+    >jd-gui</a
+  >.
+</p>
+<p>
+  Le <span lang="en">proof of concept</span> de cet article est ce petit
+  <a
+    hreflang="en"
+    title="Voir ce client"
+    href="https://github.com/nfroidure/SimpleRestAndroidClient"
+    >client REST</a
+  >
+  que j&#039;ai eu le malheur de développer sur un coin de table tant et si bien
+  que je n&#039;avais plus que le fichier apk.
+</p>

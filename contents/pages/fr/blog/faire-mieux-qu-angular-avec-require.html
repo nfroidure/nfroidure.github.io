@@ -19,16 +19,23 @@ disqus=true
 
 <h2>Faire mieux qu'AngularJS avec require()</h2>
 <p>
-  Lors de <a href="https://www.youtube.com/watch?v=n8nvHFfEFC4"
-    title="Voir la présentation sur YouTube">ma dernière présentation</a> pour
-  <a href="http://chtijs.francejs.org/archives/2015-02-05/index.html"
-    title="Voir le résumé de cette édition">#ChtiJS10</a>, j'ai cédé au troll
-  à propos du système de modules d'AngularJS. En effet, bien qu'il m'ait paru
-  plutôt smart au début, j'ai vite compris ses limites.
+  Lors de
+  <a
+    href="https://www.youtube.com/watch?v=n8nvHFfEFC4"
+    title="Voir la présentation sur YouTube"
+    >ma dernière présentation</a
+  >
+  pour
+  <a
+    href="http://chtijs.francejs.org/archives/2015-02-05/index.html"
+    title="Voir le résumé de cette édition"
+    >#ChtiJS10</a
+  >, j'ai cédé au troll à propos du système de modules d'AngularJS. En effet,
+  bien qu'il m'ait paru plutôt smart au début, j'ai vite compris ses limites.
 </p>
 <p>
-  En effet, le fait de devoir wrapper le moindre code JavaScript d'une série
-  de lignes qui peuvent sembler un peu déroutante pour un non initié est
+  En effet, le fait de devoir wrapper le moindre code JavaScript d'une série de
+  lignes qui peuvent sembler un peu déroutante pour un non initié est
   particulièrement ennuyeux. De plus, la création de builds pour AngularJS est
   très fastidieux du fait de l'usage de bower pour les récupérer.
 </p>
@@ -64,12 +71,12 @@ angular.module('my.app.namespace', [
   return myServiceInstance;
 }]);
 </pre>
-<p>
-  Cette syntaxe a plusieurs buts avoués&nbsp;:
-</p>
+<p>Cette syntaxe a plusieurs buts avoués&nbsp;:</p>
 <ul>
   <li>cloisonner le code en espace de noms (pour éviter les collisions),</li>
-  <li>rendre le code maintenable et réutilisable (grâce à la modularisation),</li>
+  <li>
+    rendre le code maintenable et réutilisable (grâce à la modularisation),
+  </li>
   <li>rendre le code testable (grâce à l'injection de dépendances).</li>
 </ul>
 <p>
@@ -101,11 +108,11 @@ module.exports = myServiceInstance;
   de nom sont gérés d'une façon beaucoup plus intéressante. L'unicité de la
   dépendance <code>dep2</code> est assurée par un dépôt centralisé de modules
   (ici NPM). Celle de la dépendance <code>dep1</code> quand à elle est assurée
-  par l'arborescence du  projet.
+  par l'arborescence du projet.
 </p>
 <p>
-  Enfin, il exporte le contenu de <code>myServiceInstance</code> comme étant
-  le "contenu" du module. Bref, le fonctionnement classique des modules CommonJS,
+  Enfin, il exporte le contenu de <code>myServiceInstance</code> comme étant le
+  "contenu" du module. Bref, le fonctionnement classique des modules CommonJS,
   jusqu'ici, rien d'insurmontable.
 </p>
 <h2>Service configuré</h2>
@@ -155,8 +162,8 @@ myApp.config('MyServiceProvider', [
 <p>
   Ça en fait du code. Je vous laisse voir ça en détail sur la
   <a href="https://docs.angularjs.org/guide/providers">
-    documentation d'AngularJS</a>,
-  retenez simplement que l'idée ici est de configurer un sungleton global.
+    documentation d'AngularJS</a
+  >, retenez simplement que l'idée ici est de configurer un singleton global.
   Chose que l'on réalise comme ceci avec CommonJS&nbsp;:
 </p>
 <pre>
@@ -189,19 +196,20 @@ myService.myPublicFunction('hello!');
 </pre>
 <p>
   L'idée est de créer un module qui soit simplement le retour d'appel d'une
-  fonction permettant de récupérer une version configurée d'un service donné.
-  De cette façon on peut accèder à celui-ci n'importe où dans le programme
-  par simple appel à require.
+  fonction permettant de récupérer une version configurée d'un service donné. De
+  cette façon on peut accèder à celui-ci n'importe où dans le programme par
+  simple appel à require.
 </p>
 <p>
   Cependant, j'ai rarement recours à cette technique car c'est une sorte de
-  singleton et à vrai dire, ce design pattern est de plus en plus décrié car
-  il fait rarement sens.
+  singleton et à vrai dire, ce design pattern est de plus en plus décrié car il
+  fait rarement sens.
 </p>
 <h2>Service "wrappés"</h2>
-<p>Angular a eu la merveilleuse idée de fournir des services pour les variables
+<p>
+  Angular a eu la merveilleuse idée de fournir des services pour les variables
   globales exposées par le système. Ainsi, pour accéder à <code>window</code>,
-  il suffit  d'injecter le service <code>$window</code>, idem pour
+  il suffit d'injecter le service <code>$window</code>, idem pour
   <code>window.location</code> avec <code>$location</code> etc.
 </p>
 <p>
@@ -210,9 +218,9 @@ myService.myPublicFunction('hello!');
   dédié au test mockant les fonctionnalités exposées par le service requis.
 </p>
 <p>
-  Avec <code>require()</code>, appliquer ce principe est également possible. Il suffit de
-  créer le module correspondant. Ici, nous créeons un "service" fournissant
-  un accès au constructeur <code>Date</code>&nbsp;:
+  Avec <code>require()</code>, appliquer ce principe est également possible. Il
+  suffit de créer le module correspondant. Ici, nous créeons un "service"
+  fournissant un accès au constructeur <code>Date</code>&nbsp;:
 </p>
 <pre>
 // contenu de date.js
@@ -221,9 +229,7 @@ module.exports = Date;
 // utilisation
 var Date = require('./date');
 </pre>
-<p>
-  Il ne nous reste plus qu'à mocker les dates lors de nos tests unitaires.
-</p>
+<p>Il ne nous reste plus qu'à mocker les dates lors de nos tests unitaires.</p>
 <h2>Les tests</h2>
 <p>
   Justement, parlons-en&nbsp;! Angular a la réputation de faciliter les tests
@@ -236,7 +242,7 @@ var Date = require('./date');
 </p>
 <p>
   Cela reste cependant possible grâce au module <code>mockery</code>. Par
-  exemple, pour tester un module qui reposerait sur  notre service wrappant
+  exemple, pour tester un module qui reposerait sur notre service wrappant
   <code>Date</code>, il suffirait de procéder ainsi&nbsp;:
 </p>
 <pre>
@@ -263,18 +269,19 @@ describe('myModule', function() {
 });
 </pre>
 <p>
-  Ici <code>mockery</code> substitue à la volée le module <code>./date</code>
-  par du code qui vous permet de simuler le temps. Il est également possible de
-  simplement remplacer la variable globale Date, mais ceci peut avoir d'autres
-  effets par ailleurs, je vous conseille donc plutôt cette technique.
+  Ici <code>mockery</code> substitue à la volée le module
+  <code>./date</code> par du code qui vous permet de simuler le temps. Il est
+  également possible de simplement remplacer la variable globale Date, mais ceci
+  peut avoir d'autres effets par ailleurs, je vous conseille donc plutôt cette
+  technique.
 </p>
 <h2>Quel rapport avec le front&nbsp;?</h2>
 <p>
   À ce stade il se peut que vous vous demandiez comment utiliser des modules
   CommonJS pour vos projets front. Autrefois on
-  <a href="utiliser_requirejs.html">utilisait RequireJS</a> et on créait
-  ses <a href="module_javascript.html">modules AMD</a> avec ses ptites mimines
-  (ne faîtes plus ça&nbsp;!).
+  <a href="utiliser_requirejs.html">utilisait RequireJS</a> et on créait ses
+  <a href="module_javascript.html">modules AMD</a> avec ses ptites mimines (ne
+  faîtes plus ça&nbsp;!).
 </p>
 <p>
   Avec <a href="browserify.html"><code>browserify</code></a> ou webpack vous
@@ -294,9 +301,11 @@ describe('myModule', function() {
   À l'avenir, en revanche, nos amis d'ECMA ont tout prévu, notamment une façon
   d'overrider le comportement du loader de module à la volée. Ça devrait se
   concrétiser via
-  <a href="http://babeljs.io/docs/learn-es6/#module-loaders"><code>System</code></a>.
-  Cette fonctionnalité devrait pouvoir être utilisée comme <code>mockery</code> pour
-  modifier le comportement de l'injection de dépendance d'ES6.
+  <a href="http://babeljs.io/docs/learn-es6/#module-loaders"
+    ><code>System</code></a
+  >. Cette fonctionnalité devrait pouvoir être utilisée comme
+  <code>mockery</code> pour modifier le comportement de l'injection de
+  dépendance d'ES6.
 </p>
 <p>
   Voilà, j'espère que ce petit article vous a plût. Pour les angulariens, sachez
@@ -304,23 +313,26 @@ describe('myModule', function() {
   mauvaise nouvelles ;).
 </p>
 <ins datetime="2016-11-12T09:37:02.193Z">
-<p>
-  Petite mise à jour pour ajouter qu'il est possible d'appliquer ceci aux
-  applications Angular également pour simplifier les tests et se passer de
-  Karma,
-  <a href="https://github.com/SimpliField/angular-sf-load/blob/7ae1467c4ce914fdc8fed940d96a39c6b4cce026/src/load.service.specs.js#L8-L18"voici un exemple</a>.
-</p>
-<p>
-  Le système d'injection d'Angular reste sympa malgré tout pour gérer les
-  états globaux, mais son principal souci est d'être trop intrusif sur la façon
-  de gérer le code à mon goût. C'est pourquoi j'ai créé
-  <a href="https://github.com/nfroidure/knifecycle">Knifecycle</a> qui reprend
-  ses concepts mais de façon moins intrusive et surtout applicable pour le
-  backend (prise en compte du graceful shutdown).
-</p>
-<p>
-  Enfin, le système d'injection d'Angular2 a tiré pas mal de leçons des erreurs
-  précédentes et même si je ne suis pas fan d'Angular2 je reconnais qu'il y a eu
-  des progrès de ce côté.
-</p>
+  <p>
+    Petite mise à jour pour ajouter qu'il est possible d'appliquer ceci aux
+    applications Angular également pour simplifier les tests et se passer de
+    Karma,
+    <a
+      href="https://github.com/SimpliField/angular-sf-load/blob/7ae1467c4ce914fdc8fed940d96a39c6b4cce026/src/load.service.specs.js#L8-L18"
+      >voici un exemple</a
+    >.
+  </p>
+  <p>
+    Le système d'injection d'Angular reste sympa malgré tout pour gérer les
+    états globaux, mais son principal soucis est d'être trop intrusif sur la
+    façon de gérer le code à mon goût. C'est pourquoi j'ai créé
+    <a href="https://github.com/nfroidure/knifecycle">Knifecycle</a> qui reprend
+    ses concepts mais de façon moins intrusive et surtout applicable pour le
+    backend (prise en compte du graceful shutdown).
+  </p>
+  <p>
+    Enfin, le système d'injection d'Angular2 a tiré pas mal de leçons des
+    erreurs précédentes et même si je ne suis pas fan d'Angular2 je reconnais
+    qu'il y a eu des progrès de ce côté.
+  </p>
 </ins>

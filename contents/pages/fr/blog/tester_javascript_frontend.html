@@ -13,42 +13,179 @@ disqus=true
 -->
 
 <h2>Tester son JavaScript front end</h2>
-<p>Depuis que j&#039;ai découvert Karma, je ne me lasse plus de convertir mes projets pour lancer les tests grâce à cet outil. Retour d&#039;expérience et conseils pour une utilisation pleine et entière.</p>
+<p>
+  Depuis que j&#039;ai découvert Karma, je ne me lasse plus de convertir mes
+  projets pour lancer les tests grâce à cet outil. Retour d&#039;expérience et
+  conseils pour une utilisation pleine et entière.
+</p>
 
-<p><a hreflang="en" title="Voir le dépôt de Karma" href="https://github.com/karma-runner/">Karma Runner</a> est un lanceur de tests automatisés. Sa particularité est qu&#039;il gère tous les navigateurs de Firefox à Internet Explorer 6. Ce projet est issu
-    et utilisé par l&#039;équipe de développement d&#039;AngularJS (un projet créé et soutenu par Google donc).</p>
+<p>
+  <a
+    hreflang="en"
+    title="Voir le dépôt de Karma"
+    href="https://github.com/karma-runner/"
+    >Karma Runner</a
+  >
+  est un lanceur de tests automatisés. Sa particularité est qu&#039;il gère tous
+  les navigateurs de Firefox à Internet Explorer 6. Ce projet est issu et
+  utilisé par l&#039;équipe de développement d&#039;AngularJS (un projet créé et
+  soutenu par Google donc).
+</p>
 <h3>Installer Karma</h3>
-<p>Karma est un module pour NodeJS, il vous faudra donc installer Node en premier lieu. Une fois cela fait, il suffit d&#039;installer le module NPM de karma pour pouvoir commencer :</p><pre>npm install -g karma</pre>
-<p>Il vous faudra les droits administrateur pour exécuter cette commande car elle installe Karma de manière globale ce qui est recommandé pour l&#039;utiliser sur tous vos projets sans réinstaller Karma à chaque fois.</p>
-<p>L&#039;installation de base de Karma est volontairement minimaliste. Vous devrez sûrement installer des modules complémentaires (plug-ins), comme les divers frameworks de tests et de chargement de modules AMD. Pour ma part, je vais tester la librairie
-    Commandor qui se présente sous la forme d&#039;un module UMD, je vais donc avoir besoin du plugin RequireJS :</p><pre>npm install -g karma-requirejs</pre>
-<p>J&#039;utilise le framework de test Mocha, il me faut donc aussi installer le plug-in correspondant :</p><pre>npm install -g karma-mocha</pre>
-<p>Enfin, pour chaque navigateur que nous souhaitons tester, nous devons installer les lanceurs correspondants :</p><pre>&#35; Mozilla Firefox<br />npm install karma-firefox-launcher<br />&#35; Google Chrome<br />npm install karma-chrome-launcher<br />&#35; Internet Explorer<br />npm install karma-ie-launcher<br />&#35; SlimerJS<br />npm install karma-slimerjs-launcher<br />&#35; Pour voir la liste des lanceurs disponibles<br />npm search karma-launcher</pre>
-<p>Nous voilà donc avec une installation complète de Karma Runner, il ne reste plus qu&#039;à tester nos projets.</p>
+<p>
+  Karma est un module pour NodeJS, il vous faudra donc installer Node en premier
+  lieu. Une fois cela fait, il suffit d&#039;installer le module NPM de karma
+  pour pouvoir commencer :
+</p>
+<pre>npm install -g karma</pre>
+<p>
+  Il vous faudra les droits administrateur pour exécuter cette commande car elle
+  installe Karma de manière globale ce qui est recommandé pour l&#039;utiliser
+  sur tous vos projets sans réinstaller Karma à chaque fois.
+</p>
+<p>
+  L&#039;installation de base de Karma est volontairement minimaliste. Vous
+  devrez sûrement installer des modules complémentaires (plug-ins), comme les
+  divers frameworks de tests et de chargement de modules AMD. Pour ma part, je
+  vais tester la librairie Commandor qui se présente sous la forme d&#039;un
+  module UMD, je vais donc avoir besoin du plugin RequireJS :
+</p>
+<pre>npm install -g karma-requirejs</pre>
+<p>
+  J&#039;utilise le framework de test Mocha, il me faut donc aussi installer le
+  plug-in correspondant :
+</p>
+<pre>npm install -g karma-mocha</pre>
+<p>
+  Enfin, pour chaque navigateur que nous souhaitons tester, nous devons
+  installer les lanceurs correspondants :
+</p>
+<pre>&#35; Mozilla Firefox<br />npm install karma-firefox-launcher<br />&#35; Google Chrome<br />npm install karma-chrome-launcher<br />&#35; Internet Explorer<br />npm install karma-ie-launcher<br />&#35; SlimerJS<br />npm install karma-slimerjs-launcher<br />&#35; Pour voir la liste des lanceurs disponibles<br />npm search karma-launcher</pre>
+<p>
+  Nous voilà donc avec une installation complète de Karma Runner, il ne reste
+  plus qu&#039;à tester nos projets.
+</p>
 <h3>Configurer les tests</h3>
-<p>Pour configurer les tests d&#039;un projet, vous avez deux solutions, utiliser l&#039;initieur de projets qui vous pose toutes les questions nécessaires à la création de votre fichier karma.conf.json :</p><pre>karma init</pre>
-<p>Ou alors, simplement, copier/coller le <a hreflang="en" title="Voir le fichier de configuration de Commandor" href="https://github.com/nfroidure/Commandor/blob/master/karma.conf.js">fichier d&#039;un projet existant</a>. Typiquement, le fichier de configuration
-    Karma est une simple déclaration des navigateurs que vous souhaitez tester et des plug-ins que vous souhaitez utiliser.</p>
-<p>Les informations les plus importantes sont les fichiers que vous voulez servir et de quelle façon. En effet, lorsque vous lancez les tests, Karma lance un serveur Web/WebSocket et démarre vos divers navigateurs en leur indiquant l&#039;adresse à charger.</p>
+<p>
+  Pour configurer les tests d&#039;un projet, vous avez deux solutions, utiliser
+  l&#039;initieur de projets qui vous pose toutes les questions nécessaires à la
+  création de votre fichier karma.conf.json :
+</p>
+<pre>karma init</pre>
+<p>
+  Ou alors, simplement, copier/coller le
+  <a
+    hreflang="en"
+    title="Voir le fichier de configuration de Commandor"
+    href="https://github.com/nfroidure/Commandor/blob/master/karma.conf.js"
+    >fichier d&#039;un projet existant</a
+  >. Typiquement, le fichier de configuration Karma est une simple déclaration
+  des navigateurs que vous souhaitez tester et des plug-ins que vous souhaitez
+  utiliser.
+</p>
+<p>
+  Les informations les plus importantes sont les fichiers que vous voulez servir
+  et de quelle façon. En effet, lorsque vous lancez les tests, Karma lance un
+  serveur Web/WebSocket et démarre vos divers navigateurs en leur indiquant
+  l&#039;adresse à charger.
+</p>
 <h3>Lancer les tests</h3>
-<p>Pour lancer les tests, il suffit de taper la commande suivante :</p><pre>karma start karma.conf.js<br />INFO &#91;karma&#93;: Karma v0.10.1 server started at http://localhost:9876/<br />INFO [[launcher]]: Starting browser Chrome<br />INFO [[launcher]]: Starting browser PhantomJS<br />INFO [[launcher]]: Starting browser SlimerJS<br />INFO [[launcher]]: Starting browser Firefox<br />INFO [[launcher]]: Starting browser Opera<br />INFO [[PhantomJS 1.9.1 (Linux)]]: Connected on socket id wNBBZ8YKbSMaZ0ZUhsKy<br />INFO [[Chrome 26.0.1410 (Linux)]]: Connected on socket id _CpwDOdv2x4SdfuRhsKz<br />INFO [[Other 0.0.0 (Linux)]]: Connected on socket id ik-BRxveU9jkhpzShsK0<br />INFO [[Opera 12.16.0 (Linux)]]: Connected on socket id NTmgHieffSR3ZXBshsK1<br />INFO [[Firefox 23.0.0 (Linux)]]: Connected on socket id _p-fNdQpNOLdeJClhsK2</pre>
-<p>Dès lors, pour connecter un nouveau navigateur sans utiliser de lanceur, il suffit d&#039;ouvrir l&#039;adresse donnée par Karma dans ce dernier. Un exemple avec mon téléphone Android :</p><pre>INFO [[Chrome Mobile 28.0.1500 (Android 4.1.2)]]: Connected on socket id Iyi7l8bgnvIh1mjyhsK</pre>
-<p>Pour chaque navigateur, un compte rendu des tests vous est alors présenté, si des tests échouent, alors les exceptions lancées sont affichées dans la console. C&#039;est un peu le paradis des développeurs front-end :</p><pre>PhantomJS 1.9.1 (Linux): Executed 0 of 0 ERROR (0.025 secs / 0 secs)<br />Chrome 26.0.1410 (Linux): Executed 11 of 11 SUCCESS (0.078 secs / 0.017 secs)<br />Other 0.0.0 (Linux): Executed 11 of 11 SUCCESS (0.155 secs / 0.024 secs)<br />Opera 12.16.0 (Linux): Executed 11 of 11 (5 FAILED) (0.104 secs / NaN secs)<br />Firefox 23.0.0 (Linux): Executed 11 of 11 SUCCESS (0.135 secs / 0.015 secs)<br />Firefox Mobile 23.0.0 (Android): Executed 14 of 14 (3 FAILED) (1.042 secs / NaN secs)</pre>
-<p>Vous pouvez voir qu&#039;il me reste encore un peu de boulot à ce stade ;).</p>
+<p>Pour lancer les tests, il suffit de taper la commande suivante :</p>
+<pre>karma start karma.conf.js<br />INFO &#91;karma&#93;: Karma v0.10.1 server started at http://localhost:9876/<br />INFO [[launcher]]: Starting browser Chrome<br />INFO [[launcher]]: Starting browser PhantomJS<br />INFO [[launcher]]: Starting browser SlimerJS<br />INFO [[launcher]]: Starting browser Firefox<br />INFO [[launcher]]: Starting browser Opera<br />INFO [[PhantomJS 1.9.1 (Linux)]]: Connected on socket id wNBBZ8YKbSMaZ0ZUhsKy<br />INFO [[Chrome 26.0.1410 (Linux)]]: Connected on socket id _CpwDOdv2x4SdfuRhsKz<br />INFO [[Other 0.0.0 (Linux)]]: Connected on socket id ik-BRxveU9jkhpzShsK0<br />INFO [[Opera 12.16.0 (Linux)]]: Connected on socket id NTmgHieffSR3ZXBshsK1<br />INFO [[Firefox 23.0.0 (Linux)]]: Connected on socket id _p-fNdQpNOLdeJClhsK2</pre>
+<p>
+  Dès lors, pour connecter un nouveau navigateur sans utiliser de lanceur, il
+  suffit d&#039;ouvrir l&#039;adresse donnée par Karma dans ce dernier. Un
+  exemple avec mon téléphone Android :
+</p>
+<pre>
+INFO [[Chrome Mobile 28.0.1500 (Android 4.1.2)]]: Connected on socket id Iyi7l8bgnvIh1mjyhsK</pre
+>
+<p>
+  Pour chaque navigateur, un compte rendu des tests vous est alors présenté, si
+  des tests échouent, alors les exceptions lancées sont affichées dans la
+  console. C&#039;est un peu le paradis des développeurs front-end :
+</p>
+<pre>PhantomJS 1.9.1 (Linux): Executed 0 of 0 ERROR (0.025 secs / 0 secs)<br />Chrome 26.0.1410 (Linux): Executed 11 of 11 SUCCESS (0.078 secs / 0.017 secs)<br />Other 0.0.0 (Linux): Executed 11 of 11 SUCCESS (0.155 secs / 0.024 secs)<br />Opera 12.16.0 (Linux): Executed 11 of 11 (5 FAILED) (0.104 secs / NaN secs)<br />Firefox 23.0.0 (Linux): Executed 11 of 11 SUCCESS (0.135 secs / 0.015 secs)<br />Firefox Mobile 23.0.0 (Android): Executed 14 of 14 (3 FAILED) (1.042 secs / NaN secs)</pre>
+<p>
+  Vous pouvez voir qu&#039;il me reste encore un peu de boulot à ce stade ;).
+</p>
 <h3>Automatiser les tests avec Travis</h3>
-<p>Mais ce n&#039;est pas tout. Peut-être que vous connaissez Travis, un hook pour GitHub qui permet de lancer les tests à chaque commit dans une machine virtuelle. Les machines virtuelles de Travis embarquent PhantomJS et Firefox par défaut. Nous allons
-    donc utiliser Firefox pour afficher un joli logo indiquant que les tests passent bien depuis le dernier commit.</p>
-<p>Pour ce faire, il suffit de créer un fichier au format Travis nommé <a hreflang="en" title="Voir le fichier Travis de Commandor" href="https://github.com/nfroidure/Commandor/blob/master/.travis.yml">.travis.yml</a> et de l&#039;ajouter à la racine de
-    votre projet. Vous devrez aussi autoriser travis à accéder à votre gitHub. Voilà la petite image qui indique si Commandor passe les tests depuis le dernier commit :</p>
-<p><img alt="Image indiquant le statut des tests" src="https://travis-ci.org/nfroidure/Commandor.png?branch=master" /> </p>
-<p>Je l&#039;ai ajoutée au README du projet pour monter le sérieux de ce dernier. Et voilà, Travis vous enverra un mail dès que vos tests échouent pour vous avertir. Si quelqu&#039;un fait un pull request, Travis testera pour vous si ce PR passe bien les
-    tests. Elle est pas belle la vie ?</p>
+<p>
+  Mais ce n&#039;est pas tout. Peut-être que vous connaissez Travis, un hook
+  pour GitHub qui permet de lancer les tests à chaque commit dans une machine
+  virtuelle. Les machines virtuelles de Travis embarquent PhantomJS et Firefox
+  par défaut. Nous allons donc utiliser Firefox pour afficher un joli logo
+  indiquant que les tests passent bien depuis le dernier commit.
+</p>
+<p>
+  Pour ce faire, il suffit de créer un fichier au format Travis nommé
+  <a
+    hreflang="en"
+    title="Voir le fichier Travis de Commandor"
+    href="https://github.com/nfroidure/Commandor/blob/master/.travis.yml"
+    >.travis.yml</a
+  >
+  et de l&#039;ajouter à la racine de votre projet. Vous devrez aussi autoriser
+  travis à accéder à votre gitHub. Voilà la petite image qui indique si
+  Commandor passe les tests depuis le dernier commit :
+</p>
+<p>
+  <img
+    alt="Image indiquant le statut des tests"
+    src="https://travis-ci.org/nfroidure/Commandor.png?branch=master"
+  />
+</p>
+<p>
+  Je l&#039;ai ajoutée au README du projet pour monter le sérieux de ce dernier.
+  Et voilà, Travis vous enverra un mail dès que vos tests échouent pour vous
+  avertir. Si quelqu&#039;un fait un pull request, Travis testera pour vous si
+  ce PR passe bien les tests. Elle est pas belle la vie ?
+</p>
 <h3>Aller plus loin</h3>
-<p>Sur le <a title="Se rednre sur le salon IRC de FranceJS" href="irc://irc.freenode.org&#35;francejs">salon IRC de FranceJS</a> on est euphoriques avec Karma et chacun partage ses expériences et astuces pour l&#039;utiliser. Erwan Mest a même promis qu&#039;il
-    ferait un billet sur le lancement de VM IE avec Travis (:p). N&#039;hésitez donc pas à nous rejoindre !</p>
-<p>De mon côté, j&#039;ai bien envie de créer un lanceur pour FirefoxOS ce qui devrait être assez simple. J&#039;ai créé un <a hreflang="en" title="Voir le projet du lanceur" href="https://github.com/nfroidure/karma-slimerjs-launcher">lanceur</a> pour
-    <a
-    hreflang="en" title="Voir le site de SlimerJS" href="http://slimerjs.org">SlimerJS</a> (un <a hreflang="en" title="Voir le site de PhantomJS" href="http://phantomjs.org">PhantomJS</a> basé sur Gecko), mais je n&#039;ai pas réussi à l&#039;utiliser avec Travis.</p>
-<p>Enfin, je suis en pleine réflexion sur la création d&#039;un lanceur pour Android. J&#039;ai trouvé quelques pistes comme l&#039;outil de lancement de VM en ligne de commande (<a hreflang="en" title="Voir l&#039;outil" href="http://developer.android.com/tools/help/emulator.html">emulator</a>)
-    et l&#039;outil de manipulation d&#039;instances de l&#039;émulateur (<a title="Voir l&#039;outil" href="http://developer.android.com/tools/help/monkeyrunner_concepts.html">monkey-runner</a>). Je pense qu&#039;avec tout cela, il y a moyen de faire
-    quelque chose, n&#039;hésitez pas à me bipper si vous connaissez déjà un outil permettant de le faire.</p>
+<p>
+  Sur le
+  <a
+    title="Se rednre sur le salon IRC de FranceJS"
+    href="irc://irc.freenode.org&#35;francejs"
+    >salon IRC de FranceJS</a
+  >
+  on est euphoriques avec Karma et chacun partage ses expériences et astuces
+  pour l&#039;utiliser. Erwan Mest a même promis qu&#039;il ferait un billet sur
+  le lancement de VM IE avec Travis (:p). N&#039;hésitez donc pas à nous
+  rejoindre !
+</p>
+<p>
+  De mon côté, j&#039;ai bien envie de créer un lanceur pour FirefoxOS ce qui
+  devrait être assez simple. J&#039;ai créé un
+  <a
+    hreflang="en"
+    title="Voir le projet du lanceur"
+    href="https://github.com/nfroidure/karma-slimerjs-launcher"
+    >lanceur</a
+  >
+  pour
+  <a hreflang="en" title="Voir le site de SlimerJS" href="http://slimerjs.org"
+    >SlimerJS</a
+  >
+  (un
+  <a hreflang="en" title="Voir le site de PhantomJS" href="http://phantomjs.org"
+    >PhantomJS</a
+  >
+  basé sur Gecko), mais je n&#039;ai pas réussi à l&#039;utiliser avec Travis.
+</p>
+<p>
+  Enfin, je suis en pleine réflexion sur la création d&#039;un lanceur pour
+  Android. J&#039;ai trouvé quelques pistes comme l&#039;outil de lancement de
+  VM en ligne de commande (<a
+    hreflang="en"
+    title="Voir l&#039;outil"
+    href="http://developer.android.com/tools/help/emulator.html"
+    >emulator</a
+  >) et l&#039;outil de manipulation d&#039;instances de l&#039;émulateur (<a
+    title="Voir l&#039;outil"
+    href="http://developer.android.com/tools/help/monkeyrunner_concepts.html"
+    >monkey-runner</a
+  >). Je pense qu&#039;avec tout cela, il y a moyen de faire quelque chose,
+  n&#039;hésitez pas à me bipper si vous connaissez déjà un outil permettant de
+  le faire.
+</p>

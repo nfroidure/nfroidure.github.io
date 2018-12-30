@@ -16,23 +16,24 @@ disqus=true
 
 <h2>Let's Subset JavaScript</h2>
 <p>
- TL;DR: Subsetting JavaScript is easy, you can do it with
- <a href="https://github.com/SimpliField/jsub"><code>jsub</code></a>.
+  TL;DR: Subsetting JavaScript is easy, you can do it with
+  <a href="https://github.com/SimpliField/jsub"><code>jsub</code></a
+  >.
 </p>
 <p>
-  At <a href="http://www.simplifield.com">SimpliField</a>, we allow users to
+  At <a href="https://www.simplifield.com">SimpliField</a>, we allow users to
   collect and analyse field data and as part of it, our users can create their
   own data models.
 </p>
 <p>
-  As a consequence, we needed a solution that allows to define
-  dynamically computed relational constraints. Things like dynamically define
-  a form field as optional based on some conditions/computations.
+  As a consequence, we needed a solution that allows to define dynamically
+  computed relational constraints. Things like dynamically define a form field
+  as optional based on some conditions/computations.
 </p>
 <p>
   We ended up with a reliable solution based on a user interface and simple
-  conditions. The problem we faced was that every new feature resulted in
-  new complexity.
+  conditions. The problem we faced was that every new feature resulted in new
+  complexity.
 </p>
 <p>
   We were also defining a new language our API consumers would certainly hate,
@@ -44,19 +45,26 @@ disqus=true
   We're using a full JavaScript stack (we call it MEANI for Mongo Express
   Angular NodeJS and Ionic). The big win of this kind of stack is not only
   isomorphism (I had great moments building the
-  <a href="http://slides.com/nfroidure/reaccess">end-to-end user's rights
-  management system</a> for our apps) but is mainly skill reuse.
+  <a href="http://slides.com/nfroidure/reaccess"
+    >end-to-end user's rights management system</a
+  >
+  for our apps) but is mainly skill reuse.
 </p>
 <p>
-  As a JavaScript developer, I can make some changes
-  to the back-end and apply the resulting changes in both the front-end
-  and the mobile app. It is really valuable as you don't have to rely on
-  someone else to make a bunch of related changes.
+  As a JavaScript developer, I can make some changes to the back-end and apply
+  the resulting changes in both the front-end and the mobile app. It is really
+  valuable as you don't have to rely on someone else to make a bunch of related
+  changes.
 </p>
 <h3>Subsetting JavaScript</h3>
 <p style="text-align:center;">
-  <img src="https://25kqb534wuaj2dio891i5ntf-wpengine.netdna-ssl.com/files/2011/09/CapitolJS.021.png" alt="Always bet in JavaScript" /><br />
-  <a href="https://brendaneich.com/2011/09/capitoljs-rivertrail/">Source: Brendan Eich's blog</a>
+  <img
+    src="https://brendaneich.com/wp-content/uploads/2011/09/CapitolJS.021-768x576.png"
+    alt="Always bet in JavaScript"
+  /><br />
+  <a href="https://brendaneich.com/2011/09/capitoljs-rivertrail/"
+    >Source: Brendan Eich's blog</a
+  >
 </p>
 <p>
   So we choose to rely on JavaScript for conditionally displayed fields,
@@ -104,13 +112,17 @@ assert.equal(errors.length, 0);
   advantages:
 </p>
 <ul>
-  <li>Syntax highlighting: you can simply add highlighted syntax to your own
-    API docs</li>
+  <li>
+    Syntax highlighting: you can simply add highlighted syntax to your own API
+    docs
+  </li>
   <li>Hinting: what about a custom JSLint module to help your customers?</li>
   <li>Parsing: syntax errors will be the same than for JavaScript;</li>
-  <li>No overhead: Just run it, especially if you are using the MEANI stack ;).</li>
+  <li>
+    No overhead: Just run it, especially if you are using the MEANI stack ;).
+  </li>
 </ul>
 <p>
-  There's probably a lot more things interesting with this approach let me
-  know your thoughts.
+  There's probably a lot more things interesting with this approach let me know
+  your thoughts.
 </p>

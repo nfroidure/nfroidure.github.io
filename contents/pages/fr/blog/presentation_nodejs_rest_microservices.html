@@ -18,10 +18,12 @@ disqus=true
 <h2>Micro-services first avec NodeJS</h2>
 <p>
   Jeudi dernier j'ai eu l'honneur de faire une présentation à
-  <a href="http://chtijs.francejs.org/archives/2016-02-25/index.html"
-    title="Voir le résumé de cette édition">ChtiJS 15</a>. Comme à chaque fois
-  que je fais une présentation, je passe forcément à côté de deux ou trois
-  détails.
+  <a
+    href="http://chtijs.francejs.org/archives/2016-02-25/index.html"
+    title="Voir le résumé de cette édition"
+    >ChtiJS 15</a
+  >. Comme à chaque fois que je fais une présentation, je passe forcément à côté
+  de deux ou trois détails.
 </p>
 <p>
   C'est donc l'occasion pour moi de proposer un petit billet sur pourquoi et
@@ -35,8 +37,8 @@ disqus=true
 </p>
 <p>
   On y met une pièce (l'équivalent d'une requête HTTP) puis quand la transaction
-  est effectuée (pièce bloquée dans le monnayeur, l'équivalent d'un statut
-  200 OK), alors on reçoit des cacahuètes (une réponse HTTP).
+  est effectuée (pièce bloquée dans le monnayeur, l'équivalent d'un statut 200
+  OK), alors on reçoit des cacahuètes (une réponse HTTP).
 </p>
 <p>
   Quand une transaction est validée, on garanti que le système a bien enregistré
@@ -53,29 +55,45 @@ disqus=true
   mails ou de la synchronisation à des systèmes distants.
 </p>
 <p>
-  L'approche micro-service telle que je la conçoit est donc répartie comme suit :
+  L'approche micro-service telle que je la conçoit est donc répartie comme
+  suit :
 </p>
 <ul>
-  <li>un frontal REST : un ou plusieurs processus qui traitent les reqûetes
-  entrantes;</li>
-  <li>un queue : dans laquelle on stocke des évènements qui déclencheront des
+  <li>
+    un frontal REST : un ou plusieurs processus qui traitent les reqûetes
+    entrantes;
+  </li>
+  <li>
+    un queue : dans laquelle on stocke des évènements qui déclencheront des
     actions différées. Ces évènements sont dépilés par de nombreux processus
-    spécialisés ce qui isole les responsabilités;</li>
+    spécialisés ce qui isole les responsabilités;
+  </li>
 </ul>
 <p>
-  Vous avez probablement, comme moi, vu circuler quelques articles vous expliquant
-  pourquoi vous feriez mieux d'apprendre à créer une application avant de penser
-  à faire une architecture scalable.
+  Vous avez probablement, comme moi, vu circuler quelques articles vous
+  expliquant pourquoi vous feriez mieux d'apprendre à créer une application
+  avant de penser à faire une architecture scalable.
 </p>
 <p>
-  Au délà de l'aspect péremptoire du conseil, je m'inscrits en faux sur ce point.
-  Il n'est jamais trop tôt pour bien faire. Pour faire mieux, pour faire plus...
+  Au délà de l'aspect péremptoire du conseil, je m'inscrits en faux sur ce
+  point. Il n'est jamais trop tôt pour bien faire. Pour faire mieux, pour faire
+  plus...
 </p>
 <p style="text-align:center">
-  <iframe src="//giphy.com/embed/JM8gUOupDDqgw" width="480" height="332"
-  frameBorder="0" class="giphy-embed" allowFullScreen></iframe><br />
-  <a href="https://giphy.com/gifs/daft-punk-interstella-5555-harder-better-faster-stronger-JM8gUOupDDqgw">
-    via GIPHY</a>
+  <iframe
+    src="//giphy.com/embed/JM8gUOupDDqgw"
+    width="480"
+    height="332"
+    frameborder="0"
+    class="giphy-embed"
+    allowfullscreen
+  ></iframe
+  ><br />
+  <a
+    href="https://giphy.com/gifs/daft-punk-interstella-5555-harder-better-faster-stronger-JM8gUOupDDqgw"
+  >
+    via GIPHY</a
+  >
 </p>
 <p>
   En effet, n'importe quel frontal REST doit pouvoir être subdivisé en plusieurs
@@ -94,31 +112,47 @@ disqus=true
   Pour se faire, rien de plus simple. Au lieu d'utiliser, day one, un message
   broker style RabbitMQ, vous créez un simple pub/sub qui permet de découpler
   les actions différées de votre API REST tout en ne gardant qu'un seul
-  processus dans la phase de développement, voire même en production si vous
-  ne prévoyez pas un trafic monumental au démarrage (cas de 95% des apps).
+  processus dans la phase de développement, voire même en production si vous ne
+  prévoyez pas un trafic monumental au démarrage (cas de 95% des apps).
 </p>
 <p>
   Pour illustrer le principe, dans un backend créé pour un hackathon, j'ai créé
-  <a href="https://github.com/nfroidure/TripStory/blob/cef64f401098809c81ecf8ddf2203eb48628aa46/backend/index.js#L56-L63"
-  title="Voir le service"
-  >un service</a> se servant de <code>process</code> pour créer un simple pub-sub
-  émulant un message broker.
+  <a
+    href="https://github.com/nfroidure/TripStory/blob/cef64f401098809c81ecf8ddf2203eb48628aa46/backend/index.js#L56-L63"
+    title="Voir le service"
+    >un service</a
+  >
+  se servant de <code>process</code> pour créer un simple pub-sub émulant un
+  message broker.
 </p>
 <p>
-  Ainsi, quand un utilisateur se connecte avec Twitter, on <a
+  Ainsi, quand un utilisateur se connecte avec Twitter, on
+  <a
     href="https://github.com/nfroidure/TripStory/blob/cef64f401098809c81ecf8ddf2203eb48628aa46/backend/app/authentication/authentication.controller.js#L248-L253"
-  >émet un évènement</a> qui est ensuite consommé <a
+    >émet un évènement</a
+  >
+  qui est ensuite consommé
+  <a
     href="https://github.com/nfroidure/TripStory/blob/cef64f401098809c81ecf8ddf2203eb48628aa46/backend/workers/twitter/twitter.bin.js#L7-L18"
-  >dans un simili-worker</a> complètement découplé qui se charge de synchroniser
-  les amis Twitter. Cette action qui pourra se faire dans un worker dédié
-  si cette application montait en charge.
+    >dans un simili-worker</a
+  >
+  complètement découplé qui se charge de synchroniser les amis Twitter. Cette
+  action qui pourra se faire dans un worker dédié si cette application montait
+  en charge.
 </p>
 <p>
   Bref, on a le beurre, l'argent du beurre, voire plus. Moralité: n'attendez
   jamais pour bien penser votre code, mais restez pragmatiques ;).
 </p>
 <p style="text-align:center">
-  <iframe src="//slides.com/nfroidure/architecture_nodejs_web_services/embed"
-  width="576" height="420" scrolling="no" frameborder="0"
-  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+  <iframe
+    src="//slides.com/nfroidure/architecture_nodejs_web_services/embed"
+    width="576"
+    height="420"
+    scrolling="no"
+    frameborder="0"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
 </p>

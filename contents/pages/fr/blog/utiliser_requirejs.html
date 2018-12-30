@@ -12,57 +12,236 @@ categories.+=.*
 disqus=true
 -->
 
-<p><strong>
-  Cet article est ancien et ne reflète plus ma façon de procéder. J'utilise
-  maintenant <code>browserify</code> et les modules CommonJS/NodeJS. Je vous
-  recommande de lire
-  <a href="faire-mieux-qu-angular-avec-require.html">cet article</a> plus au
-  goût du jour.
-</strong></p>
+<p>
+  <strong>
+    Cet article est ancien et ne reflète plus ma façon de procéder. J'utilise
+    maintenant <code>browserify</code> et les modules CommonJS/NodeJS. Je vous
+    recommande de lire
+    <a href="faire-mieux-qu-angular-avec-require.html">cet article</a> plus au
+    goût du jour.
+  </strong>
+</p>
 
 <h2>Astuces pour utiliser pleinement RequireJS</h2>
-<p>Pour un projet dont je vous reparlerai bientôt, j&#039;ai utilisé RequireJS pour la première fois en production. J&#039;en profite pour vous faire un petit retour d&#039;expérience avec quelques astuces de mon cru ;).</p>
+<p>
+  Pour un projet dont je vous reparlerai bientôt, j&#039;ai utilisé RequireJS
+  pour la première fois en production. J&#039;en profite pour vous faire un
+  petit retour d&#039;expérience avec quelques astuces de mon cru ;).
+</p>
 
 <h3>Présentation</h3>
-<p>Je vous ai parlé récemment des modules JavaScript (n&#039;hésites pas à lire ou relire mon <a title="En savoir plus sur les modules JS" href="module_javascript.html">billet sur les modules JavaScript</a> pour bien comprendre ce billet). <a hreflang="en"
-    title="Voir le site officiel de RequireJS" href="http://requirejs.org">RequireJS</a> est un gestionnaire de modules asynchrone. Il permet de charger les modules JavaScript par l&#039;analyse des dépendances de ces derniers puis les exécute dans le
-    bon ordre.</p>
-<p>Bien que RequireJS gère les modules synchrone du type CommonJS, il est plutôt recommandé d&#039;utiliser les modules <dfn lang="en">AMD (Asynchronous Module Definition)</dfn> qui peuvent ainsi être chargés en parallèle par RequireJS.</p>
-<p>Pour rendre notre code compatible avec AMD, il suffit d&#039;utiliser l&#039;un des patterns proposés par James Burke (le créateur de RequireJS), <a hreflang="en" title="Voir le dépôt en question" href="https://github.com/umdjs/umd">sur le dépôt</a> du
-    projet <dfn lang="en">UMD (Unified Module Definition)</dfn> visant à unifier la définition de modules.</p>
-<p>La seule chose qui peut paraître déroutante (et qui à mon avis est un défaut de conception originel) est que les identifiants de modules sont des identifiants et non des chemins de fichiers. Le fait que l&#039;on puisse utiliser des chemins de fichiers
-    n&#039;est qu&#039;un effet de bord puisque les slashs sont permis dans les noms de modules et réutilisés tels quels lors de la création de l&#039;URL correspondante au script.</p>
-<p>Cela amène à quelques soucis quand on souhaite importer un projet composé de plusieurs modules au sein de notre propre projet.</p>
-<h3>Utilisation</h3>
-<p>Pour utiliser RequireJS, rien de plus simple, il suffit de télécharger l&#039;unique fichier <code>require.js</code> (soit minifié, soit en clair pour développer). Puis, d&#039;ajouter la balise suivante dans votre HTML (la section <code>&lt;head&gt;</code>    de préférence)&#0160;:</p><pre>&lt;script data-main=&#034;javascript/Application&#034; src=&#034;javascript/libs/requirejs/require.js&#034; type=&#034;text/javascript&#034;&gt;&lt;/script&gt;</pre>
-<p>Ce bout de code a deux effets, d&#039;une part, charger RequireJS, d&#039;autre part, indiquer le fichier principal de votre application. C&#039;est à partir de ce fichier (ici, <code>javascript/Application.js</code>) que RequireJS va déduire tous les
-    fichiers nécessaires pour votre application (appelés dépendances).</p>
-<p>Comme vous pouvez le voir sur la capture d&#039;écran de <a hreflang="en" title="Jouer à mon Memory" href="http://memory.insertafter.com/">mon dernier projet</a>, le chargement de RequireJS et son exécution provoque bien le chargement de <code>Application.js</code>    puis de <a title="Voir l&#039;endroit où ces dépendances sont définies" href="https://github.com/nfroidure/Memory/blob/master/www/javascript/Application.js&#35;L6">ses trois dépendances</a> <code>Sounds.js</code>, <code>Commandor.js</code> et <code>View.js</code>.
-    On peut remarquer que ces trois dernières sont chargées en paralèlle.</p>
-<p> <img alt="Capture d&#039;écran du chargement du Memory" src="/images/capture-memory1.png" />
+<p>
+  Je vous ai parlé récemment des modules JavaScript (n&#039;hésites pas à lire
+  ou relire mon
+  <a title="En savoir plus sur les modules JS" href="module_javascript.html"
+    >billet sur les modules JavaScript</a
+  >
+  pour bien comprendre ce billet).
+  <a
+    hreflang="en"
+    title="Voir le site officiel de RequireJS"
+    href="http://requirejs.org"
+    >RequireJS</a
+  >
+  est un gestionnaire de modules asynchrone. Il permet de charger les modules
+  JavaScript par l&#039;analyse des dépendances de ces derniers puis les exécute
+  dans le bon ordre.
 </p>
-<p>RequireJS est particulièrement utile pour le développement. Il permet de ne pas avoir à constamment ajouter/retirer des balises <code>&lt;script&gt;</code> à chaque nouveau module ajouté au projet. On peut également l&#039;utiliser pour charger des scripts
-    à la volée uniquement lorsque c&#039;est nécessaire. Par exemple, dans mon Memory, je ne charge le code spécifique à chaque vue que lorsqu&#039;elle est affichée. Par exemple, ci dessous avec la vue <code>VueOptions.js</code>.</p>
-<p><img alt="Capture d&#039;écran de l&#039;affichage de la vue des options du jeu" src="/images/capture-memory2.png" /> </p>
+<p>
+  Bien que RequireJS gère les modules synchrone du type CommonJS, il est plutôt
+  recommandé d&#039;utiliser les modules
+  <dfn lang="en">AMD (Asynchronous Module Definition)</dfn> qui peuvent ainsi
+  être chargés en parallèle par RequireJS.
+</p>
+<p>
+  Pour rendre notre code compatible avec AMD, il suffit d&#039;utiliser
+  l&#039;un des patterns proposés par James Burke (le créateur de RequireJS),
+  <a
+    hreflang="en"
+    title="Voir le dépôt en question"
+    href="https://github.com/umdjs/umd"
+    >sur le dépôt</a
+  >
+  du projet <dfn lang="en">UMD (Unified Module Definition)</dfn> visant à
+  unifier la définition de modules.
+</p>
+<p>
+  La seule chose qui peut paraître déroutante (et qui à mon avis est un défaut
+  de conception originel) est que les identifiants de modules sont des
+  identifiants et non des chemins de fichiers. Le fait que l&#039;on puisse
+  utiliser des chemins de fichiers n&#039;est qu&#039;un effet de bord puisque
+  les slashs sont permis dans les noms de modules et réutilisés tels quels lors
+  de la création de l&#039;URL correspondante au script.
+</p>
+<p>
+  Cela amène à quelques soucis quand on souhaite importer un projet composé de
+  plusieurs modules au sein de notre propre projet.
+</p>
+<h3>Utilisation</h3>
+<p>
+  Pour utiliser RequireJS, rien de plus simple, il suffit de télécharger
+  l&#039;unique fichier <code>require.js</code> (soit minifié, soit en clair
+  pour développer). Puis, d&#039;ajouter la balise suivante dans votre HTML (la
+  section <code>&lt;head&gt;</code> de préférence)&#0160;:
+</p>
+<pre>
+&lt;script data-main=&#034;javascript/Application&#034; src=&#034;javascript/libs/requirejs/require.js&#034; type=&#034;text/javascript&#034;&gt;&lt;/script&gt;</pre
+>
+<p>
+  Ce bout de code a deux effets, d&#039;une part, charger RequireJS,
+  d&#039;autre part, indiquer le fichier principal de votre application.
+  C&#039;est à partir de ce fichier (ici,
+  <code>javascript/Application.js</code>) que RequireJS va déduire tous les
+  fichiers nécessaires pour votre application (appelés dépendances).
+</p>
+<p>
+  Comme vous pouvez le voir sur la capture d&#039;écran de
+  <a
+    hreflang="en"
+    title="Jouer à mon Memory"
+    href="http://memory.insertafter.com/"
+    >mon dernier projet</a
+  >, le chargement de RequireJS et son exécution provoque bien le chargement de
+  <code>Application.js</code> puis de
+  <a
+    title="Voir l&#039;endroit où ces dépendances sont définies"
+    href="https://github.com/nfroidure/Memory/blob/3f5cb8e52ec84ff8e7567588a9180dfb098ba50c/www/javascript/Application.js#L6"
+    >ses trois dépendances</a
+  >
+  <code>Sounds.js</code>, <code>Commandor.js</code> et <code>View.js</code>. On
+  peut remarquer que ces trois dernières sont chargées en paralèlle.
+</p>
+<p>
+  <img
+    alt="Capture d&#039;écran du chargement du Memory"
+    src="/images/capture-memory1.png"
+  />
+</p>
+<p>
+  RequireJS est particulièrement utile pour le développement. Il permet de ne
+  pas avoir à constamment ajouter/retirer des balises
+  <code>&lt;script&gt;</code> à chaque nouveau module ajouté au projet. On peut
+  également l&#039;utiliser pour charger des scripts à la volée uniquement
+  lorsque c&#039;est nécessaire. Par exemple, dans mon Memory, je ne charge le
+  code spécifique à chaque vue que lorsqu&#039;elle est affichée. Par exemple,
+  ci dessous avec la vue <code>VueOptions.js</code>.
+</p>
+<p>
+  <img
+    alt="Capture d&#039;écran de l&#039;affichage de la vue des options du jeu"
+    src="/images/capture-memory2.png"
+  />
+</p>
 <h3>r.js et mise en production</h3>
-<p>Bien que RequireJS soit intéressant, ce n&#039;est bien souvent pas la solution pour une application en production. En effet, même asynchrone, le chargement reste bien plus lent que si l&#039;on regroupait tous les fichiers au sein d&#039;un seul et même
-    fichier et que, par la même occasion, on en profitait pour le minifier.</p>
-<p>C&#039;est l&#039;objet de r.js du même auteur. Il permet en une ligne de commande de réunir et minifier toutes les dépendances de votre application. Pour l&#039;installer, rien de plus simple grâce à NodeJS&#0160;:</p><pre>npm install -g requirejs</pre>
-<p>Pour grouper et minifier tous les fichiers de mon application, cela donne&#0160;:</p><pre>r.js -o baseUrl=./javascript/ name=Application out=javascript/production.js</pre>
-<p>Tous&#0160;? Non&#0160;! Un certains nombre de fichiers résistent au minifieur. Les fichiers chargé dynamiquement. En effet, r.js se base sur une analyse statique du code source (il n&#039;est pas exécuté). Il n&#039;a donc aucun moyen de deviner si un
-    fichier est chargé dynamiquement durant le cycle de vie de l&#039;application.</p>
-<p>Cela peut-être laissé en l&#039;état sciemment. En effet, si la taille des fichiers chargés dynamiquement est très importante, on préfèrera continuer de les charger dynamiquement. Sinon, on peut facilement forcer l&#039;ajout de ces dépendances en
-    <a
-    hreflang="en" title="Voir le code concerné" href="https://github.com/nfroidure/Memory/blob/master/www/javascript/Application.js&#35;L3">ajoutant une fonction</a> faisant un appel à la fonction <code>require</code> contenant toutes les dépendances. Cette fonction n&#039;est à aucun moment exécutée, mais ça, r.js ne le sait pas puisqu&#039;il se base sur une analyse statique.</p>
-<p>Nous voilà donc avec un fichier production.js contenant toutes nos dépendances. On pourrait penser que nous touchons au but. Mais pour un perfectionniste, ce n&#039;est que le début ;).</p>
+<p>
+  Bien que RequireJS soit intéressant, ce n&#039;est bien souvent pas la
+  solution pour une application en production. En effet, même asynchrone, le
+  chargement reste bien plus lent que si l&#039;on regroupait tous les fichiers
+  au sein d&#039;un seul et même fichier et que, par la même occasion, on en
+  profitait pour le minifier.
+</p>
+<p>
+  C&#039;est l&#039;objet de r.js du même auteur. Il permet en une ligne de
+  commande de réunir et minifier toutes les dépendances de votre application.
+  Pour l&#039;installer, rien de plus simple grâce à NodeJS&#0160;:
+</p>
+<pre>npm install -g requirejs</pre>
+<p>
+  Pour grouper et minifier tous les fichiers de mon application, cela
+  donne&#0160;:
+</p>
+<pre>
+r.js -o baseUrl=./javascript/ name=Application out=javascript/production.js</pre
+>
+<p>
+  Tous&#0160;? Non&#0160;! Un certains nombre de fichiers résistent au
+  minifieur. Les fichiers chargé dynamiquement. En effet, r.js se base sur une
+  analyse statique du code source (il n&#039;est pas exécuté). Il n&#039;a donc
+  aucun moyen de deviner si un fichier est chargé dynamiquement durant le cycle
+  de vie de l&#039;application.
+</p>
+<p>
+  Cela peut-être laissé en l&#039;état sciemment. En effet, si la taille des
+  fichiers chargés dynamiquement est très importante, on préfèrera continuer de
+  les charger dynamiquement. Sinon, on peut facilement forcer l&#039;ajout de
+  ces dépendances en
+  <a
+    hreflang="en"
+    title="Voir le code concerné"
+    href="https://github.com/nfroidure/Memory/blob/3f5cb8e52ec84ff8e7567588a9180dfb098ba50c/www/javascript/Application.js&#35;L3"
+    >ajoutant une fonction</a
+  >
+  faisant un appel à la fonction <code>require</code> contenant toutes les
+  dépendances. Cette fonction n&#039;est à aucun moment exécutée, mais ça, r.js
+  ne le sait pas puisqu&#039;il se base sur une analyse statique.
+</p>
+<p>
+  Nous voilà donc avec un fichier production.js contenant toutes nos
+  dépendances. On pourrait penser que nous touchons au but. Mais pour un
+  perfectionniste, ce n&#039;est que le début ;).
+</p>
 <h3>Supprimer RequireJS</h3>
-<p>r.js ne supprime pas la dépendance à RequireJS. Ainsi, pour que votre projet continue de fonctionner, vous devez absolument le conserver. Et ça, c&#039;est pas cool ;). Pour éviter ce problème, il existe cependant une voie à emprunter. Les modules UMD.
-    En effet, un module UMD peut être créé pour fonctionner avec RequireJS et dans le contexte global (c&#039;est le cas du module <a hreflang="en" title="Voir le module en question" href="https://github.com/nfroidure/Commandor/blob/master/Commandor.js">Commandor.js</a>    par exemple). Certains fonctionnent même avec Node, comme le module <a hreflang="en" title="Voir le module Promise" href="https://github.com/nfroidure/Promise/blob/master/Promise.js">Promise</a>.</p>
-<p>Ainsi, si l&#039;on a utilisé les modules UMD et non seulement AMD, alors on peut retirer RequireJS et nos modules continueront de fonctionner. Le seul souci est qu&#039;ils seront exécutés dans le contexte global ce qui n&#039;est pas recommandé à cause
-    des collisions qu&#039;il peut y avoir entre les différents scripts tiers présents dans votre page.</p>
-<p>L&#039;idée est alors de modifier une dernière fois votre fichier JavaScript de production en l&#039;englobant dans une focntion anonyme immédiatemment exécutée en lui fournissant un contexte vierge. Voici un extrait de mon script de mise en production
-    (<a hreflang="en" title="Voir le script entier" href="https://github.com/nfroidure/Memory/blob/master/build.sh">build.sh</a>)&#0160;:</p><pre>&#35; Adding a simple closure<br />prodContent=$(cat javascript/production.js)<br />echo &#034;(function() &#123; $prodContent &#125;).call(&#123;&#125;)&#034; &gt; javascript/production.js</pre>
-<p>Et voilà, tout est prêt, il ne nous reste plus qu&#039;à supprimer la balise de RequireJS et ajouter une balise pour notre script de production, de préférence cette fois ci à la fin de notre document HTML. J&#039;ai aussi automatisé ça grâce aux commentaires
-    HTML&#0160;:</p><pre>&#35; Comment RequireJS script tag<br />sed -i &#034;s/DEV--&gt;/DEV--/g&#034; index.html<br />&#35; Uncomment production script tag<br />sed -i &#034;s/PROD--/PROD--&gt;/g&#034; index.html</pre>
+<p>
+  r.js ne supprime pas la dépendance à RequireJS. Ainsi, pour que votre projet
+  continue de fonctionner, vous devez absolument le conserver. Et ça, c&#039;est
+  pas cool ;). Pour éviter ce problème, il existe cependant une voie à
+  emprunter. Les modules UMD. En effet, un module UMD peut être créé pour
+  fonctionner avec RequireJS et dans le contexte global (c&#039;est le cas du
+  module
+  <a
+    hreflang="en"
+    title="Voir le module en question"
+    href="https://github.com/nfroidure/Commandor/blob/master/src/Commandor.js"
+    >Commandor.js</a
+  >
+  par exemple). Certains fonctionnent même avec Node, comme le module
+  <a
+    hreflang="en"
+    title="Voir le module Promise"
+    href="https://github.com/nfroidure/Promise/blob/master/src/Promise.js"
+    >Promise</a
+  >.
+</p>
+<p>
+  Ainsi, si l&#039;on a utilisé les modules UMD et non seulement AMD, alors on
+  peut retirer RequireJS et nos modules continueront de fonctionner. Le seul
+  souci est qu&#039;ils seront exécutés dans le contexte global ce qui
+  n&#039;est pas recommandé à cause des collisions qu&#039;il peut y avoir entre
+  les différents scripts tiers présents dans votre page.
+</p>
+<p>
+  L&#039;idée est alors de modifier une dernière fois votre fichier JavaScript
+  de production en l&#039;englobant dans une focntion anonyme immédiatemment
+  exécutée en lui fournissant un contexte vierge. Voici un extrait de mon script
+  de mise en production (<a
+    hreflang="en"
+    title="Voir le script entier"
+    href="https://github.com/nfroidure/Memory/blob/f57c64ac9301aaf412f2969ddf9db96c5047cb5a/build.sh"
+    >build.sh</a
+  >)&#0160;:
+</p>
+<pre>&#35; Adding a simple closure<br />prodContent=$(cat javascript/production.js)<br />echo &#034;(function() &#123; $prodContent &#125;).call(&#123;&#125;)&#034; &gt; javascript/production.js</pre>
+<p>
+  Et voilà, tout est prêt, il ne nous reste plus qu&#039;à supprimer la balise
+  de RequireJS et ajouter une balise pour notre script de production, de
+  préférence cette fois ci à la fin de notre document HTML. J&#039;ai aussi
+  automatisé ça grâce aux commentaires HTML&#0160;:
+</p>
+<pre>&#35; Comment RequireJS script tag<br />sed -i &#034;s/DEV--&gt;/DEV--/g&#034; index.html<br />&#35; Uncomment production script tag<br />sed -i &#034;s/PROD--/PROD--&gt;/g&#034; index.html</pre>
 <p>Vos commentaires, avis, améliorations éventuelles sont les bienvenues ;).</p>
-<p>Ajout de dernière minute &#0160;: <a title="Voir son profil twitter" href="https://twitter.com/_Florian_R">Florian</a> m&#039;a appris sur Twitter l&#039;existence du <a hreflang="en" title="Voir le dépôt du projet" href="https://github.com/jrburke/almond">projet almond</a>    (tjrs du même auteur), visant à réduire au maximum l&#039;empreinte de RequireJS. Une bonne alternative à ma méthode si vous décidez de conserver le chargement asynchrone.</p>
+<p>
+  Ajout de dernière minute &#0160;:
+  <a title="Voir son profil twitter" href="https://twitter.com/_Florian_R"
+    >Florian</a
+  >
+  m&#039;a appris sur Twitter l&#039;existence du
+  <a
+    hreflang="en"
+    title="Voir le dépôt du projet"
+    href="https://github.com/jrburke/almond"
+    >projet almond</a
+  >
+  (tjrs du même auteur), visant à réduire au maximum l&#039;empreinte de
+  RequireJS. Une bonne alternative à ma méthode si vous décidez de conserver le
+  chargement asynchrone.
+</p>

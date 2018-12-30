@@ -15,25 +15,63 @@ disqus=true
 -->
 
 <h2>Easily Implement Stacks (Fifo) And Queues (Lifo) With JavaScript</h2>
-<p>I&#039;m currently reviewing Javascript basis for a personnal project and it appears i often use stacks and queues implicitly. Let&#039;s make it explicit and easyer to debug/use.</p>
+<p>
+  I&#039;m currently reviewing Javascript basis for a personnal project and it
+  appears i often use stacks and queues implicitly. Let&#039;s make it explicit
+  and easyer to debug/use.
+</p>
 
-<p>It&#039;s really easy to create queues (<acronym title="First In First Out">FIFO</acronym>) by simply creating an Array and only use push and shift methods. The same for stacks (<acronym title="Last In First Out">LIFO</acronym>) with push and pop. But
-    when coming back to the code or working together it can lead to hardly detectable bugs or unexpected behaviors. That&#039;s why i decided to implement them seriously with the help of the closure pattern. Let&#039;s dive in the code.</p>
+<p>
+  It&#039;s really easy to create queues (<acronym title="First In First Out"
+    >FIFO</acronym
+  >) by simply creating an Array and only use push and shift methods. The same
+  for stacks (<acronym title="Last In First Out">LIFO</acronym>) with push and
+  pop. But when coming back to the code or working together it can lead to
+  hardly detectable bugs or unexpected behaviors. That&#039;s why i decided to
+  implement them seriously with the help of the closure pattern. Let&#039;s dive
+  in the code.
+</p>
 <h3>Queues : First In Firt Out</h3>
 <p>Here is the code :</p>
-<script type="text/javascript" src="https://gist.github.com/nfroidure/5472445.js"></script>
-<noscript><pre>var Queue = function()<br /> &#123;<br /> var functionSet=(function()<br /> &#123;<br /> var _elements=&#91;&#93;; // creating a private array<br /> return [[function() // push function<br /> &#123; return _elements.push .apply(_elements,arguments); &#125;,<br /> function() // shift function<br /> &#123; return _elements.shift .apply(_elements,arguments); &#125;,<br /> function() &#123; return _elements.length; &#125;,<br /> function(n) &#123; return _elements.length=n; &#125;]];<br /> &#125;)();<br /> this.push=functionSet[[0]];<br /> this.shift=functionSet[[1]];<br /> this.getLength=functionSet[[2]];<br /> this.setLength=functionSet[[3]];<br /> // initializing the queue with given arguments<br /> this.push.apply(this,arguments);<br /> &#125;; </pre><pre>var q=new Queue(0,1), e;<br />q.push(2);<br />console.log(q.getLength()); // 3<br />while(undefined!==(e=q.shift()))<br /> console.log(e); // 0, 1, 2 </pre>
+<script
+  type="text/javascript"
+  src="https://gist.github.com/nfroidure/5472445.js"
+></script>
+<noscript>
+  <pre>var Queue = function()<br /> &#123;<br /> var functionSet=(function()<br /> &#123;<br /> var _elements=&#91;&#93;; // creating a private array<br /> return [[function() // push function<br /> &#123; return _elements.push .apply(_elements,arguments); &#125;,<br /> function() // shift function<br /> &#123; return _elements.shift .apply(_elements,arguments); &#125;,<br /> function() &#123; return _elements.length; &#125;,<br /> function(n) &#123; return _elements.length=n; &#125;]];<br /> &#125;)();<br /> this.push=functionSet[[0]];<br /> this.shift=functionSet[[1]];<br /> this.getLength=functionSet[[2]];<br /> this.setLength=functionSet[[3]];<br /> // initializing the queue with given arguments<br /> this.push.apply(this,arguments);<br /> &#125;; </pre>
+  <pre>var q=new Queue(0,1), e;<br />q.push(2);<br />console.log(q.getLength()); // 3<br />while(undefined!==(e=q.shift()))<br /> console.log(e); // 0, 1, 2 </pre>
 </noscript>
-<p>The tip is deadly simple, we&#039;re keeping a reference to the elements in the scope of our set of functions and the Queue instances expose only those functions as methods. So, we&#039;re sure our queues will be used properly.</p>
-<p>If you&#039;re coding in a modern JavaScript engine you&#039;ll probably want to access the queue length as a property like it&#039;s done with arrays or strings. Here is the way to :</p>
-<script type="text/javascript" src="https://gist.github.com/nfroidure/5472480.js"></script>
-<noscript><pre>var Queue = function() &#123;<br /> var functionSet=(function() &#123;<br /> var _elements=[[]]; // creating a private array<br /> return [[function() // push function<br /> &#123; return _elements.push .apply(_elements,arguments); &#125;, function() // shift function<br /> &#123; return _elements.shift .apply(_elements,arguments); &#125;,<br /> function() &#123; return _elements.length; &#125;, function(n) &#123; return _elements.length=n; &#125;]];<br /> &#125;)();<br /> this.push=functionSet[[0]];<br /> this.shift=functionSet[[1]];<br /> Object.defineProperty(this,&#039;length&#039;,&#123;&#039;get&#039;:functionSet[[2]],&#039;set&#039;:functionSet[[3]]&#125;);<br /> // initializing the queue with given arguments<br /> this.push.apply(this,arguments);<br /> &#125;; </pre>
-    <p>Our sample code becomes :</p><pre>var q=new Queue(0,1), e;<br />q.push(2);<br />console.log(q.length); // 3<br />while(undefined!==(e=q.shift()))<br /> console.log(e); // 0, 1, 2 </pre>
+<p>
+  The tip is deadly simple, we&#039;re keeping a reference to the elements in
+  the scope of our set of functions and the Queue instances expose only those
+  functions as methods. So, we&#039;re sure our queues will be used properly.
+</p>
+<p>
+  If you&#039;re coding in a modern JavaScript engine you&#039;ll probably want
+  to access the queue length as a property like it&#039;s done with arrays or
+  strings. Here is the way to:
+</p>
+<script
+  type="text/javascript"
+  src="https://gist.github.com/nfroidure/5472480.js"
+></script>
+<noscript>
+  <pre>var Queue = function() &#123;<br /> var functionSet=(function() &#123;<br /> var _elements=[[]]; // creating a private array<br /> return [[function() // push function<br /> &#123; return _elements.push .apply(_elements,arguments); &#125;, function() // shift function<br /> &#123; return _elements.shift .apply(_elements,arguments); &#125;,<br /> function() &#123; return _elements.length; &#125;, function(n) &#123; return _elements.length=n; &#125;]];<br /> &#125;)();<br /> this.push=functionSet[[0]];<br /> this.shift=functionSet[[1]];<br /> Object.defineProperty(this,&#039;length&#039;,&#123;&#039;get&#039;:functionSet[[2]],&#039;set&#039;:functionSet[[3]]&#125;);<br /> // initializing the queue with given arguments<br /> this.push.apply(this,arguments);<br /> &#125;; </pre>
+  <p>Our sample code becomes :</p>
+  <pre>var q=new Queue(0,1), e;<br />q.push(2);<br />console.log(q.length); // 3<br />while(undefined!==(e=q.shift()))<br /> console.log(e); // 0, 1, 2 </pre>
 </noscript>
 <h3>Stacks (Last In First Out)</h3>
-<p>Now we can simply modify the above code to also manage stacks :</p>
-<script type="text/javascript" src="https://gist.github.com/nfroidure/5472493.js"></script>
-<noscript><pre>var Stack = function() &#123;<br /> var functionSet=(function() &#123;<br /> var _elements=[[]]; // creating a private array<br /> return [[function() // push function<br /> &#123; return _elements.push .apply(_elements,arguments); &#125;,<br /> function() // pop function<br /> &#123; return _elements.pop .apply(_elements,arguments); &#125;,<br /> function() &#123; return _elements.length; &#125;,<br /> function(n) &#123; return _elements.length=n; &#125;]];<br /> &#125;)();<br /> this.push=functionSet[[0]];<br /> this.pop=functionSet[[1]];<br /> this.getLength=functionSet[[2]];<br /> this.setLength=functionSet[[3]];<br /> // initializing the stack with given arguments<br /> this.push.apply(this,arguments);<br /> &#125;; </pre>
-    <p>Let&#039;s test it :</p><pre>var s=new Stack(0,1), e;<br />s.push(2);<br />console.log(s.getLength()); // 3<br />while(undefined!==(e=s.pop()))<br /> console.log(e); // 2, 1, 0</pre>
+<p>Now we can simply modify the above code to also manage stacks:</p>
+<script
+  type="text/javascript"
+  src="https://gist.github.com/nfroidure/5472493.js"
+></script>
+<noscript>
+  <pre>var Stack = function() &#123;<br /> var functionSet=(function() &#123;<br /> var _elements=[[]]; // creating a private array<br /> return [[function() // push function<br /> &#123; return _elements.push .apply(_elements,arguments); &#125;,<br /> function() // pop function<br /> &#123; return _elements.pop .apply(_elements,arguments); &#125;,<br /> function() &#123; return _elements.length; &#125;,<br /> function(n) &#123; return _elements.length=n; &#125;]];<br /> &#125;)();<br /> this.push=functionSet[[0]];<br /> this.pop=functionSet[[1]];<br /> this.getLength=functionSet[[2]];<br /> this.setLength=functionSet[[3]];<br /> // initializing the stack with given arguments<br /> this.push.apply(this,arguments);<br /> &#125;; </pre>
+  <p>Let&#039;s test it:</p>
+  <pre>var s=new Stack(0,1), e;<br />s.push(2);<br />console.log(s.getLength()); // 3<br />while(undefined!==(e=s.pop()))<br /> console.log(e); // 2, 1, 0</pre>
 </noscript>
-<p>As you can see JavaScript closures allows you to easily create constructors using only a subset of an existing data type. Feel free to use or patch it !</p>
+<p>
+  As you can see JavaScript closures allows you to easily create constructors
+  using only a subset of an existing data type. Feel free to use or patch it!
+</p>

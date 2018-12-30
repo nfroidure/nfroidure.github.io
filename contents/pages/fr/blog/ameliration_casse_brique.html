@@ -14,18 +14,72 @@ disqus=true
 -->
 
 <h2>Amélioration d&#039;un casse-brique</h2>
-<p>J&#039;ai cliqué via Twitter sur un lien vers un casse-brique en développement. Il avait des problèmes de performance étonnants. J&#039;y ai mis mon grain de sel.</p>
-
-<p>Un <a hreflang="en" title="Voir le dépôt" href="https://github.com/jonathankowalski/CasseBriques">casse-brique en création</a> a donné du fil à retordre à mon CPU. Cela était assez étrange car pour l&#039;instant, il n&#039;y avait que la barre et une balle qui se baladait. Rien ne justifiant ce problème de perf.</p>
-<p><img alt="Casse brique" src="/images/breakit.png" />
+<p>
+  J&#039;ai cliqué via Twitter sur un lien vers un casse-brique en
+  développement. Il avait des problèmes de performance étonnants. J&#039;y ai
+  mis mon grain de sel.
 </p>
-<p>Après un petit coup d&#039;œil sur la source, je me suis rendu compte qu&#039;il y avait plusieurs problèmes de conception. Le premier était évident. À chaque boucle de jeu, le canvas était entièrement redessiné ce qui provoquait un écriture règulière de nombreux pixels blancs.</p>
-<p>Pour pallier ce problème, j&#039;ai renforcé le modèle objet du petit jeu en déléguant à chaque objet la responsabilité d&#039;effacer sa précédente impression avant de s&#039;imprimer de nouveau.</p>
-<p>Pour la gestion de la barre, le précédent programme écoutait l&#039;évènement onmousemove, mettait à jour les coordonnées et la barre s&#039;affichait perpétuellement dans la boucle principale du jeu. J&#039;ai connecté directement le gestionnaire d&#039;évènement
-    à la méthode d&#039;impression de la barre permettant un affichage uniquement en cas de changement de coordonnées.</p>
-<p>Le jeu est maintenant très fluide et j&#039;espère que son créateur sera content de mes petites modifications. C&#039;est la magie de GitHub, on peut participer à des projets de manière épisodique et faire avancer le schmilbick ! Cela m&#039;a pris une
-    heure ou deux et j&#039;imagine que ça peut relancer le projet de ce développeur. J&#039;ai bien sûr fait un <a hreflang="en" title="Voir le pull request" href="https://github.com/jonathankowalski/CasseBriques/pull/1">pull request</a>.</p>
-<p>J&#039;ai aussi rendu le jeu flexible, il suffit d&#039;instancier un object Game en passant un élément HTML à son constructeur pour que le jeu s&#039;affiche dedans et s&#039;adapte à la taille que cet élément permet d&#039;exploiter.</p>
-<p>Il reste à créer une méthode de génération de briques s&#039;adaptant à la taille et à gérer les collisions pour avoir un jeu jouable (j&#039;ai aussi implémenté le rebond sur la barre). Je n&#039;en ai pas le temps maintenant, mais pourquoi pas plus
-    tard. À moins que vous ne le fassiez avant moi !</p>
-<p>Information : Finalement, j&#039;ai directement créé un <a title="Voir le tutoriel" href="html5_casse_brique.html">tutoriel complet pour la création d&#039;un casse-brique</a>.</p>
+
+<p>
+  Un
+  <a
+    hreflang="en"
+    title="Voir le dépôt"
+    href="https://github.com/jonathankowalski/CasseBriques"
+    >casse-brique en création</a
+  >
+  a donné du fil à retordre à mon CPU. Cela était assez étrange car pour
+  l&#039;instant, il n&#039;y avait que la barre et une balle qui se baladait.
+  Rien ne justifiant ce problème de perf.
+</p>
+<p><img alt="Casse brique" src="/images/breakit.png" /></p>
+<p>
+  Après un petit coup d&#039;œil sur la source, je me suis rendu compte
+  qu&#039;il y avait plusieurs problèmes de conception. Le premier était
+  évident. À chaque boucle de jeu, le canvas était entièrement redessiné ce qui
+  provoquait un écriture règulière de nombreux pixels blancs.
+</p>
+<p>
+  Pour pallier ce problème, j&#039;ai renforcé le modèle objet du petit jeu en
+  déléguant à chaque objet la responsabilité d&#039;effacer sa précédente
+  impression avant de s&#039;imprimer de nouveau.
+</p>
+<p>
+  Pour la gestion de la barre, le précédent programme écoutait l&#039;évènement
+  onmousemove, mettait à jour les coordonnées et la barre s&#039;affichait
+  perpétuellement dans la boucle principale du jeu. J&#039;ai connecté
+  directement le gestionnaire d&#039;évènement à la méthode d&#039;impression de
+  la barre permettant un affichage uniquement en cas de changement de
+  coordonnées.
+</p>
+<p>
+  Le jeu est maintenant très fluide et j&#039;espère que son créateur sera
+  content de mes petites modifications. C&#039;est la magie de GitHub, on peut
+  participer à des projets de manière épisodique et faire avancer le
+  schmilbick ! Cela m&#039;a pris une heure ou deux et j&#039;imagine que ça
+  peut relancer le projet de ce développeur. J&#039;ai bien sûr fait un
+  <a
+    hreflang="en"
+    title="Voir le pull request"
+    href="https://github.com/jonathankowalski/CasseBriques/pull/1"
+    >pull request</a
+  >.
+</p>
+<p>
+  J&#039;ai aussi rendu le jeu flexible, il suffit d&#039;instancier un object
+  Game en passant un élément HTML à son constructeur pour que le jeu
+  s&#039;affiche dedans et s&#039;adapte à la taille que cet élément permet
+  d&#039;exploiter.
+</p>
+<p>
+  Il reste à créer une méthode de génération de briques s&#039;adaptant à la
+  taille et à gérer les collisions pour avoir un jeu jouable (j&#039;ai aussi
+  implémenté le rebond sur la barre). Je n&#039;en ai pas le temps maintenant,
+  mais pourquoi pas plus tard. À moins que vous ne le fassiez avant moi !
+</p>
+<p>
+  Information : Finalement, j&#039;ai directement créé un
+  <a title="Voir le tutoriel" href="html5_casse_brique.html"
+    >tutoriel complet pour la création d&#039;un casse-brique</a
+  >.
+</p>

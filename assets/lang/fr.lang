@@ -59,17 +59,3 @@ siteModules.community.l_list.*.link=Flux de syndication
 siteModules.community.l_list.*.link_tx=Suivez la publication de mes billets sur mon blog
 siteModules.community.l_list.*.class=atom
 siteModules.community.l_content=Retrouvez moi sur les différents réseaux sociaux !
-## Tools
-siteModules.tools.l_link=Mes extensions
-siteModules.tools.l_list.+.url=http://kgen.elitwork.com
-siteModules.tools.l_list.*.link=KGen : Analyseur syntaxique de mots-clés permet de connaître les mots-clés considérés comme important par les moteurs de recherche sur votre site.
-siteModules.tools.l_list.*.link_tx=Télécharger KGen
-siteModules.tools.l_list.*.class=kgen
-siteModules.tools.l_list.+.url=http://bbcomposer.elitwork.com
-siteModules.tools.l_list.*.link=BBComposer : Cet éditeur permet de rédiger du contenu de haute qualité pour vos sites Internet grâce au respect de la sémantique du HTML.
-siteModules.tools.l_list.*.link_tx=Télécharger BBComposer
-siteModules.tools.l_list.*.class=bbcomposer
-siteModules.tools.l_list.+.url=http://canimage.elitwork.com
-siteModules.tools.l_list.*.link=CanImage : Editez facilement vos images avant de les ajouter à votre site Internet directement à l'intérieur de Firefox.
-siteModules.tools.l_list.*.link_tx=Télécharger CanImage
-siteModules.tools.l_list.*.class=canimage

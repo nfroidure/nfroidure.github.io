@@ -19,21 +19,21 @@ disqus=true
 <h2>Design de bases de données MongoDB</h2>
 <p>
   Comme nous l'avons vu précédemment, la conception de bases de données avec
-  MongoDB est  <a href="retour_xp_mongodb.html">bien différente</a> de la
+  MongoDB est <a href="retour_xp_mongodb.html">bien différente</a> de la
   conception avec les bases de données relationnelles.
 </p>
 <p>
-  Dans cet article, je vous propose d'aller un peu plus loin dans les
-  techniques de conception de schéma avec MongoDB. Voici quelques conseils
-  et patterns que j'ai eu à utiliser pour le backend de l'application SaaS que
-  nous développons chez SimpliField.
+  Dans cet article, je vous propose d'aller un peu plus loin dans les techniques
+  de conception de schéma avec MongoDB. Voici quelques conseils et patterns que
+  j'ai eu à utiliser pour le backend de l'application SaaS que nous développons
+  chez SimpliField.
 </p>
 <h3>Collection != Modèle != Ressource</h3>
 <p>
   Les documents MongoDB sont stockés dans des collections. Cette appellation
   n'est pas innocente. Il faut voir une collection comme un amas de documents
-  pas forcément uniformes et sans aucune corrélation avec les concepts que
-  vous manipulez dans vos applications.
+  pas forcément uniformes et sans aucune corrélation avec les concepts que vous
+  manipulez dans vos applications.
 </p>
 <p>
   Ainsi, il ne faut pas chercher à associer les ressources de votre API REST aux
@@ -74,25 +74,34 @@ disqus=true
   <li>GET /users - Pour obtenir la liste des utilisateurs&nbsp;;</li>
   <li>POST /users - Pour ajouter un utilisateur&nbsp;;</li>
   <li>GET|PUT /users/:id - Pour lire/écrire un utilisateur&nbsp;;</li>
-  <li>GET|PUT /users/:id/preferences/:name - Pour lire/écrire une préférence&nbsp;;</li>
+  <li>
+    GET|PUT /users/:id/preferences/:name - Pour lire/écrire une
+    préférence&nbsp;;
+  </li>
   <li>GET|PUT /users/:id/tags - Pour lire/écrire les tags associés&nbsp;;</li>
-  <li>GET|PUT /users/:id/locations - Pour lire/éditer les lieux de l'utilisateur&nbsp;;</li>
-  <li>GET|PUT /users/:id/coworkers - Pour lire/éditer les collèges de l'utilisateur&nbsp;;</li>
+  <li>
+    GET|PUT /users/:id/locations - Pour lire/éditer les lieux de
+    l'utilisateur&nbsp;;
+  </li>
+  <li>
+    GET|PUT /users/:id/coworkers - Pour lire/éditer les collèges de
+    l'utilisateur&nbsp;;
+  </li>
 </ul>
 <p>
-  On voit donc clairement ici le découplage total entre collections et ressources.
-  Ici, on a une collection qui "contient" plusieurs ressources, mais dans
-  d'autres cas, on peut avoir une ressource dont le contenu est réparti entre
-  plusieurs collections. Ce serait le cas d'une ressource permettant d'accéder
-  aux tags associés à tous les concepts du système (lieux, utilisateurs,
-  produits...).
+  On voit donc clairement ici le découplage total entre collections et
+  ressources. Ici, on a une collection qui "contient" plusieurs ressources, mais
+  dans d'autres cas, on peut avoir une ressource dont le contenu est réparti
+  entre plusieurs collections. Ce serait le cas d'une ressource permettant
+  d'accéder aux tags associés à tous les concepts du système (lieux,
+  utilisateurs, produits...).
 </p>
 <h3>Pas d'ODM</h3>
 <p>
   Puisqu'il n'y a aucune corrélation entre modèles, ressources et collections,
   je vous déconseille fortement l'utilisation d'ODM du type Mongoose. Je ne suis
-  clairement pas fan de ce type d'outils pour les bases de données relationnelles
-  mais dans le cas de MongoDB, ceci est d'autant plus vrai.
+  clairement pas fan de ce type d'outils pour les bases de données
+  relationnelles mais dans le cas de MongoDB, ceci est d'autant plus vrai.
 </p>
 <p>
   Pour tout dire, je l'ai appris dans la douleur. Mongoose a retardé ma
@@ -102,9 +111,9 @@ disqus=true
 </p>
 <p>
   Si vous me demandez mon avis sur l'API du driver natif de MongoDB, je vous
-  répondrai  qu'il y a une bonne marge d'amélioration, mais cette dernière est
-  encore le meilleur moyen de profiter de toutes les fonctionnalités qu'un
-  ORM comme Mongoose vous cache.
+  répondrai qu'il y a une bonne marge d'amélioration, mais cette dernière est
+  encore le meilleur moyen de profiter de toutes les fonctionnalités qu'un ORM
+  comme Mongoose vous cache.
 </p>
 <p>
   Prenons l'exemple précédent, avec Mongoose, pour mettre à jour les lieux de
@@ -185,14 +194,12 @@ db.collection('location').count({
 </p>
 <p>
   En pratique, c'est souvent le contraire. Par exemple, dans la collection
-  utilisateurs ci-dessus, on peut vouloir créer un point d'API qui expose l'utilisateur
-  <strong>et</strong> ses préférences. On a donc une décorrelation entre la
-  représentation d'un utilisateur au niveau de l'API REST et au niveau des
-  documents de la collection MongoDB.
+  utilisateurs ci-dessus, on peut vouloir créer un point d'API qui expose
+  l'utilisateur <strong>et</strong> ses préférences. On a donc une décorrelation
+  entre la représentation d'un utilisateur au niveau de l'API REST et au niveau
+  des documents de la collection MongoDB.
 </p>
-<h3>
-  Rien à la racine des documents
-</h3>
+<h3>Rien à la racine des documents</h3>
 <p>
   Une autre bonne pratique est d'éviter de stocker des propriétés d'un même
   concept à la racine des documents d'une collection. Par exemple, vous pourriez
@@ -203,8 +210,8 @@ db.collection('location').count({
 <p>
   La raison à cela est simple. Si un consommateur de l'API fait une requête
   <code>PUT</code> vers le point d'API <code>/users/:id</code>, alors, je vais
-  modifier toutes les informations concernant l'utilisateur. Il sera bien
-  plus simple de faire une requête de type <code>update</code> comme ceci&nbsp;:
+  modifier toutes les informations concernant l'utilisateur. Il sera bien plus
+  simple de faire une requête de type <code>update</code> comme ceci&nbsp;:
 </p>
 <pre>
 db.collection('users').update({
@@ -224,10 +231,10 @@ db.collection('users').update({
 </p>
 <h3>Linéarisation de l'appartenance</h3>
 <p>
-  On pourrait être tenté de donner à nos documents une structure qui reflète
-  les relations d'appartenance entre les divers concepts qu'elles rassemblent.
-  Par exemple, les préférences appartenant à l'utilisateur seraient peut-être
-  mieux dans l'objet utilisateur.
+  On pourrait être tenté de donner à nos documents une structure qui reflète les
+  relations d'appartenance entre les divers concepts qu'elles rassemblent. Par
+  exemple, les préférences appartenant à l'utilisateur seraient peut-être mieux
+  dans l'objet utilisateur.
 </p>
 <p>
   C'est clairement une mauvaise idée. Toujours pour pouvoir modifier ces
@@ -240,27 +247,28 @@ db.collection('users').update({
   votre API REST.
 </p>
 <p>
-  En effet, pour tirer parti des performances des pipes d'agrégation, c'est
-  une véritable nécessité.
+  En effet, pour tirer parti des performances des pipes d'agrégation, c'est une
+  véritable nécessité.
 </p>
 <h3>Lazy embedding</h3>
 <p>
-  Comme nous l'avions vu dans mon billet précédent, le point de compression
-  des performances dans une application MongoDB est la gestion des relations
-  inter collections. Puisqu'il n'existe pas de jointure, on fait parfois ce
-  qui s'apparente au désormais bien connu <q><code>SELECT</code> dans une
-  boucle</q> honni des DBA.
+  Comme nous l'avions vu dans mon billet précédent, le point de compression des
+  performances dans une application MongoDB est la gestion des relations inter
+  collections. Puisqu'il n'existe pas de jointure, on fait parfois ce qui
+  s'apparente au désormais bien connu
+  <q><code>SELECT</code> dans une boucle</q> honni des DBA.
 </p>
 <p>
   Bien qu'il y aura toujours des cas où ce ne sera pas possible de faire
-  autrement, toutes les stratégies sont bonnes pour les éviter. Parmi elles,
-  la technique que j'appelle le <q>lazy embedding</q> permet de stocker ces
+  autrement, toutes les stratégies sont bonnes pour les éviter. Parmi elles, la
+  technique que j'appelle le <q>lazy embedding</q> permet de stocker ces
   relations dans les collections afin d'éviter de les requêter à chaque accès.
 </p>
 <p>
   Imaginons que nous voulions donner le nom des lieux d'un utilisateur dans la
   ressource du même nom. Nous devrions effectuer une requête pour aller chercher
-  l'utilisateur, puis, une autre pour aller chercher les noms de ses lieux&nbsp;:
+  l'utilisateur, puis, une autre pour aller chercher les noms de ses
+  lieux&nbsp;:
 </p>
 <pre>
 db.collection('user').find({
@@ -347,10 +355,10 @@ db.collection('user').update({
   les divers updates de l'objet à des fins de débogage a posteriori.
 </p>
 <p>
-  Cependant, il nous faut bien caper ce tableau pour éviter qu'il ne sature
-  nos documents. On trouve dans les divers opérateurs une possibilité de
-  réaliser ce type d'opération en une seule requête. Ainsi, la modification d'un
-  utilisateur devient&nbsp;:
+  Cependant, il nous faut bien caper ce tableau pour éviter qu'il ne sature nos
+  documents. On trouve dans les divers opérateurs une possibilité de réaliser ce
+  type d'opération en une seule requête. Ainsi, la modification d'un utilisateur
+  devient&nbsp;:
 </p>
 <pre>
 db.collection('users').update({
@@ -376,24 +384,26 @@ db.collection('users').update({
 }, {multi: true});
 </pre>
 <p>
-  Cet exemple montre encore une fois l'intérêt du driver MongoDB natif. Comme
-  il n'existe pas de notion de transaction en Mongo, nous devons tout faire
-  pour limiter la concurrence des requêtes et quoi de mieux pour ce faire que
-  de limiter leur nombre&nbsp;?
+  Cet exemple montre encore une fois l'intérêt du driver MongoDB natif. Comme il
+  n'existe pas de notion de transaction en Mongo, nous devons tout faire pour
+  limiter la concurrence des requêtes et quoi de mieux pour ce faire que de
+  limiter leur nombre&nbsp;?
 </p>
 <p>
   Il y a encore tellement de techniques dont je n'ai pas parlé, mais cet article
-  étant déjà très  long, je vous dévoilerai certainement ces dernières dans
+  étant déjà très long, je vous dévoilerai certainement ces dernières dans
   d'autres billets.
 </p>
 <p>
-  En attendant, n'hésitez pas à me livrer les vôtres en commentaire ou à
-  donner des alternatives aux techniques que je vous ai présenté.
+  En attendant, n'hésitez pas à me livrer les vôtres en commentaire ou à donner
+  des alternatives aux techniques que je vous ai présenté.
 </p>
-<p><ins>
-  Petite précision, j'ai du faire une modification des sources présentées dans
-  cet article pour ajouter les options <code>{multi: true}</code> qui permettent
-  aux requêtes de mise à jour de fonctionner sur plusieurs entrées. C'est un peu
-  bizarre, mais c'est comme ça, par défaut les requêtes de mise à jour ne
-  modifient que la première entrée.
-</ins></p>
+<p>
+  <ins>
+    Petite précision, j'ai du faire une modification des sources présentées dans
+    cet article pour ajouter les options <code>{multi: true}</code> qui
+    permettent aux requêtes de mise à jour de fonctionner sur plusieurs entrées.
+    C'est un peu bizarre, mais c'est comme ça, par défaut les requêtes de mise à
+    jour ne modifient que la première entrée.
+  </ins>
+</p>

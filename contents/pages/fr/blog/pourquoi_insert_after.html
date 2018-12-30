@@ -12,22 +12,82 @@ disqus=true
 -->
 
 <h2>Pourquoi j&#039;ai nommé ce blog InsertAfter</h2>
-<p>Je viens de m&#039;apercevoir que je n&#039;ai pas expliqué pourquoi ce blog s&#039;appelle InsertAfter, c&#039;est le moment de palier à ce manque.</p>
+<p>
+  Je viens de m&#039;apercevoir que je n&#039;ai pas expliqué pourquoi ce blog
+  s&#039;appelle InsertAfter, c&#039;est le moment de palier à ce manque.
+</p>
 
-<p>C&#039;est en réfléchissant à créer un blog que ce nom m&#039;est venu spontanément. En effet, pour moi, un blog est un endroit de partage, un lieu ou l&#039;on peut donner quelques idées, ressources ou avis sur les technologies qu&#039;on utilise.</p>
-<p>Il ne s&#039;agit pas de se regarder le nombril, j&#039;ai d&#039;ailleurs dû réfléchir intensivement sur les parties de ce blog où je parle de moi. Faut-il dire je, faut-il rester plus ou moins anonyme, faut-il mettre une photo ? Faut-il tout court ?</p>
-<p>Après de longues hésitations, je me suis dit qu&#039;un blog devait permettre à ceux qui le veulent de me rencontrer et que même si ce n&#039;est pas trop dans mes habitudes, je me devais de mettre en avant ma personnalité car c&#039;est bien comme cela
-    qu&#039;on se rencontre. Vous remarquerez d&#039;ailleurs que j&#039;ai <a title="Voir ma présentation" href="../a_propos.html">livré ça brute de taille</a>, à mon image ;).</p>
-<p>Cependant, un blog est avant tout un lieu d&#039;échange et il m&#039;apparaissait évident qu&#039;il fallait y laisser une place pour les commentaires. Ce seraient d&#039;ailleurs ces mêmes commentaires qui rendraient cette expérience enrichissante pour
-    moi.</p>
-<p>InsertAfter par son sens purement littéral introduit ces deux dimensions. J&#039;ai même été surpris que le nom de domaine n&#039;ait pas déjà été réservé (d&#039;où mon empressement à le réserver, plusieurs mois avant de créer ce blog).</p>
-<p>Mais InsertAfter a un sens plus profond pour un développeur qui utilise fréquemment le <acronym title="Document Object Model" lang="en">DOM</acronym> avec Javascript. En effet, à mes débuts avec cette API, je me suis posé une question bête. Pourquoi n&#039;y
-    a-t-il pas de fonction Node.insertAfter comme il y a une fonction Node.insertBefore ?</p>
-<p>Cette question est idiote car elle ferait doublon. En ce sens que le seul cas qui pourrait justifier une telle fonction serait l&#039;ajout d&#039;un nœud au sommet de la pile de la propriété Node.childNodes de type DOMCollection. Or ce cas est justement
-    couvert par la fonction Node.appendChild().</p>
-<p>On peut donc facilement implémenter cette fonction :</p><pre>Node.prototype.insertAfter = function (newNode, afterNode) &#123;<br />return (afterNode?this&#91;(this.childNodes.lastChild==afterNode?&#039;appendChild&#039;:&#039;insertBefore&#039;&#93;<br /> (newNode,(this.childNodes.lastChild==afterNode?null:afterNode.nextSibling):null);<br />&#125; </pre>
-<p>La question est, est-ce une bonne idée ? On pourrait dire oui vu qu&#039;une recherche de ce blog sur le web m&#039;a fait apprendre que JQuery proposait cela. Mais en fait, c&#039;est une mauvaise idée. Cela fait non-seulement doublon, mais en plus,
-    cela mène à une méconnaissance du DOM et de ses fonctions natives, hors librairies Js.</p>
-<p>Je considère cela comme une maturité de développeur Js que de ne pas penser qu&#039;il manque InsertAfter dans l&#039;API du DOM. C&#039;est donc aussi en hommage à cette maturité et au chemin parcouru depuis que j&#039;ai appelé ce blog ainsi.</p>
-<p>Enfin, <a title="Voir son compte Google Plus" href="https://plus.google.com/104046041694416287579/about">Bruno Bichet</a> et <a title="Voir son site" href="http://ignorez-moi.fr/">Nicolas Paillard</a> m&#039;ont rappelé que cela pouvait aussi faire référence
-    au sélecteur CSS :after, d&#039;où l’identité visuelle du logo. La boucle est bouclée, InsertAfter n&#039;a plus de secret pour vous.</p>
+<p>
+  C&#039;est en réfléchissant à créer un blog que ce nom m&#039;est venu
+  spontanément. En effet, pour moi, un blog est un endroit de partage, un lieu
+  ou l&#039;on peut donner quelques idées, ressources ou avis sur les
+  technologies qu&#039;on utilise.
+</p>
+<p>
+  Il ne s&#039;agit pas de se regarder le nombril, j&#039;ai d&#039;ailleurs dû
+  réfléchir intensivement sur les parties de ce blog où je parle de moi. Faut-il
+  dire je, faut-il rester plus ou moins anonyme, faut-il mettre une photo ?
+  Faut-il tout court ?
+</p>
+<p>
+  Après de longues hésitations, je me suis dit qu&#039;un blog devait permettre
+  à ceux qui le veulent de me rencontrer et que même si ce n&#039;est pas trop
+  dans mes habitudes, je me devais de mettre en avant ma personnalité car
+  c&#039;est bien comme cela qu&#039;on se rencontre. Vous remarquerez
+  d&#039;ailleurs que j&#039;ai
+  <a title="Voir ma présentation" href="../a_propos.html"
+    >livré ça brute de taille</a
+  >, à mon image ;).
+</p>
+<p>
+  Cependant, un blog est avant tout un lieu d&#039;échange et il
+  m&#039;apparaissait évident qu&#039;il fallait y laisser une place pour les
+  commentaires. Ce seraient d&#039;ailleurs ces mêmes commentaires qui
+  rendraient cette expérience enrichissante pour moi.
+</p>
+<p>
+  InsertAfter par son sens purement littéral introduit ces deux dimensions.
+  J&#039;ai même été surpris que le nom de domaine n&#039;ait pas déjà été
+  réservé (d&#039;où mon empressement à le réserver, plusieurs mois avant de
+  créer ce blog).
+</p>
+<p>
+  Mais InsertAfter a un sens plus profond pour un développeur qui utilise
+  fréquemment le
+  <acronym title="Document Object Model" lang="en">DOM</acronym> avec
+  Javascript. En effet, à mes débuts avec cette API, je me suis posé une
+  question bête. Pourquoi n&#039;y a-t-il pas de fonction Node.insertAfter comme
+  il y a une fonction Node.insertBefore ?
+</p>
+<p>
+  Cette question est idiote car elle ferait doublon. En ce sens que le seul cas
+  qui pourrait justifier une telle fonction serait l&#039;ajout d&#039;un nœud
+  au sommet de la pile de la propriété Node.childNodes de type DOMCollection. Or
+  ce cas est justement couvert par la fonction Node.appendChild().
+</p>
+<p>On peut donc facilement implémenter cette fonction :</p>
+<pre>Node.prototype.insertAfter = function (newNode, afterNode) &#123;<br />return (afterNode?this&#91;(this.childNodes.lastChild==afterNode?&#039;appendChild&#039;:&#039;insertBefore&#039;&#93;<br /> (newNode,(this.childNodes.lastChild==afterNode?null:afterNode.nextSibling):null);<br />&#125; </pre>
+<p>
+  La question est, est-ce une bonne idée ? On pourrait dire oui vu qu&#039;une
+  recherche de ce blog sur le web m&#039;a fait apprendre que JQuery proposait
+  cela. Mais en fait, c&#039;est une mauvaise idée. Cela fait non-seulement
+  doublon, mais en plus, cela mène à une méconnaissance du DOM et de ses
+  fonctions natives, hors librairies Js.
+</p>
+<p>
+  Je considère cela comme une maturité de développeur Js que de ne pas penser
+  qu&#039;il manque InsertAfter dans l&#039;API du DOM. C&#039;est donc aussi en
+  hommage à cette maturité et au chemin parcouru depuis que j&#039;ai appelé ce
+  blog ainsi.
+</p>
+<p>
+  Enfin,
+  <a
+    title="Voir son compte Google Plus"
+    href="https://plus.google.com/104046041694416287579/about"
+    >Bruno Bichet</a
+  >
+  et Nicolas Paillard m&#039;ont rappelé que cela pouvait aussi faire référence
+  au sélecteur CSS :after, d&#039;où l’identité visuelle du logo. La boucle est
+  bouclée, InsertAfter n&#039;a plus de secret pour vous.
+</p>

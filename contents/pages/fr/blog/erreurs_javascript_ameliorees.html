@@ -22,10 +22,10 @@ disqus=true
   des erreurs pertinente est une nécessité pour nous.
 </p>
 <p>
-  J'ai déjà parlé de la <a href="erreurs_javascript.html">gestion des erreurs en
-  JavaScript</a> sur ce blog, mais de façon purement théorique et
-  architecturale. Je voudrais parler ici de détails d'implémentation que nous
-  avons mis en pratique avec succès.
+  J'ai déjà parlé de la
+  <a href="erreurs_javascript.html">gestion des erreurs en JavaScript</a> sur ce
+  blog, mais de façon purement théorique et architecturale. Je voudrais parler
+  ici de détails d'implémentation que nous avons mis en pratique avec succès.
 </p>
 <h3>s/message d'erreur/code d'erreur/</h3>
 <p>
@@ -49,13 +49,13 @@ function checkBounds(n) {
 }
 </pre>
 <p>
-  A priori, cette erreur peut sembler tout à fait claire et exploitable. Mais
-  à l'usage, on va rencontrer divers problèmes, dont un majeur, la qualification
+  A priori, cette erreur peut sembler tout à fait claire et exploitable. Mais à
+  l'usage, on va rencontrer divers problèmes, dont un majeur, la qualification
   de cette erreur à un autre niveau du programme.
-</p> 
+</p>
 <p>
-  En effet, comment savoir, quand on l'attrapera par ailleurs dans
-  notre application, ce qu'il faut en faire&nbsp;? Simple me direz-vous, nous allons
+  En effet, comment savoir, quand on l'attrapera par ailleurs dans notre
+  application, ce qu'il faut en faire&nbsp;? Simple me direz-vous, nous allons
   utiliser l'opérateur <code>instanceof</code>&nbsp;!
 </p>
 <pre>
@@ -92,8 +92,8 @@ try {
 </pre>
 <p>
   Ici, ce n'est pas très parlant, mais un message d'erreur sous forme de phrase
-  est la porte ouverte à tous les abus :). Si l'auteur du message a tendance
-  à écrire un roman pour chaque erreur, votre code va se détériorer rapidement.
+  est la porte ouverte à tous les abus :). Si l'auteur du message a tendance à
+  écrire un roman pour chaque erreur, votre code va se détériorer rapidement.
 </p>
 <p>
   Sans compter qu'au moindre changement de mot ou à la moindre correction de
@@ -107,15 +107,20 @@ try {
   pouvez sortir vos <code>RegExp</code> :).
 </p>
 <p style="text-align:center;">
-  <a href="http://www.commitstrip.com/fr/2013/03/06/quelquun-sy-connait-en-expressions-regulieres/"
-    title="Voir la planche sur le site des auteurs">
-    <img src="http://www.commitstrip.com/wp-content/uploads/2013/03/Strips-Expressions-r%C3%A9guli%C3%A8res-550-final.jpg"
-      alt="A propos des personnes qui font leur RegExp elles même, transcription sur le site de la source."><br />
-      Source: Commit Strip
+  <a
+    href="https://www.commitstrip.com/fr/2013/03/06/quelquun-sy-connait-en-expressions-regulieres/"
+    title="Voir la planche sur le site des auteurs"
+  >
+    <img
+      src="https://www.commitstrip.com/wp-content/uploads/2013/03/Strips-Expressions-r%C3%A9guli%C3%A8res-550-final.jpg"
+      alt="A propos des personnes qui font leur RegExp elles même, transcription sur le site de la source."
+    /><br />
+    Source: Commit Strip
   </a>
 </p>
 <p>
- Chez moi, la fonction de vérification d'intervalle ressemble plutôt à ça&nbsp;:
+  Chez moi, la fonction de vérification d'intervalle ressemble plutôt à
+  ça&nbsp;:
 </p>
 <pre>
 var YError = require('yerror');
@@ -128,9 +133,7 @@ function checkBounds(n) {
   }
 }
 </pre>
-<p>
-  Et son utilisation, à ça&nbsp;:
-</p>
+<p>Et son utilisation, à ça&nbsp;:</p>
 <pre>
 try {
   checkBounds(6);
@@ -140,21 +143,27 @@ try {
   }
 }
 </pre>
-<p>
-  Plusieurs avantages&nbsp;:
-</p>
+<p>Plusieurs avantages&nbsp;:</p>
 <ul>
-  <li>le code d'erreur se suffit à lui-même, pas besoin d'une phrase pour le
-    comprendre.</li>
-  <li>les paramètres de l'erreur permettent de comprendre ce qui l'a générée et
-    même de l'analyser programmatiquement de façon simple.</li>
-  <li>si cette erreur vient à faire planter le serveur de production, j'ai déjà
+  <li>
+    le code d'erreur se suffit à lui-même, pas besoin d'une phrase pour le
+    comprendre.
+  </li>
+  <li>
+    les paramètres de l'erreur permettent de comprendre ce qui l'a générée et
+    même de l'analyser programmatiquement de façon simple.
+  </li>
+  <li>
+    si cette erreur vient à faire planter le serveur de production, j'ai déjà
     des informations pour comprendre pourquoi sans avoir à revenir dans le même
-    état.</li>
-  <li>si je souhaite afficher cette erreur à l'utilisateur, la gestion de
-    l'internationalisation sera plus facile (le code étant la clé du
-    message et les paramètres permettant de le compléter de façon
-    internationalisée, par exemple, en affichant les nombres au format local).</li>
+    état.
+  </li>
+  <li>
+    si je souhaite afficher cette erreur à l'utilisateur, la gestion de
+    l'internationalisation sera plus facile (le code étant la clé du message et
+    les paramètres permettant de le compléter de façon internationalisée, par
+    exemple, en affichant les nombres au format local).
+  </li>
 </ul>
 <h3>Erreurs asynchrones et trace d'erreur</h3>
 <p>
@@ -164,11 +173,14 @@ try {
 </p>
 <p>
   Certaines librairies vous proposent des fonctionnalités pour gérer ceci comme
-  la méthode <a
-    href="https://github.com/petkaantonov/bluebird/blob/master/API.md#promiselongstacktraces---void"><code>
-    Promise.longStackTrace()</code></a> de BlueBird. Mais il est assez laborieux
-  de faire cohabiter les différentes librairies entre elles. De plus, les traces
-  produites sont souvent très verbeuses car pas du tout sélectives.
+  la méthode
+  <a
+    href="https://github.com/petkaantonov/bluebird/blob/master/API.md#promiselongstacktraces---void"
+    ><code> Promise.longStackTrace()</code></a
+  >
+  de BlueBird. Mais il est assez laborieux de faire cohabiter les différentes
+  librairies entre elles. De plus, les traces produites sont souvent très
+  verbeuses car pas du tout sélectives.
 </p>
 <p>
   À cette fin, je préfère gérer cette long stack trace manuellement en
@@ -195,9 +207,10 @@ function updatePassword(id, passwd) {
 <h3>Requalification</h3>
 <p>
   Bien souvent, quand on attrape une erreur, c'est que l'on souhaite la
-  requalifier. En effet, une erreur de type <code>'undefined' is not a
-  function</code> n'a aucun sens pour les utilisateurs. C'est également
-  généralement le cas des erreurs de bas niveau que vos librairies remontent.
+  requalifier. En effet, une erreur de type
+  <code>'undefined' is not a function</code> n'a aucun sens pour les
+  utilisateurs. C'est également généralement le cas des erreurs de bas niveau
+  que vos librairies remontent.
 </p>
 <p>
   Malheureusement, cette requalification génère souvent une perte d'information
@@ -221,10 +234,10 @@ function updatePassword(id, passwd) {
 </pre>
 <p>
   Ici, je requalifie un échec à la récupération de l'utilisateur ou à la
-  vérification du nouveau mot de passe pour qualifier l'erreur comme étant dûe
-  à l'utilisateur. Dans le cadre d'une API rest, cela permettra de renvoyer une
-  erreur 400. Les autres erreurs seront quand à elles classifiées comme bug et une erreur
-  500 sera retournée dans ce cas.
+  vérification du nouveau mot de passe pour qualifier l'erreur comme étant dûe à
+  l'utilisateur. Dans le cadre d'une API rest, cela permettra de renvoyer une
+  erreur 400. Les autres erreurs seront quand à elles classifiées comme bug et
+  une erreur 500 sera retournée dans ce cas.
 </p>
 <p>
   Mais le véritable avantage de cette méthode est que la trace de l'erreur
@@ -246,5 +259,6 @@ function updatePassword(id, passwd) {
 </p>
 <p>
   N'hésitez pas à partager vos recettes&nbsp;! Le code de YError est, bien-sûr,
-  <a href="https://github.com/SimpliField/yerror">disponible sur GitHub</a>&nbsp;.
+  <a href="https://github.com/SimpliField/yerror">disponible sur GitHub</a
+  >&nbsp;.
 </p>

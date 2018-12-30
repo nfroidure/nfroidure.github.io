@@ -13,23 +13,59 @@ disqus=true
 -->
 
 <h2>Gérer les monnaies dans un logiciel (CRM,ERP)</h2>
-<p>Je suis actuellement entrain de développer une solution CRM basée sur mon framework Rest PHP. Il faut donc gérer les différentes monnaies.</p>
+<p>
+  Je suis actuellement entrain de développer une solution CRM basée sur mon
+  framework Rest PHP. Il faut donc gérer les différentes monnaies.
+</p>
 
-<p>Il existe un standard (ISO 4217) qui répertorie toutes les monnaies utilisées dans le monde. Ce standard assigne 6 éléments à chaque monnaie :</p>
+<p>
+  Il existe un standard (ISO 4217) qui répertorie toutes les monnaies utilisées
+  dans le monde. Ce standard assigne 6 éléments à chaque monnaie :
+</p>
 <ul>
-    <li>une valeur numérique (978 pour l&#039;Euro),</li>
-    <li>un code composé de trois lettres (EUR pour l&#039;euro, USD pour le dollar américain),</li>
-    <li>le nom de la monnaie,</li>
-    <li>le symbole de cette monnaie (€, $ ..),</li>
-    <li>les pays dans lesquels ces monnaies sont utilisées,</li>
-    <li>le nombre de décimales après la virgule.</li>
+  <li>une valeur numérique (978 pour l&#039;Euro),</li>
+  <li>
+    un code composé de trois lettres (EUR pour l&#039;euro, USD pour le dollar
+    américain),
+  </li>
+  <li>le nom de la monnaie,</li>
+  <li>le symbole de cette monnaie (€, $ ..),</li>
+  <li>les pays dans lesquels ces monnaies sont utilisées,</li>
+  <li>le nombre de décimales après la virgule.</li>
 </ul>
-<p>Bref, tout ce qu&#039;il faut pour se constituer une petite table des monnaies simplement. Ca tombe bien, l&#039;organisme chargé de la maintenance de cette liste propose <a hreflang="&#034;en&#034;" title="&#034;Télécharger la liste des codes&#034;"
-    href="&#034;http://www.currency-iso.org/iso_index/iso_tables/iso_tables_a1.htm">une liste de ces dernières</a> au format XML ou Excel que vous n&#039;aurez aucun mal à importer. Il y a aussi la possibilité de s&#039;inscrire à une liste permettant
-    de recevoir un e-mail à chaque mise à jour de la liste afin de garder votre base de donnée propre.</p>
-<p>L&#039;intérêt d&#039;utiliser ce standard réside dans le fait que la plupart des acteurs l&#039;utilisent aussi. Par exemple, la majeure partie des solutions de paiement que j&#039;ai eu à intégrer utilisent ces codes.</p>
-<p>Voici le format de table que j&#039;ai adopté :</p><pre> CREATE TABLE IF NOT EXISTS `currencies` (   `id` smallint(5) unsigned NOT NULL,   `label` varchar(150) NOT NULL,   `code` varchar(3) NOT NULL,   `symbol` varchar(3) DEFAULT NULL,   `fraction` tinyint(2) NOT NULL,   PRIMARY KEY (`id`),   UNIQUE KEY `code` (`code`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;</pre>
-<p>J&#039;ai utilisé la valeur numérique associée à chaque monnaie comme index primaire. Vous remarquerez que je n&#039;ai pas associé les pays dans la même table car ces derniers peuvent être plusieurs pour la même monnaie. J&#039;ai donc créé une table
-    jointure avec ma table répertoriant les pays.</p>
-<p>En ce qui concerne la localisation, certains pays indiquent un montant comme ceci : USD 35 (Etats-Unis) et d&#039;autres comme cela (30 EUR), j&#039;ai donc ajouté une fonction de formatage selon la locale utilisée.</p>
+<p>
+  Bref, tout ce qu&#039;il faut pour se constituer une petite table des monnaies
+  simplement. Ca tombe bien, l&#039;organisme chargé de la maintenance de cette
+  liste propose
+  <a
+    hreflang="&#034;en&#034;"
+    title="&#034;Télécharger la liste des codes&#034;"
+    href="https://www.currency-iso.org/en/home/tables/table-a1.html"
+    >une liste de ces dernières</a
+  >
+  au format XML ou Excel que vous n&#039;aurez aucun mal à importer. Il y a
+  aussi la possibilité de s&#039;inscrire à une liste permettant de recevoir un
+  e-mail à chaque mise à jour de la liste afin de garder votre base de donnée
+  propre.
+</p>
+<p>
+  L&#039;intérêt d&#039;utiliser ce standard réside dans le fait que la plupart
+  des acteurs l&#039;utilisent aussi. Par exemple, la majeure partie des
+  solutions de paiement que j&#039;ai eu à intégrer utilisent ces codes.
+</p>
+<p>Voici le format de table que j&#039;ai adopté :</p>
+<pre>
+ CREATE TABLE IF NOT EXISTS `currencies` (   `id` smallint(5) unsigned NOT NULL,   `label` varchar(150) NOT NULL,   `code` varchar(3) NOT NULL,   `symbol` varchar(3) DEFAULT NULL,   `fraction` tinyint(2) NOT NULL,   PRIMARY KEY (`id`),   UNIQUE KEY `code` (`code`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;</pre
+>
+<p>
+  J&#039;ai utilisé la valeur numérique associée à chaque monnaie comme index
+  primaire. Vous remarquerez que je n&#039;ai pas associé les pays dans la même
+  table car ces derniers peuvent être plusieurs pour la même monnaie. J&#039;ai
+  donc créé une table jointure avec ma table répertoriant les pays.
+</p>
+<p>
+  En ce qui concerne la localisation, certains pays indiquent un montant comme
+  ceci : USD 35 (Etats-Unis) et d&#039;autres comme cela (30 EUR), j&#039;ai
+  donc ajouté une fonction de formatage selon la locale utilisée.
+</p>
 <p>Et vous comment gérez vous les monnaies ?</p>

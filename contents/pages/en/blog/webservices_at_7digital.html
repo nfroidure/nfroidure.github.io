@@ -18,10 +18,7 @@ disqus=true
 draft=false
 -->
 
-<p>
-  Script of the presentation:
-</p>
-
+<p>Script of the presentation:</p>
 
 <h3>A bit of context</h3>
 
@@ -52,8 +49,8 @@ draft=false
 
 <p>
   We also have to manage relationship with contractors and keep sure we can
-  provide them the environment quick enough to be sure they won't be stuck
-  on their working days.
+  provide them the environment quick enough to be sure they won't be stuck on
+  their working days.
 </p>
 
 <h4>Project oriented</h4>
@@ -74,9 +71,9 @@ draft=false
 
 <p>
   First of all, we created several normalized repositories: infrastructure,
-  webservices, frontends. Each repository of the same category shares
-  the same CLI/directory tree interface to avoid having to figure out what is
-  where for each project.
+  webservices, frontends. Each repository of the same category shares the same
+  CLI/directory tree interface to avoid having to figure out what is where for
+  each project.
 </p>
 
 <h4>A docker image per repository</h4>
@@ -105,8 +102,8 @@ draft=false
 
 <p>
   Since building customer projects is like picking features in an existing
-  toolbox plus creating specific ones, we automated the documentation in
-  a way that allows us to spend 0 time on bundling it or on already documented
+  toolbox plus creating specific ones, we automated the documentation in a way
+  that allows us to spend 0 time on bundling it or on already documented
   features. We just focus on new features.
 </p>
 
@@ -115,19 +112,19 @@ draft=false
 <h4>Dependency Injection with Inversion of Control</h4>
 
 <p>
-  We're using an open-source tool I made that implement Dependency Injection with
-  inversion of controls and looks similar to what's done in Angular. There is a
-  small difference though, since it also handle service shutdown. Indeed, to
-  ensure high availability we must shutdown services like PostgreSQL only when
-  every connections to the HTTP server where closed.
+  We're using an open-source tool I made that implement Dependency Injection
+  with inversion of controls and looks similar to what's done in Angular. There
+  is a small difference though, since it also handle service shutdown. Indeed,
+  to ensure high availability we must shutdown services like PostgreSQL only
+  when every connections to the HTTP server where closed.
 </p>
 
 <h4>Pure functions for the win</h4>
 
 <p>
   A side effect of using services to enclose global states is that we can use
-  pure functions everywhere else. I won't cover functional programming here
-  but you should really have a look at its patterns.
+  pure functions everywhere else. I won't cover functional programming here but
+  you should really have a look at its patterns.
 </p>
 
 <h4>Documentation Driven APIs</h4>
@@ -135,32 +132,35 @@ draft=false
 <p>
   Like any developer, i prefer write code than documentation. But i also prefer
   using documented code. To conciliate those two paradoxical needs, i manage to
-  tie documentation and code. By writing the documentation, you create
-  (<a href="https://github.com/nfroidure/siso">routing</a>,
-  <a href="https://github.com/nfroidure/strict-qs">input filtering</a>,
-  <a href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js">clients API</a>,
-  ...).
+  tie documentation and code. By writing the documentation, you create (<a
+    href="https://github.com/nfroidure/siso"
+    >routing</a
+  >, <a href="https://github.com/nfroidure/strict-qs">input filtering</a>,
+  <a
+    href="https://github.com/nfroidure/asttpl/blob/master/src/realworld.mocha.js"
+    >clients API</a
+  >, ...).
 </p>
 
 <h4>Workflow oriented controller</h4>
 
 <p>
   I am not an MVC fan. Indeed, experience proves that answering to an HTTP
-  request is often more a unique workflow specific to a given endpoint.
-  I would say i am using a Workflow Stages Service pattern where Workflow
-  is a bunch of asynchronous sequential operation, Stages is about running
-  pure functions or services functions and Service is just dealing with
-  system's or third party global states.
+  request is often more a unique workflow specific to a given endpoint. I would
+  say i am using a Workflow Stages Service pattern where Workflow is a bunch of
+  asynchronous sequential operation, Stages is about running pure functions or
+  services functions and Service is just dealing with system's or third party
+  global states.
 </p>
 
 <h4>Cache ready</h4>
 
 <p>
-  I think enforcing URLs uniqueness in the stricter manner possible is a
-  very important thing. I made caching strategy efficient. What's the point of
-  taking trains to go to the office if your code is wasting resources?
-  I want to code green and URI unicity is maybe the best improvement you can
-  achieve for that matter.
+  I think enforcing URLs uniqueness in the stricter manner possible is a very
+  important thing. I made caching strategy efficient. What's the point of taking
+  trains to go to the office if your code is wasting resources? I want to code
+  green and URI unicity is maybe the best improvement you can achieve for that
+  matter.
 </p>
 
 <p>
@@ -202,17 +202,17 @@ draft=false
 
 <p>
   We managed to create scripts that aggregate each webservices/frontends
-  definitions and output a platform agnostic project definition we can
-  then convert for many targets: AWS, Google Cloud Engine or even a
-  simple instance running Docker or PM2 if necessary.
+  definitions and output a platform agnostic project definition we can then
+  convert for many targets: AWS, Google Cloud Engine or even a simple instance
+  running Docker or PM2 if necessary.
 </p>
 
 <h4>Back to the future</h4>
 
 <p>
-  Since each project has its own hosting budget, traffic expectations,
-  we want to provide more targets for deployments to precisely fit
-  needs at the better cost.
+  Since each project has its own hosting budget, traffic expectations, we want
+  to provide more targets for deployments to precisely fit needs at the better
+  cost.
 </p>
 
 <h4>Quality Insurance</h4>
@@ -225,6 +225,4 @@ draft=false
 
 <h3>Thanks</h3>
 
-<p>
-  Thanks you for your attention. If you have any question, please ask ;).
-</P>
+<p>Thanks you for your attention. If you have any question, please ask ;).</p>

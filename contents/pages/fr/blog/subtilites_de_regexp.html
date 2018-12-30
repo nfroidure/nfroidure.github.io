@@ -13,29 +13,118 @@ disqus=true
 -->
 
 <h2>Les subtilités de RegExp en Javascript</h2>
-<p>Les expressions régulières sont très peu populaires, elles sont pourtant surpuissantes. Néanmoins, il y a quelques subtilités à connaître, dont une que j&#039;ai récemment apprise.</p>
+<p>
+  Les expressions régulières sont très peu populaires, elles sont pourtant
+  surpuissantes. Néanmoins, il y a quelques subtilités à connaître, dont une que
+  j&#039;ai récemment apprise.
+</p>
 
-<p>J&#039;ai une très forte expérience dans l&#039;utilisation des expressions régulières notamment grâce à BBComposer et les <a hreflang="en" title="Voir le code de ces parseurs" href="https://github.com/nfroidure/BBComposer/tree/master/chrome/bbcomposer/content/languages">différents parseurs</a>    que j&#039;ai créé pour convertir différents langages vers et depuis l&#039;éditeur. Mais les différentes subtilités des expressions régulières m&#039;ont souvent amené à coder les parseurs à la main.</p>
-<p>Un exemple épique, le <a hreflang="en" title="Voir le code concerné" href="https://github.com/nfroidure/BBComposer/blob/master/chrome/bbcomposer/content/languages/spip.js&#35;L163">parsing de tableaux avec la typographie Spip</a>. A ma connaissance, les
-    développeurs de Spip ont fait ça à base d&#039;expressions régulières, mais je doute vraiment que la tâche ait été plus aisé que d&#039;écrire le parseur from scratch. Bon, à leur avantage, ils ont pu utiliser PCRE qui est somme toute un peu plus
-    avancé que ce qu&#039;offre Javascript.</p>
-<p>Ce qui m&#039;amène au sujet de ce billet. Une des choses les plus courantes que l&#039;on souhaite faire avec les expressions régulières, est de trouver une expression et de la remplacer par une autre. Imaginons que nous souhaitions supprimer tous les
-    guillemets d&#039;un snippet HTML se trouvant à l&#039;intérieur des balises.</p>
-<h3>Création de l&#039;expression régulière</h3><pre>var regExp = new RegExp(&#039;&lt;(&#91;^&gt;&#93;+)&#034;([[^&gt;]]*)&gt;&#039;);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />str=str.replace(regExp,pattern);<br />console.log(str);</pre>
-<p>L&#039;expression régulière &lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt; cible toute sous-chaîne commençant par un &lt; et se terminant par un &gt; dont le contenu est composé d&#039;une chaîne contenant tout caractère sauf &gt;, suivie d&#039;un guillemet
-    et éventuellement d&#039;une autre chaîne de caractère contenant tout sauf &gt;.</p>
+<p>
+  J&#039;ai une très forte expérience dans l&#039;utilisation des expressions
+  régulières notamment grâce à BBComposer et les
+  <a
+    hreflang="en"
+    title="Voir le code de ces parseurs"
+    href="https://github.com/nfroidure/BBComposer/tree/master/chrome/bbcomposer/content/languages"
+    >différents parseurs</a
+  >
+  que j&#039;ai créé pour convertir différents langages vers et depuis
+  l&#039;éditeur. Mais les différentes subtilités des expressions régulières
+  m&#039;ont souvent amené à coder les parseurs à la main.
+</p>
+<p>
+  Un exemple épique, le
+  <a
+    hreflang="en"
+    title="Voir le code concerné"
+    href="https://github.com/nfroidure/BBComposer/blob/master/chrome/bbcomposer/content/languages/spip.js&#35;L163"
+    >parsing de tableaux avec la typographie Spip</a
+  >. A ma connaissance, les développeurs de Spip ont fait ça à base
+  d&#039;expressions régulières, mais je doute vraiment que la tâche ait été
+  plus aisé que d&#039;écrire le parseur from scratch. Bon, à leur avantage, ils
+  ont pu utiliser PCRE qui est somme toute un peu plus avancé que ce
+  qu&#039;offre Javascript.
+</p>
+<p>
+  Ce qui m&#039;amène au sujet de ce billet. Une des choses les plus courantes
+  que l&#039;on souhaite faire avec les expressions régulières, est de trouver
+  une expression et de la remplacer par une autre. Imaginons que nous
+  souhaitions supprimer tous les guillemets d&#039;un snippet HTML se trouvant à
+  l&#039;intérieur des balises.
+</p>
+<h3>Création de l&#039;expression régulière</h3>
+<pre>var regExp = new RegExp(&#039;&lt;(&#91;^&gt;&#93;+)&#034;([[^&gt;]]*)&gt;&#039;);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />str=str.replace(regExp,pattern);<br />console.log(str);</pre>
+<p>
+  L&#039;expression régulière &lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt; cible toute
+  sous-chaîne commençant par un &lt; et se terminant par un &gt; dont le contenu
+  est composé d&#039;une chaîne contenant tout caractère sauf &gt;, suivie
+  d&#039;un guillemet et éventuellement d&#039;une autre chaîne de caractère
+  contenant tout sauf &gt;.
+</p>
 <h3>Pourquoi ça marche pas ?</h3>
-<p>Le problème est que ça ne fonctionne pas. Sous cette forme, le code ne remplace que la première occurrence, de plus, si une telle chaîne se trouve sur plusieurs lignes, cela ne fonctionnera pas non-plus. Naturellement, on aurait tendance à ajouter les
-    flags m pour multiligne et g pour global qui respectivement permettent de trouver les expressions se trouvant sur plusieurs lignes et de trouver toutes les occurrences de cette dernière.</p><pre>var regExp = new RegExp(&#039;&lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt;&#039;<strong>,&#039;mg&#039;</strong>);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />str=str.replace(regExp,pattern);<br />console.log(str);</pre>
-<p>Oui, mais non :). la recherche globale trouve toutes les occurrences dans la chaîne d&#039;origine. Cela signifie que si les modifications apportées à la chaîne créent de nouvelles occurrences du masque recherché, <strong>celles-cis ne seront pas remplacées</strong>.
-    Le piège naïf dans lequel je suis alors tombé, fût de tester la présence du masque sur la nouvelle chaîne afin de vérifier qu&#039;il n&#039;y a plus d’occurrences de ce dernier.</p><pre>var regExp = new RegExp(&#039;&lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt;&#039;<strong>,&#039;mg&#039;</strong>);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />while(regExp.test(str))<br /> str=str.replace(regExp,pattern);<br />console.log(str);</pre>
-<p>Mais ça ne fonctionne pas non-plus :). En effet, contrairement à ce que l&#039;on pourrait penser RegExp.test et String.replace n&#039;ont pas le même comportement. Quand un masque est recherché, il complète une référence interne à la dernière occurrence
-    trouvée, le fameux <a hreflang="en" title="En savoir plus sur ce petit farceur" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/RegExp/lastIndex">RegExp.lastIndex</a>. Ainsi, quand le remplacement a été effectué,
-    cet index est mis à jour à l&#039;endroit du dernier remplacement, tant et si bien que la prochaine recherche (ici regExp.test(str)) <strong>commence à partir de cet index</strong>.</p>
-<p>Deux solutions se présente alors à nous. La première est de retirer le flag global, ce qui améliore la lisibilité du code. La seconde, celle que j&#039;ai retenu, est de réinitialiser ce fameux lastIndex après chaque remplacement au sein de la boucle.</p><pre>var regExp = new RegExp(&#039;&lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt;&#039;<strong>,&#039;mg&#039;</strong>);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />while(regExp.test(str))<br /> &#123;<br /> str=str.replace(regExp,pattern);<br /> regExp.lastIndex=0;<br /> &#125;<br />console.log(str);</pre>
-<p>Cette solution est moins compréhensible de prime abord, mais elle à le mérite de montrer que ce fameux lastIndex existe et d&#039;éviter que quelqu&#039;un passe derrière et rajoute un g qu&#039;il sera particulièrement difficile de déboguer. Elle est
-    aussi plus performante puisque l&#039;expression régulière n&#039;est ré-exécutée que si, précisément, le cas de la création d&#039;une nouvelle occurrence après remplacement se présente plutôt que pour chaque occurrence de la chaîne originale.</p>
+<p>
+  Le problème est que ça ne fonctionne pas. Sous cette forme, le code ne
+  remplace que la première occurrence, de plus, si une telle chaîne se trouve
+  sur plusieurs lignes, cela ne fonctionnera pas non-plus. Naturellement, on
+  aurait tendance à ajouter les flags m pour multiligne et g pour global qui
+  respectivement permettent de trouver les expressions se trouvant sur plusieurs
+  lignes et de trouver toutes les occurrences de cette dernière.
+</p>
+<pre>var regExp = new RegExp(&#039;&lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt;&#039;<strong>,&#039;mg&#039;</strong>);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />str=str.replace(regExp,pattern);<br />console.log(str);</pre>
+<p>
+  Oui, mais non :). la recherche globale trouve toutes les occurrences dans la
+  chaîne d&#039;origine. Cela signifie que si les modifications apportées à la
+  chaîne créent de nouvelles occurrences du masque recherché,
+  <strong>celles-cis ne seront pas remplacées</strong>. Le piège naïf dans
+  lequel je suis alors tombé, fût de tester la présence du masque sur la
+  nouvelle chaîne afin de vérifier qu&#039;il n&#039;y a plus d’occurrences de
+  ce dernier.
+</p>
+<pre>var regExp = new RegExp(&#039;&lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt;&#039;<strong>,&#039;mg&#039;</strong>);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />while(regExp.test(str))<br /> str=str.replace(regExp,pattern);<br />console.log(str);</pre>
+<p>
+  Mais ça ne fonctionne pas non-plus :). En effet, contrairement à ce que
+  l&#039;on pourrait penser RegExp.test et String.replace n&#039;ont pas le même
+  comportement. Quand un masque est recherché, il complète une référence interne
+  à la dernière occurrence trouvée, le fameux
+  <a
+    hreflang="en"
+    title="En savoir plus sur ce petit farceur"
+    href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/RegExp/lastIndex"
+    >RegExp.lastIndex</a
+  >. Ainsi, quand le remplacement a été effectué, cet index est mis à jour à
+  l&#039;endroit du dernier remplacement, tant et si bien que la prochaine
+  recherche (ici regExp.test(str))
+  <strong>commence à partir de cet index</strong>.
+</p>
+<p>
+  Deux solutions se présente alors à nous. La première est de retirer le flag
+  global, ce qui améliore la lisibilité du code. La seconde, celle que j&#039;ai
+  retenu, est de réinitialiser ce fameux lastIndex après chaque remplacement au
+  sein de la boucle.
+</p>
+<pre>var regExp = new RegExp(&#039;&lt;([[^&gt;]]+)&#034;([[^&gt;]]*)&gt;&#039;<strong>,&#039;mg&#039;</strong>);<br />var str = &#039;&lt;h2&gt;Blahblah&lt;/h2&gt;&lt;p style=&#034;text-align: center;&#034;&gt; &lt;img alt=&#034;Blahblah&#034; src=&#034;http://www.example.com/images/blah.jpg&#034; /&gt;&lt;/p&gt;&#039;;<br />var pattern=&#039;&lt;$1$2&gt;&#039;;<br />while(regExp.test(str))<br /> &#123;<br /> str=str.replace(regExp,pattern);<br /> regExp.lastIndex=0;<br /> &#125;<br />console.log(str);</pre>
+<p>
+  Cette solution est moins compréhensible de prime abord, mais elle à le mérite
+  de montrer que ce fameux lastIndex existe et d&#039;éviter que quelqu&#039;un
+  passe derrière et rajoute un g qu&#039;il sera particulièrement difficile de
+  déboguer. Elle est aussi plus performante puisque l&#039;expression régulière
+  n&#039;est ré-exécutée que si, précisément, le cas de la création d&#039;une
+  nouvelle occurrence après remplacement se présente plutôt que pour chaque
+  occurrence de la chaîne originale.
+</p>
 <h3>Moralité</h3>
-<p>Vous pensiez que les expressions régulières étaient l&#039;enfer des développeurs ? Vous étiez loin de la réalité, c&#039;est pire :). J&#039;ai perdu une journée sur ce problème, et c&#039;est finalement un <a hreflang="en" title="Voir ce rapport de bug"
-    href="https://bugzilla.mozilla.org/show_bug.cgi?id=837154">rapport de bug</a> qui m&#039;a permis de connaître la solution ce matin au réveil (merci Sean Stangl). Mon conseil est de tout de même vous mettre aux expressions régulières car elles sont
-    vraiment puissantes, le tout est de bien les comprendre.</p>
+<p>
+  Vous pensiez que les expressions régulières étaient l&#039;enfer des
+  développeurs ? Vous étiez loin de la réalité, c&#039;est pire :). J&#039;ai
+  perdu une journée sur ce problème, et c&#039;est finalement un
+  <a
+    hreflang="en"
+    title="Voir ce rapport de bug"
+    href="https://bugzilla.mozilla.org/show_bug.cgi?id=837154"
+    >rapport de bug</a
+  >
+  qui m&#039;a permis de connaître la solution ce matin au réveil (merci Sean
+  Stangl). Mon conseil est de tout de même vous mettre aux expressions
+  régulières car elles sont vraiment puissantes, le tout est de bien les
+  comprendre.
+</p>

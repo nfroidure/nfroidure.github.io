@@ -15,15 +15,75 @@ disqus=true
 -->
 
 <h2>Match IE8 With Rework And Gulp!</h2>
-<p>Rework is a very powerful tool. It allows working with CSS contents in a friendly manner. Let&#039;s improve you IE8 compatibility with it.</p>
+<p>
+  Rework is a very powerful tool. It allows working with CSS contents in a
+  friendly manner. Let&#039;s improve you IE8 compatibility with it.
+</p>
 
-<p>I discovered <a title="Visit the rework repository" href="https://github.com/reworkcss/rework">Rework</a> recently thanks to the <a title="Read his blog post" href="http://nicolasgallagher.com/custom-css-preprocessing/">Nicolas Gallagher recent blog post</a>.
-    It made me think about the recent ChtiJS build migration from Grunt to Gulp. One thing i did with our Grunt build was to <a title="See the concerned code" href="https://github.com/ChtiJS/chtijs.francejs.org/blob/223ba7bbce89d46ed08dd329dcf520ce92f812d1/grunt-config/website_build/build_front-tasks.js&#35;L3">create a IE8 specific CSS file</a>    by removing each rem units and replacing them with px units. It worked well but wasn&#039;t perfect since it didn&#039;t took in count the CSS syntax and could have lead to bugs for complex stylesheets.</p>
-<p>On the other hand, give up rem units just for IE8 support is a bad idea. The rem unit system is really <a title="Look at this excellent article on font sizing with rem" href="http://snook.ca/archives/html_and_css/font-size-with-rem">powerful</a> when
-    you want to size your contents. It gives you the em advantages without the well know nested em problems.</p>
-<p>So i decided to create a Rework plugin in order to reproduce this behavior more safely. I called it <a title="See the public repository" href="https://github.com/nfroidure/rework-rem2px">rework-rem2px</a> and you can already find it on NPM. It works well,
-    but the IE specific stylesheet were still containing some extra code, especially media queries that old IE version doesn&#039;t understand.</p>
-<p>Thanks to the community, something already exists. <a title="See the queryless repository" href="https://github.com/iamdustan/queryless">css-queryless</a> remove media queries from a CSS file and also allows you to specify some expressions for wich you
-    want to keep the media queries content in place that matches.</p>
-<p>Ended up with this <a title="Look at the ChtiJS gulp build" href="https://github.com/ChtiJS/chtijs.francejs.org/blob/09c02aa9ab71fd324c61f917b907aafb706398ff/gulpfile.js&#35;L127">Gulp task</a>:</p><pre> // CSS<br />gulp.task(&#039;build_styles&#039;, function(cb) &#123;<br /> var keepmatches = &#91;<br /> &#039;screen and (min-width: 61rem)&#039;,<br /> &#039;print&#039;<br /> &#93;;<br /><br /> gulp.src(conf.src.less + &#039;/main.less&#039;)<br /> .pipe(g.less())<br /> .pipe(g.autoprefixer())<br /> .pipe(gulp.dest(conf.build.css))<br /> .pipe(g.rework(queryless(keepmatches), rem2px(16)))<br /> .pipe(g.rename(&#123;<br /> suffix: &#039;-ie&#039;<br /> &#125;))<br /> .pipe(gulp.dest(conf.build.css))<br /> .once(&#039;end&#039;, cb);<br />&#125;); </pre>
+<p>
+  I discovered
+  <a
+    title="Visit the rework repository"
+    href="https://github.com/reworkcss/rework"
+    >Rework</a
+  >
+  recently thanks to the
+  <a
+    title="Read his blog post"
+    href="http://nicolasgallagher.com/custom-css-preprocessing/"
+    >Nicolas Gallagher recent blog post</a
+  >. It made me think about the recent ChtiJS build migration from Grunt to
+  Gulp. One thing i did with our Grunt build was to
+  <a
+    title="See the concerned code"
+    href="https://github.com/ChtiJS/chtijs.francejs.org/blob/223ba7bbce89d46ed08dd329dcf520ce92f812d1/grunt-config/website_build/build_front-tasks.js&#35;L3"
+    >create a IE8 specific CSS file</a
+  >
+  by removing each rem units and replacing them with px units. It worked well
+  but wasn&#039;t perfect since it didn&#039;t took in count the CSS syntax and
+  could have lead to bugs for complex stylesheets.
+</p>
+<p>
+  On the other hand, give up rem units just for IE8 support is a bad idea. The
+  rem unit system is really
+  <a
+    title="Look at this excellent article on font sizing with rem"
+    href="http://snook.ca/archives/html_and_css/font-size-with-rem"
+    >powerful</a
+  >
+  when you want to size your contents. It gives you the em advantages without
+  the well know nested em problems.
+</p>
+<p>
+  So i decided to create a Rework plugin in order to reproduce this behavior
+  more safely. I called it
+  <a
+    title="See the public repository"
+    href="https://github.com/nfroidure/rework-rem2px"
+    >rework-rem2px</a
+  >
+  and you can already find it on NPM. It works well, but the IE specific
+  stylesheet were still containing some extra code, especially media queries
+  that old IE version doesn&#039;t understand.
+</p>
+<p>
+  Thanks to the community, something already exists.
+  <a
+    title="See the queryless repository"
+    href="https://github.com/iamdustan/queryless"
+    >css-queryless</a
+  >
+  remove media queries from a CSS file and also allows you to specify some
+  expressions for wich you want to keep the media queries content in place that
+  matches.
+</p>
+<p>
+  Ended up with this
+  <a
+    title="Look at the ChtiJS gulp build"
+    href="https://github.com/ChtiJS/chtijs.francejs.org/blob/09c02aa9ab71fd324c61f917b907aafb706398ff/gulpfile.js&#35;L127"
+    >Gulp task</a
+  >:
+</p>
+<pre> // CSS<br />gulp.task(&#039;build_styles&#039;, function(cb) &#123;<br /> var keepmatches = &#91;<br /> &#039;screen and (min-width: 61rem)&#039;,<br /> &#039;print&#039;<br /> &#93;;<br /><br /> gulp.src(conf.src.less + &#039;/main.less&#039;)<br /> .pipe(g.less())<br /> .pipe(g.autoprefixer())<br /> .pipe(gulp.dest(conf.build.css))<br /> .pipe(g.rework(queryless(keepmatches), rem2px(16)))<br /> .pipe(g.rename(&#123;<br /> suffix: &#039;-ie&#039;<br /> &#125;))<br /> .pipe(gulp.dest(conf.build.css))<br /> .once(&#039;end&#039;, cb);<br />&#125;); </pre>
 <p>Let me know you own tips to write modern CSS that work on IE8!</p>
