@@ -14,6 +14,12 @@ disqus=true
 
 <h2>Les promises avec JavaScript : ouvrons le capot !</h2>
 <p>
+  ⚠ Attention: Cet article est ancien et bien qu'il reste une bonne façon de
+  comprendre les promesses en JavaScript, le projet réalisé ne doit pas être
+  utilisé car de nos jours les promesses sont présentes nativement dans tous
+  les environnements exécutant du JavaScript.
+</p>
+<p>
   Dans le petit monde de JavaScript les promises font l&#039;actualité. Je vous
   propose de comprendre les promises par l&#039;implémentation.
 </p>
@@ -64,7 +70,9 @@ promise.then=function(callbackSuccess, callbackError, callbackProgress)&#123;&#1
   La fonction <code>callbackSuccess</code> peut retourner une valeur qui sera
   alors associée à la promise retournée par la méthode <code>then</code> :
 </p>
-<noscript><pre>var p=new Promise(function myPromiseLogic(success,error,progress) &#123;<br /> success(1);<br />&#125;).then(function(value)&#123;<br /> return value+1;<br />&#125;).then(function(value) &#123;<br /> console.log(value);<br />&#125;);<br />// 2</pre>
+<noscript
+  >>
+  <pre>var p=new Promise(function myPromiseLogic(success,error,progress) &#123;<br /> success(1);<br />&#125;).then(function(value)&#123;<br /> return value+1;<br />&#125;).then(function(value) &#123;<br /> console.log(value);<br />&#125;);<br />// 2</pre>
 </noscript>
 <script
   type="text/javascript"
