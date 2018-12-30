@@ -28,7 +28,6 @@ brew install imagemagick --with-librsvg
 To publish a new version of the blog, just run:
 ```sh
 npm run build
-npm run publish
 ```
 
 ## License

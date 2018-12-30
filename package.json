@@ -1,6 +1,7 @@
 {
   "name": "insertafter",
   "version": "0.1.0",
+  "private": true,
   "description": "Nicolas Froidure's homepage",
   "metapak": {
     "data": {
@@ -15,7 +16,7 @@
     ]
   },
   "scripts": {
-    "build": "gulp --prod",
+    "build": "gulp --prod && gulp publish --prod",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
     "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
@@ -25,11 +26,8 @@
     "lint:js": "eslint 'src/**/*.js'",
     "lint:urls": "reachable-urls 'contents/**/*.md' 'contents/**/*.html'",
     "metapak": "metapak",
-    "postinstall": "npm run metapak",
     "precz": "npm t && npm run lint && npm run metapak -- -s",
-    "prepublish": "gulp --prod",
     "preversion": "npm t && npm run lint && npm run metapak -- -s",
-    "publish": "gulp publish --prod",
     "test": "gulp build --prod --noreq --nolr --nobro --nowatch --nosrv",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
