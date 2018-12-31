@@ -4,7 +4,9 @@ var Stream = require('stream');
 var Nunjucks = require('nunjucks');
 
 // Utils
-function noop(nop) { return nop; }
+function noop(nop) {
+  return nop;
+}
 
 // Plugin function
 function gulpRender(options) {
@@ -25,18 +27,17 @@ function gulpRender(options) {
     cb();
   };
 
-
   stream._read = function gulpRenderRead() {
     var file;
 
-    if(finished) {
-      while(outputFilesBuffer.length) {
+    if (finished) {
+      while (outputFilesBuffer.length) {
         file = outputFilesBuffer.shift();
-        if(!stream.push(file)) {
+        if (!stream.push(file)) {
           break;
         }
       }
-      if(0 === outputFilesBuffer.length) {
+      if (0 === outputFilesBuffer.length) {
         stream.push(null);
       }
     }
@@ -61,10 +62,10 @@ function gulpRender(options) {
         var curFile = file;
         var nunjucksOptions;
 
-        if(0 < i) {
+        if (0 < i) {
           curFile = file.clone();
         }
-        if('html' !== type) {
+        if ('html' !== type) {
           curFile.path = curFile.path.substr(0, curFile.path.length - 4) + type;
         }
         nunjucksOptions = {
@@ -78,17 +79,22 @@ function gulpRender(options) {
           content: curFile.contents.toString('utf-8'),
         };
         // Render the template
-        curFile.contents = new Buffer(Nunjucks.render(
-          type + '/' + (nunjucksOptions.metadata.template || 'page') + '.tpl',
-          nunjucksOptions
-        ));
+        curFile.contents = new Buffer(
+          Nunjucks.render(
+            type + '/' + (nunjucksOptions.metadata.template || 'page') + '.tpl',
+            nunjucksOptions
+          )
+        );
         // Save it.
         outputFilesBuffer.push(curFile);
         // Still hacky stuffs for old endpoints
-        if('html' !== type) {
+        if ('html' !== type) {
           curFile = curFile.clone();
-          curFile.path = curFile.base + ('fr' === curFile.metadata.lang ? 'articles' : 'blog') +
-            '.' + type;
+          curFile.path =
+            curFile.base +
+            ('fr' === curFile.metadata.lang ? 'articles' : 'blog') +
+            '.' +
+            type;
           // Save it.
           outputFilesBuffer.push(curFile);
         }
@@ -98,7 +104,6 @@ function gulpRender(options) {
   });
 
   return stream;
-
 }
 
 // Export the plugin main function

@@ -65,7 +65,7 @@ function gulpSearchIndex(options) {
   };
 
   stream._read = function gulpRenderRead() {
-    if(file) {
+    if (file) {
       stream.push(file);
       stream.push(null);
       file = null;
@@ -84,7 +84,6 @@ function gulpSearchIndex(options) {
   });
 
   return stream;
-
 }
 
 module.exports = gulpSearchIndex;

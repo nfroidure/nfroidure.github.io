@@ -5,11 +5,12 @@
   "description": "Nicolas Froidure's homepage",
   "metapak": {
     "data": {
-      "files": "src/**/*.js"
+      "files": "'src/**/*.js' gulpfile.js 'gulp/**/*.js'"
     },
     "configs": [
       "www",
-      "main"
+      "main",
+      "eslint"
     ],
     "ignore": [
       "www"
@@ -21,12 +22,12 @@
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
     "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
     "dev": "gulp",
-    "lint": "npm run lint:js",
+    "lint": "eslint 'src/**/*.js' gulpfile.js 'gulp/**/*.js'",
     "lint:html": "htmlhint 'contents/**/*.html'",
-    "lint:js": "eslint 'src/**/*.js'",
     "lint:urls": "reachable-urls 'contents/**/*.md' 'contents/**/*.html'",
     "metapak": "metapak",
     "precz": "npm t && npm run lint && npm run metapak -- -s",
+    "prettier": "prettier --write 'src/**/*.js' gulpfile.js 'gulp/**/*.js'",
     "preversion": "npm t && npm run lint && npm run metapak -- -s",
     "test": "gulp build --prod --noreq --nolr --nobro --nowatch --nosrv",
     "version": "npm run changelog && git add CHANGELOG.md"
@@ -54,8 +55,8 @@
     "commitizen": "^3.0.4",
     "conventional-changelog-cli": "^2.0.11",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "3.4.0",
-    "eslint-config-simplifield": "4.1.1",
+    "eslint": "^5.9.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "express": "^4.16.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^6.0.0",
@@ -88,6 +89,7 @@
     "nunjucks": "^3.1.6",
     "open": "^0.0.5",
     "plexer": "^1.0.2",
+    "prettier": "^1.14.3",
     "reachable-urls": "^1.0.2",
     "request": "^2.88.0",
     "rework-rem2px": "^0.0.1",
@@ -114,7 +116,10 @@
     "ignore": [
       "commitizen",
       "cz-conventional-changelog",
-      "conventional-changelog-cli"
+      "conventional-changelog-cli",
+      "eslint",
+      "eslint-config-prettier",
+      "prettier"
     ]
   },
   "files": [
@@ -122,5 +127,33 @@
     "LICENSE",
     "README.md",
     "CHANGELOG.md"
-  ]
+  ],
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "sourceType": "script",
+      "modules": true
+    },
+    "env": {
+      "es6": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "proseWrap": "always"
+  }
 }
