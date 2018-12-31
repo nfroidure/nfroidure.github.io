@@ -23,7 +23,7 @@ disqus=true
   If you're a frontend developper, you probably already heard about icon fonts.
   If you use the Gulp build tool, you maybe already used
   <a href="https://www.npmjs.com/package/gulp-iconfont">gulp-iconfont</a>. As
-  its maintainer, when i heard about the WOFF2 font format, i really wanted to
+  its maintainer, when I heard about the WOFF2 font format, I really wanted to
   get it in output of my gulp plugin.
 </p>
 <p>
@@ -60,7 +60,7 @@ output:Buffer function ttf2woff2(input:Buffer);
 </pre>
 <p>
   The most complex work was to figure out how to create a NodeJS Buffer from a C
-  one. Indeed, i had to create a new JavaScript Buffer instance by invoking its
+  one. Indeed, I had to create a new JavaScript Buffer instance by invoking its
   global constructor from the C++ code. That way, when no more references to the
   Buffer will be set in the JS userland, then, it will automatically be garbage
   collected per the V8 engine avoiding the need to free it manually via another
@@ -73,12 +73,12 @@ output:Buffer function ttf2woff2(input:Buffer);
     >binding.gyp</a
   >
   that allows you to specify building instruction for the various compilers. We
-  had to struggle a bit with the MacOSX one since i couldn't test by myself.
+  had to struggle a bit with the MacOSX one since I couldn't test by myself.
 </p>
 <p>
   And that's it! Your module gets compiled at <code>npm install</code>. In fact,
-  i had to test a few time and correct compilation errors progressively but it
-  was suprisingly fast to get it up and running. For that testing matter i set
+  I had to test a few time and correct compilation errors progressively but it
+  was suprisingly fast to get it up and running. For that testing matter I set
   up a
   <a
     href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L14-L15"
@@ -104,13 +104,13 @@ output:Buffer function ttf2woff2(input:Buffer);
     href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/jssrc/index.js"
     >create a wrapper</a
   >
-  for it. As you can see, i had to manually manage the allocated memory in the
-  JS wrapper except for the output buffer that i had to free on the C side with
+  for it. As you can see, I had to manually manage the allocated memory in the
+  JS wrapper except for the output buffer that I had to free on the C side with
   a second function call (strange errors happens when trying to free C side
   allocated memory from the JavaScript module).
 </p>
 <p>
-  Once again, i made
+  Once again, I made
   <a
     href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L16-L17"
     >some scripts</a
@@ -154,10 +154,10 @@ output:Buffer function ttf2woff2(input:Buffer);
 <h3>Browserify</h3>
 <p>
   In order to allow <code>gulp-iconfont</code> users to preview and download the
-  resulting fonts made with it (and to see it it was feasible :p), i've made a
+  resulting fonts made with it (and to see if it was feasible :p), I a
   <a href="http://nfroidure.github.io/svgiconfont/"
     >full frontend font builder</a
-  >. So, i immediatly tried to use my shinny new module to also output WOFF2
+  >. So, I immediatly tried to use my shinny new module to also output WOFF2
   files.
 </p>
 <p>

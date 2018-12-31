@@ -1,7 +1,7 @@
 <!--VarStream
 title=Considerations for Automatic Generation of API Clients
 description=No one should loose time writing code that can be generated \
-automatically. Here are some tips on how i did it.
+automatically. Here are some tips on how I did it.
 shortTitle=API Clients Generation
 shortDesc=Learn how to generate API clients
 published=2017-02-19T15:00:00.000Z
@@ -54,7 +54,7 @@ disqus=true
   Also, it creates as many function arguments for each endpoint than the
   possible parameters enforcing us to remember their order and creating function
   calls with a huge signature. In the context of an ES6 based AngularJS
-  application, i wanted to use ES6 destructuring for a nicer API interface.
+  application, I wanted to use ES6 destructuring for a nicer API interface.
 </p>
 <p>
   I decided to create one that would be aligned with the following architecture
@@ -66,7 +66,7 @@ disqus=true
   generating the client API should be part of your frontend build process.
 </p>
 <p>
-  In my case, i quickly created a Webpack loader matching the
+  In my case, I quickly created a Webpack loader matching the
   <code>*.swagger.json</code> allowing me to simply import the client API into
   the AngularJS application with a single line of code
   <code>require('./api.swagger.json');</code>.
@@ -139,7 +139,7 @@ disqus=true
 </p>
 <h3>Why not having some fun?</h3>
 <p>
-  Well. Generating code is less boring than writing it but i wanted to test an
+  Well. Generating code is less boring than writing it but I wanted to test an
   old idea. Why not making JavaScript templates in a new way? I already
   leveraged the AST power with
   <a href="./lets_subset_javascript.html">jsub</a> but I wanted to make
@@ -151,7 +151,7 @@ disqus=true
   JavaScript tools would just work on it.
 </p>
 <p>
-  This i how i created
+  This is how I created
   <a href="https://github.com/nfroidure/asttpl">astpl</a> and you can see how
   our API client looks like in its
   <a

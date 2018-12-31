@@ -1,8 +1,8 @@
 <!--VarStream
 title=No more middlewares, please
-description=Why i think middlewares are a bad thing, how i am replacing them.
+description=Why I think middlewares are a bad thing, how I am replacing them.
 shortTitle=No more middlewares!
-shortDesc=See why i won't use middlewares anymore
+shortDesc=See why I won't use middlewares anymore
 published=2016-11-05T19:50:20.000Z
 lang=en
 location=US
@@ -19,7 +19,7 @@ disqus=true
   qualifying a code snippet as elegant or beautiful.
 </p>
 <p>
-  From my point of view, each time i found an API interface allowing me to
+  From my point of view, each time I found an API interface allowing me to
   create some elegant code, it ended up as a nightmare codebase, full of
   unmaintainable spaghetti code.
 </p>
@@ -32,7 +32,7 @@ disqus=true
     <a
       href="https://www.reddit.com/r/javascript/comments/1sk8vm/method_chaining_good_or_bad_thing/cdyebjh/"
       >Method Chaining</a
-    >: I think it is the first reason why JQuery will finally die, if not yet
+    >: I think it is the first reason why JQuery will finally died, if not yet
     done.
   </li>
   <li>
@@ -40,7 +40,7 @@ disqus=true
       href="https://blog.pivotal.io/labs/labs/all-evidence-points-to-oop-being-bullshit"
       >POO</a
     >: Not that object and classes are harmful but thinking everything in term
-    of objects/classes is a non-sense. Can't remind the time i find out that a
+    of objects/classes is a non-sense. Can't remind the time I find out that a
     fully OOP application was easily maintainable.
   </li>
   <li>
@@ -76,7 +76,7 @@ disqus=true
 </p>
 <h3>Here be middlewares</h3>
 <p>
-  As a JavaScript developer i heavily used Express with NodeJS. At first, i
+  As a JavaScript developer I heavily used Express with NodeJS. At first, I
   found its middleware system really elegant. Well, at first.
 </p>
 <p>
@@ -94,13 +94,13 @@ disqus=true
 </p>
 <p>
   Indeed, to reuse a controller, you have to find out every middlewares it
-  depends on and set them up in the Express application within you want to reuse
+  depends on and set them up in the Express application where you want to reuse
   it. Problem: There is great chances that the same middleware is already in use
   but with a different version. And it is not the same shitty property that is
   set on that shitty god object.
 </p>
 <p>
-  This is why i think <strong>middlewares are an anti-pattern</strong>. Your
+  This is why I think <strong>middlewares are an anti-pattern</strong>. Your
   controller should contain the complete workflow that allows you to get a
   response from an HTTP request. Transforming the following usual code:
 </p>
@@ -111,7 +111,7 @@ disqus=true
 
     // where the hell is this config set?
     const config = app.get('config');
-    // How can i see what this timer do?
+    // How can I see what this timer do?
     const timer = app.get('timer');
 
     app.post((req, res, next) => {
@@ -152,14 +152,14 @@ module.exports = ({ app, config, timer}) => {
     // could have been async/await too
     Promise.all([
       // No surprise, the body comes from the pureBodyParser module
-      // But i can already guess it allows JSON or YAML
+      // But I can already guess it allows JSON or YAML
       getBodyFromReq.bind(null, req, ['json', 'yaml']),
       // And so on for the query
       getQueryFromReq.bind(null, req),
     ])
     .then(_buildResponse.bind(null, {timer, config})
     // No surprise, the response is sent by the pureResponseMaker module
-    // But i can already guess it could output JSON or YAML
+    // But I can already guess it could output JSON or YAML
     .sendToRes(sendToRes.bind(null, req, res, ['json', 'yaml'], 200));
   });
 
@@ -201,7 +201,7 @@ function _buildResponse({timer, config}, [body, query]) => {
   The middleware based code, to be inclusive, should add comments telling where
   all that magic happens. But the fact is that commenting is a shitty way to
   help others to grasp your code. I personally use it only to explain something
-  i cannot show with meaningful code. Most of the time, it's all about business
+  I cannot show with meaningful code. Most of the time, it's all about business
   constraints or legacy issues.
 </p>
 <p>
@@ -221,7 +221,12 @@ function _buildResponse({timer, config}, [body, query]) => {
   into simple steps?
 </p>
 <p>
-  As a conclusion, i would say that
+  As a conclusion, I would say that
   <strong>good code is not smart or elegant</strong>. It is readable, reliable,
   naive in a word: simple. And you probably know how hard it is to do simple ;).
+</p>
+<p>
+  Edit: I ended up bringing up all those preferences in a JavaScript module
+  intended to help building REst APIs called
+  <a href="https://github.com/nfroidure/whook">Whook</a>.
 </p>

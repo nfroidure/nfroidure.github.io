@@ -2,7 +2,7 @@
 name=InsertAfter
 description=Développeur JavaScript fullstack
 domain=insertafter.com
-baseURL=http://insertafter.com
+baseURL=https://insertafter.com
 lang=fr
 location=FR
 copyright.start=2012

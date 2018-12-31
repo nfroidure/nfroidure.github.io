@@ -18,20 +18,19 @@ way to stay informed on new development features and improve my skills.
 
 ### NodeJS
 
-As as early NodeJS user, i made several modules i
-[published on NPM](https://www.npmjs.org/~nfroidure "View my NPM profile").
+As as early NodeJS user, I made several modules I
+[published on NPM](https://www.npmjs.org/~nfroidure 'View my NPM profile').
 
-In particular, i like make JavaScript parsers (CSV, VarStream, SVG...), work
-with streams, make plugins and tools
-for developers.
+In particular, I like make JavaScript parsers (CSV, VarStream, SVG...), work
+with streams, make plugins and tools for developers.
 
 ### Web apps
 
 I also build HTML5 games for fun and skills, like:
 
-- [Sumuraÿ](http://sumuray.insertafter.com/)
-- [Memory](http://memory.insertafter.com/)
-- [Break'It](http://breakit.insertafter.com/)
+- [Sumuraÿ](https://sumuray.insertafter.com/)
+- [Memory](https://memory.insertafter.com/)
+- [Break'It](https://breakit.insertafter.com/)
 - [Tank Arena](http://tank.elitwork.com/) (work in progress).
 
 I sometimes make some apps during hackathons with friends:
@@ -40,21 +39,26 @@ I sometimes make some apps during hackathons with friends:
 
 And other wierd stuff:
 
-- [WEB MIDI Karaoke player](http://karaoke.insertafter.com/).
-- [Hexadecimal Editor](http://hexa.insertafter.com/).
+- [WEB MIDI Karaoke player](https://karaoke.insertafter.com/).
+- [Hexadecimal Editor](https://hexa.insertafter.com/).
 
 ### Firefox / Chrome / Opera add-ons
 
-If you are old enough and used to work with SEO/web contents,
-you may have used some of my now unmaintained Firefox add-ons
-([KGen](https://github.com/nfroidure/KGen), [BBComposer](https://github.com/nfroidure/BBComposer), [BugMeBack](https://github.com/nfroidure/BugMeBack) et [CanImage](https://github.com/nfroidure/CanImage)), may they rest in peace.
+If you are old enough and used to work with SEO/web contents, you may have used
+some of my now unmaintained Firefox add-ons
+([KGen](https://github.com/nfroidure/KGen),
+[BBComposer](https://github.com/nfroidure/BBComposer),
+[BugMeBack](https://github.com/nfroidure/BugMeBack) et
+[CanImage](https://github.com/nfroidure/CanImage)), may they rest in peace.
 
-My Thunderbird add-ons is still alive but no maintenance either:
+[CapsKiller](https://addons.mozilla.org/thunderbird/addon/caps-killer/), a
+Thunderbird add-on, is still alive but no maintenance either.
 
-- [CapsKiller](https://addons.mozilla.org/thunderbird/addon/caps-killer/).
-
-At the moment, only the Chrome version of [BugMeBack](https://chrome.google.com/webstore/detail/bugmeback/hgmagcomobmjhaomdoihiggpdekaehmg?hl=fr) and [KGen](https://chrome.google.com/webstore/detail/kgen/jkpcelefglapiahikhocfdcigfpaagcl?hl=fr) seems
-live but with no maintenance either.
+At the moment, only the Chrome version of
+[BugMeBack](https://chrome.google.com/webstore/detail/bugmeback/hgmagcomobmjhaomdoihiggpdekaehmg?hl=fr)
+and
+[KGen](https://chrome.google.com/webstore/detail/kgen/jkpcelefglapiahikhocfdcigfpaagcl?hl=fr)
+seems live but with no maintenance either.
 
 ### And many more
 
@@ -62,5 +66,5 @@ You can get the source of my public projects in
  [my GitHub home](https://github.com/nfroidure).
 
 You can also find open-source projects I made for my successive employers:
-[Sencrop](https://github.com/Sencrop),
-[7Digital](https://github.com/7Digital) and [SimpliField](https://github.com/SimpliField).
+[Sencrop](https://github.com/Sencrop), [7Digital](https://github.com/7Digital)
+and [SimpliField](https://github.com/SimpliField).

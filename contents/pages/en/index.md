@@ -16,7 +16,7 @@ location=US
 This is my piece of Web. It's a bit about me and a lot about technologies, Web
  and all that geeky stuffs you're probably here to read ;).
 
-You can lear more about [my projects](projects.html), read my
+You can learn more about [my projects](projects.html), read my
  [blogs posts](blog/index.html) or even know more [about me](about.html).
 
 The source code of this website is actually

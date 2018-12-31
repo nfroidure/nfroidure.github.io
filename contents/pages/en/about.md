@@ -1,6 +1,6 @@
 <!--VarStream
 title=About Nicolas Froidure
-description=Read how i define myself. My thoughts, not those of my family.
+description=Read how I define myself. My thoughts, not those of my family.
 shortTitle=About
 shortDesc=Learn more about me
 keywords.+=about

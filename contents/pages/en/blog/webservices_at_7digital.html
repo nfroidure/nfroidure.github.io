@@ -113,7 +113,7 @@ draft=false
 
 <p>
   We're using an open-source tool I made that implement Dependency Injection
-  with inversion of controls and looks similar to what's done in Angular. There
+  with Inversion of Control and looks similar to what's done in Angular. There
   is a small difference though, since it also handle service shutdown. Indeed,
   to ensure high availability we must shutdown services like PostgreSQL only
   when every connections to the HTTP server where closed.
@@ -130,8 +130,8 @@ draft=false
 <h4>Documentation Driven APIs</h4>
 
 <p>
-  Like any developer, i prefer write code than documentation. But i also prefer
-  using documented code. To conciliate those two paradoxical needs, i manage to
+  Like any developer, I prefer write code than documentation. But I also prefer
+  using documented code. To conciliate those two paradoxical needs, I managed to
   tie documentation and code. By writing the documentation, you create (<a
     href="https://github.com/nfroidure/siso"
     >routing</a
@@ -147,7 +147,7 @@ draft=false
 <p>
   I am not an MVC fan. Indeed, experience proves that answering to an HTTP
   request is often more a unique workflow specific to a given endpoint. I would
-  say i am using a Workflow Stages Service pattern where Workflow is a bunch of
+  say I am using a Workflow Stages Service pattern where Workflow is a bunch of
   asynchronous sequential operation, Stages is about running pure functions or
   services functions and Service is just dealing with system's or third party
   global states.
@@ -157,10 +157,10 @@ draft=false
 
 <p>
   I think enforcing URLs uniqueness in the stricter manner possible is a very
-  important thing. I made caching strategy efficient. What's the point of taking
-  trains to go to the office if your code is wasting resources? I want to code
-  green and URI unicity is maybe the best improvement you can achieve for that
-  matter.
+  important thing. It makes caching strategy efficient. What's the point of
+  taking trains to go to the office if your code is wasting resources? I want to
+  code green and URI unicity is maybe the best improvement you can achieve for
+  that matter.
 </p>
 
 <p>
@@ -195,7 +195,7 @@ draft=false
 <p>
   Every repositories involved in a project are embedded into the infrastructure
   repository as a Git submodule in order to be able to setup the development
-  environment by clone a single repository.
+  environment by cloning a single repository.
 </p>
 
 <h4>Cloud Hosting Powers</h4>
@@ -219,7 +219,7 @@ draft=false
 
 <p>
   There is a lot of checks before shipping to UAT or production dramatically
-  reducing risks to deploy non working versions. Most of the BDD tests i made
+  reducing risks to deploy non working versions. Most of the BDD tests I made
   also helped to ensure backward compatibility with the old APIs.
 </p>
 
