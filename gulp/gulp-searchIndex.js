@@ -18,18 +18,18 @@ const index = lunr(function() {
   this.field('shortDesc');
   this.field('body');
   this.ref('id');
-});
 
-Object.keys(documents).forEach((id) => {
-  const document = documents[id];
-  index.add({
-    id: id,
-    path: document.path,
-    title: document.title,
-    description: document.description,
-    shortTitle: document.shortTitle,
-    shortDesc: document.shortDesc,
-    contents: document.contents,
+  Object.keys(documents).forEach((id) => {
+    const document = documents[id];
+    this.add({
+      id: id,
+      path: document.path,
+      title: document.title,
+      description: document.description,
+      shortTitle: document.shortTitle,
+      shortDesc: document.shortDesc,
+      contents: document.contents,
+    });
   });
 });
 
