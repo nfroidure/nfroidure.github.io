@@ -28,8 +28,8 @@ with streams, make plugins and tools for developers.
 
 I also build HTML5 games for fun and skills, like:
 
-- [Sumuraÿ](https://sumuray.insertafter.com/)
-- [Memory](https://memory.insertafter.com/)
+- [Sumuraÿ](http://sumuray.insertafter.com/)
+- [Memory](http://memory.insertafter.com/)
 - [Break'It](https://breakit.insertafter.com/)
 - [Tank Arena](http://tank.elitwork.com/) (work in progress).
 

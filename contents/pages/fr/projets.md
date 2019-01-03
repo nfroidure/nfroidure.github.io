@@ -35,7 +35,7 @@ dont quelques jeux HTML5 :
 
 - [Sumuraÿ](http://sumuray.insertafter.com/) ;
 - [Memory](http://memory.insertafter.com/) ;
-- [Break'It](http://breakit.insertafter.com/) ;
+- [Break'It](https://breakit.insertafter.com/) ;
 - [Tank Arena](http://tank.elitwork.com/) (en travaux).
 
 Je crée parfois des apps pendant des hackathons:
@@ -44,8 +44,8 @@ Je crée parfois des apps pendant des hackathons:
 
 Et d'autres choses un peu bizarres :
 
-- [WEB MIDI Karaoke player](http://karaoke.insertafter.com/) ;
-- [Hexadecimal Editor](http://hexa.insertafter.com/).
+- [WEB MIDI Karaoke player](https://karaoke.insertafter.com/) ;
+- [Hexadecimal Editor](https://hexa.insertafter.com/).
 
 ### Extensions Firefox / Chrome / Opéra
 

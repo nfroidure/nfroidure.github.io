@@ -32,7 +32,7 @@
     "test": "gulp build --prod --noreq --nolr --nobro --nowatch --nosrv",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
-  "homepage": "http://insertafter.com",
+  "homepage": "https://insertafter.com",
   "repository": {
     "type": "git",
     "url": "git://github.com/nfroidure/blog"

@@ -16,7 +16,7 @@ https://github.com/joshbuchea/HEAD
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <meta name="robots" content="index,follow">
     <link rel="stylesheet" href="/css/main.css">
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     {% block head %}{% endblock %}
 </head>
 <body>
