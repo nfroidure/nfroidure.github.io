@@ -3,19 +3,17 @@
 
 /******** Mixins             ********/
 @import "mixins/_common.less";
-@import "mixins/_glyphs.less";
 
 /******** Good basis         ********/
-html, body { height:100%; font-size:@basefontsize; line-height:@vrythm; }
+html { font-size: 16px; }
+html, body { height:100%; }
+body { font-size: @basefontsize; line-height:@vrythm; }
 * { box-sizing: border-box; }
 
 /******** Modules             ********/
 @import "_vars.less";
 @import "_content.less";
 @import "_layout.less";
-
-/********  Default skin       ********/
-body { font-display: fallback; font-family:PT Sans, sans-serif; background:white; color:@c2; }
 
 /********  Components         ********/
 @import "components/_logo.less";

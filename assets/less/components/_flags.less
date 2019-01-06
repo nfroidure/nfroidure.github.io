@@ -1,21 +1,24 @@
-.ia-flags {
+
+.ia-flag {
   display:inline-block;
-  .ia-flags__item {
-    display:inline-block;
-  }
-  .ia-flags__item a {
-    display:inline-block;
-    text-decoration:none;
-    background-size: cover;
-    background-position: center;
-  }
-  .ia-flags__item--fr a {
-    background-image:url(/images/flags/fr.svg);
-  }
-  .ia-flags__item--en a {
-    background-image:url(/images/flags/en-US.svg);
-  }
-  .ia-flags__item span {
+  width:@vrythm*1.5;
+  height:@vrythm;
+  text-decoration:none;
+  background-size: cover;
+  background-position: center;
+  span {
     .hideText();
   }
+}
+.ia-flag--fr {
+  background-image:url(/images/flags/fr.svg);
+}
+html[lang=fr] .ia-flag--fr {
+  display:none;
+}
+.ia-flag--en {
+  background-image:url(/images/flags/en-US.svg);
+}
+html[lang=en] .ia-flag--en {
+  display:none;
 }

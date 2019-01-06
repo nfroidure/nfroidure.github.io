@@ -1,13 +1,13 @@
 {% extends type + '/layout.tpl' %}
 
 {% block body %}
-<article class="main-text">
+<article class="ia-main__content">
   {{ content | safe }}
 </article>{% if metadata.parent %}
-<p>
+<nav class="ia-main__back">
   <a href="{{metadata.parent.path}}{{metadata.parent.name}}.html"
     title="{{metadata.parent.title}}">
     &lt; {{metadata.parent.shortTitle}}
   </a>
-</p>{% endif %}
+</nav>{% endif %}
 {% endblock %}

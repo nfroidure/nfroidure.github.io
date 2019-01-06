@@ -46,7 +46,7 @@ location=US
     .trim()
     .replace(/ [ ]+/g, " ")
     .replace("404", "");
-  var results = searchIndex.search(search);
+  var results = searchIndex.search(search).slice(0, 10);
 
   if (results.length) {
     document.getElementById("suggestions").innerHTML =

@@ -14,19 +14,10 @@
    height="48px"
    id="svg4066"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="favicon.svg">
   <defs
      id="defs4068">
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4630">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.26984375"
-         id="feGaussianBlur4632" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient4634"
@@ -55,16 +46,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7"
-     inkscape:cx="-4.2142857"
-     inkscape:cy="24"
+     inkscape:zoom="3.5"
+     inkscape:cx="-3.8637602"
+     inkscape:cy="20.958668"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
      inkscape:window-width="1044"
      inkscape:window-height="608"
-     inkscape:window-x="1"
+     inkscape:window-x="65"
      inkscape:window-y="94"
      inkscape:window-maximized="0" />
   <metadata
@@ -84,42 +75,17 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <rect
-       style="fill:#5e7a90;fill-opacity:1;stroke:none"
-       id="rect4554"
+       style="opacity:1;fill:#3e78b2;fill-opacity:1;stroke:none;stroke-width:0.0892473;stroke-opacity:1"
+       id="rect5780"
        width="48"
        height="48"
        x="0"
        y="0"
-       inkscape:export-xdpi="37.894737"
-       inkscape:export-ydpi="37.894737"
-       inkscape:export-filename="/home/nfroidure/Bureau/LocalServer/elitwork/insert/www/images/favicon.png"
-       ry="12.442696" />
-    <text
-       xml:space="preserve"
-       style="font-size:34.87918472px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-       x="12.140471"
-       y="38.017952"
-       id="text2857-4"
-       inkscape:export-filename="/home/nfroidure/Bureau/LocalServer/elitwork/insert/www/images/header.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90"><tspan
-         sodipodi:role="line"
-         id="tspan2859-7"
-         x="12.140471"
-         y="38.017952"
-         style="font-size:34.87918472px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:FreeSans;-inkscape-font-specification:FreeSans" /></text>
-    <text
-       xml:space="preserve"
-       style="font-size:34.87918472px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-       x="5.5682564"
-       y="38.017952"
-       id="text2851-4"
-       inkscape:export-filename="/home/nfroidure/Bureau/LocalServer/elitwork/insert/www/images/header.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90"><tspan
-         sodipodi:role="line"
-         x="5.5682564"
-         y="38.017952"
-         id="tspan2855-55">&gt;</tspan></text>
+       ry="9.1216774" />
+    <path
+       id="path5788"
+       d="m 26.287401,8.9283208 v 4.8257402 h 6.38676 v 19.63362 h -6.38676 v 4.8258 h 18.59298 v -4.8258 h -6.33984 v -19.63362 h 6.33984 V 8.9283208 Z m -5.91444,6.8601602 -18.1663766,7.61718 v 5.25114 l 18.1663766,7.6641 1.60902,-5.10942 -13.2469196,-5.15622 13.2469196,-5.15742 z"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:26.96797752px;line-height:125%;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';letter-spacing:0px;word-spacing:0px;fill:#fffeff;fill-opacity:1;stroke:none;stroke-width:1.26725221px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

@@ -57,23 +57,6 @@ Nunjucks.configure(conf.src.templates, {
     .format('LLLL');
 });
 
-// Fonts
-gulp.task('build_fonts', () =>
-  gulp
-    .src(conf.src.icons + '/**/*.svg', { buffer: buffer })
-    .pipe(
-      g.iconfont({
-        formats: ['ttf', 'eot', 'woff', 'woff2'],
-        fontName: 'iconsfont',
-        appendUnicode: true,
-        fontHeight: 90,
-        normalize: true,
-        hint: !!g.util.env.hint,
-      })
-    )
-    .pipe(gulp.dest(conf.build.fonts))
-);
-
 // Images
 gulp.task('build_images', () => {
   var stream = new CombineStream([
@@ -86,7 +69,8 @@ gulp.task('build_images', () => {
       .pipe(
         g.cond(watch, g.watch.bind(g, conf.src.illustrations + '/**/*.svg'))
       )
-      .pipe(g.cond(prod, g.svgmin)),
+      .pipe(g.cond(prod, g.svgmin))
+      .on('error', console.error),
     gulp
       .src(conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}', {
         buffer: buffer,
@@ -325,7 +309,7 @@ gulp.task('clean', () => {
 // The build task
 gulp.task(
   'build',
-  ['clean', 'build_fonts', 'build_images', 'build_styles', 'build_js'],
+  ['clean', 'build_images', 'build_styles', 'build_js'],
   function(cb) {
     // Robots.txt
     fs.writeFileSync(
@@ -346,8 +330,6 @@ gulp.task(
         ],
         ['build_js']
       );
-
-      gulp.watch([conf.src.icons + '/**/*.svg'], ['build_fonts']);
     }
 
     // Livereload
