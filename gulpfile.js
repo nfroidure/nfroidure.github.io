@@ -69,8 +69,7 @@ gulp.task('build_images', () => {
       .pipe(
         g.cond(watch, g.watch.bind(g, conf.src.illustrations + '/**/*.svg'))
       )
-      .pipe(g.cond(prod, g.svgmin))
-      .on('error', console.error),
+      .pipe(g.cond(prod, g.svgmin)),
     gulp
       .src(conf.src.illustrations + '/**/*.{png,jpg,jpeg,gif}', {
         buffer: buffer,
