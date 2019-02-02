@@ -184,7 +184,7 @@ try {
 </p>
 <p>
   À cette fin, je préfère gérer cette long stack trace manuellement en
-  identifiant les secteurs importants de l'application qui necessitent que je
+  identifiant les secteurs importants de l'application qui nécessitent que je
   récupère la trace en cours. Prenons la chaîne de promise suivante&nbsp;:
 </p>
 <pre>
@@ -199,7 +199,7 @@ function updatePassword(id, passwd) {
 }
 </pre>
 <p>
-  Dans cette chaîne de promise, ce qui m'interesse, c'est d'avoir la stack
+  Dans cette chaîne de promise, ce qui m'intéresse, c'est d'avoir la stack
   initiale de l'erreur et de savoir qu'elle a eu lieu dans cette chaîne de
   promise. Le reste n'est que du bruit. C'est pourquoi j'utilise explicitement
   la fonction <code>YError.bump()</code>.
@@ -214,7 +214,7 @@ function updatePassword(id, passwd) {
 </p>
 <p>
   Malheureusement, cette requalification génère souvent une perte d'information
-  si on se contente naïvement de créer une autre erreur paralèllement. Mon
+  si on se contente naïvement de créer une autre erreur parallèlement. Mon
   approche dans ce cas est d'utiliser la méthode <code>YError.wrap()</code>.
 </p>
 
@@ -234,7 +234,7 @@ function updatePassword(id, passwd) {
 </pre>
 <p>
   Ici, je requalifie un échec à la récupération de l'utilisateur ou à la
-  vérification du nouveau mot de passe pour qualifier l'erreur comme étant dûe à
+  vérification du nouveau mot de passe pour qualifier l'erreur comme étant due à
   l'utilisateur. Dans le cadre d'une API rest, cela permettra de renvoyer une
   erreur 400. Les autres erreurs seront quand à elles classifiées comme bug et
   une erreur 500 sera retournée dans ce cas.

@@ -15,10 +15,13 @@ disqus=true
 -->
 
 <h2>MongoDB ou la conception probabiliste</h2>
+
 <p>
-  Comme je ne vous ai pas tout dit dans mon dernier billet sur le design de base
-  de donnée avec MongoDB, je me fends d'un second billet plus généraliste sur la
-  philosophie que je mets en œuvre pour la gestion d'une base de donnée MongoDB.
+  Comme je ne vous ai pas tout dit dans mon
+  <a href="./design_base_donnee_mongodb.html"
+    >dernier billet sur le design de base de donnée avec MongoDB</a
+  >, je me fends d'un second billet plus généraliste sur la philosophie que je
+  mets en œuvre pour la gestion d'une base de donnée MongoDB.
 </p>
 <p>
   La majeure partie des décisions en matière d'architecture et de conception de
@@ -47,8 +50,9 @@ disqus=true
 <h3>ObjectId, the WTF primary key</h3>
 <p>
   Les clés utilisées par MongoDB, les
-  <a href="https://docs.mongodb.com/manual/reference/method/ObjectId/">ObjectIds</a>,
-  sont facilement reconnaissables sous forme de chaîne de caractère. Derrière
+  <a href="https://docs.mongodb.com/manual/reference/method/ObjectId/"
+    >ObjectIds</a
+  >, sont facilement reconnaissables sous forme de chaîne de caractère. Derrière
   cette séquence hexadécimale de 24 caractères (ex.&nbsp;:
   babacafebabacafebabacafebabacafe) se cache bien des concepts.
 </p>
@@ -278,7 +282,7 @@ db.users.find({
 <h5>Contrôle et traitement opportuniste d'intégrité</h5>
 <p>
   Mais il y a mieux :). Dans notre exemple de code tolérant à l'inconsistance,
-  je vois une belle opportunité de gérer à postériori les inconsistances. En
+  je vois une belle opportunité de gérer à posteriori les inconsistances. En
   effet, puisque nous avons fait les requêtes permettant de voir
   l'inconsistance, pourquoi ne pas la corriger&nbsp;?
 </p>
@@ -472,15 +476,6 @@ db.users.find({
 <p>
   J'aime ces points de jonction entre la science et la vie. N'est-ce pas ainsi
   qu'on explique désormais la plupart des mystères de l'univers&nbsp;?
-</p>
-<p style="text-align:center;">
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/Bze72H4il78"
-    frameborder="0"
-    allowfullscreen
-  ></iframe>
 </p>
 <p>
   Toutes les bonnes choses ont une fin, je pense que je reparlerai de MongoDB
