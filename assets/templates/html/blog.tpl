@@ -11,7 +11,7 @@
 {% else %}
 <section class="ia-main__articles">
   {% for post in metadata.childs %}
-  <article class="ia-article{% if post.template == 'presentation' %} ia-article--presentation{% endif %}">
+  <article class="ia-article{% if post.template == 'presentation' %} ia-article--presentation{% endif %}{% if post.template == 'talk' %} ia-article--talk{% endif %}">
     <p class="ia-article__title"><strong>
       <a href="{{post.path}}{{post.name}}.html"
         title="{{post.shortDesc}}">
@@ -21,6 +21,9 @@
     <p class="ia-article__description">{{ post.description }}</p>
     {% if post.template == 'presentation' %}
     <iframe class="ia-article__presentation" src="{{ post.embed }}" width="320" height="240" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    {% endif %}
+    {% if post.template == 'talk' %}
+    <iframe class="ia-article__talk" src="{{ post.embed }}" width="320" height="240" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     {% endif %}
     <p class="ia-article__publication">{{ metadata.published_on }} {{post.published | date(metadata.lang)}}</p>
   </article>

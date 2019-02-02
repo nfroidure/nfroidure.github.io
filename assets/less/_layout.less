@@ -7,11 +7,11 @@ body {
   height: 100%;
   display: grid;
   grid-template-areas:
-   "header header"
-   "icons languages"
-   "menu menu"
-   "content content"
-   "footer footer";
+    'header header'
+    'icons languages'
+    'menu menu'
+    'content content'
+    'footer footer';
   grid-template-rows: auto auto auto 1fr auto auto;
   grid-template-columns: 3fr 1fr;
 }
@@ -24,7 +24,7 @@ body {
       display: block;
       height: @vrythm * 2;
       max-width: 100%;
-      margin: @vrythm/2 auto;
+      margin: @vrythm / 2 auto;
     }
   }
 }
@@ -32,7 +32,7 @@ body {
 .ia-languages {
   grid-area: languages;
   display: block;
-  padding: @vrythm/2 @gutter;
+  padding: @vrythm / 2 @gutter;
   text-align: right;
 }
 
@@ -44,9 +44,10 @@ body {
   line-height: @vrythm * 2;
   text-align: right;
 
-  .ia-menu__body, .ia-menu__item {
+  .ia-menu__body,
+  .ia-menu__item {
     list-style-type: none;
-    margin:0;
+    margin: 0;
     padding: 0;
   }
   .ia-menu__body {
@@ -79,7 +80,7 @@ body {
   align-self: center;
   display: block;
   padding: @vrythm @gutter;
-  &>div {
+  & > div {
     max-width: @gutter * 45;
     margin: 0 auto;
   }
@@ -87,7 +88,7 @@ body {
 
 .ia-icons {
   grid-area: icons;
-  padding: @vrythm/2 @gutter;
+  padding: @vrythm / 2 @gutter;
   text-align: left;
 }
 
@@ -106,7 +107,8 @@ body {
   }
 }
 
-.ia-presentation__presentation {
+.ia-presentation__presentation,
+.ia-presentation__talk {
   width: @column;
   height: (@column * 3 / 4);
 }
@@ -136,21 +138,33 @@ body {
     height: (@column * 3 / 4);
     margin: 0 0 @vrythm 0;
   }
+  .ia-article__talk {
+    grid-area: article_talk;
+    align-self: start;
+    width: @column;
+    height: (@column * 3 / 4);
+    margin: 0 0 @vrythm 0;
+  }
   &:first-child {
-    .ia-article__title {
-      border-top: @border solid @c5;
+    border-top: @border solid @c5;
+    .ia-article__presentation, .ia-article__talk {
+      margin: (@vrythm - @border) 0 @vrythm 0;
     }
   }
 }
 
 /* S : 1 column : */
 @media screen and (max-width: (@M + @gutter * 2 - @RWDSec)) {
-  head link { content: 'S'; }
+  head link {
+    content: 'S';
+  }
 }
 
 /* n+1 columns */
 @media screen and (min-width: (@M + @gutter * 2)) {
-  .ia-content p { text-align: justify; }
+  .ia-content p {
+    text-align: justify;
+  }
   .ia-menu {
     line-height: @vrythm * 3;
     text-align: center;
@@ -161,8 +175,9 @@ body {
     .ia-menu__item {
       a {
         padding: 0 (@gutter * 2);
-        &:hover, &.selected {
-          background-color: #ffffff0f
+        &:hover,
+        &.selected {
+          background-color: #ffffff0f;
         }
         &.selected:before {
           content: '';
@@ -174,7 +189,9 @@ body {
 
 /* M : 2 columns */
 @media screen and (min-width: (@M + @gutter * 2)) and (max-width: (@L + @gutter * 2 - @RWDSec)) {
-  head link { content: 'M'; }
+  head link {
+    content: 'M';
+  }
 
   .ia-presentation__presentation {
     width: @two_columns_wide;
@@ -220,21 +237,39 @@ body {
     grid-template-rows: auto auto auto;
     grid-template-columns: auto @column;
     grid-template-areas:
-     "article_title article_presentation"
-     "article_description article_presentation"
-     "article_publication article_presentation"
+      'article_title article_presentation'
+      'article_description article_presentation'
+      'article_publication article_presentation';
+  }
+  .ia-presentation__talk {
+    width: @three_columns_wide;
+    height: (@three_columns_wide * 3 / 4);
+  }
+  .ia-article.ia-article.ia-article--talk {
+    display: grid;
+    grid-gap: @gutter;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto @column;
+    grid-template-areas:
+      'article_title article_talk'
+      'article_description article_talk'
+      'article_publication article_talk';
   }
 }
 
-
 /* L : 3 columns */
 @media screen and (min-width: (@L + @gutter * 2)) and (max-width: (@XL + @gutter * 2 - @RWDSec)) {
-  head link { content:'L'; }
+  head link {
+    content: 'L';
+  }
 }
-
 
 /* XL : 4 columns */
 @media screen and (min-width: (@XL + @gutter * 2)) {
-  head link { content:'XL'; }
-  html { font-size: 18px; }
+  head link {
+    content: 'XL';
+  }
+  html {
+    font-size: 18px;
+  }
 }
