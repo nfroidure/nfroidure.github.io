@@ -2,7 +2,7 @@
 title=Blog d'un développeur JavaScript/NodeJS à Lille
 description=Blog de Nicolas Froidure, développeur JavaScript fullstack à Lille.
 shortTitle=Accueil
-shortDesc=Retour à l'acceuil
+shortDesc=Retour à l'accueil
 keywords.+=JavaScript
 keywords.+=developer
 keywords.+=Nicolas

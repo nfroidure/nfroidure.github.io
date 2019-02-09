@@ -49,7 +49,7 @@ Et d'autres choses un peu bizarres :
 
 ### Extensions Firefox / Chrome / Opéra
 
-Les dinosaures du web connaissent sûrements quelques-unes des
+Les dinosaures du web connaissent sûrement quelques-unes des
 extensions Firefox que j'ai développées et maintenues pendant
 plusieurs années ([KGen](https://github.com/nfroidure/KGen), [BBComposer](https://github.com/nfroidure/BBComposer), [BugMeBack](https://github.com/nfroidure/BugMeBack) et [CanImage](https://github.com/nfroidure/CanImage)).
 
