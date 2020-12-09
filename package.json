@@ -86,7 +86,7 @@
     "metapak": "^2.0.0",
     "metapak-nfroidure": "9.0.3",
     "nunjucks": "^3.1.6",
-    "open": "^0.0.5",
+    "open": "^6.0.0",
     "plexer": "^1.0.2",
     "prettier": "^1.14.3",
     "reachable-urls": "^1.0.2",
