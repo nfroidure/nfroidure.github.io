@@ -89,7 +89,7 @@ gulp.task('build_images', () => {
           cmd: '/bin/sh',
           args: [
             '-c',
-            'cat |  convert -background none -resize 32x32 svg:/dev/stdin png:/dev/stdout | cat',
+            'cat |  convert -background none -resize 32x32 svg:/dev/stdin png:- | cat',
           ],
           filename: () => 'favicon.png',
         })
