@@ -65,17 +65,14 @@ disqus=true
   </li>
 </ul>
 <p>
-  Utilisation de camelCase. En effet, cette syntaxe rend plus lisible les noms
+  Utilisation du snake case (ndr: et non camelCase comme initialement recommandé ici,
+  MySQL est sensible à la casse, mais ce n'est pas le cas de PostgreSQL, le snake case
+  est donc plus largement utilisable partout).<br />
+  Le snake case (ex: <code>an_example_snake_case</code>) rend plus lisible les noms
   des tables en marquant les différents mots qui composent le nom d&#039;une
   table apportant une visibilité qui n&#039;est pas de trop pour les requêtes
   les plus complexes. De plus cette syntaxe est assez naturelle à tout
-  programmeur initié à la <abbr title="Programmation Orientée Objet">POO</abbr>.
-</p>
-<p>
-  Cela découle de l&#039;utilisation du camelCase, mais je le précise tout de
-  même : pas de tirets ou autres signes superflux. On reste sur des caractères
-  de a à z. Cette règle souffre une seule exception comme vous le constaterez
-  ci-après.
+  programmeur initié à la programmation en C ou en Rust.
 </p>
 <p>
   Ces deux règles suffisent à savoir comment nommer une base de donnée, pour les
@@ -87,37 +84,38 @@ disqus=true
   sont une liste de lignes. C&#039;est aussi une façon de bien distinguer une
   table d&#039;une table liée. Par exemple, grâce à l&#039;utilisation du
   pluriel, on ne peut pas confondre la table <span>products</span> avec la table
-  <span>productCategories</span> ou le champ <span>billRows.product</span>.
+  <span>product_categories</span> ou le champ <span>bill_rows.product</span>.
 </p>
 <p>
-  Seules les tables de jointures peuvent contenir (elles le doivent) des tirets.
-  Plus précisément l&#039;underscore (tiret sous le 8 sur votre clavier). Une
-  table qui associerai des utilisateurs à leurs produits préférés se nommerai
-  <code>products_users</code>.
+  Seules les tables de jointures peuvent contenir (elles le doivent) deux tirets
+  à la suite. Plus précisément l&#039;underscore (tiret sous le 8 sur votre
+  clavier). Une table qui associerai des utilisateurs à leurs produits préférés
+  se nommerai <code>products__users</code>.
 </p>
 <p>
   C&#039;est une convention personnelle mais qui peut avoir de
-  l&#039;importance : le nom de la table <code>products_users</code> doit être
-  composée des deux tables qu&#039;elle référence par ordre croissant. Cela
-  permet de pouvoir prédire leur nom sans avoir besoin de consulter le schéma de
-  la table.
+  l&#039;importance : le nom de la table <code>products__users</code> doit être
+  composée des deux tables qu&#039;elle référence par ordre alphabétique croissant.
+  Cela permet de pouvoir prédire leur nom sans avoir besoin de consulter le schéma
+  de la table.
 </p>
 <h3>Nomenclature des champs</h3>
 <p>
   Les champs sont le plus souvent au singulier lorsqu&#039;il ne peuvent
   contenir qu&#039;une valeur. Une exception cependant, les champs de type
   <code>SET</code> qui contiennent un sous ensemble du set de valeurs qu&#039;il
-  peuvent contenir.
+  peuvent contenir (avec PostgreSQL, ce sont les champs de type
+  <code>Array</code>).
 </p>
 <p>
   Cela permet aussi de se poser une question sur le contenu de votre table. Si
-  l&#039;un des champs est au pluriels et n&#039;est pas de type
+  l&#039;un des champs est au pluriel et n&#039;est pas de type
   <code>SET</code>, il y a de fortes présomptions sur le fait que le schéma de
   votre table n&#039;est pas optimal conceptuellement.
 </p>
 <p>
   Bien entendu, un champs avec une clé étrangère référençant la table
-  <code>products</code> sera nommé <code>product</code> si que possible.
+  <code>products</code> sera nommé <code>product</code> si possible.
 </p>
 <p>
   Enfin, l&#039;identifiant unique quand il se résume à une seule valeur
@@ -130,7 +128,20 @@ disqus=true
   requête créée récemment pour l&#039;export
   <abbr title="Comma Separated Values">CSV</abbr> d&#039;un client:
 </p>
-<pre>SELECT equipments.id AS Id, organizations.label AS Client, installations.label AS Aire, CONCAT_WS(&#039; &#039;, equipmentModels.model, equipments.precision) AS Jeu<br /> FROM equipments<br /> LEFT JOIN equipmentModels on equipments.model=equipmentModels.id<br /> LEFT JOIN installations ON equipments.installation=installations.id<br /> LEFT JOIN organizations ON installations.organization=organizations.id<br /> WHERE equipmentModels.model LIKE &#039;&#37;sans réf&#37;&#039;</pre>
+<pre>SELECT
+  equipments.id AS Id,
+  organizations.label AS Client,
+  installations.label AS Aire,
+  CONCAT_WS(&#039; &#039;, equipment_models.model,
+  equipments.precision) AS Jeu
+FROM equipments
+LEFT JOIN equipment_models
+  ON equipments.model = equipment_models.id
+LEFT JOIN installations
+  ON equipments.installation = installations.id
+LEFT JOIN organizations
+  ON installations.organization = organizations.id
+WHERE equipment_models.model LIKE &#039;&#37;sans réf&#37;&#039;</pre>
 <p>
   Voilà pour mes petites règles de bonne conduite SQL ! Et vous, comment
   nommez-vous vos tables ? Que pensez-vous de ces principes ?
