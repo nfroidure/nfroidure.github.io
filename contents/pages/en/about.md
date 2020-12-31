@@ -15,13 +15,17 @@ location=US
 
 ## About
 
-I'm a curious web developer in love with JavaScript, HTML, CSS, HTTP, REST and
- Node.js. I'm a hard worker, a bit direct but skillful. Rigorous but generous.
- I like to invent and share.
+I follow an ideal of getting technologies to really help the mankind by putting
+in practice my ethical principles : ecology, humanism and knowledge sharing.
 
-I'm mainly blogging about web technologies, historically in French, but I try
- to translate the most interesting posts into English. Feel free to add your
- comments or to contact me if you want to give me your point of view or ask some
- explanations about the content I share here.
+I found in the web and ITs a way to impact the world in a positive manner.
+
+I like to invent and share so I am particurlarly interested in creating
+innovative products.
+
+I'm mainly blogging about web technologies, historically in French, but I try to
+translate the most interesting posts into English. Feel free to add your
+comments or to contact me if you want to give me your point of view or ask some
+explanations about the content I share here.
 
 I wish you'll find this blog useful and hope to see you soon!

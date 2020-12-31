@@ -16,31 +16,38 @@ location=US
 I'm involved in a lot of different projects from add-ons to games, It's a good
 way to stay informed on new development features and improve my skills.
 
+I particularily like JavaScript, TypeScript and Rust languages.
+
 ### NodeJS
 
 As as early NodeJS user, I made several modules I
 [published on NPM](https://www.npmjs.org/~nfroidure 'View my NPM profile').
 
-In particular, I like make JavaScript parsers (CSV, VarStream, SVG...), work
-with streams, make plugins and tools for developers.
+In particular, I like to create JavaScript parsers (CSV, VarStream, SVG...),
+work with streams, make plugins and tools for developers.
 
 ### Web apps
 
 I also build HTML5 games for fun and skills, like:
 
-- [Sumuraÿ](http://sumuray.insertafter.com/)
-- [Memory](http://memory.insertafter.com/)
-- [Break'It](https://breakit.insertafter.com/)
-- [Tank Arena](http://tank.elitwork.com/) (work in progress).
+- [BeloreRE](https://belote.insertafter.com/): a simple franch card game (close
+  to the bridge game),
+- [Sumuraÿ](http://sumuray.insertafter.com/): a simple math game where you must
+  find sums,
+- [Memory](http://memory.insertafter.com/): a multiplayer memory game,
+- [Break'It](https://breakit.insertafter.com/): a WTF breakit game.
 
 I sometimes make some apps during hackathons with friends:
 
-- [Trip Story](https://github.com/nfroidure/TripStory)
+- [Trip Story](https://github.com/nfroidure/TripStory): a travel app made during
+  a hackaton.
 
 And other wierd stuff:
 
-- [WEB MIDI Karaoke player](https://karaoke.insertafter.com/).
-- [Hexadecimal Editor](https://hexa.insertafter.com/).
+- [WEB MIDI Karaoke player](https://karaoke.insertafter.com/): a simple tool to
+  Karaoke like in the 90's,
+- [Hexadecimal Editor](https://hexa.insertafter.com/): a web based hexadecimal
+  editor.
 
 ### Firefox / Chrome / Opera add-ons
 
