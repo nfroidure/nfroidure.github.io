@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Jeux HTML5 : Défi Tank Arena</title>
+  <meta name="description" content="Si vous avez déjà joué à Tank Arena, alors vous savez que c&#39;est un excellent jeu. Malheureusement, il n&#39;existe que pour Windows. Relevons le défi d&#39;en faire un jeu HTML5 !">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/tank_arena_html5.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Jeux HTML5 : Défi Tank Arena</h2>
+<p>
+  ⚠ Attention: Cet article est ancien et son contenu n'est plus d'actualité. Je
+  ne le conserve que pour des raisons historiques.
+</p>
+<p>
+  Si vous avez déjà joué à Tank Arena, alors vous savez que c&#039;est un
+  excellent jeu. Malheureusement, il n&#039;existe que pour Windows. Relevons le
+  défi d&#039;en faire un jeu HTML5 !
+</p>
+
+<p>
+  <a
+    title="Voir le billet sur le Casse brique que j&#039;ai réalisé"
+    href="html5_casse_brique.html"
+    >Mon expérience du Casse Brique</a
+  >
+  a confirmé mon intuition première&#0160;: développer des jeux HTML5,
+  c&#039;est fun&#0160;! Après avoir goûté à
+  <a
+    hreflang="en"
+    title="Voir le jeu créé par Mozilla"
+    href="http://browserquest.mozilla.org/"
+    >BrowserQuest</a
+  >, je me suis dit que le web était prêt pour embrasser l&#039;univers du jeu
+  et j&#039;ai eu envie de m&#039;y frotter. Malheureusement, créer un jeu de
+  toute pièce plus évolué qu&#039;un simple Casse Brique nécessite de monter une
+  équipe composée de graphistes, de scenaristes et de développeurs.
+</p>
+<p>
+  Je n&#039;ai pas vocation à vendre ces jeux au travers de mon entreprise, mais
+  plutôt à les créer pour le fun, à mon rythme et à les proposer à la
+  communauté. Bref, je ne peux pas embaucher un graphiste pour cela.
+</p>
+<p>
+  C&#039;est alors que j&#039;ai pensé à ce vieux freeware avec lequel j&#039;ai
+  pas mal joué étant plus jeune (alors en shareware) et qui me plaisait
+  beaucoup. J&#039;ai donc contacté les auteurs de Tank Arena, Jorrit Rouwe et
+  Dennis Medema et ils ont gentiment accepté que ce projet démarre avec pour
+  seule condition, une utilisation non-commerciale ce qui me va tout à fait.
+  Jorrit m&#039;a donc transmis les sources du jeu (écrit originellement en C).
+  Un gros travail de conversion des fichiers existants en fichiers utilisables
+  pour le web a donc commencé.
+</p>
+<p>
+  Deux jours plus tard, me voici donc avec une
+  <a
+    title="Voir la liste"
+    href="https://github.com/nfroidure/TankArena/tree/master/www/sprites"
+    >collection de sprites</a
+  >
+  sous licence Creative Common Non-Commercial Attribution. Il ne me reste plus
+  qu&#039;à coder&#0160;:D.
+</p>
+<h3>Plantons le décor</h3>
+<p>
+  <a
+    hreflang="en"
+    title="Voir le site officiel"
+    href="http://www.jrouwe.nl/tank/"
+    >Tank Arena</a
+  >
+  est un jeu aux graphismes 2D vus de dessus. Le joueur incarne un tank, un
+  bateau ou un avion et évolue en 3D (les avions surtout). En mode solo (ou en
+  coopération), il accomplit des missions contre l&#039;ordinateur, en mode
+  multijoueur, il propose des battles ou des courses. Afin de bien comprendre
+  tout l&#039;article, je vous conseille d&#039;y jouer un peu, de cette façon
+  vous aurez une bonne vision des raisons qui expliquent les choix que
+  j&#039;expose ci-dessous.
+</p>
+<p>
+  Je ne sais pas encore ce que ma version proposera, mais j&#039;aimerai bien
+  proposer un mode mission et un mode multijoueur (avec les web sockets). Dans
+  tous les cas, les
+  <a
+    hreflang="en"
+    title="Voir la page sur laquelle Tant Arena est proposé"
+    href="http://tank.elitwork.com"
+    >premiers prototypes</a
+  >
+  que je vais réaliser vont surtout consister à trouver la meilleure solution
+  technique pour afficher le monde et ce qu&#039;il contient.
+</p>
+<h3>Mon plan d&#039;action</h3>
+<p>
+  J&#039;ai contacté le
+  <a title="Voir son profil Twitter" href="http://twitter.com/whatthefranck"
+    >développeur de Browser Quest</a
+  >
+  et lui ai posé quelques questions à propos de la façon dont il avait travaillé
+  sur le projet. Je voulais surtout savoir si ils avaient rencontré des
+  problèmes de performance. Je ne veux surtout pas me retrouver avec un jeu
+  injouable à cause d&#039;une architecture mal pensée. En effet, là ou le code
+  natif permet quelques écarts, la programmation d&#039;un jeu avec
+  HTML5 / Javascript nécessite de bien penser aux performances.
+</p>
+<p>
+  Finalement, un jeu de ce type se compose d&#039;un plan (avec étages dans
+  notre cas) sur lequel se trouvent des objets dont un certain nombre sont
+  animés ou se déplacent contrôlés par le joueur ou par l&#039;ordinateur.
+  Chaque objet est donc affiché en fonction d&#039;une part de son état
+  (position, orientation, niveau z etc..) et/ou du temps. Le jeu se résumera
+  donc à une boucle qui parcourera successivement tous les objets se trouvant
+  sur le plan pour les modifier en fonction du temps pour les éléments
+  dynamiques et pour les dessiner en fonction du point de vue actuel sur ce
+  plan.
+</p>
+<h4>Le plan</h4>
+<p>
+  Le plan peut être subdivisé en cases dont chacune contient une texture. Ces
+  textures sont le plus souvent figées, il n&#039;est donc pas nécessaire
+  d&#039;imprimer ces dernières dans un Canvas à chaque fois. Par exemple, dans
+  Browser Quest, la map n&#039;est imprimée qu&#039;un fois dans un Canvas et
+  n&#039;est réimprimée que lorsque le personnage change de vue. Dans mon cas,
+  le problème est que la carte doit défiler en même temps que le tank,
+  cependant, afin d&#039;économiser du CPU, je vais partir sur une solution un
+  peu spéciale, j&#039;espère que ça marchera.
+</p>
+<p>
+  L&#039;idée est d&#039;imprimer tous les éléments statiques dans un Canvas de
+  la taille de la carte (donc trop grand pour être affiché en entier. Ensuite,
+  je vais choisir entre deux solutions&#0160;: la première, utiliser la
+  propriété background dans une élément &lt;div&gt; grâce à l&#039;export sous
+  forme de dataUri de l&#039;image composée par le Canvas, la seconde, est de
+  mettre le Canvas dans un div et de scroller le div en même temps que le
+  personnage évolue. J&#039;espère que l&#039;une des deux solutions sera
+  concluante.
+</p>
+<p>
+  Actuellement, je penche plutôt pour la seconde car elle me permettrait
+  d&#039;animer certaines textures (vagues dans l&#039;eau, vent dans les arbres
+  ou autre), je me vois mal récupérer une dataURI a chaque frame d&#039;une
+  animation pour l&#039;injecter dans le background d&#039;une div.
+</p>
+<h4>Les tanks, bâtiments et autres objets</h4>
+<p>
+  Ensuite, sur la carte, il y a des bâtiments qui eux aussi sont statiques, mais
+  qui peuvent changer d&#039;état et donc d&#039;apparence. De plus, les tanks
+  peuvent, en fonction de leur position en z apparaître au dessus ou en dessous
+  du bâtiment.
+</p>
+<p>
+  Deux solutions se présentent à moi. La première est de décider de tout
+  redessiner à chaque boucle de jeu dans un unique canvas, la seconde est de
+  superposer plusieurs éléments &lt;canvas&gt;. La deuxième solution me paraît
+  plus souhaitable, mais je dois déterminer combien d&#039;éléments
+  &lt;canvas&gt; je dois superposer.
+</p>
+<p>
+  Les tanks terrestres ou maritimes sont au niveau 0 (sol), les bâtiments sont
+  au niveau 0 pour ceux en dessous desquels on ne peut passer ou au niveau 1
+  pour les autres, sachant que pour les bâtiments sous lesquels on peut passer,
+  bien qu&#039;il ne sont représentés graphiquement qu&#039;au niveau 1, il ont
+  une présence physique au niveau 0 qui sera à prendre en compte pour les
+  collisions.
+</p>
+<p>Je serais bien tenté par la disposition suivante&#0160;:</p>
+<ul>
+  <li>
+    canvas de fond statique (Niveau 0)&#0160;: les éléments sont imprimés une
+    fois en debut de jeu, ceux dont l&#039;état change sont ré-imprimé à ce
+    moment là et uniquement la zone concernée. On y imprimerai les textures de
+    fond et les batiments pleins (on ne peut pas passer en dessous).
+  </li>
+  <li>
+    canvas dynamique (Niveau 0)&#0160;: on y imprimera les animations des
+    textures puis les tanks terrestres et maritimes y seront imprimés à chaque
+    boucle du jeu, mais uniquement pour la zone de la carte affichée à
+    l&#039;écran.
+  </li>
+  <li>
+    canvas aerien statique&#0160;: on y imprimera les bâtiment en dessous
+    desquels un tank peut passer avec une gestion du même type que le canvas de
+    fond.
+  </li>
+  <li>
+    canvas aerien multi-niveaux&#0160;: on y imprimera tous les autres niveaux
+    en parcourant récursivement le tableau des objets dynamiques pour chaque
+    étage de jeu. En effet, pour tous les autres étages de jeu, il n&#039;y a
+    plus que des éléments dynamiques et il ne serait donc pas opportun de créer
+    d&#039;autres éléments Canvas.
+  </li>
+</ul>
+<p>
+  J&#039;oubliais, dans le Tank Arena original, il existe des &#034;trous&#034;
+  dans lesquels on peut tomber. Le niveau z peut donc être négatif. Pour autant,
+  on ne le prévoit pas dans la superposition des éléments &lt;canvas&gt; car les
+  trous ne sont pas recouverts et il nous suffira d&#039;imprimer les sprites
+  qui vont bien pour donner l&#039;impression que le Tank est entrain de tomber.
+</p>
+<h4>Les sprites</h4>
+<p>
+  Lors de la refonte des graphismes, je ne savais pas trop comment organiser les
+  sprites pour optimiser la gestion des images dans le jeu. J&#039;ai pris le
+  parti de réunir les sprites relatif à un même tank au sein d&#039;un seul
+  fichier. De réunir les structures ensemble, tout comme les bâtiments, les
+  murs, les arbres etc... De cette façon, les sprites du jeu sont réunis dans un
+  total de 36 fichiers ce qui me parrait pas mal en terme d&#039;organisation.
+</p>
+<p>
+  J&#039;imagine que je devrais les charger dynamiquement au chargement du jeu
+  afin de les avoir sous la main. A savoir, le jeu original utilisait des
+  sprites de 33x33pixels, je vais donc rester sur ça, mais je
+  m&#039;appliquerait pour que cela soit modifiable afin que je puisse
+  réutiliser une bonne part du code dans d&#039;autres jeux sans forcément
+  rester sur ce choix là.
+</p>
+<h4>Types d&#039;objets</h4>
+<p>Finalement, on distingue peu de types d&#039;objets différents&#0160;:</p>
+<ul>
+  <li>
+    le terrain&#0160;: chaque subdivision du plan de 33x33 pixels contient une
+    image représentant le terrain. Je ne créerai pas d&#039;objets pour ceux-ci,
+    mais simplement un tableau indiquant quelle texture doit y être insérée. Ce
+    tableau servira aussi à contenir les éléments se trouvant dans chacune de
+    ces subdivisions.
+  </li>
+  <li>
+    les objets statiques&#0160;: il peuvent être de niveau 0 et/ou 1. Ils ont
+    des bords physiques avec lesquels des objets mobiles peuvent entrer en
+    collision.
+  </li>
+  <li>
+    les objets dynamiques&#0160;: il peuvent être de niveau n (entier) et
+    peuvent entrer en collision avec des autres objets du même type ou des
+    objets statiques.
+  </li>
+</ul>
+<p>
+  En revanche, chaque objet a des types de collision différents. En fonction des
+  formes, on aura divers choix&#0160;:
+</p>
+<ul>
+  <li>
+    un objet suffisamment petit pourra être considéré comme un point. Je pense à
+    un tir principalement.
+  </li>
+  <li>
+    un objet suffisamment rond pourra être considéré comme un rond (tank ou
+    bâtiment plutôt rond, plot).
+  </li>
+  <li>
+    un objet suffisamment carré pourra être considéré comme une carré (bâtiment
+    plein) ou un ensemble de carrés (bâtiments sous lequel on peut passer).
+  </li>
+</ul>
+<p>
+  Chaque objet du monde devra donc avoir une propriété contenant un tableau de
+  ses contours physiques et de leur type. Ajoutons enfin le fait qu&#039;il nous
+  faudra toujours vérifier que les objets mobiles soient bien à l&#039;intérieur
+  des limites du jeu.
+</p>
+<p>
+  On distinguera les objets qui devront être repositionnés (tanks) des objets
+  qui seront détruits (tirs) à la collision.
+</p>
+<p>
+  Par convention, on déléguera aux objets mobiles la gestion de leur colision
+  avec les objets statiques et mobiles qui les entourent. En cas de collision
+  entre deux objets mobiles, chacun de ces objets aura la responsabilité de
+  calculer sa propre réaction. Les tirs sont des objets mobiles particuliers,
+  les autres objets mobiles ne s&#039;en préoccuperons pas, c&#039;est le tir
+  lui même qui infligera ses dégâts aux objets qu&#039;il atteindra.
+</p>
+<p>
+  Les objets auront également sous leur responsabilité de déclarer leur propre
+  occupation de l&#039;espace. En effet, afin d&#039;affiner la gestion des
+  collisions, chaque objet devra déclarer quelles subdivisions de 33x33 pixels
+  du plan ils occupent afin de permettre de mieux cibler les tests à effectuer
+  pour calculer les collisions. Un objet mobile calculera donc sa collision avec
+  les objets déclarés dans les subdivisions du plan qu&#039;il occupe (1 à 4
+  dans la majorité des cas). Cela permettra de réduire les calculs de collision
+  à effectuer.
+</p>
+<p>
+  Chaque objet mobile/animé a la responsabilité d&#039;exposer une méthode
+  fonction du temps que la boucle de jeu se chargera d&#039;appeler afin de
+  procéder à un changement d&#039;état/de position/de direction etc...
+</p>
+<p>
+  Enfin, chaque objet fournit une méthode permettant d&#039;imprimer sa propre
+  représentation graphique et ce pour chaque canvas concerné. Pour les objets
+  statiques cette méthode sera appelée au démarrage et à chaque changement
+  d&#039;état, pour les objets mobiles à chaque boucle si il se trouve dans la
+  vue actuelle du jeu.
+</p>
+<h3>Où , quand et comment&#0160;?</h3>
+<p>
+  <a
+    hreflang="en"
+    title="Voir la page&#034; du projet"
+    href="https://github.com/nfroidure/TankArena"
+    >Ce projet se trouve sur GitHub</a
+  >, il sera développé pendant mon temps libre, sous licence GNU/GPL. Vous
+  pouvez participer si vous le souhaitez en le forkant et en me proposant un
+  pull request. De mon côté, je tenterai de prendre le temps d&#039;expliquer
+  son code sur ce blog pour vous mettre le pied à l&#039;étrier.
+</p>
+<p>A vos éditeurs de code&#0160;:).</p>
+<p>
+  Edit&#0160;: Le jeu est déjà bien avancé, j&#039;ai créé un petit
+  <a title="Lire cet article" href="gestion_collisions_html5_canvas.html"
+    >article sur les collisions 2D</a
+  >
+  que j&#039;ai dû fouillé pour coder les premières versions.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

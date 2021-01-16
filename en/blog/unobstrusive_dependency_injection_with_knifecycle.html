@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Unobtrusive Dependency Injection with Knifecycle</title>
+  <meta name="description" content="Knifecycle is a NodeJS module aimed to provide DI power without the headaches..">
+  <link rel="bookmark" href="https://insertafter.com/en/blog/unobstrusive_dependency_injection_with_knifecycle.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/en/index.html" title="Back to home"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home"
+      class="selected">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/index.html"
+          title="Back to home">Home</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/blog/index.html"
+          title="Back to home"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projects">
+        <a href="/en/projects.html"
+          title="Learn more about my projects">Projects</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--about">
+        <a href="/en/about.html"
+          title="Learn more about me">About</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__text ia-presentation">
+  <h2 class="ia-presentation__title">Unobtrusive Dependency Injection with Knifecycle</h2>
+  <iframe class="ia-presentation__presentation" src="//slides.com/nfroidure/javascript_dependency_injection/embed"
+    width="320" height="240" scrolling="no"
+  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+  
+<h2>Unobtrusive Dependency Injection with Knifecycle</h2>
+<p>
+  I first used the dependency injection (DI) pattern with the AngularJS
+  framework a few years ago. Since then, I am convinced it is one of the best
+  design pattern out there, when used with caution. Here's why and how I finally
+  bundled my own dependency injection library for JavaScript and NodeJS.
+</p>
+<h3>What is Dependency Injection?</h3>
+<p>
+  The
+  <a
+    href="https://en.wikipedia.org/wiki/Dependency_injection"
+    title="Check the full definition on Wikipedia"
+    >dependency injection pattern</a
+  >
+  aims to provide the states some code depends on. That way, the actual code is
+  completely decoupled from its own dependencies implementation /
+  initialization.
+</p>
+<p>
+  People rarely have no advice on it, they often hate or love it, no mitigation
+  there. I think it comes from the fact it really brings great powers but sadly
+  it often forces you to respect a few annoying conventions on how you write and
+  split your code.
+</p>
+<h3>Definition</h3>
+<p>
+  First of all, let's briefly recall you the DI advantages. The DI comes with
+  the idea that the applications life cycle usually is about initializing
+  things, use it and finally free it.
+</p>
+<p style="text-align: center;">
+  <img
+    src="/images/dependency-injection.svg"
+    alt="Application Lifecycle Timeline"
+  />
+</p>
+<p>
+  It may be databases, external APIs, RPC calls, anything implying IOs with the
+  rest of the world. They are a bit special and this is why DI threat it
+  differently than simple code libraries.
+</p>
+<p>
+  Those dependencies are linked to each other so that we finally have an
+  oriented dependency graph. The initialization and shutdown sequences are then
+  resolving the graph in an optimized way with the best parallelism possible.
+  This is the injector role to take care of it.
+</p>
+<p style="text-align: center;">
+  <img
+    src="/images/dependencies-graph-sequences.svg"
+    alt="Dependencies graph initialization and shutdown sequence"
+  />
+</p>
+<p>Basically, in JavaScript, DI looks like this:</p>
+<code
+  ><pre>
+// With Classes
+class User {
+  constructor(db, log) {
+    this.db = db;
+    this.log = log;
+  }
+  async delete() {
+    const result = await this.db.query('DELETE FROM users WHERE id = $id', { id });
+
+    if (result.deletedRows) {
+      this.log(`User ${id} has been deleted!`);
+    }
+  }
+}
+
+// With functions
+async function deleteUser(db, log, id) {
+  const result = await db.query('DELETE FROM users WHERE id = $id', { id });
+
+  if (result.deletedRows) {
+    log(`User ${id} has been deleted!`);
+  }
+}    
+</pre
+  ></code
+>
+<h4>The DI goodness</h4>
+<p>
+  Using DI allows you to just declare your services dependencies and delegate
+  the startup and shutdown process to the injector. It saves you a lot of time
+  and allows to focus on your actual business code.
+</p>
+<p>
+  It also make your code more testable since you can easily replace a dependency
+  per another (mocks, stubs).
+</p>
+<p>
+  Making dependencies easy to substitute also leads to a more configurable code
+  base. Your code base pieces are also more reusable.
+</p>
+<p>
+  Finally, splitting your code into more specialized modules helps reducing the
+  cognitive load of reasoning on its parts.
+</p>
+<h4>The DI downsides</h4>
+<p>
+  Usually, dependency injection with the help of an injector comes with
+  downsides. First, it makes debugging harder since the code only express
+  dependencies in a declarative way. That said, usually, injectors are bullet
+  proof and some have a limited set of features reducing the bug risks.
+</p>
+<p>
+  Also, when using types, since DI is dynamically done, you may loose some
+  advantages of strong typing and static code analysis.
+</p>
+<p>Those downsides can be mitigated as we'll see later.</p>
+<h3>Introducing Knifecycle</h3>
+<p>
+  When it comes to DI, most tools are levering <abbr>OOP</abbr> and decorators.
+  While it may fit the needs of OOP lovers, I prefer using the function based
+  approach where a service is simply initialized by an asynchronous function
+  taking the service's dependencies in argument and returning the initialized
+  service.
+</p>
+<p>
+  Using functions also makes the code independent of the actual DI library
+  since, you know, it's just functions and function can be called without any
+  framework. One could just use those functions and initialize the process
+  dependencies with actual code.
+</p>
+<p>
+  In fact, I used to create my services that way and to create the
+  initialization code by hand for years. The thing is that it is repetitive,
+  error prone and create boilerplate that adds no value.
+</p>
+<p>
+  I finally decided to automatize it but I didn't found a tool allowing DI usage
+  without having to embrace a whole opinionated framework. I just wanted to use
+  simple functions so I created one. Here comes,
+  <a href="https://github.com/nfroidure/knifecycle">Knifecycle</a>.
+</p>
+<p>
+  I like to refer to Knifecycle as the DI banana without the
+  <a
+    href="https://en.wikipedia.org/wiki/Object-oriented_programming#cite_ref-armstrongjoe_39-1"
+    >Gorilla</a
+  >
+  since most DI libraries are using OOP and I am really convinced it is a
+  mistake.
+</p>
+<h4>Using Knifecycle</h4>
+<p>
+  Declaring a service is pretty simple actually, you just have to use the
+  various functions that allows tagging initialization functions (called
+  initializers) with the dependencies they actually need, the name and the kind
+  of service it provides.
+</p>
+<script src="https://gist.github.com/nfroidure/d9fb9d2d40f0614ca9f31a75a3c5201d.js"></script>
+<noscript
+  ><code
+    ><pre>
+import { Knifecycle, constant, autoService, autoProvider } from 'knifecycle';
+
+// Initialize the injector
+const $ = new Knifecycle();
+
+// Declare constants
+$.register(constant('FTP_CONFIG', { user: 'test', password: 'test' }));
+$.register(constant('DB_CONFIG', { user: 'test', password: 'test' }));
+
+// Declare services
+$.register(autoService(async function initFileServer({ FTP_CONFIG }) {
+  let fileServer;
+  
+  // Actual initialization code 
+
+  return fileServer;
+}));
+
+// Declare providers
+$.register(autoProvider(async function initDatabase({ DB_CONFIG }) {
+  let database;
+  
+  // Returning a structure describing the provider service and disposal
+  return {
+    service: database,
+    dispose: async () => {
+      // Do whatever needed to shut the db down properly here
+    },
+  };
+}));
+
+// Initialize root dependencies
+$.run(['fileServer', 'database', '$shutdown'])
+.then(({ fileServer, database, $shutdown }) => {
+  // Do the actual program work here
+
+  // Shutdown properly the process (will call dispose on every providers in order)
+  // Useful for graceful stop
+  return $shutdown();
+});
+</pre
+    ></code
+  ></noscript
+>
+<p>
+  The reason why the <code>autoService</code> and <code>autoProvider</code> are
+  prefixed by <code>auto</code> is that they infer from the function shape the
+  names of the services and the dependencies they need from the functions
+  signature. One could use the <code>service</code> and
+  <code>provider</code> functions that basically do the same but in a more
+  verbose manner. They can be useful to have more control on them though. That
+  said, you can use the automatic versions and transpile it to the explicit ones
+  by using the
+  <a href="https://github.com/nfroidure/babel-plugin-knifecycle"
+    >babel-plugin-knifecycle</a
+  >
+  module in your project's build.
+</p>
+<p>
+  Knifecycle provides a lot of helpers you can find on the
+  <a href="https://github.com/nfroidure/knifecycle#api">documentation</a>. Since
+  services initializer are simple functions, there is a lot of functional
+  programming concepts that applies to them (wrappers, compositions, piping...).
+  Each decorators create a newly bound function so you can reuse an
+  initialization function with different names and dependencies as many times as
+  you need. For instance, in the previous example, if you needed to use the FTP
+  service several times with different options you would just have to do the
+  following:
+</p>
+<script src="https://gist.github.com/nfroidure/c4889b121a3a0146f2af4a7d99cd4a02.js"></script>
+<noscript
+  ><code
+    ><pre>
+import { Knifecycle, constant, autoService, service } from 'knifecycle';
+
+// Initialize the injector
+const $ = new Knifecycle();
+
+// Declare constants
+$.register(constant('FTP_CONFIG', { user: 'test', password: 'test' }));
+$.register(constant('FTP_CONFIG2', { user: 'test2', password: 'test2' }));
+
+// Declare services
+$.register(autoService(async function initFileServer({ FTP_CONFIG }) {
+  let fileServer;
+  
+  // Actual initialization code 
+
+  return fileServer;
+}));
+$.register(
+  service(initFileServer, 'fileServer2', ['FTP_CONFIG>FTP_CONFIG2'])
+);
+
+// Initialize root dependencies
+$.run(['fileServer', 'fileServer2', '$shutdown'])
+.then(({ fileServer, fileServer2, $shutdown }) => {
+  // Do the actual program work here
+
+  // Shutdown properly the process
+  return $shutdown();
+});
+</pre
+    ></code
+  ></noscript
+>
+<h4>Addressing DI common downsides</h4>
+<p>
+  Sometime, using DI makes hard to figure out the final dependency graph since
+  you just declare each piece of code's dependencies separately. Knifecycle
+  provides a way to build graphs from your code for that purpose. You can see an
+  example of those graph in the
+  <a href="https://github.com/nfroidure/jsarch/blob/master/ARCHITECTURE.md"
+    >jsarch architecture notes</a
+  >. It is built using
+  <a href="https://github.com/nfroidure/jsarch/blob/master/package.json#L38"
+    >mermaid</a
+  >.
+</p>
+<p>
+  Another downside is the dynamic code that implies DI. Knifecycle allows you to
+  build the
+  <a
+    href="https://github.com/nfroidure/knifecycle/blob/master/src/build.mocha.js#L72-L133"
+    >injector code statically</a
+  >
+  so that you no longer need to embed Knifecycle in your final build. This is
+  how I build the AWS Lambda functions of the Sencrop's backend. That way, the
+  lambdas only contains the code they need to rely on. This is a nice side
+  effect of limiting the DI influence on your own code.
+</p>
+<p>
+  You can
+  <a href="https://github.com/nfroidure/di-test">see a full repository</a> with
+  Knifecycle usage example for a TypeScript project. It starts with no DI and
+  then implement it with Knifecycle. In this post example, I declared the
+  services manually but the injector can load the services automatically. This
+  concept is
+  <a
+    href="https://github.com/nfroidure/di-test/blob/master/src/services/_autoload.ts"
+    >also illustrated</a
+  >
+  in the above TypeScript project.
+</p>
+<p>
+  I hope you'll find your own usage of
+  <a href="https://github.com/nfroidure/knifecycle">Knifecycle</a>, I use it
+  happily since 2 years now. If you want to try, feel free to reach me for help
+  whenever you need some ;).
+</p>
+
+</article>
+<p class="ia-main__nav">
+  <a href="/en/blog/index.html"
+    title="Nicolas Froidure&#39;s Blog, Fullstack JavaScript Developper">
+    &lt; Blog
+  </a>
+</p>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "en";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/en/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Pourquoi j&#39;ai nommé ce blog InsertAfter</title>
+  <meta name="description" content="Je viens de m&#39;apercevoir que je n&#39;ai pas expliqué pourquoi ce blog s&#39;appelle InsertAfter, c&#39;est le moment de palier à ce manque.">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/pourquoi_insert_after.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Pourquoi j&#039;ai nommé ce blog InsertAfter</h2>
+<p>
+  Je viens de m&#039;apercevoir que je n&#039;ai pas expliqué pourquoi ce blog
+  s&#039;appelle InsertAfter, c&#039;est le moment de palier à ce manque.
+</p>
+
+<p>
+  C&#039;est en réfléchissant à créer un blog que ce nom m&#039;est venu
+  spontanément. En effet, pour moi, un blog est un endroit de partage, un lieu
+  ou l&#039;on peut donner quelques idées, ressources ou avis sur les
+  technologies qu&#039;on utilise.
+</p>
+<p>
+  Il ne s&#039;agit pas de se regarder le nombril, j&#039;ai d&#039;ailleurs dû
+  réfléchir intensivement sur les parties de ce blog où je parle de moi. Faut-il
+  dire je, faut-il rester plus ou moins anonyme, faut-il mettre une photo ?
+  Faut-il tout court ?
+</p>
+<p>
+  Après de longues hésitations, je me suis dit qu&#039;un blog devait permettre
+  à ceux qui le veulent de me rencontrer et que même si ce n&#039;est pas trop
+  dans mes habitudes, je me devais de mettre en avant ma personnalité car
+  c&#039;est bien comme cela qu&#039;on se rencontre. Vous remarquerez
+  d&#039;ailleurs que j&#039;ai
+  <a title="Voir ma présentation" href="../a_propos.html"
+    >livré ça brute de taille</a
+  >, à mon image ;).
+</p>
+<p>
+  Cependant, un blog est avant tout un lieu d&#039;échange et il
+  m&#039;apparaissait évident qu&#039;il fallait y laisser une place pour les
+  commentaires. Ce seraient d&#039;ailleurs ces mêmes commentaires qui
+  rendraient cette expérience enrichissante pour moi.
+</p>
+<p>
+  InsertAfter par son sens purement littéral introduit ces deux dimensions.
+  J&#039;ai même été surpris que le nom de domaine n&#039;ait pas déjà été
+  réservé (d&#039;où mon empressement à le réserver, plusieurs mois avant de
+  créer ce blog).
+</p>
+<p>
+  Mais InsertAfter a un sens plus profond pour un développeur qui utilise
+  fréquemment le
+  <acronym title="Document Object Model" lang="en">DOM</acronym> avec
+  Javascript. En effet, à mes débuts avec cette API, je me suis posé une
+  question bête. Pourquoi n&#039;y a-t-il pas de fonction Node.insertAfter comme
+  il y a une fonction Node.insertBefore ?
+</p>
+<p>
+  Cette question est idiote car elle ferait doublon. En ce sens que le seul cas
+  qui pourrait justifier une telle fonction serait l&#039;ajout d&#039;un nœud
+  au sommet de la pile de la propriété Node.childNodes de type DOMCollection. Or
+  ce cas est justement couvert par la fonction Node.appendChild().
+</p>
+<p>On peut donc facilement implémenter cette fonction :</p>
+<pre>Node.prototype.insertAfter = function (newNode, afterNode) &#123;<br />return (afterNode?this&#91;(this.childNodes.lastChild==afterNode?&#039;appendChild&#039;:&#039;insertBefore&#039;&#93;<br /> (newNode,(this.childNodes.lastChild==afterNode?null:afterNode.nextSibling):null);<br />&#125; </pre>
+<p>
+  La question est, est-ce une bonne idée ? On pourrait dire oui vu qu&#039;une
+  recherche de ce blog sur le web m&#039;a fait apprendre que JQuery proposait
+  cela. Mais en fait, c&#039;est une mauvaise idée. Cela fait non-seulement
+  doublon, mais en plus, cela mène à une méconnaissance du DOM et de ses
+  fonctions natives, hors librairies Js.
+</p>
+<p>
+  Je considère cela comme une maturité de développeur Js que de ne pas penser
+  qu&#039;il manque InsertAfter dans l&#039;API du DOM. C&#039;est donc aussi en
+  hommage à cette maturité et au chemin parcouru depuis que j&#039;ai appelé ce
+  blog ainsi.
+</p>
+<p>
+  Enfin,
+  <a
+    title="Voir son compte Google Plus"
+    href="https://plus.google.com/104046041694416287579/about"
+    >Bruno Bichet</a
+  >
+  et Nicolas Paillard m&#039;ont rappelé que cela pouvait aussi faire référence
+  au sélecteur CSS :after, d&#039;où l’identité visuelle du logo. La boucle est
+  bouclée, InsertAfter n&#039;a plus de secret pour vous.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

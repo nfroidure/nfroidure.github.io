@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <id>https://insertafter.com/fr/blog/index-3.html</id>
+  <title>InsertAfter : Blog d&#39;un développeur web à Lille - 3</title>
+  <subtitle>Blog de Nicolas Froidure, développeur JavaScript fullstack à Lille.</subtitle>
+  <link href="https://insertafter.com/fr/blog/index-3.atom" rel="self" type="application/atom+xml" />
+  <link href="https://insertafter.com/fr/blog/index-3.html" rel="alternate" type="text/html" />
+  <updated>2021-01-16T11:08:53.568Z</updated>
+
+  
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/applications_vehicules.html</id>
+      <title>Et si HTML5 accédait à mon véhicule ?</title>
+      <link href="https://insertafter.com/fr/blog/applications_vehicules.html" rel="alternate" type="text/html" />
+      <updated>2013-01-09T08:54:05.000Z</updated>
+      <published>2013-01-09T08:54:05.000Z</published>
+      <summary>Citroën vient de lancer un petit concours tout simple auquel je vais proposer une idée. Découvrez là, mais aussi, comment elle pourrait être mise en oeuvre.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/applications_html5.html</id>
+      <title>Un futur radieux pour les applications HTML5</title>
+      <link href="https://insertafter.com/fr/blog/applications_html5.html" rel="alternate" type="text/html" />
+      <updated>2013-01-05T15:06:11.000Z</updated>
+      <published>2013-01-05T15:06:11.000Z</published>
+      <summary>L&#39;importance des applications HTML5 va croissante, les acteurs qui parient sur ces dernières aussi. L&#39;avenir des applications HTML5 s&#39;annonce épique.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/hackaton_microsoft.html</id>
+      <title>Hackaton Windows Phone 8</title>
+      <link href="https://insertafter.com/fr/blog/hackaton_microsoft.html" rel="alternate" type="text/html" />
+      <updated>2012-12-25T20:11:57.000Z</updated>
+      <published>2012-12-25T20:11:57.000Z</published>
+      <summary>Depuis que Windows 8 gère le HTML5, je me suis un peu plus rapproché de la communauté Microsoft grâce notamment à un développeurs de mon coin. Petit retour sur ce hackaton.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/systeme_template_ideal.html</id>
+      <title>Le système de template idéal</title>
+      <link href="https://insertafter.com/fr/blog/systeme_template_ideal.html" rel="alternate" type="text/html" />
+      <updated>2012-11-30T10:16:24.000Z</updated>
+      <published>2012-11-30T10:16:24.000Z</published>
+      <summary>L&#39;utilisation d&#39;un système de template est très avantageuse, mais apporte également d&#39;autres problématiques. L&#39;existant ne me satisfait pas vraiment, voyons pourquoi et comment faire mieux.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/streamer_donnees.html</id>
+      <title>Devenez un homme, streamez vos données !</title>
+      <link href="https://insertafter.com/fr/blog/streamer_donnees.html" rel="alternate" type="text/html" />
+      <updated>2012-11-23T10:11:41.000Z</updated>
+      <published>2012-11-23T10:11:41.000Z</published>
+      <summary>Peut-être ne le saviez-vous pas, mais XMLHttpRequest Level 2 permet d&#39;accéder vos données avant leur chargement complet grâce à l&#39;écouteur d&#39;évènement onProgress. Il est temps de grandir et de l&#39;utiliser.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/gerer_monnaies_logiciel.html</id>
+      <title>Gérer les monnaies dans un logiciel (CRM,ERP)</title>
+      <link href="https://insertafter.com/fr/blog/gerer_monnaies_logiciel.html" rel="alternate" type="text/html" />
+      <updated>2012-11-16T09:24:57.000Z</updated>
+      <published>2012-11-16T09:24:57.000Z</published>
+      <summary>Je suis actuellement entrain de développer une solution CRM basée sur mon framework Rest PHP. Il faut donc gérer les différentes monnaies.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/bugmeback.html</id>
+      <title>BugMeBack : La solution pour venir à bout de vos bugs ?</title>
+      <link href="https://insertafter.com/fr/blog/bugmeback.html" rel="alternate" type="text/html" />
+      <updated>2012-10-27T21:53:43.000Z</updated>
+      <published>2012-10-27T21:53:43.000Z</published>
+      <summary>Le problème avec les bugs, c&#39;est qu&#39;ils ont la facheuse tendance à
+ être détectés par des novices. C&#39;est alors le parcours du combattant pour se
+ les faire expliquer. BugMeBack va vous aider !</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/polyfill_or_not.html</id>
+      <title>Faut-il utiliser les polyfills ?</title>
+      <link href="https://insertafter.com/fr/blog/polyfill_or_not.html" rel="alternate" type="text/html" />
+      <updated>2012-10-21T07:23:29.000Z</updated>
+      <published>2012-10-21T07:23:29.000Z</published>
+      <summary>Tout à chacun est tenté d&#39;utiliser HTML5 pour créer des applications sympa expérimentant le champs des possibles. Malheureusement, HTML5 n&#39;est pas supporté par tous les navigateurs. C&#39;est alors que se pose la question des polyfills.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/tester_virtualhost_avant_dns.html</id>
+      <title>Tester un virtualhost avant de changer les DNS</title>
+      <link href="https://insertafter.com/fr/blog/tester_virtualhost_avant_dns.html" rel="alternate" type="text/html" />
+      <updated>2012-10-18T08:29:18.000Z</updated>
+      <published>2012-10-18T08:29:18.000Z</published>
+      <summary>Quand on migre un site vers un nouveau serveur, on a besoin de tester le bon fonctionnement de ce dernier avant de mettre à jour les DNS. Petite astuce à base de telnet et openssl.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/creer_un_bon_service_rest.html</id>
+      <title>Créer un service Rest</title>
+      <link href="https://insertafter.com/fr/blog/creer_un_bon_service_rest.html" rel="alternate" type="text/html" />
+      <updated>2012-10-06T13:04:04.000Z</updated>
+      <published>2012-10-06T13:04:04.000Z</published>
+      <summary>Rest est de plus en plus utilisé pour la création de services web. J&#39;ai moi-même créé un framework basé sur ce principe. Découvrez mes petits plus pour créer un bon service Rest !</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/resume_septembre_2012.html</id>
+      <title>Mes trouvailles de septembre 2012</title>
+      <link href="https://insertafter.com/fr/blog/resume_septembre_2012.html" rel="alternate" type="text/html" />
+      <updated>2012-09-29T10:54:05.000Z</updated>
+      <published>2012-09-29T10:54:05.000Z</published>
+      <summary>Ce mois-ci, j&#39;ai vu passer assez de petites choses pour faire un point rapide sur les dernières nouveautés et actualités du développement web.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/devcamp_microsoft_lille.html</id>
+      <title>Dev camp Microsoft Lille : Bienvenue en boîte !</title>
+      <link href="https://insertafter.com/fr/blog/devcamp_microsoft_lille.html" rel="alternate" type="text/html" />
+      <updated>2012-09-28T12:50:44.000Z</updated>
+      <published>2012-09-28T12:50:44.000Z</published>
+      <summary>Hier je suis allé au Devcamp Microsoft organisé à Lille pour découvrir le nouveau Windows et ses nouvelles possibilités pour la création de logiciels. Je pense que l&#39;expérience mérite un petit résumé, surtout en ce qui concerne HTML5 / Javascript.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/gestion_collisions_html5_canvas.html</id>
+      <title>Gestion des collisions 2D dans un jeu HTML5 / Javascript</title>
+      <link href="https://insertafter.com/fr/blog/gestion_collisions_html5_canvas.html" rel="alternate" type="text/html" />
+      <updated>2012-09-23T10:29:46.000Z</updated>
+      <published>2012-09-23T10:29:46.000Z</published>
+      <summary>L&#39;expérience du développement de Tank Arena m&#39;amène à faire un petit point sur la gestion des collisions dans un jeu 2D écrit avec Javascript/HTML5.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/champs_set_et_group_by.html</id>
+      <title>Les champs SET et les requêtes GROUP BY</title>
+      <link href="https://insertafter.com/fr/blog/champs_set_et_group_by.html" rel="alternate" type="text/html" />
+      <updated>2012-08-28T07:34:25.000Z</updated>
+      <published>2012-08-28T07:34:25.000Z</published>
+      <summary>J&#39;adore utiliser les champs de type SET pour leur souplesse et leur nature multivaluées, mais quand GROUP BY entre dans la place, attention les dégâts !</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/module_javascript.html</id>
+      <title>Les modules Javascript : Un joyeux B</title>
+      <link href="https://insertafter.com/fr/blog/module_javascript.html" rel="alternate" type="text/html" />
+      <updated>2012-08-17T11:34:48.000Z</updated>
+      <published>2012-08-17T11:34:48.000Z</published>
+      <summary>Dès lors que l&#39;on tente de créer des applications complexes en Javascript, la segmentation du code en divers fichiers devient nécessaire. Cela génère une nouvelle difficulté, la modularisation du Javascript.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/accelerometre_casse_briques.html</id>
+      <title>Utilisation de l&#39;accéléromètre dans le Casse Brique</title>
+      <link href="https://insertafter.com/fr/blog/accelerometre_casse_briques.html" rel="alternate" type="text/html" />
+      <updated>2012-08-09T12:14:36.000Z</updated>
+      <published>2012-08-09T12:14:36.000Z</published>
+      <summary>HTML5 expose via l&#39;API accelerometer des information sur l&#39;inclinaison de l&#39;appareil en fonction des trois axes de l&#39;espace, utilisons les pour notre Casse brique.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/critique_livre_base_de_donnees.html</id>
+      <title>Bases de données : Concepts, utilisation et développement de Jean-Luc Hainaut</title>
+      <link href="https://insertafter.com/fr/blog/critique_livre_base_de_donnees.html" rel="alternate" type="text/html" />
+      <updated>2012-08-02T09:43:00.000Z</updated>
+      <published>2012-08-02T09:43:00.000Z</published>
+      <summary>J&#39;ai terminé ce livre sur les bases de donnée et je l&#39;ai trouvé très intéressant et instructif, voici un petit résumé de ce qu&#39;il m&#39;a apporté.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/trouvailles_juillet_2012.html</id>
+      <title>Mes trouvailles de juillet 2012</title>
+      <link href="https://insertafter.com/fr/blog/trouvailles_juillet_2012.html" rel="alternate" type="text/html" />
+      <updated>2012-07-27T15:00:07.000Z</updated>
+      <published>2012-07-27T15:00:07.000Z</published>
+      <summary>Voici quelques liens sur l&#39;actualité du développement Web en ce mois de juillet 2012.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/comparatif_appstores.html</id>
+      <title>Comparatif des webapp stores</title>
+      <link href="https://insertafter.com/fr/blog/comparatif_appstores.html" rel="alternate" type="text/html" />
+      <updated>2012-07-27T14:28:05.000Z</updated>
+      <published>2012-07-27T14:28:05.000Z</published>
+      <summary>Une fois qu&#39;une application web est développée, il peut être intéressant de lui donner de la visibilité. Les AppStores sont censés aider les développeurs dans cette tâche.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/request_animation_frame.html</id>
+      <title>Utilisation de requestAnimationFrame pour les jeux HTML5</title>
+      <link href="https://insertafter.com/fr/blog/request_animation_frame.html" rel="alternate" type="text/html" />
+      <updated>2012-07-26T08:13:35.000Z</updated>
+      <published>2012-07-26T08:13:35.000Z</published>
+      <summary>Une nouvelle spécification permet d&#39;optimiser l&#39;affichage des jeux HTML5 en synchronisant ces derniers avec le moteur graphique du navigateur. Petit exemple de mise en oeuvre avec notre casse brique.</summary>
+    </entry>
+
+
+
+
+
+</feed>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0">
+  <channel>
+    <title>InsertAfter : Blog d&#39;un développeur web à Lille - 4</title>
+    <description>Blog de Nicolas Froidure, développeur JavaScript fullstack à Lille.</description>
+    <link>https://insertafter.com/fr/blog/index-4.html</link>
+    <lastBuildDate>2021-01-16T11:08:53.568Z</lastBuildDate>
+    <pubDate>2021-01-16T11:08:53.568Z</pubDate>
+    <ttl>1800</ttl>
+
+    
+
+
+
+    <item>
+      <title>Conventions de nommage des bases de données</title>
+      <description>Depuis que j&#39;ai découvert les bases de données avec MySQL, je n&#39;ai pas cessé de m&#39;en servir, tant et si bien que j&#39;ai fini par définir une convention de nommage.</description>
+      <link>https://insertafter.com/fr/blog/nommenclature_table_sql_base.html</link>
+      <pubDate>2012-07-18T14:34:39.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Exemple de mise en oeuvre des VarStreams avec WebSockIPC et NodeJS</title>
+      <description>Afin de mieux mettre en exergue l&#39;intérêt des VarStreams, j&#39;ai créé une petite application NodeJS mettant en oeuvre une communication inter processus avec les WebSockets.</description>
+      <link>https://insertafter.com/fr/blog/application_des_varstreams_avec_websockipc.html</link>
+      <pubDate>2012-07-09T11:57:39.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Pourquoi j&#39;ai remplacé JSON par VarStream</title>
+      <description>JSON est très connu et semble bon pour la plupart des utilisations, cependant, par &quot;hasard&quot;, j&#39;ai créé un format de données que je trouve supérieur et que j&#39;ai décidé d&#39;appeler VarStream.</description>
+      <link>https://insertafter.com/fr/blog/remplacer_json_par_varstream.html</link>
+      <pubDate>2012-07-06T08:56:35.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Comment bien designer les url de son site ou application web</title>
+      <description>Les URL ou URI d&#39;une application ou d&#39;un site Internet nécessitent
+ de prendre un moment pour réfléchir à leur schema. Voici quelques bonnes
+ pratiques issues de mon expérience REST.</description>
+      <link>https://insertafter.com/fr/blog/bien_designer_url_site_applications_web.html</link>
+      <pubDate>2012-06-30T10:02:27.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Firefox Mobile Android : Accéder aux consoles d&#39;erreur Javascript / stderr</title>
+      <description>Pour développer pour Firefox Mobile, mieux vaut avoir la console d&#39;erreur à portée de main. Voici la méthode.</description>
+      <link>https://insertafter.com/fr/blog/firefox_mobile_console.html</link>
+      <pubDate>2012-06-18T07:49:47.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Orange HTML5 Hackathon : Pourquoi j&#39;ai aimé !</title>
+      <description>Dans le cadre du programme Orange Partner, un hackathon HTML5 de 30h non-stop a été organisé. Avec mon équipe, nous avons remporté le grand prix du jury.</description>
+      <link>https://insertafter.com/fr/blog/orange_hackaton.html</link>
+      <pubDate>2012-06-13T08:28:45.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Jeux HTML5 : Défi Tank Arena</title>
+      <description>Si vous avez déjà joué à Tank Arena, alors vous savez que c&#39;est un excellent jeu. Malheureusement, il n&#39;existe que pour Windows. Relevons le défi d&#39;en faire un jeu HTML5 !</description>
+      <link>https://insertafter.com/fr/blog/tank_arena_html5.html</link>
+      <pubDate>2012-06-09T14:20:22.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Récupérer les privilèges de l&#39;utilisateur root de MySQL</title>
+      <description>En administration système, tout arrive, même les cas les plus désespérés. Perdre le mot de passe ou les privilèges de root de MySQL en fait partie. Voici comment s&#39;en sortir.</description>
+      <link>https://insertafter.com/fr/blog/recuperer_privilege_root_mysql.html</link>
+      <pubDate>2012-05-19T13:02:39.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Comment devenir un meilleur père grâce à Cron</title>
+      <description>Décrocher de l&#39;écran en plein milieu d&#39;une session de code est difficile. Mais arriver en retard à la garderie, c&#39;est pas cool. Heureusement cron et Patrick Sébastien sont là !</description>
+      <link>https://insertafter.com/fr/blog/meilleur_pere_grace_a_cron.html</link>
+      <pubDate>2012-05-12T10:24:25.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Jeux HTML5 : Développement d&#39;un casse brique</title>
+      <description>Créer un jeu en HTML5 est simple. Cependant, il faut respecter quelques bonnes pratiques pour éviter que cela tourne au cauchemar.</description>
+      <link>https://insertafter.com/fr/blog/html5_casse_brique.html</link>
+      <pubDate>2012-05-11T08:51:19.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Migrer toute une base de données vers UTF8</title>
+      <description>Vous avez peut-être commencé votre application avec les caractères latins et pour des besoins d&#39;internationalisation, vous souhaitez passer vos bases en UTF8 ? La solution tient en un seul script.</description>
+      <link>https://insertafter.com/fr/blog/migrer_base_de_donnees_utf8.html</link>
+      <pubDate>2012-05-10T06:48:13.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Tester ses sites web sur les mobiles</title>
+      <description>On ne peut pas toujours s&#39;offrir un téléphone haut de gamme pour tester son site web. Heureusement, les émulateurs sont là !</description>
+      <link>https://insertafter.com/fr/blog/developpement_web_mobile.html</link>
+      <pubDate>2012-05-09T17:47:14.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Amélioration d&#39;un casse brique</title>
+      <description>J&#39;ai cliqué via Twitter sur un lien vers un casse brique en développement. Il avait des problèmes de performance étonnants. J&#39;y ai mis mon grain de sel.</description>
+      <link>https://insertafter.com/fr/blog/ameliration_casse_brique.html</link>
+      <pubDate>2012-05-08T18:09:31.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Pourquoi j&#39;ai nommé ce blog InsertAfter</title>
+      <description>Je viens de m&#39;apercevoir que je n&#39;ai pas expliqué pourquoi ce blog s&#39;appelle InsertAfter, c&#39;est le moment de palier à ce manque.</description>
+      <link>https://insertafter.com/fr/blog/pourquoi_insert_after.html</link>
+      <pubDate>2012-05-08T12:23:29.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Installer/utiliser Notepad++ sous Debian GNU/Linux</title>
+      <description>L&#39;univers windows est pour moi du passé, mais Notepad++ reste un must-have sans lequel coder serait bien moins sympa. Découvrez comment profiter de ce logiciel sous Linux.</description>
+      <link>https://insertafter.com/fr/blog/notepad_plus_plus_debian_gnu_linux.html</link>
+      <pubDate>2012-05-08T07:36:03.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Lecteur/parseur de fichiers de POIs .ASC en PHP</title>
+      <description>Peut-être avez vous déjà été confronté à ces infâmes fichiers de POI au format .ASC. Voici un petit parseur créé par mes soins.</description>
+      <link>https://insertafter.com/fr/blog/lecteur_fichiers_asc_php.html</link>
+      <pubDate>2012-05-05T20:16:48.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Critique du livre : Performances PHP, audit et optimisation LAMP</title>
+      <description>Afin de compléter mes compétences en administration système, j&#39;ai acheté le livre Performance PHP aux éditions Eyrolles. Bonne pioche !</description>
+      <link>https://insertafter.com/fr/blog/performances_php_lamp.html</link>
+      <pubDate>2012-05-05T17:06:27.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Critique du livre : Linux embarqué. Comprendre, développer, réussir de Gilles Blanc</title>
+      <description>J&#39;ai récemment hacké mon Nas et mon routeur Linksys. Pour aller plus loin, j&#39;ai acheté un livre sur Linux dans le domaine de l&#39;embarqué.</description>
+      <link>https://insertafter.com/fr/blog/linux_embarque.html</link>
+      <pubDate>2012-04-08T02:16:03.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Critique du livre : UML par la pratique par Pascal Roques</title>
+      <description>UML est un formidable outil pour modéliser vos futures applications. J&#39;ai compris cela en lisant ce livre.</description>
+      <link>https://insertafter.com/fr/blog/uml_par_la_pratique.html</link>
+      <pubDate>2012-02-26T20:18:55.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Critique du livre : Développement système sous Linux de Christophe Blaess</title>
+      <description>Cette semaine, j&#39;ai lu l&#39;un des livres les plus intéressants qu&#39;il m&#39;ait été donné de lire.</description>
+      <link>https://insertafter.com/fr/blog/developpement_systeme_sous_linux.html</link>
+      <pubDate>2012-02-15T18:31:26.000Z</pubDate>
+    </item>
+
+
+
+
+
+  </channel>
+</rss>

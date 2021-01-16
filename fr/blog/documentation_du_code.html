@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Documentation d&#39;applications en JavaScript</title>
+  <meta name="description" content="Documenter son code est parfois fastidieux. Pourtant, c&#39;est une
+ nécessité. Petit retour d&#39;expérience sur les techniques et outils que
+ j&#39;utilise.">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/documentation_du_code.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+<h2>Documentation d'applications en JavaScript</h2>
+<p>
+  Documenter son code est parfois fastidieux mais c'est une étape essentielle
+  pour se faire comprendre de ses pairs. Dans ce billet, je vais faire un tour
+  d'horizon des techniques que j'utilise pour ce faire et des outils que j'ai
+  créé récemment pour compléter mon arsenal.
+</p>
+<h3>La base</h3>
+<h4>Diviser pour mieux régner</h4>
+<p>
+  Je ne rate jamais une occasion de créer un nouveau module NPM. En effet,
+  isoler le code générique de son application dans un module open-source avec
+  une API concise et restreinte facilite la documentation de votre application.
+</p>
+<p>
+  De plus, si ce module existe déjà et est lui-même bien documenté le travail
+  est encore moins important. En général, on a même l'embarras du choix.
+  Personnellement, en plus des conseils que j'ai donné dans
+  <a href="./choisir_module_nodejs.html">ce billet</a>, je privilégie les
+  modules exposant des fonctions pures quand c'est possible. Par exemple, je
+  préfère utiliser un module comme
+  <a href="https://github.com/jshttp/content-disposition"
+    >content-disposition</a
+  >
+  plutôt que d'utiliser un middleware ExpressJS.
+</p>
+<h4>Fichier README</h4>
+<p>
+  Le fichier README doit être simple et concis. J'ai fait beaucoup de README
+  Driven Development, mais aujourd'hui, je me contente d'y décrire l'intention
+  du module/de l'application et je suis revenu à un mélange entre TDD et le
+  développement dirigé par la documentation. J'y reviendrai, mais globalement,
+  aujourd'hui, mes fichiers README sont générés automatiquement et contiennent
+  titre, description, badges, brief, référence de l'API. Par exemple, celui de
+  <a href="https://github.com/nfroidure/strict-qs">strict-qs</a>. Vous pouvez
+  jeter un œil à
+  <a
+    href="https://github.com/nfroidure/metapak-nfroidure/tree/master/src/readme"
+    >ma recette</a
+  >
+  pour les générer.
+</p>
+<h4>Fichier CHANGELOG</h4>
+<p>
+  Je ne l'ai que récemment mis en place sur tous mes projets et pourtant c'est
+  clairement nécessaire. Savoir ce qui a changé et quand est très important pour
+  les consommateurs de vos modules, à commencer par vous.
+</p>
+<p>
+  Mettre en place un bon changelog nécessite un peu de travail. Il est, par
+  exemple, préférable d'utiliser une convention de commit. Pour ma part, j'ai
+  choisi <a href="https://www.npmjs.com/package/commitizen">commitizen</a> qui
+  permet de gérer automatiquement le type de changement et de versionner en
+  conséquence selon les principes de semver.
+</p>
+<p>
+  J'ai mis en place un
+  <a
+    href="https://github.com/nfroidure/metapak-nfroidure/blob/master/src/_common/hooks.js#L3-L13"
+    >petit hook</a
+  >
+  pour forcer le commit avec commitizen car après des années de commit via la
+  commande de git, difficile de changer un réflexe bien ancré ;).
+</p>
+<p>
+  Au final, on obtient un
+  <a href="https://github.com/nfroidure/knifecycle/blob/master/CHANGELOG.md"
+    >joli changelog</a
+  >
+  qui permet de ne pas perdre de temps sur des informations qui peuvent être
+  générées automatiquement.
+</p>
+<h4>JSDocs</h4>
+<p>
+  J'ai beaucoup tergiversé sur JSDoc. Parfois je l'utilisais, d'autre fois non.
+  Aujourd'hui je l'utilise de manière systématique car c'est devenu painless. En
+  effet, grâce aux addons comme
+  <a href="https://atom.io/packages/docblockr">docblockr</a> pour Atom,
+  l'autocomplétion des définitions JSDoc est une réalité.
+</p>
+<p>
+  Aussi, eslint permet d'éviter que vos définitions JSDoc divergent de votre
+  code. Même si JSDoc n'est pas idéal, c'est mieux que rien ou que de se
+  palucher une documentation à la main. Ça a aussi le mérite de coupler la
+  documentation avec le code. En revanche, utiliser JSDocs ne sert à rien ou
+  presque si vous ne fournissez pas d'exemple d'utilisation comme je l'ai fait
+  par exemple
+  <a
+    href="https://github.com/nfroidure/knifecycle/blob/d78ecd3d58f7b1f1a95cb7e8800d0a06ff657530/src/index.js#L77-L100"
+    >ici</a
+  >.
+</p>
+<h3>Ma touche personnelle</h3>
+<p>
+  Ces pratiques de base sont nécessaires mais j'avais encore quelques points qui
+  me chagrinaient. En effet, pour les modules exposant de simple fonctions pures
+  JSDoc se suffit souvent à lui même, mais pour des applications (web services,
+  SPA ou des programmes en ligne de commande) il manque tout de même une vision
+  macroscopique de l'architecture du code.
+</p>
+<h4>Notes d'architecture avec jsarch</h4>
+<p>
+  C'est généralement dans le fichier README que l'on met ces informations. Le
+  problème, c'est que souvent, on oublie de mettre à jour ce dernier quand on
+  modifie le code, tout simplement à cause du fait que la documentation et le
+  code se trouvent dans des fichiers différents.
+</p>
+<p>
+  J'ai donc récemment créé
+  <a href="https://github.com/nfroidure/jsarch">jsarch</a>, un module
+  ridiculement simple, qui permet d'ajouter des notes d'architecture directement
+  dans le code. Ces notes sont ensuite regroupées, réordonnées pour créer un
+  fichier décrivant l'architecture et pointant vers les endroits du code où ces
+  choix prennent place.
+</p>
+<p>
+  Rien de tel que
+  <a href="https://github.com/nfroidure/jsarch/blob/master/ARCHITECTURE.md"
+    >le fichier d'architecture de jsarch</a
+  >
+  pour illustrer le type de fichier qu'on obtient en sortie ;).
+</p>
+<h4>Graphe des dépendances</h4>
+<p>
+  Je n'ai plus l'intention d'utiliser AngularJS et je ne suis pas
+  particulièrement fan d'Angular2. Cela dit, le système d'injection de
+  dépendances de ce dernier m'a vraiment séduit. À un point tel que j'en ai fait
+  <a href="https://github.com/nfroidure/knifecycle">un clone</a> que j'utilise
+  pour toutes mes applications (CLI, backend ou frontend).
+</p>
+<p>
+  Cela me permet de séparer le monde des fonctions pures de celui des fonctions
+  qui utilisent des variables globales. C'est pratique pour les tests, pour
+  l'instrumentation du code ou simplement pour facilement remplacer un service
+  par un autre.
+</p>
+<p>
+  Ça fonctionne assez bien avec React ;). Je gère le bootstrap de l'application
+  avec et, par exemple, je peux remplacer des services par d'autres de mock pour
+  mon React storybook.
+</p>
+<p>
+  Grâce à mon ex-collègue et ami
+  <a href="https://twitter.com/SebastienElet">Sébastien Elet</a>, j'ai découvert
+  <a href="https://github.com/knsv/mermaid">mermaid</a> un outil permettant de
+  générer des graphes. Pour améliorer encore cette vision macroscopique de
+  l'architecture de mes applications, j'ai ajouté à Knifecycle une fonction
+  d'export qui me permet de générer des graphes de dépendances comme celui que
+  vous avez pu apercevoir dans le fichier d'architecture de jsarch ou dans le
+  tweet suivant avec des exemple issus des applications que je crée pour
+  7Digital.
+</p>
+<blockquote class="twitter-tweet" data-lang="fr">
+  <p lang="en" dir="ltr">
+    New KnifeCycle feature: Mermaid graphs for services dependencies:<a
+      href="https://t.co/EZH6LTMG16"
+      >https://t.co/EZH6LTMG16</a
+    ><a href="https://twitter.com/hashtag/JavaScript?src=hash">#JavaScript</a>
+    <a href="https://twitter.com/hashtag/NodeJS?src=hash">#NodeJS</a>
+    <a href="https://twitter.com/hashtag/dependency?src=hash">#dependency</a>
+    <a href="https://twitter.com/hashtag/injection?src=hash">#injection</a>
+    <a href="https://t.co/f3P3vM4ezc">pic.twitter.com/f3P3vM4ezc</a>
+  </p>
+  &mdash; Nicolas Froidure (@nfroidure)
+  <a href="https://twitter.com/nfroidure/status/840202380721430528"
+    >10 mars 2017</a
+  >
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
+  Voilà ! Si vous avez d'autres astuces pour documenter son code JavaScript
+  comme un as, je suis clairement preneur !
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

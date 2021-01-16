@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0">
+  <channel>
+    <title>InsertAfter : Blog d&#39;un développeur web à Lille</title>
+    <description>Blog de Nicolas Froidure, développeur JavaScript fullstack à Lille.</description>
+    <link>https://insertafter.com/fr/blog/index.html</link>
+    <lastBuildDate>2021-01-16T11:08:53.568Z</lastBuildDate>
+    <pubDate>2021-01-16T11:08:53.568Z</pubDate>
+    <ttl>1800</ttl>
+
+    
+
+
+
+    <item>
+      <title>Kafka avec docker-compose</title>
+      <description>Faire tourner Apache Kafka en local avec docker-compose.</description>
+      <link>https://insertafter.com/fr/blog/kafka_docker_compose.html</link>
+      <pubDate>2020-12-31T13:07:32.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Injection de dépendances avec NodeJS </title>
+      <description>Présentation donnée lors du ChtiJS 21 à propos de l&#39;injection de dépendances en JavaScript.</description>
+      <link>https://insertafter.com/fr/blog/injection_de_dependance_nodejs.html</link>
+      <pubDate>2019-02-02T07:00:00.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Ma configuration VSCode</title>
+      <description>Petit tour d&#39;horizon de ma configuration VSCode pour ceux que ça peut intéresser ;).</description>
+      <link>https://insertafter.com/fr/blog/ma_config_vscode.html</link>
+      <pubDate>2018-12-30T20:00:00.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Critique du livre : Les 7 habitudes
+ de Stephen R. Covey</title>
+      <description>Les 7 habitudes des
+ gens qui réussissent tout ce qu&#39;ils
+ entreprennent de Stephen R. Covey vous
+ propose de diriger votre vie selon vos
+ principes. Pas si évident que cela à la
+ lecture de ce livre.</description>
+      <link>https://insertafter.com/fr/blog/les_7_habitudes.html</link>
+      <pubDate>2017-10-28T12:16:03.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Développer de l&#39;impact</title>
+      <description>Présentation donnée
+ lors du Club Tech à Euratechnologies.</description>
+      <link>https://insertafter.com/fr/blog/developper_de_l_impact.html</link>
+      <pubDate>2017-10-25T13:00:00.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Documentation d&#39;applications en JavaScript</title>
+      <description>Documenter son code est parfois fastidieux. Pourtant, c&#39;est une
+ nécessité. Petit retour d&#39;expérience sur les techniques et outils que
+ j&#39;utilise.</description>
+      <link>https://insertafter.com/fr/blog/documentation_du_code.html</link>
+      <pubDate>2017-03-11T18:02:27.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Normalisation des retours JSON</title>
+      <description>Peu de gens pensent à normaliser les JSON en début de
+ projet. C&#39;est dommage car c&#39;est le meilleur moment pour.</description>
+      <link>https://insertafter.com/fr/blog/normalisation_retours_json.html</link>
+      <pubDate>2017-03-03T10:07:32.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Génération automatique de clients d&#39;APIs</title>
+      <description>Personne de devrait perdre du temps à écrire du code 
+qui peut être généré automatiquement. Voici comment je m&#39;y prends 
+pour les clients d&#39;APIs.</description>
+      <link>https://insertafter.com/fr/blog/generation_api_cliente.html</link>
+      <pubDate>2017-02-19T15:00:00.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>«Histoire des Mathématiques» par Mickaël Launay</title>
+      <description>Critique du livre «Histoire des Mathématiques» par Mickaël Launay</description>
+      <link>https://insertafter.com/fr/blog/histoire_des_mathematiques.html</link>
+      <pubDate>2017-02-11T18:02:27.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Méta-paquets NPM avec metapak</title>
+      <description>Présentation sur metapak, un module d&#39;aide à la
+création de méta-paquets NPM.</description>
+      <link>https://insertafter.com/fr/blog/metapak.html</link>
+      <pubDate>2017-02-05T07:46:44.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Micro-services first avec NodeJS</title>
+      <description>Retour rapide sur ma présentation au ChtiJS 15 sur les microservices 
+ et le design d&#39;APIs avec NodeJS.</description>
+      <link>https://insertafter.com/fr/blog/presentation_nodejs_rest_microservices.html</link>
+      <pubDate>2016-02-28T20:32:43.033Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>ES6 dans ton code</title>
+      <description>Présentation sur les évolutions apportées par
+la version 6 d&#39;ECMAScript donnée à l&#39;occasion de ChtiJS.</description>
+      <link>https://insertafter.com/fr/blog/es6_dans_ton_code.html</link>
+      <pubDate>2015-05-12T08:21:43.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Architecture d&#39;une API NodeJS</title>
+      <description>Présentation d&#39;une architecture d&#39;API REST
+ réalisée avec des microservices.</description>
+      <link>https://insertafter.com/fr/blog/infrastructure_microservices.html</link>
+      <pubDate>2015-05-12T08:21:43.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>MongoDB ou la conception probabiliste</title>
+      <description>Concevoir une base de donnée MongoDB c&#39;est composer avec le hasard.
+ Dans ce billet je vous propose de découvrir pourquoi et comment.</description>
+      <link>https://insertafter.com/fr/blog/design_probabiliste_mongodb.html</link>
+      <pubDate>2015-04-04T13:29:02.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Design de bases de données MongoDB</title>
+      <description>Le design de bases de données MongoDB est une activité complexe qui
+ nécessite d&#39;avoir une profonde connaissance des implications des divers choix
+ possibles.</description>
+      <link>https://insertafter.com/fr/blog/design_base_donnee_mongodb.html</link>
+      <pubDate>2015-03-28T12:40:32.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Améliorer les erreurs JavaScript</title>
+      <description>Pour un meilleur débogage, il faut de meilleures erreurs. C&#39;est
+pourquoi j&#39;ai mis en place une stratégie pour les rendre plus pertinentes.</description>
+      <link>https://insertafter.com/fr/blog/erreurs_javascript_ameliorees.html</link>
+      <pubDate>2015-03-15T11:04:02.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Faire mieux qu&#39;AngularJS avec require()</title>
+      <description>Le système CommonJS-like de NodeJS permet un grand nombre de
+ subtilités. Je vous propose de les découvrir en reproduisant les
+ fonctionnalités du système de modules d&#39;AngularJS.</description>
+      <link>https://insertafter.com/fr/blog/faire-mieux-qu-angular-avec-require.html</link>
+      <pubDate>2015-03-12T07:49:00.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Surveillez les dépendances de vos projets NodeJS</title>
+      <description>Avec watchdeps abonnez-vous automatiquement aux dépendences de vos
+ projets NodeJS sur GitHub.</description>
+      <link>https://insertafter.com/fr/blog/watchdeps.html</link>
+      <pubDate>2015-03-08T10:07:32.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Bref, j&#39;ai lu Lean Startup</title>
+      <description>Critique du livre Lean Startup à travers le prisme d&#39;un développeur.</description>
+      <link>https://insertafter.com/fr/blog/bref_j_ai_lu_lean_startup.html</link>
+      <pubDate>2015-03-02T18:02:27.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>L&#39;isomorphisme par l&#39;exemple</title>
+      <description>Présentation sur la gestion des droits dans
+une application JavaScript de façon universelle.</description>
+      <link>https://insertafter.com/fr/blog/isomorphisme_par_l_exemple.html</link>
+      <pubDate>2015-02-03T07:08:19.000Z</pubDate>
+    </item>
+
+
+
+
+
+  </channel>
+</rss>

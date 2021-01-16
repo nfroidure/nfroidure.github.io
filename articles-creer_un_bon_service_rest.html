@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Créer un service Rest</title>
+  <meta name="description" content="Rest est de plus en plus utilisé pour la création de services web. J&#39;ai moi-même créé un framework basé sur ce principe. Découvrez mes petits plus pour créer un bon service Rest !">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/creer_un_bon_service_rest.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Créer un service Rest</h2>
+<p>
+  ⚠ Attention: Bien que la plupart des principes décrits dans cet article
+  restent valables, l'implémentation PHP décrite n'est plus utilisée. J'utilise
+  maintenant <a href="https://github.com/nfroidure/whook">Whook</a> qui améliore
+  ces principes tout en utilisant une stack moderne basée sur NodeJS.
+</p>
+<p>
+  Rest est de plus en plus utilisé pour la création de services web. J&#039;ai
+  moi-même créé un framework basé sur ce principe. Découvrez mes petits plus
+  pour créer un bon service Rest !
+</p>
+
+<p>
+  En effet, Rest est à la mode, mais bien que ce type d&#039;architecture soit
+  le meilleur selon moi, l&#039;implémentation doit être bien cadrée pour
+  arriver à un résultat intéressant. La première condition est de bien connaître
+  les principes fondamentaux de l&#039;architecture orientée ressource.
+</p>
+<h3>Présentation de Rest</h3>
+<p>
+  Rest (Representational State Tranfert) est une architecture épousant les
+  principes fondateurs du web et de son protocole originel : HTTP.
+</p>
+<p>
+  Ainsi, chaque donnée exposée par une application web est représentée par une
+  URI (Uniform Ressource Identifier). Cette URI est un identifiant permettant
+  d&#039;effectuer diverses opérations sur la dîte ressource grâce aux verbes
+  HTTP (ou méthodes HTTP).
+</p>
+<p>
+  Le plus connu étant GET qui permet de récupérer un état (ou représentation)
+  d&#039;une ressource. Ceux les plus utilisés étant POST (peu utilisé dans une
+  approche REST pure), PUT, DELETE, OPTIONS, HEAD.
+</p>
+<p>
+  Rest peut-être complémenté des principes dits RESTful que l&#039;on retrouvera
+  dans le fameux livre Services Web RESTful de Leonard Richardson et Sam Ruby
+  aux éditions O&#039;Reilly. Voyons les principes que j&#039;ai repris.
+</p>
+<h4>Respect de l&#039;interface uniforme</h4>
+<p>
+  Chaque verbe HTTP doit être utilisé en connaissance de cause en fonction de
+  ses caractéristiques propres.
+</p>
+<p>
+  <strong> GET, PUT et DELETE doivent être idempotentes.</strong> Cela signifie
+  que répéter plusieurs fois la même requête doit mener au même résultat à
+  chaque fois. Imaginez que vous envoyez une requête PUT qui enregistre le
+  contenu d&#039;une entrée de base de donnée. Malheureusement un problème de
+  réseau vous empêche de recevoir la réponse à cette requête.
+</p>
+<p>
+  Vous êtes alors incapable de déterminer si la requête n&#039;a pas du tout été
+  traitée (l&#039;entrée n&#039;a pas été modifiée) ou si elle a été traitée,
+  mais que vous n&#039;avez pas reçu la réponse le confirmant à cause de la
+  coupure. La nature idempotente de PUT vous permet de réenvoyer la requête en
+  étant certain que celle-ci fonctionnera, que le serveur ait pris en compte la
+  précédente ou non, et que la réponse envoyée sera identique en tout point à
+  celle que vous auriez reçu si il n&#039;y avait pas eu cette déconnexion.
+</p>
+<p>
+  <strong>GET et HEAD doivent être sûres.</strong> Votre implémentation de GET
+  et HEAD doit assurer à ses utilisateurs que les requêtes GET et HEAD ne
+  changent jamais l&#039;état du système. Ils ne doivent entraîner aucun effet
+  de bord qui pourrait rendre leur utilisation non-sûre.
+</p>
+<h4>Respect de la nature sans état de HTTP</h4>
+<p>
+  Chaque requête doit être complètement indépendante des autres requête. Les
+  sessions et autres cookies doivent être bannis de votre implémentation. Cela
+  devient le rôle du répartiteur de charge de s&#039;en préoccuper en surcouche
+  de votre service. Il en résulte l&#039;utilisation de l&#039;identification
+  HTTP (Basic, Digest) ou d&#039;un système de token distribué à tous les
+  utilisateurs de votre API Rest.
+</p>
+<h4>Une représentation, une ressource</h4>
+<p>
+  Le mécanisme de négociation de contenu de HTTP est très puissant pour fournir
+  une représentation d&#039;une ressource adaptée à ses préférences
+  utilisateur : langue parlée (entête Accept-Language), type de contenu acceptés
+  (entête Accept) etc... Cependant, l&#039;implémentation de ce mécanisme doit,
+  par le biais de redirections 301, rediriger vers l&#039;URI qui désigne la
+  représentation adéquate de la ressource. Ainsi, on distingue les ressources
+  négociables (qui mènent toujours à une redirection 301) et les ressources
+  qualifiées (qui pointent vers une représentation donnée d&#039;une ressource).
+  Vous pouvez vous référer à
+  <a
+    title="En savoir plus sur les URI"
+    href="bien_designer_url_site_applications_web.html"
+    >ce billet qui traite la question des uri</a
+  >
+  plus en profondeur.
+</p>
+<h3>Mes principes complémentaires</h3>
+<p>
+  Rest est une très bonne base, mais pour plusieurs raisons techniques,
+  j&#039;ai dégagé des principes complémentaires qui gagnent à être exploités
+  dans votre implémentation.
+</p>
+<h4>Unicité stricte des URI</h4>
+<p>
+  Deux URI ne peuvent exposer une représentation de ressource identique. Il faut
+  donc s&#039;assurer de l&#039;unicité des URI par divers moyens : ordre
+  stricte des paramètres de requête (query params), et même de leur valeurs
+  lorsqu&#039;elles peuvent provoquer un doublon.
+</p>
+<p>
+  Par exemple, dans mon implémentation, cette uri est valide :
+  /db/mabase/matable/list.dat?limit=20&orderby=title, mais pas celle-ci :
+  /db/mabase/matable/list.dat?orderby=title&limit=20. Cette dernière retournera
+  une erreur HTTP 400 Bad Request. En effet, si la deuxième version était
+  permise, alors ces deux URIs exposeraient exactement la même chose. On
+  pourrait alors se retrouver avec un cache qui contiendrait deux fois la même
+  chose ce qui serait innefficient.
+</p>
+<p>
+  Il en est de même pour l&#039;URI /test.dat?param=a¶m=b qui est valide et
+  /test.dat?param=b¶m=a qui ne l&#039;est pas. Ici, le principe est que les
+  valeurs soient classées dans l&#039;ordre alphabétique.
+</p>
+<p>
+  Le résultat de ceci fait que le tableau PHP $_GET devient inutilisable.
+  J&#039;ai donc réécrit un parser respectant la précédence des paramètres et
+  des valeurs.
+</p>
+<h4>Ressources composites</h4>
+<p>
+  Le concept de ressource composite repose sur la formule suivante avec A et B
+  étant des ressources :
+</p>
+<p>
+  Si <strong>A ∩ B ≠ 0</strong> alors <strong>A c B || B c A</strong> (si
+  l&#039;intersection entre les ressources A et B n&#039;est pas nulle, alors A
+  inclus B ou B inclus A).
+</p>
+<p>
+  Par exemple, si la génération d&#039;une représentation necessite l&#039;accès
+  à une autre ressource, cet accès doit être effectué via l&#039;interface
+  uniforme. De cette façon, si la ressource qui entre dans sa composition est
+  déjà présente dans le cache, cette dernière ne sera pas à nouveau régénérée.
+</p>
+<p>
+  Le respect de cette règle n&#039;est pas stricte et dépend des considérations
+  en matière de performance et admet quelques exceptions. Par exemple, il faut
+  éviter d&#039;appliquer ce principe lorsque l&#039;accès à deux ressources
+  interrogeant le serveur SQL diviserait en deux une récupération
+  d&#039;informations qui auraient pu être obtenues en une seule requête SQL.
+</p>
+<h4>POO au service de Rest</h4>
+<p>
+  Les concepts de la Programmation Orientée Objet se subliment avec
+  l&#039;utilisation de Rest, comme la surcharge des exceptions pour les rendre
+  compatibles avec Rest. L&#039;idée est qu&#039;au sein d&#039;une architecture
+  Rest, les exceptions sont des codes d&#039;erreurs HTTP directement
+  transmissibles aux clients.
+</p>
+<p>
+  J&#039;ai égalmeent utilisé le chargement de classe dynamique pour ne charger
+  que ce qui est nécessaire à la fourniture d&#039;une ressource.
+  L&#039;héritage est également une bonne façon de déclarer les filiations entre
+  les divers ressources.
+</p>
+<h3>Détails de mon implémentation</h3>
+<h4>Interface uniforme pour toutes les ressources</h4>
+<p>
+  Rest est un goulot d&#039;étranglement grâce auquel on va pouvoir agir de
+  manière standardisée sur toutes les ressources exposées. La première étape a
+  été l&#039;exposition des principales ressources nécessaires à une
+  application/un site sous forme de drivers Rest dont voici les plus
+  remarquables :
+</p>
+<ul>
+  <li>
+    Db : ce driver permet d&#039;accéder à tous les niveaux d&#039;un base de
+    donnée (liste des bases, liste des table, liste des entrées, entrées).
+    C&#039;est une sorte d&#039;ORM fournie au format REST. Par exemple, GET
+    /db/matable.dat expose le schema de la table matable.
+  </li>
+  <li>
+    Fs : ce driver permet d&#039;accéder au système de fichier (contenu des
+    fichiers et des répertoires). Il possède plusieurs variantes : fsi pour la
+    récupération des informations, mpfs qui est un clone de fs mais en
+    environnement multipath (cf ini_path de php.ini).
+  </li>
+  <li>Http : fait office de proxy http.</li>
+  <li>Feed : met à disposition un ou plusieurs flux RSS/Atom.</li>
+  <li>App : simple moteur de template/localisation pour applications web.</li>
+  <li>Site : driver servant à la mise en place de sites web.</li>
+  <li>
+    Cache : Le cache lui même est une ressource, on peut donc agir sur ce
+    dernier via l&#039;interface uniforme.
+  </li>
+  <li>
+    Auth : L&#039;authentification et les droits qu&#039;elle concède est
+    encapsulée dans un driver Rest permettant une mise en cache de celle ci par
+    exemple.
+  </li>
+</ul>
+<p>
+  On peut imaginer des tas d&#039;autres drivers comme pour la minification des
+  fichiers (minfs?), le redimensionnement à la volée d&#039;images/vidéos etc...
+</p>
+<p>
+  L&#039;utilisation de cette interface uniforme pour toutes les ressources
+  exploitables permet d&#039;agir sur toutes ces ressources de manière
+  macroscopique grâce à différents systèmes listés ci dessous.
+</p>
+<h4>Mis en cache des ressources</h4>
+<p>
+  Plus la peine de gérer de nombreux caches compliqués pour chaque source de
+  données, le cache est implémenté directement au nouveau de Rest. Il se compose
+  de trois niveaux. L&#039;un côté client/proxy, habituel, mais ici bien plus
+  puissant car le respect de la nature de HTTP permet son fonctionnement
+  optimal. Les deux autres côté serveur. Un « compteur » de ressource interne à
+  chaque instance de PHP garde une référence à chaque objet accédé afin
+  d&#039;éviter deux accès pour une même ressource (important pour les
+  ressources composites complexes). Un système de cache (XCache, APC, ou Fs)
+  stocke le résultat des ressources pouvant être cachées et réutilisées par
+  d&#039;autres instances de PHP.
+</p>
+<p>
+  Pour ce dernier un système de Callback garanti qu&#039;une ressource composite
+  sera bien supprimée dans le cas où une des ressources la composant serait
+  modifiée. Plus généralement, un GET permet la mise en cache alors que les
+  requêtes de type POST, DELETE et PUT génèrent un nettoyage a posteriori des
+  ressources liées.
+</p>
+<p>
+  Le cache est optimisé car une application web est susceptible d&#039;accéder
+  aux mêmes ressources que le site web réduisant ainsi les redondances au sein
+  du cache. En effet, si j&#039;accède à la ressource /db/mabase/users/1.dat
+  dans une page du site générée côté serveur ou si j&#039;y accède directement
+  via HTTP depuis un javascript utilisant XMLHttpRequest, je suis sûr qu&#039;au
+  moins une des deux requêtes sera servie à partir du cache.
+</p>
+<h4>Gestion des droits</h4>
+<p>
+  Les droits son gérés à l&#039;aide de masques sur les URI permettant une
+  gestion très fine des autorisations des différents utilisateurs. Ces droits
+  peuvent être associés directement à l&#039;utilisateur ou via les groupes
+  auxquels il appartient. De plus, les différents verbes HTTP (GET, PUT, DELETE,
+  POST) représentent divers niveau d&#039;accès aux ressources qui peuvent
+  également être accordé ou non en fonction des utilisateurs.
+</p>
+<h4>Gestion des connections instables</h4>
+<p>
+  L&#039;avantage de l&#039;idempotence des requêtes est qu&#039;on peut tout à
+  fait faire plusieurs requêtes GET, DELETE ou PUT plusieurs fois sans
+  qu&#039;il y ait d&#039;effet de bord. Par exemple, dans une application
+  HTML5, on peut tout à fait créer un mécanisme générique de rétention des
+  requêtes HTTP idempotentes tant qu&#039;aucune réponse n&#039;est reçue. Dans
+  mon cas, cela a été implémenté grâce à localStorage (avec une limite néanmoins
+  dans la taille du stockage).
+</p>
+<p>
+  Ainsi, si une requête est exécutée deux fois, cela est sans incidence sur
+  l&#039;intégrité dus systèmes et des données. Dans une certaine mesure, on
+  peut « enrober » une requête POST pour obtenir un comportement équivalent.
+</p>
+<h4>Tests unitaires</h4>
+<p>
+  L&#039;uniformité des ressources Rest permet d&#039;implémenter un système
+  simple de tests unitaires, soit en ligne de commande avec curl, soit comme
+  dans notre cas en créant une ressource dédiée. L&#039;avantage est que
+  l&#039;on écrit moins de tests tout en garantissant le bon fonctionnement de
+  l&#039;application. On crée plusieurs scénarios d&#039;utilisation composé
+  d&#039;une suite de diverses requêtes et on compare les résultats (entêtes,
+  code HTTP, contenu) à ceux attendus.
+</p>
+<h4>Répartition de charge</h4>
+<p>
+  On peut tout à fait tirer parti de cette interface uniforme pour répartir la
+  charge sur différents serveurs (serveur de ressources SQL séparé par exemple)
+  grâce à un routage fin en amont (proxy ou server apache avec rewrite rules).
+</p>
+<h3>Bientôt chez vous</h3>
+<p>
+  Cette implémentation PHP est déjà utilisée chez un client et au sein de mon
+  entreprise pour la gestion des relations client et la comptabilité. Je dois
+  encore lui trouver un nom et supprimer quelques dépendances vis à vis du CMS
+  interne de la boîte et son code sera disponible sous double licence : GNU/GPL
+  + Licence commerciale pour ceux qui voudraient pouvoir garder leurs
+  modifications secrètes.
+</p>
+<p>
+  Je compte offrir des licences commerciales aux contributeurs les plus
+  fréquents. L&#039;objectif de cette double licence étant que les amateurs du
+  gratuit qui ne contribuent jamais supportent les contraintes de la licence
+  GNU/GPL.
+</p>
+<p>
+  En attendant, je cherche des développeurs PHP intéressés par ce projet, prêts
+  à m&#039;aider à le finaliser, à l&#039;utiliser et à me faire des premiers
+  retours afin de mettre en ligne une version plus stable, plus universelle et
+  surtout avec déjà une petite communauté capable de réagir en cas de bug ou de
+  faille de sécurité.
+</p>
+<p>
+  Les manques actuels sont : une installation facilitée grâce à des
+  tutos/scripts, plusieurs contextes d&#039;utilisation afin de valider la
+  pluralité des champs d&#039;application et le support de la plateforme Windows
+  voire de plateformes plus hétérogènes que mon Debian Squeeze + MPM Prefork +
+  MySQL.
+</p>
+<p>
+  Bref, toutes les bonnes volonté peuvent
+  <a title="Me contacter" href="contact.html">me contacter</a> à ce sujet. De
+  mon côté, je prépare une démo en ligne pour tester le framework à sa guise.
+  Vous serez tenus au courant sur ce blog de la suite des évènements.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

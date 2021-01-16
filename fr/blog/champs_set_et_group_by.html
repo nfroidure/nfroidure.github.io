@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Les champs SET et les requêtes GROUP BY</title>
+  <meta name="description" content="J&#39;adore utiliser les champs de type SET pour leur souplesse et leur nature multivaluées, mais quand GROUP BY entre dans la place, attention les dégâts !">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/champs_set_et_group_by.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Les champs SET et les requêtes GROUP BY</h2>
+<p>
+  J&#039;adore utiliser les champs de type SET pour leur souplesse et leur
+  nature multivaluées, mais quand GROUP BY entre dans la place, attention les
+  dégâts !
+</p>
+
+<h3>Petit rappel sur les champs <var>SET</var> dans MySQL</h3>
+<p>
+  Si j&#039;aime tant utiliser les champs <var>SET</var> dans mes tables,
+  c&#039;est que contrairement aux champs à première vue similaires de type
+  <var>ENUM</var>, ces derniers peuvent être multivalués. Imaginons la table
+  suivante permettant de stocker des documents techniques, relatifs à des
+  modèles d&#039;équipements, qui peuvent être de plusieurs types prédéfinis :
+</p>
+<pre>CREATE TABLE `documents` (<br /> `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,<br /> `label` varchar(75) NOT NULL DEFAULT &#039;&#039;,<br /> `model` mediumint(8) unsigned DEFAULT NULL COMMENT &#039;link:equipmentModels&#039;,<br /> `type` <strong>set(&#039;standard&#039;,&#039;law&#039;,&#039;rule&#039;,&#039;assemblynotice&#039;,&#039;washnotice&#039;,&#039;usenotice&#039;,&#039;certificate&#039;,&#039;testreport&#039;,&#039;implant&#039;)</strong> NOT NULL DEFAULT &#039;law&#039;,<br /> `description` text,<br /> `applicationDate` date NOT NULL DEFAULT &#039;0000-00-00&#039;,<br /> PRIMARY KEY (`id`),<br /> KEY `model` (`model`),<br /> KEY `applicationDate` (`applicationDate`),<br /> KEY `type` (`type`)<br />) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1175 ;</pre>
+<p>
+  L&#039;avantage du champs <var>SET</var> est que pour un set prédéfini de
+  valeurs qui n&#039;est pas amené à évoluer, on fait l&#039;économie d&#039;une
+  table de jointure qui rendrait plus complexe notre schema. Mais ce n&#039;est
+  pas le seul avantage de ce type de champs. En effet, les valeurs ne sont pas
+  stockées sous une forme textuelle dans la base de donnée, mais sous la forme
+  d&#039;un entier particulier.
+</p>
+<p>
+  Un peu comme pour les droits UNIX, chaque valeurs du champs <var>SET</var> se
+  voit assigner en correspondance un entier dont le bit de poids faible indique
+  la
+  <a
+    title="&#034;Voir la documentation de SET&#034;"
+    href="https://dev.mysql.com/doc/refman/8.0/en/set.html"
+    >position dans la liste des valeurs</a
+  >
+  acceptées par le champs de type SET. Pour notre table, on a donc
+  <var
+    >standard=1, law=2, rule=4, assemblynotice=8, washnotice=16, usenotice=32,
+    certificate=64, testreport=128, implant=256</var
+  >. Un champs <var>SET</var> ne peut avoir que 64 valeurs ce qui correspond à
+  la valeur maximale d&#039;un entier non signé sur un système 64bits.
+</p>
+<p>
+  Ainsi, si je souhaite obtenir la liste des documents contenant une notice
+  d&#039;utilisation, je peux indifféremment utiliser les deux requêtes
+  suivantes :
+</p>
+<pre>SELECT * FROM `documents` WHERE `type` LIKE &#039;&#37;usenotice&#37;&#039; &#35; ici type est converti en chaîne<br />SELECT * FROM `documents` WHERE `type`&amp;32&#039; &#35; ici type est converti en entier<br />SELECT * FROM `documents` WHERE FIND_IN_SET(`type`,&#039;usenotice&#039;)&gt;0 &#35; ici une fonction spécifique aux champs SET est utilisé</pre>
+<p>
+  Idéalement, il vaut mieux utiliser la fonction dédiée ou la conversion en
+  chaîne car elles sont indépendantes de l&#039;ordre des valeurs dans le champs
+  <var>SET</var> contrairement à la technique de l&#039;opérateur binaire
+  <var>&amp;</var>. Mais il existe un cas où cela peut sauver la vie, c&#039;est
+  ce qui vient de m&#039;arriver pour cette table.
+</p>
+<h3>Et un jour GROUP BY arriva</h3>
+<p>
+  Le problème vient quand votre client vous demande si il serait possible de
+  sortir une liste des modèles d&#039;équipement pour lesquels certains
+  documents ne sont pas présents. La difficulté ici est qu&#039;à un modèle
+  d&#039;équipement peuvent correspondre plusieurs lignes de la table
+  <var>documents</var>. Nous avons donc besoin de réunir toutes les lignes
+  correspondant au modèle associé et de &#034;merger&#034; les valeurs du champs
+  type pour pouvoir y rechercher les valeurs supposées absentes.
+</p>
+<p>
+  Ce fût alors le moment d&#039;utiliser la valeur numérique des champs
+  <var>SET</var>. Mon premier réflexe fût d&#039;essayer de coupler la fonction
+  SUM avec l&#039;opérateur binaire au sein d&#039;une seule et même requête,
+  mais MySQL n&#039;accepte pas cette forme, j&#039;ai donc dû utiliser les
+  requêtes imbriquées, voilà le résultat :
+</p>
+<pre>SELECT * FROM<br /> (<br /> SELECT organizations.label AS organization, equipmentModels.model AS eqtModel, equipmentModels.reference AS eqtRef,<br /> equipmentModels.description AS eqtDesc, SUM(documents.type) AS docTypesInt, GROUP_CONCAT(documents.type) AS docTypesString<br /> FROM `equipmentModels`<br /> LEFT JOIN documents ON documents.model = equipmentModels.id<br /> LEFT JOIN organizations ON organizations.id = equipmentModels.builder<br /> GROUP BY equipmentModels.id<br /> ORDER BY equipmentModels.builder<br /> ) AS temp<br />WHERE docTypesInt IS NULL<br /> &#35; OR NOT docTypesInt&amp;1 &#35; standard<br /> &#35; OR NOT docTypesInt&amp;2 &#35; law<br /> &#35; OR NOT docTypesInt&amp;4 &#35; rule<br /> OR NOT docTypesInt&amp;8 &#35;assemblynotice<br /> OR NOT docTypesInt&amp;16 &#35;washnotice<br /> OR NOT docTypesInt&amp;32 &#35;usernotice<br /> OR NOT docTypesInt&amp;64 &#35;certificate<br /> &#35; OR NOT docTypesInt&amp;128 &#35;testreport<br /> OR NOT docTypesInt&amp;256 &#35;implant</pre>
+<p>
+  Le principe est simple, on fait la somme des valeurs du champs
+  <var>type</var> pour toutes les lignes concernant le même équipement (grâce à
+  la clause GROUP BY). Cette somme obtenue, on peut utiliser l&#039;opérateur
+  binaire afin de vérifier la présence d&#039;une ou plusieurs valeurs au sein
+  de ces champs. la ligne docTypeInt IS NULL sert à prendre également en compte
+  le cas où il n&#039;y a aucune valeur de type correspondant au modèle.
+</p>
+<p>
+  Le lecteur averti aura remarqué une vaine tentative d&#039;utilisation de la
+  fonction <var>GROUP_CONCAT</var> qui aurait peut-être pu servir à continuer
+  d&#039;utiliser une comparaison à partir de chaînes, mais le problème est
+  qu&#039;il n&#039;y aura pas de virgule insérée entre chaque valeurs du champs
+  <var>type</var>. J&#039;ai cherché après la fonction
+  <var>GROUP_CONCAT_WS</var>, mais elle n&#039;existe pas encore.
+</p>
+<p>
+  Bref, les champs SET c&#039;est pratique, mais il faut bien connaître leur
+  nature pour pouvoir en profiter pleinement. Et vous, que faîtes vous avec vos
+  <var>SET</var> ?
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

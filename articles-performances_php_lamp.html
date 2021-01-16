@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Critique du livre : Performances PHP, audit et optimisation LAMP</title>
+  <meta name="description" content="Afin de compléter mes compétences en administration système, j&#39;ai acheté le livre Performance PHP aux éditions Eyrolles. Bonne pioche !">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/performances_php_lamp.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Critique du livre : Performances PHP, audit et optimisation LAMP</h2>
+<p>
+  Afin de compléter mes compétences en administration système, j&#039;ai acheté
+  le livre Performance PHP aux éditions Eyrolles. Bonne pioche !
+</p>
+
+<p>
+  <cite>Performances PHP</cite>, écrit par Julien Pauli, Cyril Pierre de Geyer
+  et Guillaume Plessis, se propose de vous aider à optimiser votre architecture
+  <acronym title="Linux Apache MySQL et PHP">LAMP</acronym>.
+</p>
+<p>
+  Acheté 35€ au furêt du Nord, ce livre me laisse une bonne impression générale.
+  Simple et conçis, je l&#039;ai lu sur deux ou trois jours. Je connaissais déjà
+  quelques astuces pour l&#039;optimisation, mais un rappel ne fait pas de mal
+  (surtout pour celles qu&#039;on connaît, mais qu&#039;on se rend compte
+  qu&#039;on a oublié de mettre en place).
+</p>
+<p>
+  J&#039;ai cependant aussi beaucoup appris, notamment pour les optimisations
+  concernant des infrastructures à forte charge. Au fil de la lecture, on se
+  rend compte que les auteurs ont vraiment une bonne compréhension des
+  mécanismes bas niveau qui sous-tendent un serveur LAMP. Chaque optimisation
+  est appuyée par des explications accessibles sur les raisons qui rendent ces
+  dernières utiles.
+</p>
+<p>
+  Après une brève présentation de LAMP, le livre revient sur la journalisation
+  et ses subtilités. Il montre aussi comment superviser les serveurs de
+  production. Il propose des outils utiles pour effectuer des tests de
+  charge&#0160;: Apache benchmark, JMeter...
+</p>
+<p>
+  Ensuite il expose tour à tour les différentes optimisations possibles pour les
+  différentes couches d&#039;une architecture LAMP. J&#039;y ai découvert
+  qu&#039;APC (cache d&#039;OP codes) était un projet directement propulsé par
+  les créateurs de PHP. J&#039;utilise XCache, mais je compte bien tester ce
+  dernier.
+</p>
+<p>
+  Il revient clairement aussi sur les paramètres d&#039;optimisation
+  d&#039;Apache et liste les fameux
+  <acronym title="Multi Process Manager">MPM</acronym> et leurs usages en
+  fonction des situations. On y apprend que bien paramètrer Apache permet
+  d&#039;obtenir des performances proches de ses challengers actuellement en
+  vogue (NGinx, LightHTTPD).
+</p>
+<p>
+  Bref, un livre sympa et accessible pour qui souhaite optimiser ses sites web.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

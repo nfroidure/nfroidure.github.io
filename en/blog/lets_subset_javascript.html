@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Let&#39;s Subset JavaScript</title>
+  <meta name="description" content="Currently, it&#39;s all about JavaScript and how to compile, transpile
+ and every &quot;ile&quot;y things you could imagine. But what about making JavaScript
+ smaller?">
+  <link rel="bookmark" href="https://insertafter.com/en/blog/lets_subset_javascript.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/en/index.html" title="Back to home"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home"
+      class="selected">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/index.html"
+          title="Back to home">Home</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/blog/index.html"
+          title="Back to home"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projects">
+        <a href="/en/projects.html"
+          title="Learn more about my projects">Projects</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--about">
+        <a href="/en/about.html"
+          title="Learn more about me">About</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Let's Subset JavaScript</h2>
+<p>
+  TL;DR: Subsetting JavaScript is easy, you can do it with
+  <a href="https://github.com/SimpliField/jsub"><code>jsub</code></a
+  >.
+</p>
+<p>
+  At <a href="https://www.simplifield.com">SimpliField</a>, we allow users to
+  collect and analyse field data and as part of it, our users can create their
+  own data models.
+</p>
+<p>
+  As a consequence, we needed a solution that allows to define dynamically
+  computed relational constraints. Things like dynamically define a form field
+  as optional based on some conditions/computations.
+</p>
+<p>
+  We ended up with a reliable solution based on a user interface and simple
+  conditions. The problem we faced was that every new feature resulted in new
+  complexity.
+</p>
+<p>
+  We were also defining a new language our API consumers would certainly hate,
+  once publicly available. And friends don't let friends struggling with bad
+  APIs ;).
+</p>
+<h3>A few words about our stack</h3>
+<p>
+  We're using a full JavaScript stack (we call it MEANI for Mongo Express
+  Angular NodeJS and Ionic). The big win of this kind of stack is not only
+  isomorphism (I had great moments building the
+  <a href="http://slides.com/nfroidure/reaccess"
+    >end-to-end user's rights management system</a
+  >
+  for our apps) but is mainly skill reuse.
+</p>
+<p>
+  As a JavaScript developer, I can make some changes to the back-end and apply
+  the resulting changes in both the front-end and the mobile app. It is really
+  valuable as you don't have to rely on someone else to make a bunch of related
+  changes.
+</p>
+<h3>Subsetting JavaScript</h3>
+<p style="text-align:center;">
+  <img
+    src="https://brendaneich.com/wp-content/uploads/2011/09/CapitolJS.021-768x576.png"
+    alt="Always bet in JavaScript"
+  /><br />
+  <a href="https://brendaneich.com/2011/09/capitoljs-rivertrail/"
+    >Source: Brendan Eich's blog</a
+  >
+</p>
+<p>
+  So we choose to rely on JavaScript for conditionally displayed fields,
+  computed fields, etc... The idea is simple: we need a formula language like
+  those you can find in Open Office Calc or Microsoft Excel but we don't want to
+  reinvent the wheel.
+</p>
+<p>
+  We also want to have the minimal learning curve for developpers that will
+  interact with our API. Since JavaScript was already a first class citizen in
+  our stack, subsetting its syntax was in evidence.
+</p>
+<p>
+  Thanks to the great <a href="http://esprima.org">Esprima project</a>, only a
+  few hours were sufficient to create a first prototype of
+  <a href="https://github.com/SimpliField/jsub">jsub</a>; a tiny project aimed
+  to simply define a custom JavaScript subset.
+</p>
+<p>
+  You basically define a set of conditions that shapes syntactically allowed
+  expressions. Then, you check your script against those conditions and if
+  something is going wrong, errors will simply show up.
+</p>
+<pre>
+var simpleMath = {
+  conditions: [{
+    type: 'Program' // allow the root node
+  }, {
+    type: 'ExpressionStatement' // allow expressions
+  }, {
+    type: 'BinaryExpression', // allow the + and - operators
+    operator: ['+', '-']
+  }, {
+    type: 'Literal',
+    raw: /^([0-9]{1,5})$/ // allow positive numbers
+  }]
+};
+
+var errors = jsub('(1 + 2) - 1', simpleMath);
+assert.equal(errors.length, 0);
+</pre>
+<h3>Benefits</h3>
+<p>
+  Having a custom syntax subsetting JavaScript provides a lot of out of the box
+  advantages:
+</p>
+<ul>
+  <li>
+    Syntax highlighting: you can simply add highlighted syntax to your own API
+    docs
+  </li>
+  <li>Hinting: what about a custom JSLint module to help your customers?</li>
+  <li>Parsing: syntax errors will be the same than for JavaScript;</li>
+  <li>
+    No overhead: Just run it, especially if you are using the MEANI stack ;).
+  </li>
+</ul>
+<p>
+  There's probably a lot more things interesting with this approach let me know
+  your thoughts.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/en/blog/index.html"
+    title="Nicolas Froidure&#39;s Blog, Fullstack JavaScript Developper">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "en";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/en/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

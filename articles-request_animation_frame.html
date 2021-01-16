@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Utilisation de requestAnimationFrame pour les jeux HTML5</title>
+  <meta name="description" content="Une nouvelle spécification permet d&#39;optimiser l&#39;affichage des jeux HTML5 en synchronisant ces derniers avec le moteur graphique du navigateur. Petit exemple de mise en oeuvre avec notre casse brique.">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/request_animation_frame.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Utilisation de requestAnimationFrame pour les jeux HTML5</h2>
+<p>
+  ⚠ Attention: Cet article est ancien et ne correspond pas à l'état de l'art de
+  la création de casse briques pour le navigateur.
+</p>
+<p>
+  Une nouvelle spécification permet d&#039;optimiser l&#039;affichage des jeux
+  HTML5 en synchronisant ces derniers avec le moteur graphique du navigateur.
+  Petit exemple de mise en oeuvre avec notre casse brique.
+</p>
+
+<p>
+  Le
+  <a
+    hreflang="&quot;&quot;en&quot;&quot;"
+    title="&quot;&quot;Voir son code sur GitHub"
+    href="https://github.com/nfroidure/Breakit"
+    >code de notre casse brique</a
+  >
+  consiste en une fonction appelée régulièrement (toutes les 30ms) par la
+  fonction setTimeout. J&#039;expliquais dans l&#039;<a
+    title="&quot;&quot;Voir l&#039;article en question"
+    href="html5_casse_brique.html"
+    >article dédié au développement du casse brique</a
+  >
+  que cette manière de faire permettait de faire ralentir le jeu en cas de
+  difficulté du navigateur à afficher les différents dessins a temps.
+</p>
+<p>
+  Le problème est donc que la vitesse ressentie est différente en fonction du
+  matériel de notre utilisateur. Elle n&#039;ira pas au delà de 30ms, mais peut
+  aller bien moins vite sur du matériel ancien. C&#039;est ici que
+  requestAnimationFrame intervient. L&#039;idée est de synchroniser
+  l&#039;affichage du jeu dans le canvas de façon à ce que le navigateur puisse
+  optimiser au mieux sa gestion.
+</p>
+<p>
+  L&#039;utilisation de requestAnimationFrame est simple bien que
+  non-standardisée entre les divers navigateurs. Néanmoins, leur point commun
+  est que l&#039;on peut leur passer une fonction en argument qui sera appelé
+  avant chaque repaint effectué par le navigateur. Ce petit morceau de code
+  m&#039;a permis de l&#039;utiliser sur tous les navigateurs
+  l&#039;implémentant&#0160;:
+</p>
+<pre>this.requestAnimFrame = (function()&#123; return window.requestAnimationFrame<br /> || window.webkitRequestAnimationFrame<br /> || window.mozRequestAnimationFrame<br /> || window.oRequestAnimationFrame<br /> || window.msRequestAnimationFrame<br /> || null&#125;)();</pre>
+<p>
+  J&#039;ai donc créé une méthode Game.draw() qui permet d&#039;afficher les
+  différents objets de la scene du jeu que j&#039;ai passé en argument de ma
+  fonction wrappant les diverses implémentations (notez l&#039;utilisation de la
+  methode call de l&#039;objet function permettant de réinjecter le scope global
+  à la fonction wrapper (nécessaire sous Chrome)&#0160;:
+</p>
+<pre>if(this.requestAnimFrame)<br /> this.requestAnimFrame.call(window,this.draw.bind(this));</pre>
+<p>
+  J&#039;ai cependant conservé mon timer pour les mouvements de objets et leurs
+  collisions. En effet, le temps ne doit pas varier en fonction du matériel
+  utilisé. Dans la réalité, il varie un peu tout de même car il y a bien un
+  temps de calcul entre chaque appel de la fonction principale du jeu, mais cela
+  est bien moins important depuis que le dessin a été complètement dissocié. Le
+  timer sert également de fallback dans le cas où la fonction
+  requestAnimationFrame ne serait pas disponible.
+</p>
+<p>
+  Malheureusement, seul Mozilla a implémenté une méthode permettant de détacher
+  la fonction passée en argument (pour effectuer une pause du jeu sans consommer
+  inutilement de ressources système) grâce à la fonction cancelAnimationFrame à
+  laquelle on passe un id reçu en retour de la fonction requestAnimationFrame
+  (un peu sur le modèle des fonctions setTimeout et clearTimeout. J&#039;ai donc
+  du me référer au timer afin de savoir si le jeu est mis en pause ou non pour
+  ne pas dessiner inutilement la scène. La fonction est cependant toujours
+  appelée, mais je n&#039;y peux pas grand chose.
+</p>
+<p>
+  J&#039;avoue que je n&#039;ai pas vu de forte différences entre la version
+  avec et la version sans requestAnimationFrame, cela est sûrement dû à mon PC
+  assez musclé ;). Je n&#039;ai pas encore testé sur mobile, j&#039;imagine que
+  la différence sera plus nette. Je vais certainement réutiliser le même patron
+  de conception pour Tank Arena dès que j&#039;aurai un peu plus de temps. La
+  suite au prochain numéro ;).
+</p>
+<p>
+  PS&#0160;: Et ce prochain numéro est
+  <a
+    title="&quot;&quot;Voir l&#039;article sur le support de l&#039;accéléromètre dans le casse brique"
+    href="accelerometre_casse_briques.html"
+    >le support de l&#039;accéléromètre</a
+  >.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <id>https://insertafter.com/fr/blog/index-5.html</id>
+  <title>InsertAfter : Blog d&#39;un développeur web à Lille - 5</title>
+  <subtitle>Blog de Nicolas Froidure, développeur JavaScript fullstack à Lille.</subtitle>
+  <link href="https://insertafter.com/fr/blog/index-5.atom" rel="self" type="application/atom+xml" />
+  <link href="https://insertafter.com/fr/blog/index-5.html" rel="alternate" type="text/html" />
+  <updated>2021-01-16T11:08:53.568Z</updated>
+
+  
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/exercices_en_cplusplus.html</id>
+      <title>Critique du livre : Exercices en langage C++</title>
+      <link href="https://insertafter.com/fr/blog/exercices_en_cplusplus.html" rel="alternate" type="text/html" />
+      <updated>2012-01-26T20:28:14.000Z</updated>
+      <published>2012-01-26T20:28:14.000Z</published>
+      <summary>Afin de parfaire ma connaissance du C++, j&#39;ai entrepris la lecture de ce livre d&#39;exercices assez bien ficelé.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/desasembler_apk.html</id>
+      <title>Décompiler/désassembler un paquet Android (.apk)</title>
+      <link href="https://insertafter.com/fr/blog/desasembler_apk.html" rel="alternate" type="text/html" />
+      <updated>2012-01-19T12:11:27.000Z</updated>
+      <published>2012-01-19T12:11:27.000Z</published>
+      <summary>Grâce à la combinaison de deux outils simples et pratiques, il est possible d&#39;obtenir un code source assez fidèle à celui d&#39;origine pour un paquet Android.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/services_web_restful.html</id>
+      <title>Critique du livre : Services Web RESTful par Richarson &amp; Ruby</title>
+      <link href="https://insertafter.com/fr/blog/services_web_restful.html" rel="alternate" type="text/html" />
+      <updated>2012-01-17T19:44:40.000Z</updated>
+      <published>2012-01-17T19:44:40.000Z</published>
+      <summary>Si on me demandait quel livre a véritablement influencé mon quotidien de développeur web, ce serait sans hésitation celui-là.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/creation_insert_after.html</id>
+      <title>Bonjour InsertAfter !</title>
+      <link href="https://insertafter.com/fr/blog/creation_insert_after.html" rel="alternate" type="text/html" />
+      <updated>2012-01-01T13:38:15.000Z</updated>
+      <published>2012-01-01T13:38:15.000Z</published>
+      <summary>Dix ans après, je décide de créer mon blog. Mieux vaut tard que jamais !</summary>
+    </entry>
+
+
+
+
+
+</feed>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0">
+  <channel>
+    <title>InsertAfter : Blog d&#39;un développeur web à Lille - 5</title>
+    <description>Blog de Nicolas Froidure, développeur JavaScript fullstack à Lille.</description>
+    <link>https://insertafter.com/fr/blog/index-5.html</link>
+    <lastBuildDate>2021-01-16T11:08:53.568Z</lastBuildDate>
+    <pubDate>2021-01-16T11:08:53.568Z</pubDate>
+    <ttl>1800</ttl>
+
+    
+
+
+
+    <item>
+      <title>Critique du livre : Exercices en langage C++</title>
+      <description>Afin de parfaire ma connaissance du C++, j&#39;ai entrepris la lecture de ce livre d&#39;exercices assez bien ficelé.</description>
+      <link>https://insertafter.com/fr/blog/exercices_en_cplusplus.html</link>
+      <pubDate>2012-01-26T20:28:14.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Décompiler/désassembler un paquet Android (.apk)</title>
+      <description>Grâce à la combinaison de deux outils simples et pratiques, il est possible d&#39;obtenir un code source assez fidèle à celui d&#39;origine pour un paquet Android.</description>
+      <link>https://insertafter.com/fr/blog/desasembler_apk.html</link>
+      <pubDate>2012-01-19T12:11:27.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Critique du livre : Services Web RESTful par Richarson &amp; Ruby</title>
+      <description>Si on me demandait quel livre a véritablement influencé mon quotidien de développeur web, ce serait sans hésitation celui-là.</description>
+      <link>https://insertafter.com/fr/blog/services_web_restful.html</link>
+      <pubDate>2012-01-17T19:44:40.000Z</pubDate>
+    </item>
+
+
+
+    <item>
+      <title>Bonjour InsertAfter !</title>
+      <description>Dix ans après, je décide de créer mon blog. Mieux vaut tard que jamais !</description>
+      <link>https://insertafter.com/fr/blog/creation_insert_after.html</link>
+      <pubDate>2012-01-01T13:38:15.000Z</pubDate>
+    </item>
+
+
+
+
+
+  </channel>
+</rss>

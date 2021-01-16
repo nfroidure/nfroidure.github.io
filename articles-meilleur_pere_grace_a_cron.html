@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Comment devenir un meilleur père grâce à Cron</title>
+  <meta name="description" content="Décrocher de l&#39;écran en plein milieu d&#39;une session de code est difficile. Mais arriver en retard à la garderie, c&#39;est pas cool. Heureusement cron et Patrick Sébastien sont là !">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/meilleur_pere_grace_a_cron.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Comment devenir un meilleur père grâce à Cron</h2>
+<p>
+  Décrocher de l&#039;écran en plein milieu d&#039;une session de code est
+  difficile. Mais arriver en retard à la garderie, c&#039;est pas cool.
+  Heureusement cron et Patrick Sébastien sont là !
+</p>
+
+<p>
+  Ma femme le sait bien, c&#039;est difficile de communiquer avec moi quand je
+  code. Le problème, c&#039;est que je dois conduire mes deux petites filles à
+  la garderie et surtout aller les chercher.
+</p>
+<p>
+  Après plusieurs remontrances suites à quelques retards, j&#039;ai décidé de
+  devenir un meilleur père en tirant avantage de ma machine de développement.
+  Tout d&#039;abord, j&#039;ai cherché un moyen de faire sonner mon PC sous
+  Debian GNU/Linux en ligne de commande.
+</p>
+<p>
+  La commande echo couplée à quelques options permet d&#039;émettre un bip, mais
+  cela ne marche pas toujours. Les bips peuvent être désactivés et il y a tout
+  un tas de conditions obscures pour que ça fonctionne ou pas.
+</p>
+<pre>root&#64;server:~&#35; echo -en &#034;a&#034; &gt; /dev/tty5</pre>
+<p>
+  Bref, j&#039;ai opté pour la solution &#034;beep&#034; qui est un petit
+  binaire permettant de créer de véritables compositions de bips. La première
+  chose à faire est donc de l&#039;installer.
+</p>
+<pre>root&#64;server:~&#35; aptitude install beep</pre>
+<p>
+  Enfin, j&#039;ai trouvé
+  <a
+    title="Voir le forum"
+    href="http://forum.ubuntu-fr.org/viewtopic.php?id=47239"
+    >sur ce forum</a
+  >, une ligne de commande toute prête qui joue l&#039;air du petit bonhomme en
+  mousse (on fait avec ce qu&#039;on a :D).
+</p>
+<pre>
+root&#64;server:~&#35; beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300</pre
+>
+<p>
+  Il ne reste plus qu&#039;à éditer le fichier /etc/crontab pour lui ajouter
+  quelques règles permettant de déclencher notre petit air de rassemblement pour
+  un gros calin famille comme dirait mon aînée. La garderie est ouverte le matin
+  de 9h à 12h du lundi au vendredi et l&#039;après midi de 13h45 à 17h00 les
+  lundi, mardi et vendredi. Je vous laisse deviner le sens des règles
+  ci-dessous.
+</p>
+<pre>root&#64;server:~&#35; echo &#034;<br />&#35; Garderie ZAZA &amp; EMMA<br />45 8 * * 1-5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />45 11 * * 1-5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />35 13 * * 1,2,5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />45 16 * * 1,2,5 root beep -f 1150 -n -f 1450 -n -f 1300 -l 300 -n -f 1150 -l 300 -n -f 1100 -l 300 -n -f 1150 -l 300 -n -f 850 -l 300<br />&#35;&#034; &gt;&gt; /etc/crontab</pre>
+<p>On redémarre le démon crond :</p>
+<pre>root&#64;server:~&#35; /etc/init.d/cron restart</pre>
+<p>
+  Et voilà, plus de soucis à se faire pour la garderie, à condition de ne pas
+  être en rendez-vous clientèle !
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

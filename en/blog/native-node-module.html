@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Create Native NodeJS Modules Fallbacking To Emscripten Ones</title>
+  <meta name="description" content="Suprisingly, creating a native module is not that hard. Making it 
+ compile on any platform and gracefully handle compilation fails is a bit more 
+ tricky.">
+  <link rel="bookmark" href="https://insertafter.com/en/blog/native-node-module.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/en/index.html" title="Back to home"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home"
+      class="selected">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/index.html"
+          title="Back to home">Home</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/blog/index.html"
+          title="Back to home"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projects">
+        <a href="/en/projects.html"
+          title="Learn more about my projects">Projects</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--about">
+        <a href="/en/about.html"
+          title="Learn more about me">About</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Create Native NodeJS Modules Fallbacking To Emscripten Ones</h2>
+<p>
+  If you're a frontend developper, you probably already heard about icon fonts.
+  If you use the Gulp build tool, you maybe already used
+  <a href="https://www.npmjs.com/package/gulp-iconfont">gulp-iconfont</a>. As
+  its maintainer, when I heard about the WOFF2 font format, I really wanted to
+  get it in output of my gulp plugin.
+</p>
+<p>
+  Sadly, there were no JavaScript implementation of it. It was the time for me
+  to dive deeper into NodeJS C++ add-ons and the Emscripten project.
+</p>
+<h3>NodeJS C++ add-on: easy!</h3>
+<p>
+  Creating a NodeJS add-on was blazing fast. The build system is incredibly well
+  documented and works like a charm.
+</p>
+<p>
+  Typically when creating a native add-on you need to create a wrapper written
+  in C++ that glue the library you want to use to the V8 engine. Mine is
+  <a
+    href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/csrc/addon.cc"
+    >pretty simple</a
+  >. It indeed wraps the Google's
+  <a
+    href="https://github.com/google/woff2/blob/09c4eba0f679640ddddfd5315edbb72e4d7d8447/src/woff2_enc.cc#L175"
+    >woff2 project</a
+  >
+  encoding function. This C++ function signature:
+</p>
+<pre>
+bool ConvertTTFToWOFF2(
+  const uint8_t *data, size_t length,
+  uint8_t *result, size_t *result_length
+);
+</pre>
+<p>becomes this NodeJS one:</p>
+<pre>
+output:Buffer function ttf2woff2(input:Buffer);
+</pre>
+<p>
+  The most complex work was to figure out how to create a NodeJS Buffer from a C
+  one. Indeed, I had to create a new JavaScript Buffer instance by invoking its
+  global constructor from the C++ code. That way, when no more references to the
+  Buffer will be set in the JS userland, then, it will automatically be garbage
+  collected per the V8 engine avoiding the need to free it manually via another
+  function call.
+</p>
+<p>
+  Once the wrapper is made, you just have to create a file named
+  <a
+    href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/binding.gyp"
+    >binding.gyp</a
+  >
+  that allows you to specify building instruction for the various compilers. We
+  had to struggle a bit with the MacOSX one since I couldn't test by myself.
+</p>
+<p>
+  And that's it! Your module gets compiled at <code>npm install</code>. In fact,
+  I had to test a few time and correct compilation errors progressively but it
+  was suprisingly fast to get it up and running. For that testing matter I set
+  up a
+  <a
+    href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L14-L15"
+    >few commands</a
+  >
+  to my <code>package.json</code>.
+</p>
+<p>But what about users whose OS can't build it? How to not let them down?</p>
+<h3>Emscripten for the win!</h3>
+<p>
+  The Emscripten project allows you to copmile C/C++ projects to JavaScript. It
+  was a great chance for me to improve my module quality by fallbacking to such
+  a build.
+</p>
+<p>
+  It was a bit harder to get it running. First the Emscripten documentation is
+  really light especially on how to interface your build with your other
+  JavaScript code.
+</p>
+<p>
+  I finally managed to
+  <a
+    href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/jssrc/index.js"
+    >create a wrapper</a
+  >
+  for it. As you can see, I had to manually manage the allocated memory in the
+  JS wrapper except for the output buffer that I had to free on the C side with
+  a second function call (strange errors happens when trying to free C side
+  allocated memory from the JavaScript module).
+</p>
+<p>
+  Once again, I made
+  <a
+    href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L16-L17"
+    >some scripts</a
+  >
+  to simplify the build. Basically, it query the <code>binding.gyp</code> file
+  with <a href="https://github.com/SimpliField/miniquery">miniquery</a> for the
+  C/C++ files to build, remove the <code>addon.cc</code> one that we do not want
+  and then set it as args to the
+  <a
+    href="http://kripken.github.io/emscripten-site/docs/tools_reference/emcc.html"
+    >emcc</a
+  >
+  compiler.
+</p>
+<p>
+  The output file is basically a JavaScript module that can either be used with
+  NodeJS or in the browser.
+</p>
+<h3>Gracefully fail compilation</h3>
+<p>
+  So, now we have our Emscripten build, let's fallback to him when the native
+  NodeJS add-on compilation goes wrong. First, we must ensure that any failure
+  won't impeach the module to install. We're basically doing this by
+  <a
+    href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/package.json#L18"
+    >overriding</a
+  >
+  the default installation script to exit with a 0 code whatever result the
+  compiler gives.
+</p>
+<p>
+  Then, as a main JavaScript file we will ensure failing to bind to the native
+  add-on will result in requiring the Emscripten fallback. It is simply done by
+  <a
+    href="https://github.com/nfroidure/ttf2woff2/blob/8060224462994f283842c7ff5dec13cb0914376c/src/index.js"
+    >catching exceptions</a
+  >
+  when requiring the bindings.
+</p>
+<p>It works! But what about browserifying it ?</p>
+<h3>Browserify</h3>
+<p>
+  In order to allow <code>gulp-iconfont</code> users to preview and download the
+  resulting fonts made with it (and to see if it was feasible :p), I a
+  <a href="http://nfroidure.github.io/svgiconfont/"
+    >full frontend font builder</a
+  >. So, I immediatly tried to use my shinny new module to also output WOFF2
+  files.
+</p>
+<p>
+  The fact is that it doesn't work out of the box. Browserify try to add every
+  NodeJS dependencies that appears to be useless when using the Emscripten
+  module on the front-end side.
+</p>
+<p>
+  Chances are that Browserify allows to skip the parsing for some files. Plus
+  <a href="https://github.com/nfroidure/ttf2woff2/blob/master/jssrc/post.js"
+    >a simple trick</a
+  >
+  to fix the Emscripten require, i've finally been able to make the magic
+  happen.
+</p>
+<p>
+  I'm really impressed by how a C/C++ noob like me have been able to do this in
+  the free time of a few days. If you didn't already, you really should have a
+  look at NodeJS native bindings!
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/en/blog/index.html"
+    title="Nicolas Froidure&#39;s Blog, Fullstack JavaScript Developper">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "en";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/en/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

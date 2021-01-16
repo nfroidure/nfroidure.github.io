@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Récupérer les privilèges de l&#39;utilisateur root de MySQL</title>
+  <meta name="description" content="En administration système, tout arrive, même les cas les plus désespérés. Perdre le mot de passe ou les privilèges de root de MySQL en fait partie. Voici comment s&#39;en sortir.">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/recuperer_privilege_root_mysql.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Récupérer les privilèges de l&#039;utilisateur root de MySQL</h2>
+<p>
+  En administration système, tout arrive, même les cas les plus désespérés.
+  Perdre le mot de passe ou les privilèges de root de MySQL en fait partie.
+  Voici comment s&#039;en sortir.
+</p>
+
+<p>
+  Perdre les privilèges et/ou le mot de passe de l&#039;utilisateur root de
+  MySQL est plutôt ennuyeux. Pour résoudre ce problème, il va falloir utiliser
+  la ligne de commande. Sous Debian GNU/Linux, la méthode est la suivante.
+</p>
+<p>Tout d&#039;abord, il faut arrêter le serveur MySQL :</p>
+<pre>root&#64;server:~&#35; /etc/init.d/mysql stop</pre>
+<p>
+  Si le serveur ne s&#039;arrête pas, il faut alors trouver le numéro de
+  processus du démon MySQL (PID) :
+</p>
+<pre>root&#64;server:~&#35; ps aux | grep mysqld<br />mysql 27257 0.0 7.0 136720 17824 pts/1 Sl 15:30 0:00 /usr/sbin/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/run/mysqld/mysqld.sock --port=3306<br />root 27341 0.0 0.3 3320 804 pts/1 S+ 15:37 0:00 grep mysqld</pre>
+<p>Puis, l&#039;arrêter manuellement (ici, il s&#039;agit du PID 27257) :</p>
+<pre>root&#64;server:~&#35; kill 27257</pre>
+<p>
+  Maintenant, nous allons démarrer le démon MySQL en ligne de commande en lui
+  ajoutant des options bien pratiques. Tout d&#039;abord l&#039;option
+  --skip-grant-tables qui permet d&#039;enlever les vérifications de privilège
+  et d&#039;accéder sans authentification au serveur MySQL. Ensuite,
+  l&#039;option --skip-networking afin d&#039;éviter d&#039;exposer le serveur
+  au réseau ce qui pourrait laisser la porte ouverte au hacker avisé qui
+  passerai par là.
+</p>
+<pre>
+root&#64;server:~&#35; mysqld --skip-grant-tables --skip-networking &amp;</pre
+>
+<p>
+  L&#039;esperluette permet de récupérer la ligne de commande après le démarrage
+  du démon car nous allons en avoir besoin.
+</p>
+<p>Connectons-nous à MySQL grâce à son client en ligne de commande :</p>
+<pre>root&#64;server:~&#35; mysql<br />Welcome to the MySQL monitor. Commands end with ; or g.<br /><br />Server version: 5.1.49-3 (Debian)<br /> <br />Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.<br />This software comes with ABSOLUTELY NO WARRANTY. This is free software,<br />and you are welcome to modify and redistribute it under the GPL v2 license<br />Type &#039;help;&#039; or &#039;h&#039; for help. Type &#039;c&#039; to clear the current input statement. <br />mysql&gt;</pre>
+<p>
+  Nous avons maintenant la possibilité d&#039;entrer des requêtes SQL sans
+  vérification de droits quelconques. A savoir, l&#039;option
+  --skip-grant-tables ne nous permet pas d&#039;utiliser les requêtes de type
+  GRANT. Nous allons donc devoir agir directement sur les tables virtuelles de
+  MySQL. Pour changer le mot de passe :
+</p>
+<pre>
+mysql&gt; UPDATE mysql.user SET password=PASSWORD(&#039;nouveaumdp&#039;) WHERE User=&#034;root&#034;;</pre
+>
+<p>Pour récupérer tous les privilèges :</p>
+<pre>
+mysql&gt; UPDATE mysql.user SET Grant_priv = &#039;Y&#039;, Super_priv = &#039;Y&#039; WHERE User = &#039;root&#039;;</pre
+>
+<p>On peut maintenant fermer le client mysql.</p>
+<pre>mysql&gt; exit<br />Bye</pre>
+<p>
+  Pour mettre fin au processus et redémarrer MySQL dans des conditions normales
+  de production, il faut à nouveau tuer le processus mysqld grâce aux commandes
+  utilisées plus haut et redémarrer le serveur :
+</p>
+<pre>root&#64;server:~&#35; /etc/init.d/mysql restart</pre>
+<p>Voilà. N&#039;hésitez pas à donner vos trucs perso en commentaire.</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

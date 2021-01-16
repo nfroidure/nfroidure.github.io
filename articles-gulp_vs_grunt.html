@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Gulp remplacera-t-il Grunt ?</title>
+  <meta name="description" content="Gulp est un concurrent de Grunt qui se targue d&#39;exploiter les capacités des streams NodeJS. Petit passage en revue de cet outil.">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/gulp_vs_grunt.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Gulp remplacera-t-il Grunt ?</h2>
+<p>
+  ⚠ Attention: Cet article est ancien et n'est conservé que pour des raisons
+  historiques. Gulp a bien remplacé Grunt, mais ce fût de courte durée ;).
+</p>
+<p>
+  Gulp est un concurrent de Grunt qui se targue d&#039;exploiter les capacités
+  des streams NodeJS. Petit passage en revue de cet outil.
+</p>
+
+<p>
+  Si vous ne l&#039;avez pas déjà lu, mon billet sur la génération de fontes
+  vous permettra de
+  <a title="Lire ce billet" href="gruntjs_font_icons.html">découvrir GruntJS</a
+  >. Pour résumer, GruntJS permet d&#039;exécuter des tâches diverses et variées
+  grâce à un nombre impressionnant de plug-ins publiés sur NPM. Bref, un outil
+  intéressant mais souffrant de quelques lacunes.
+</p>
+<h3>Les défauts de GruntJS</h3>
+<p>
+  L&#039;un des reproches les plus importants que j&#039;ai à formuler vis à vis
+  de GruntJS est très certainement l&#039;absence d&#039;exploitation des
+  streams. En effet, chaque tâche Grunt lis un fichier et écrit dans le suivant
+  de telle manière que les performances en sont affectées, surtout pour les
+  développeurs qui ont des disques durs classiques.
+</p>
+<p>
+  On se retrouve avec des tâches &#034;silos&#034; qui ne peuvent
+  s&#039;exécuter que l&#039;une après l&#039;autre alors que bien souvent, il
+  serait techniquement possible d&#039;effectuer ces tâches de manière plus
+  fluide grâce aux streams.
+</p>
+<p>
+  Une conséquence de ce problème est qu&#039;il y a énormément de répétitions
+  dans la configuration des tâches car on doit les configurer indépendamment
+  plutôt que de montrer leurs relations.
+</p>
+<h3>L&#039;apport de Gulp</h3>
+<p>
+  <a hreflang="en" title="Voir le site officiel" href="http://gulpjs.com/"
+    >Gulp</a
+  >
+  propose une toute autre vision en considérant une tâche comme une sorte de
+  middleware, à l&#039;image de ce que l&#039;on trouve pour Connect/Express. La
+  description d&#039;une tâche Gulp devient donc une succession
+  d&#039;opérations spécifiques sur des fichiers. Gulp tire donc parti des
+  streams NodeJS à plusieurs niveaux.
+</p>
+<p>
+  Tout d&#039;abord, au niveau des tâches, Gulp utilise les streams de NodeJS et
+  plus particulièrement leur mode &#034;objet&#034; (<a
+    hreflang="en"
+    title="Voir la documentation"
+    href="http://nodejs.org/api/stream.html&#35;stream_object_mode"
+    >objectMode</a
+  >). La physionomie d&#039;une tâche Gulp est la suivante :
+</p>
+<ol>
+  <li>
+    création d&#039;un flux d&#039;objets représentants les fichiers obtenus à
+    partir d&#039;un pattern donné (via la méthode <code>gulp.src</code> qui
+    utilise
+    <a
+      hreflang="en"
+      title="Voir la ligne"
+      href="https://github.com/gulpjs/gulp/blob/96d6596bf313489afa2a967487f74c5f8d2e7f06/lib/createInputStream/index.js#L2"
+      >glob-stream</a
+    >) ;
+  </li>
+  <li>
+    branchement de ce flux sur une ou plusieurs tâches (via la méthode
+    <code>pipe</code>) ;
+  </li>
+  <li>
+    enregistrement du résultat dans un ou plusieurs fichiers (respectivement via
+    la méthode gulp.dest ou via une tâche).
+  </li>
+</ol>
+<p>
+  Chaque objet est donc passé de manière asynchrone dans l&#039;enchaînement de
+  tâches configuré pour l&#039;occasion. Chaque
+  <a
+    hreflang="en"
+    title="Voir le package utilis"
+    href="https://npmjs.org/package/vinyl"
+    >objet <code>File</code></a
+  >
+  passé contient les informations suivantes :
+</p>
+<ul>
+  <li>le chemin du fichier ;</li>
+  <li>le répertoire courant ;</li>
+  <li>le contenu du fichier ;</li>
+</ul>
+<p>
+  Le contenu du fichier peut être nul, être un
+  <a
+    hreflang="en"
+    title="Voir la documentation de NodeJS pour les buffers"
+    href="http://nodejs.org/api/buffer.html"
+    >Buffer</a
+  >
+  de son contenu ou un
+  <a
+    hreflang="en"
+    title="Voir la documentation de NodeJS pour les streams"
+    href="http://nodejs.org/api/stream.html&#35;stream_class_stream_readable"
+    >ReadableStream</a
+  >. Par défaut, Gulp fournit un Buffer, c&#039;est peut-être d&#039;ailleurs
+  son plus grand défaut.
+</p>
+<p>
+  En effet, les streams sont dans la plupart des cas une suite de Buffers.
+  Utiliser les streams permet donc également d&#039;utiliser un unique buffer au
+  sein d&#039;un stream. Bref, utiliser les streams uniquement aurait pu
+  simplifier la création de plug-ins.
+</p>
+<p>
+  Si on résume, Gulp propose d&#039;agir sur des flux de fichiers qui peuvent
+  eux-même proposer leur contenu sous forme de Buffer ou un flux de leur propres
+  données.
+</p>
+<h3>À quoi ça sert ?</h3>
+<p>
+  Les streams permettent d&#039;optimiser l&#039;utilisation des ressources
+  systèmes et offrent une plus grande souplesse. Imaginons la combinaison de
+  tâches suivante à appliquer à des fichiers :
+</p>
+<ul>
+  <li>remplacer &#034;foo&#034; par &#034;bar&#034; ;</li>
+  <li>ajouter une phrase au début du fichier ;</li>
+  <li>tronquer le fichier à partir de 10000 lignes.</li>
+</ul>
+<p>
+  Le design de GruntJS fera qu&#039;il y aura autant de fichiers écrits sur le
+  disque qu&#039;il y a d&#039;étapes. De plus, chacune de ces étapes se fera
+  sur la totalité des fichiers séquentiellement.
+</p>
+<p>
+  Avec Gulp, chaque fichier sera passé aux tâches de manière totalement
+  asynchrone. Théoriquement, il est possible que le premier fichier envoyé aux
+  tâches soit écrit sur disque alors que tous les fichiers concernés par le
+  pattern fournit à <code>gulp.src</code> n&#039;ont pas encore été totalement
+  listés.
+</p>
+<p>
+  Mais en plus de cela pour les fichiers eux-mêmes, en utilisant le mode stream,
+  une tâche effectuée en dernier (ici, tronquer le fichier à 10000 lignes) peut
+  influer sur les tâches précédentes.
+</p>
+<p>
+  En effet, puisque l&#039;on ne souhaite prendre en compte que les 10000
+  premières lignes, pourquoi remplacer &#034;foo&#034; par &#034;bar&#034; dans
+  les lignes suivantes ? En fermant le flux après les 10000 lignes,
+  l&#039;évènement sera transmis aux flux parents. Théoriquement, il est
+  possible que la lecture des données s&#039;interrompe également permettant
+  ainsi d&#039;économiser des ressources.
+</p>
+<p>
+  Puisque les streams sont asynchrones, on peut utiliser les différentes
+  ressources système simultanément. Écrire sur le disque ne demande pas beaucoup
+  de CPU ou de mémoire, a contrario, opérer sur les données ne sollicite pas les
+  disques (sauf cas extrême). Avec GruntJS, ces étapes ont lieu séquentiellement
+  ce qui crée des goulets d&#039;étranglement. Avec Gulp ces dernières sont
+  simultanées, menant à une utilisation plus intelligente du système.
+</p>
+<h3>Et dans la pratique ?</h3>
+<p>
+  Dans la pratique, ce n&#039;est pas si simple. Tout d&#039;abord car les
+  créateurs de Gulp indiquent clairement que les créateurs de plug-in peuvent ne
+  supporter que les buffers ce qui réduit quelque peu l&#039;intérêt de Gulp.
+  Les streams au niveau des fichiers sont cachés derrière une option que peu
+  activeront.
+</p>
+<p>
+  Un autre problème qui est posé par cette façon de faire est comment opérer sur
+  les fichiers en cours de traitement (renommer/supprimer) sans être sûr
+  qu&#039;il n&#039;y aura pas d&#039;effets de bord imprédictibles. Le
+  fonctionnement de Grunt est sur ce point plus &#034;rassurant&#034;.
+</p>
+<p>
+  Étant donné le manque de maturité de Gulp et le succès de GruntJS, je pense
+  rester sur GruntJS au moins dans un premier temps. Ce qui ne m&#039;empêchera
+  pas de rester attentif. Je suis entrain de porter
+  <a
+    hreflang="en"
+    title="Voir le dépôt du plug-in"
+    href="https://github.com/nfroidure/grunt-svgicons2svgfont"
+    >grunt-svgicons2svgfont</a
+  >
+  vers Gulp, je vous en donne des nouvelles bientôt ;).
+</p>
+<p>
+  Edit du 16/12/2013 : Finalement, le fait de supporter les buffers est moins
+  handicapant que prévu puisque le module vinyl permet de faire abstraction du
+  fait que le fichier soit un Buffer ou un Stream. A un petit détail près. En
+  effet, piper un stream est susceptible d&#039;émettre un évènement
+  <code>end</code> pour indiquer la fin du stream, mais piper un buffer
+  n&#039;émet pas cet évènement. Je viens de soumettre une
+  <a
+    hreflang="en"
+    title="Voir son contenu"
+    href="https://github.com/wearefractal/vinyl/pull/2"
+    >pull request à ce sujet</a
+  >, j&#039;espère qu&#039;elle sera rapidement acceptée.
+</p>
+<p>
+  Malheureusement, cette abstraction ne semble exister qu&#039;en entrée mais
+  pas en sortie. Je continue d&#039;investiguer en même temps que j&#039;adapte
+  mon plug-in Grunt. Je rééditerai sûrement ce billet avec d&#039;autres
+  informations pratiques.
+</p>
+<p>
+  Enfin, je ne l&#039;ai pas précisé, mais les plug-in Gulp sont plus facile à
+  tester puisqu&#039;il ne nécessitent pas d&#039;écrire sur un fichier ce qui
+  est le cas avec GruntJS.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

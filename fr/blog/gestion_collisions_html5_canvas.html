@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : Gestion des collisions 2D dans un jeu HTML5 / Javascript</title>
+  <meta name="description" content="L&#39;expérience du développement de Tank Arena m&#39;amène à faire un petit point sur la gestion des collisions dans un jeu 2D écrit avec Javascript/HTML5.">
+  <link rel="bookmark" href="https://insertafter.com/fr/blog/gestion_collisions_html5_canvas.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/fr/index.html" title="Retour à l&#39;accueil"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/index.html"
+          title="Retour à l&#39;accueil">Accueil</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/fr/blog/index.html"
+          title="Retour à l&#39;index du blog"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projets">
+        <a href="/fr/projets.html"
+          title="Découvrez mes divers projets">Projets</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--a_propos">
+        <a href="/fr/a_propos.html"
+          title="Learn more about me">À propos</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+
+<h2>Gestion des collisions 2D dans un jeu HTML5 / Javascript</h2>
+<p>
+  ⚠ Attention: Cet article est ancien et son contenu n'est plus d'actualité. Une
+  approche orientée aspect serait préférée à une approche objet de nos jours. Ce
+  travail m'a permis d'affiner mes compétences mais il ne peut servir de base
+  pour implémenter un jeu, autant repartir de zéro.
+</p>
+<p>
+  L&#039;expérience du développement de Tank Arena m&#039;amène à faire un petit
+  point sur la gestion des collisions dans un jeu 2D écrit avec
+  Javascript/HTML5.
+</p>
+
+<p>
+  Ce n&#039;est pas un sujet trivial et les choix sont très larges. En effet, on
+  peut s&#039;appuyer sur un moteur physique 2D existant, plus complet mais plus
+  lourd, ou gérer uniquement les collisions dont on a besoin. Pour ma part,
+  j&#039;ai décidé de m&#039;appuyer sur les nombreuses ressources existantes
+  écrites en C pour implémenter ma propre gestion des collisions adaptée aux
+  jeux HTML5 et dans le cas présent au jeu Tank Arena que je développe durant
+  mon temps libre et dont
+  <a
+    title="Voir l&#039;article de présentation de Web Tank Arena"
+    href="tank_arena_html5.html"
+    >je vous ai déjà parlé</a
+  >.
+</p>
+<h3>Diagramme des classes UML</h3>
+<p>
+  <a
+    rel="lightbox"
+    title="Zoomer le diagramme"
+    href="https://raw.githubusercontent.com/nfroidure/TankArena/master/uml/ClassesDiagram.png"
+  >
+    <img
+      alt="Diagramme des classes UML"
+      src="/images/classesdiagram-breakit2.png"
+    />
+  </a>
+</p>
+<p>
+  Tous les fichiers Javascript implémentant ce modèle se trouvent sur le
+  <a
+    hreflang="en"
+    title="Voir le code de Tank Arena"
+    href="https://github.com/nfroidure/TankArena"
+    >dépôt GitHub de Tank Arena</a
+  >
+  sous licence GNU/GPL donc n&#039;hésitez pas à ajouter votre touche et à me
+  proposer des commits&#0160;! J&#039;ai mis la
+  <a
+    hreflang="en"
+    title="Voir la première version"
+    href="http://tank.elitwork.com"
+    >première version</a
+  >
+  en ligne pour éclairer la suite de cette article.
+</p>
+<h3>Des sprites sur une carte</h3>
+<p>
+  Comme vous pouvez le voir, l&#039;idée est d&#039;avoir un plan (classe
+  <code>Map</code>) dans lequel se trouvent des sprites (classe
+  <code>Sprite</code>). La classe <code>Sprite</code> sert de base à tous les
+  types d&#039;objets évoluant sur la carte du jeu. La classe
+  <code>Movable</code> la surcharge pour ajouter les propriétés d&#039;un objet
+  se mouvant sur la carte et la classe <code>Controlable</code> indique des
+  objets qui peuvent être contrôlés par un humain ou par l&#039;ordinateur.
+</p>
+<p>
+  Par exemple, les bâtiments (classe <code>Building</code>), sont fixes et sont
+  donc directement dérivés de la classe <code>Sprite</code>. Au contraire, les
+  tirs (classe <code>Shot</code>) héritent de la classe <code>Movable</code> et
+  les tanks de la classe <code>Controlable</code>. Pour ajouter de nouveaux
+  types d&#039;objet, il suffit d&#039;étendre une de ces trois classes
+  abstraites et de surcharger les méthodes dont on veut corriger le
+  comportement.
+</p>
+<p>
+  Enfin, la carte étant à plusieurs niveaux (avion, hélicopters), chaque sprite
+  à une propriété <code>z</code> indiquant à quel niveau ce dernier se trouve.
+</p>
+<h3>Des sprites composés de formes géométriques</h3>
+<p>
+  Afin de pouvoir calculer les collisions entre chaque objet de la carte chaque
+  sprite peut être composé de formes indiquant ses parties solides
+  (<code>Shapes</code>). Pour l&#039;instant, je n&#039;ai implémenté que les
+  formes de type cercle, rectangle (non orientable) et point. Cela est suffisant
+  pour obtenir un résultat satisfaisant. J&#039;aurai cependant pu également
+  implémenter un rectangle orientable, et une droite, mais je les ai substitué
+  respectivement par un cercle et par un rectangle d&#039;un pixel de largeur.
+</p>
+<p>
+  L&#039;avantage de pouvoir associer plusieurs formes positionnables à un même
+  sprite est qu&#039;il est possible de composer des formes plus complexes afin
+  d&#039;obtenir des collisions plus fidèles à la réalité.
+</p>
+<h3>Dessinons et animons nos sprites sur la carte</h3>
+<p>
+  Chaque sprite possède une méthode <code>draw</code> permettant de dessiner ce
+  dernier à la position à laquelle il se trouve sur l&#039;élément
+  <code>&lt;canvas&gt;</code> correspondant à sa position <code>z</code>. De
+  même, les sprites qui peuvent bouger possèdent une méthode
+  <code>move</code> qui leur permet de se déplacer en fonction de leur vitesse,
+  leur accélération etc... La boucle principale de jeu appelle successivement
+  les méthodes <code>move</code> et <code>draw</code> de chaque objet de la
+  scène et c&#039;est ainsi que les sprites commencent à s&#039;animer.
+</p>
+<h3>Calcul des collisions</h3>
+<p>
+  Nous y sommes, c&#039;est le moment de calculer les collisions de chaque objet
+  avec ceux qui l&#039;entourent. Le principe du calcul des collisions est
+  simple&#0160;: il s&#039;agit d&#039;enregistrer la position actuelle du
+  sprite, de la faire bouger avec la fonction <code>move</code>, puis de
+  calculer si ce dernier entre en collision ou non dans la nouvelle position
+  calculée. Si non, on finalise le mouvement par le dessin du sprite, si oui, on
+  replace l&#039;objet entré en collision dans sa position antérieure avant de
+  le redessiner.
+</p>
+<p>
+  C&#039;est grâce à la méthode <code>hits</code> de la classe
+  <code>Sprite</code> que nous y parvenons. Cette dernière récupère les sprites
+  proches de notre sprite (grâce à un tableau mis à jour à chaque cycle du jeu
+  avec la méthode <code>declarePositions</code>), et confronte chaque forme dont
+  ils sont composés pour déduire s&#039;il y a bien collision ou non.
+</p>
+<p>
+  Dans notre implémentation, lorsque le tank entre en collision, on simule le
+  recul de ce dernier en changeant sa direction et son accélération.
+  Lorsqu&#039;un tir atteint une cible, on inflige des dégâts à cette dernière
+  en appelant la méthode <code>damage</code>. Tous ces comportements sont
+  implémentés en surchargeant la méthode de calcul des collisions.
+</p>
+<p>
+  Vous pouvez voir tous les détails du calcul des collisions entre chaque forme
+  dans la classe <code>Shape</code> et ses sous-classes qui déterminent quels
+  types de formes sont comparées et déduisent ainsi quelle fonction utiliser
+  pour calculer leur collision.
+</p>
+<p>
+  Le calcul des collisions est largement inspiré de ces deux tutoriels&#0160;:
+  <a
+    title="Voir ce tutoriel"
+    href="http://www.siteduzero.com/tutoriel-3-254492-theorie-des-collisions.html"
+    >Théorie des collisions</a
+  >
+  et
+  <a
+    title="Voir ce tutoriel"
+    href="http://gregorycorgie.developpez.com/tutoriels/physic/"
+    >Conception d&#039;un moteur physique</a
+  >.
+</p>
+<h3>Conclusion</h3>
+<p>
+  La gestion des collisions en Javascript est assez rapide, j&#039;ai essayé cet
+  ébauche de Tank Arena sur mobile et franchement, je ne constate pas de
+  ralentissements. La prochaine étape sera certainement d&#039;isoler le moteur
+  physique du moteur de rendu graphique afin que l&#039;on puisse calculer les
+  mouvements physiques sur un serveur NodeJS et ainsi permettre un mode
+  multijoueur qui sera bien plus fun que le mode contre l&#039;ordinateur qui
+  est un peu simple à mon goût.
+</p>
+<p>
+  Sinon, pour parler du projet Tank Arena en général, il me reste à trouver le
+  meilleur moyen de tester la réussite d&#039;une mission et à trouver un format
+  le plus léger possible pour la création de cartes. J&#039;ai créé un éditeur
+  de sprites, il me reste à créer un éditeur pour associer les formes à ces
+  derniers puis un outil pour &#034;compiler&#034; les cartes.
+</p>
+<p>
+  Bref, de quoi s&#039;amuser un peu en attendant le prochain article&#0160;!
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/fr/blog/index.html"
+    title="Blog d&#39;un développeur web à Lille">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "fr";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/fr/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

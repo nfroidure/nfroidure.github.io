@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>InsertAfter : My VSCode Configuration</title>
+  <meta name="description" content="A quick tour of my VSCode configuration.">
+  <link rel="bookmark" href="https://insertafter.com/en/blog/my_vscode_configuration.html" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <meta name="robots" content="index,follow">
+  <link rel="stylesheet" href="/css/main.css">
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  
+</head>
+<body class="ia-standalone">
+  <!--[if lt IE 7]>
+  <script>document.location.href=http://browsehappy.com;</script>
+  <![endif]-->
+  <header class="ia-header">
+    <div class="ia-header__title">
+      <h1><a href="/en/index.html" title="Back to home"
+        class="ia-logo">
+        <img src="/images/logo.svg" alt="Logo Insert After" />
+      </a></h1>
+    </div>
+  </header>
+  <nav class="ia-languages">
+    <a class="ia-flag ia-flag--fr" href="/fr/index.html"
+      title="Retour à l&#39;accueil">
+      <span>Accueil</span>
+    </a>
+    <a class="ia-flag ia-flag--en" href="/en/index.html"
+      title="Back to home"
+      class="selected">
+      <span>Home</span>
+    </a>
+  </nav>
+
+  <nav class="ia-menu">
+    <ul class="ia-menu__body">
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/index.html"
+          title="Back to home">Home</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--index">
+        <a href="/en/blog/index.html"
+          title="Back to home"
+          class="selected">Blog</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--projects">
+        <a href="/en/projects.html"
+          title="Learn more about my projects">Projects</a>
+      </li>
+      <li class="ia-menu__item ia-menu__item--about">
+        <a href="/en/about.html"
+          title="Learn more about me">About</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="ia-main ia-content">
+    <div>
+    
+<article class="ia-main__content">
+  
+<h2>My VSCode Configuration</h2>
+<p>
+  I used a lot of editors for coding, from
+  <a href="https://notepad-plus-plus.org/fr/">Notepad++</a> to
+  <a href="https://www.sublimetext.com/">SublimeText</a> and
+  <a href="https://atom.io/">Atom</a> (GitHub's code editor) to finally adopt
+  VSCode, following the hype.
+</p>
+<p>
+  After using it for almost a year, I'm satisfied by it. VSCode is kinda like
+  Atom but faster (based on my experience of Atom a year ago, things may have
+  change in the meanwhile).
+</p>
+<p>
+  I'm not really a customization aficionado so my configuration won't blow your
+  mind. I consider it as the configuration VSCode should have by default, so
+  that people like me could just download it and avoid spending time on
+  customizing it.
+</p>
+<h3>Preferences</h3>
+<p>
+  One nice thing with VSCode is that settings are saved as plain JSON, so let's
+  print it rawly:
+</p>
+<code
+  ><pre>
+{
+  "window.zoomLevel": 0,
+  "editor.mouseWheelZoom": true,
+  "workbench.colorTheme": "Default High Contrast",
+  "extensions.ignoreRecommendations": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDragAndDrop": false,
+  "files.associations": {
+    "*.html": "html"
+  }
+}
+</pre
+  ></code
+>
+<p>
+  The first parameters are here due to strange zooming default behavior of
+  VSCode. It basically set it like Atom's one.
+</p>
+<p>
+  I didn't add the fourth by hand but VSCode suggestions are a good way to
+  discover new plugins so left it as is. The same goes for imports but it is
+  convenient to avoid spending time on renaming files by hand.
+</p>
+<p>
+  The drag and drop configuration removes the confirmation modal when moving
+  files in the file tree. It could be dangerous but since I use git for
+  everything, it do not care accidentally messing up my folders.
+</p>
+<p>
+  VSCode tends to detect file types correctly out of the box except for my
+  blog's HTML files (yes, I write my blog posts in raw HTML). I don't know why
+  but adding that line fixed the issue.
+</p>
+<h3>Installed extensions</h3>
+<p>Working with VSCode requires installing a few extensions.</p>
+<h4>Languages</h4>
+<p>
+  Here are the various extensions I had to install to work with the various
+  languages I use:
+</p>
+<ul>
+  <li>
+    <strong>JavaScript:</strong>
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=dzannotti.vscode-babel-coloring"
+      >Babel ES6/ES7</a
+    >
+    for syntax highlighting
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
+      >ESLint</a
+    >
+    and
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
+      >Prettier - Code formatter</a
+    >, by Esben Petersen, for quality checks,
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=orta.vscode-jest"
+      >Jest</a
+    >
+    for testing and
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=asvetliakov.snapshot-tools"
+      >snapshot-tools</a
+    >
+    to have nice shortcuts to the snapshots.
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools"
+      >JSON Tools</a
+    >, by Erik Lynd, is useful to format some JSON right in the editor.
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome"
+      >Debugger for Chrome</a
+    >
+    is installed but I rarely use it preferring the Chrome console.
+  </li>
+  <li>
+    <strong>Rust:</strong><br />
+    <a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust"
+      >Rust (rls)</a
+    >
+    provides great support for the Rust language while
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=serayuzgur.crates"
+      >Crates</a
+    >, by Seray Uzgur, helps managing dependencies.
+  </li>
+  <li>
+    <strong>C/C++:</strong><br />
+    <a href=""></a>
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools"
+      >C/C++</a
+    >
+    is nice for syntax highlighting, debugging, browsing and autocompletion. I
+    used it in association with
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.vscode-arduino"
+      >Arduino</a
+    >
+    for my hardware projects.
+  </li>
+  <li>
+    <strong>Go:</strong><br />
+    <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.go"
+      >Go</a
+    >
+    were sufficient for the little use of Go I had.
+  </li>
+  <li>
+    <strong>DevOps:</strong><br />
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=peterjausovec.vscode-docker"
+      >Docker</a
+    >
+    allows seeing summaries of what docker does right in your editor. Not bad.
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=mauve.terraform"
+      >Terraform</a
+    >, by Mikael Olenfalk, adds Terraform files (.tf) autocompletion and syntax
+    highlighting.
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools"
+      >Kubernetes</a
+    >
+    and
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=ipedrazas.kubernetes-snippets"
+      >Kubernetes Support</a
+    >
+    are installed but not enough usage currently to give a decent feedback.
+  </li>
+  <li>
+    <strong>The *ML things:</strong><br />
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml"
+      >YAML</a
+    >
+    to write YAML despite YAML.
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=bungcip.better-toml"
+      >Better TOML</a
+    >
+    to write TOML, despite TOML.
+  </li>
+  <li>
+    <strong>Blogging:</strong><br />
+    <a href="https://marketplace.visualstudio.com/items?itemName=ban.spellright"
+      >Spell Right</a
+    >
+    by Bartosz Antosik is nice to avoid typos but you'll probably have to set it
+    up with languages dictionaries of your choice.
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one"
+      >Markdown All in One</a
+    >
+    by Yu Zhang provides all you need to write Markdown (keyboard shortcuts,
+    table of contents, auto preview and more).
+  </li>
+</ul>
+<h4>Others</h4>
+<p>
+  I had to install
+  <a
+    href="https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-duplicate"
+    >Duplicate action</a
+  >
+  to be able to duplicate files/folders in the file tree view...
+</p>
+<p>
+  <a
+    href="https://marketplace.visualstudio.com/items?itemName=donjayamanne.githistory"
+    >Git History</a
+  >
+  add Git views in VSCode. I prefer using CLI most of the time but it is
+  sometimes useful for a clearer view of the repository state.
+</p>
+<p>
+  <a
+    href="https://marketplace.visualstudio.com/items?itemName=ms-vsliveshare.vsliveshare"
+    >VS Live Share</a
+  >
+  is theorically great but in practice we tried it once and reviews finally ends
+  up IRL since way more convenient.
+</p>
+<h3>Shortcuts</h3>
+<p>Here is the plain list:</p>
+<code>
+  <pre>
+[
+    {
+        "key": "ctrl+shift+d",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+alt+down",
+        "command": "-editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.tasks.test"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "expandLineSelection",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "-expandLineSelection",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+down",
+        "command": "-editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+up",
+        "command": "-editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+alt+f",
+        "command": "editor.action.formatDocument",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+i",
+        "command": "-editor.action.formatDocument",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+alt+f",
+        "command": "editor.action.formatSelection",
+        "when": "editorHasSelection && editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+k ctrl+f",
+        "command": "-editor.action.formatSelection",
+        "when": "editorHasSelection && editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.terminal.clear"
+    }
+]
+  </pre>
+</code>
+<p>
+  <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>d</kbd> is for duplicating a line
+  like in Atom's (and many other editors) defaults. The same goes for
+  <kbd>ctrl</kbd> + <kbd>l</kbd> to select a line, <kbd>ctrl</kbd> +
+  <kbd>t</kbd> to run tests, <kbd>ctrl</kbd> + <kbd>down/up</kbd> to move
+  selected lines and <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>f</kbd> to format
+  the current file. The last shortcut is <kbd>ctrl</kbd> + <kbd>k</kbd> that
+  allows to empty the integrated terminal's buffer to fit the native terminal
+  custom configuration I set up since I'm used to the Mac <kbd>cmd</kbd> +
+  <kbd>k</kbd> shortcut.
+</p>
+<p>
+  That's it! I hope you find this post helpful and feel free to share yours.
+</p>
+<p>
+  Edit: Found out that you can [recommend
+  extensions](https://github.com/ChtiJS/chtijs.francejs.org/blob/master/.vscode/extensions.json)
+  directly in your project's repository. This is a really nice way to onboard
+  you teammates to your projects.
+</p>
+
+</article>
+<nav class="ia-main__back">
+  <a href="/en/blog/index.html"
+    title="Nicolas Froidure&#39;s Blog, Fullstack JavaScript Developper">
+    &lt; Blog
+  </a>
+</nav>
+
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'insertafter';
+      var disqus_config = function () {
+        this.language = "en";
+        this.callbacks.onNewComment = [function() {
+          ga('send', 'event', 'interaction', 'comment');
+        }];
+      };
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    
+    </div>
+  </section>
+
+  <aside class="ia-icons ia-content">
+    <nav>
+      <a href="https://twitter.com/nfroidure" title="Follow me on Twitter"
+        class="ia-social ia-social--twitter">
+        <span>Twitter</span>
+      </a>
+      <a href="https://github.com/nfroidure" title="Follow me on GitHub"
+        class="ia-social ia-social--github">
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.npmjs.org/~nfroidure" title="Find NPM modules"
+        class="ia-social ia-social--npm">
+        <span>NPM</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nfroidure" title="Find me on LinkedIn"
+        class="ia-social ia-social--linkedin">
+        <span>LinkedIn</span>
+      </a>
+      <a href="/en/blog/index.atom" title="Don't miss my blog posts"
+        class="ia-social ia-social--feed">
+        <span>ATOM feed</span>
+      </a>
+    </nav>
+  </aside>
+
+  <footer class="ia-footer">
+    <p class="ia-footer__content">
+      © Nicolas Froidure 2012-2021
+    </p>
+  </footer>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21477946-7', 'insertafter.com');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

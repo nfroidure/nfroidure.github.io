@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <id>https://insertafter.com/en/blog/index.html</id>
+  <title>InsertAfter : Nicolas Froidure&#39;s Blog, Fullstack JavaScript Developper</title>
+  <subtitle>Learn more about me</subtitle>
+  <link href="https://insertafter.com/en/blog/index.atom" rel="self" type="application/atom+xml" />
+  <link href="https://insertafter.com/en/blog/index.html" rel="alternate" type="text/html" />
+  <updated>2021-01-16T11:08:53.568Z</updated>
+
+  
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/kafka_docker_compose.html</id>
+      <title>Kafka with docker-compose</title>
+      <link href="https://insertafter.com/en/blog/kafka_docker_compose.html" rel="alternate" type="text/html" />
+      <updated>2020-12-31T13:07:32.000Z</updated>
+      <published>2020-12-31T13:07:32.000Z</published>
+      <summary>Run Apache Kafka locally with docker-compose.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/unobstrusive_dependency_injection_with_knifecycle.html</id>
+      <title>Unobtrusive Dependency Injection with Knifecycle</title>
+      <link href="https://insertafter.com/en/blog/unobstrusive_dependency_injection_with_knifecycle.html" rel="alternate" type="text/html" />
+      <updated>2019-01-26T12:00:00.000Z</updated>
+      <published>2019-01-26T12:00:00.000Z</published>
+      <summary>Knifecycle is a NodeJS module aimed to provide DI power without the headaches..</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/my_vscode_configuration.html</id>
+      <title>My VSCode Configuration</title>
+      <link href="https://insertafter.com/en/blog/my_vscode_configuration.html" rel="alternate" type="text/html" />
+      <updated>2019-01-03T20:00:00.000Z</updated>
+      <published>2019-01-03T20:00:00.000Z</published>
+      <summary>A quick tour of my VSCode configuration.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/json_structure_for_rest_apis.html</id>
+      <title>Normalizing JSON Data from REST APIs</title>
+      <link href="https://insertafter.com/en/blog/json_structure_for_rest_apis.html" rel="alternate" type="text/html" />
+      <updated>2017-03-03T10:07:32.000Z</updated>
+      <published>2017-03-03T10:07:32.000Z</published>
+      <summary>Very few developer takes the time to think about
+ how they structure their JSON at the very beginning of the
+ project, it is the best moment to do so though.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/considerations_for_generating_api_clients.html</id>
+      <title>Considerations for Automatic Generation of API Clients</title>
+      <link href="https://insertafter.com/en/blog/considerations_for_generating_api_clients.html" rel="alternate" type="text/html" />
+      <updated>2017-02-19T15:00:00.000Z</updated>
+      <published>2017-02-19T15:00:00.000Z</published>
+      <summary>No one should loose time writing code that can be generated 
+automatically. Here are some tips on how I did it.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/webservices_at_7digital.html</id>
+      <title>Project Webservices at 7Digital</title>
+      <link href="https://insertafter.com/en/blog/webservices_at_7digital.html" rel="alternate" type="text/html" />
+      <updated>2017-02-07T13:09:30.000Z</updated>
+      <published>2017-02-07T13:09:30.000Z</published>
+      <summary>A sum-up of my last 6 months working at 7Digital</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/metapak.html</id>
+      <title>Meta NPM Packages</title>
+      <link href="https://insertafter.com/en/blog/metapak.html" rel="alternate" type="text/html" />
+      <updated>2017-02-02T04:29:10.000Z</updated>
+      <published>2017-02-02T04:29:10.000Z</published>
+      <summary>On managing a lot of NPM modules.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/toward_stricter_query_string_parser.html</id>
+      <title>Toward a stricter query string parser</title>
+      <link href="https://insertafter.com/en/blog/toward_stricter_query_string_parser.html" rel="alternate" type="text/html" />
+      <updated>2016-12-12T19:50:52.000Z</updated>
+      <published>2016-12-12T19:50:52.000Z</published>
+      <summary>With most query string parsers, a lot of URIs can point to the same
+ content. It not only mess you cache system but make your logs less expressive.
+ To avoid those problems I just wrote a stricter query string parser.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/http_rest_apis_with_nodejs.html</id>
+      <title>Designing HTTP REST APIs with NodeJS</title>
+      <link href="https://insertafter.com/en/blog/http_rest_apis_with_nodejs.html" rel="alternate" type="text/html" />
+      <updated>2016-11-12T09:50:52.000Z</updated>
+      <published>2016-11-12T09:50:52.000Z</published>
+      <summary>Designing good HTTP services is still a hard thing despite the many
+ tools you can find to make them with NodeJS. I&#39;m trying to define a formal
+ approach to architecture them by embracing the HTTP protocol nature and the
+ RESTful principles.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/no_more_middlewares.html</id>
+      <title>No more middlewares, please</title>
+      <link href="https://insertafter.com/en/blog/no_more_middlewares.html" rel="alternate" type="text/html" />
+      <updated>2016-11-05T19:50:20.000Z</updated>
+      <published>2016-11-05T19:50:20.000Z</published>
+      <summary>Why I think middlewares are a bad thing, how I am replacing them.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/lets_subset_javascript.html</id>
+      <title>Let&#39;s Subset JavaScript</title>
+      <link href="https://insertafter.com/en/blog/lets_subset_javascript.html" rel="alternate" type="text/html" />
+      <updated>2015-07-10T13:38:03.000Z</updated>
+      <published>2015-07-10T13:38:03.000Z</published>
+      <summary>Currently, it&#39;s all about JavaScript and how to compile, transpile
+ and every &quot;ile&quot;y things you could imagine. But what about making JavaScript
+ smaller?</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/native-node-module.html</id>
+      <title>Create Native NodeJS Modules Fallbacking To Emscripten Ones</title>
+      <link href="https://insertafter.com/en/blog/native-node-module.html" rel="alternate" type="text/html" />
+      <updated>2015-06-26T15:50:23.000Z</updated>
+      <published>2015-06-26T15:50:23.000Z</published>
+      <summary>Suprisingly, creating a native module is not that hard. Making it 
+ compile on any platform and gracefully handle compilation fails is a bit more 
+ tricky.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/watchdeps.html</id>
+      <title>Watching Your NodeJS Projects&#39;s Dependencies The Easy Way</title>
+      <link href="https://insertafter.com/en/blog/watchdeps.html" rel="alternate" type="text/html" />
+      <updated>2015-03-08T10:07:32.000Z</updated>
+      <published>2015-03-08T10:07:32.000Z</published>
+      <summary>Using watchdeps to automagically watch your project&#39;s dependencies.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/reaccess.html</id>
+      <title>REST API access control with reaccess</title>
+      <link href="https://insertafter.com/en/blog/reaccess.html" rel="alternate" type="text/html" />
+      <updated>2014-10-01T11:44:58.000Z</updated>
+      <published>2014-10-01T11:44:58.000Z</published>
+      <summary>A presentation introducing reaccess an its
+ use on a MEAN stack.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/match_ie8_with_gulp_and_rework.html</id>
+      <title>Match IE8 With Rework And Gulp!</title>
+      <link href="https://insertafter.com/en/blog/match_ie8_with_gulp_and_rework.html" rel="alternate" type="text/html" />
+      <updated>2014-03-15T15:05:01.000Z</updated>
+      <published>2014-03-15T15:05:01.000Z</published>
+      <summary>Rework is a very powerful tool. It allows working with CSS contents
+ in a friendly manner. Let&#39;s improve you IE8 compatibility with it.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/jsperf_use_with_caution.html</id>
+      <title>Detecting Bad JavaScript Performance Tests On JSPerf</title>
+      <link href="https://insertafter.com/en/blog/jsperf_use_with_caution.html" rel="alternate" type="text/html" />
+      <updated>2013-06-06T16:21:50.000Z</updated>
+      <published>2013-06-06T16:21:50.000Z</published>
+      <summary>JSPerf gives us a simple way to write JavaScript performance tests.
+ Unfortunately, tests found aren&#39;t always well designed. Here&#39;s how to detect
+ and avoid them.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/revisiting_js_singleton_pattern.html</id>
+      <title>Revisiting The JavaScript Singleton Pattern</title>
+      <link href="https://insertafter.com/en/blog/revisiting_js_singleton_pattern.html" rel="alternate" type="text/html" />
+      <updated>2013-05-30T07:38:19.000Z</updated>
+      <published>2013-05-30T07:38:19.000Z</published>
+      <summary>JavaScript design patterns are quite good examples to sharp your
+ JavaScript skills. Let&#39;s take a look to the singleton pattern.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/en/blog/fifo_lifo_javascript.html</id>
+      <title>Easily Implement Stacks (Fifo) And Queues (Lifo) With JavaScript</title>
+      <link href="https://insertafter.com/en/blog/fifo_lifo_javascript.html" rel="alternate" type="text/html" />
+      <updated>2013-04-09T09:50:52.000Z</updated>
+      <published>2013-04-09T09:50:52.000Z</published>
+      <summary>I&#39;m currently reviewing Javascript basis for a personnal project
+ and it appears I often use stacks and queues implicitly. Let&#39;s make it
+ explicit and easyer to debug/use.</summary>
+    </entry>
+
+
+
+
+
+</feed>

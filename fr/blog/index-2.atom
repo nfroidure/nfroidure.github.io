@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <id>https://insertafter.com/fr/blog/index-2.html</id>
+  <title>InsertAfter : Blog d&#39;un développeur web à Lille - 2</title>
+  <subtitle>Blog de Nicolas Froidure, développeur JavaScript fullstack à Lille.</subtitle>
+  <link href="https://insertafter.com/fr/blog/index-2.atom" rel="self" type="application/atom+xml" />
+  <link href="https://insertafter.com/fr/blog/index-2.html" rel="alternate" type="text/html" />
+  <updated>2021-01-16T11:08:53.568Z</updated>
+
+  
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/retour_xp_mongodb.html</id>
+      <title>MongoDB : Retour d&#39;expérience</title>
+      <link href="https://insertafter.com/fr/blog/retour_xp_mongodb.html" rel="alternate" type="text/html" />
+      <updated>2014-12-04T19:44:40.000Z</updated>
+      <published>2014-12-04T19:44:40.000Z</published>
+      <summary>Je travaille avec MongoDB depuis maintenant presque un an, il est temps pour
+ moi de faire un petit retour sur cette base de données et sur le NoSQL de manière générale.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/retour_experience_gulp.html</id>
+      <title>Gulp : Retour d&#39;expérience</title>
+      <link href="https://insertafter.com/fr/blog/retour_experience_gulp.html" rel="alternate" type="text/html" />
+      <updated>2014-01-26T08:01:26.000Z</updated>
+      <published>2014-01-26T08:01:26.000Z</published>
+      <summary>Comme promis, Gulp revient à l&#39;ordre du jour de ce Blog avec un retour d&#39;expérience sur l&#39;utilisation de Gulp et le développement de plugins.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/gulp_vs_grunt.html</id>
+      <title>Gulp remplacera-t-il Grunt ?</title>
+      <link href="https://insertafter.com/fr/blog/gulp_vs_grunt.html" rel="alternate" type="text/html" />
+      <updated>2013-12-23T22:25:29.000Z</updated>
+      <published>2013-12-23T22:25:29.000Z</published>
+      <summary>Gulp est un concurrent de Grunt qui se targue d&#39;exploiter les capacités des streams NodeJS. Petit passage en revue de cet outil.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/browserify.html</id>
+      <title>Browserify : Partager le code JavaScript entre front et back end</title>
+      <link href="https://insertafter.com/fr/blog/browserify.html" rel="alternate" type="text/html" />
+      <updated>2013-12-16T12:23:52.000Z</updated>
+      <published>2013-12-16T12:23:52.000Z</published>
+      <summary>Exécuter du JavaScript aussi bien côté serveur que dans le navigateur de vos clients devient possible grâce à Browserify.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/gruntjs_font_icons.html</id>
+      <title>Générer des fontes d&#39;icônes avec GruntJS</title>
+      <link href="https://insertafter.com/fr/blog/gruntjs_font_icons.html" rel="alternate" type="text/html" />
+      <updated>2013-11-09T14:25:29.000Z</updated>
+      <published>2013-11-09T14:25:29.000Z</published>
+      <summary>Cette semaine, je me suis penché sur la génération de fontes automatiquement avec GruntJS. Compte rendu de mes découvertes et des développements qui les ont suivies.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/livre_javascript.html</id>
+      <title>Un livre pour apprendre JavaScript</title>
+      <link href="https://insertafter.com/fr/blog/livre_javascript.html" rel="alternate" type="text/html" />
+      <updated>2013-09-22T15:45:27.000Z</updated>
+      <published>2013-09-22T15:45:27.000Z</published>
+      <summary>En Avril 2013 j&#39;ai été contacté par MA-Édition pour écrire un livre sur JavaScript. Aujourd&#39;hui, il est en librairie. Retour sur cette belle aventure.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/enseignement_dirige_par_tests.html</id>
+      <title>L&#39;enseignement dirigé par les tests</title>
+      <link href="https://insertafter.com/fr/blog/enseignement_dirige_par_tests.html" rel="alternate" type="text/html" />
+      <updated>2013-09-04T09:22:53.000Z</updated>
+      <published>2013-09-04T09:22:53.000Z</published>
+      <summary>Les tests unitaires et fonctionnels ont véritablement révolutionné le développement professionnel, pourquoi pas également celui de l&#39;enseignement et de la formation ?</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/tester_javascript_frontend.html</id>
+      <title>Tester son JavaScript front end</title>
+      <link href="https://insertafter.com/fr/blog/tester_javascript_frontend.html" rel="alternate" type="text/html" />
+      <updated>2013-08-25T13:24:22.000Z</updated>
+      <published>2013-08-25T13:24:22.000Z</published>
+      <summary>Depuis que j&#39;ai découvert Karma, je ne me lasse plus de convertir mes projets pour lancer les tests grâce à cet outil. Retour d&#39;expérience et conseils pour une utilisation pleine et entière.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/erreurs_javascript.html</id>
+      <title>Gestion des erreurs en JavaScript</title>
+      <link href="https://insertafter.com/fr/blog/erreurs_javascript.html" rel="alternate" type="text/html" />
+      <updated>2013-07-30T13:18:42.000Z</updated>
+      <published>2013-07-30T13:18:42.000Z</published>
+      <summary>Gérer les erreurs en JavaScript peut paraître simple, mais il n&#39;est pas toujours évident de choisir entre exceptions, retours d&#39;erreurs et callbacks d&#39;erreurs.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/choisir_module_nodejs.html</id>
+      <title>Bien choisir ses modules NodeJS : ma méthode</title>
+      <link href="https://insertafter.com/fr/blog/choisir_module_nodejs.html" rel="alternate" type="text/html" />
+      <updated>2013-07-26T14:04:25.000Z</updated>
+      <published>2013-07-26T14:04:25.000Z</published>
+      <summary>Hier à la troisième édition de ChtiJS, un question a été soulevée sur la confiance que l&#39;on pouvait avoir dans les modules NodeJS. Je vous dévoile donc ma méthode pour trancher entre npm install et npm remove ;).</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/utiliser_requirejs.html</id>
+      <title>Astuces pour utiliser pleinement RequireJS</title>
+      <link href="https://insertafter.com/fr/blog/utiliser_requirejs.html" rel="alternate" type="text/html" />
+      <updated>2013-07-11T09:57:45.000Z</updated>
+      <published>2013-07-11T09:57:45.000Z</published>
+      <summary>Pour un projet dont je vous reparlerai bientôt, j&#39;ai utilisé RequireJS pour la première fois en production. J&#39;en profite pour vous faire un petit retour d&#39;expérience avec quelques astuces de mon cru ;).</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/promises_javascript_ouvrons_capot.html</id>
+      <title>Les promises avec JavaScript : ouvrons le capot !</title>
+      <link href="https://insertafter.com/fr/blog/promises_javascript_ouvrons_capot.html" rel="alternate" type="text/html" />
+      <updated>2013-06-08T10:04:17.000Z</updated>
+      <published>2013-06-08T10:04:17.000Z</published>
+      <summary>Dans le petit monde de JavaScript les promises font l&#39;actualité. Je vous propose de comprendre les promises par l&#39;implémentation.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/creer_bot_irc_avec_nodejs.html</id>
+      <title>Créer un bot IRC avec NodeJS</title>
+      <link href="https://insertafter.com/fr/blog/creer_bot_irc_avec_nodejs.html" rel="alternate" type="text/html" />
+      <updated>2013-05-05T08:04:57.000Z</updated>
+      <published>2013-05-05T08:04:57.000Z</published>
+      <summary>J&#39;ai récemment pu tester la création d&#39;un bot NodeJS grâce à la mise en place de Marionnette, le bot IRC de FranceJS.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/animations_css3.html</id>
+      <title>Les animations sur les sites web en 2013</title>
+      <link href="https://insertafter.com/fr/blog/animations_css3.html" rel="alternate" type="text/html" />
+      <updated>2013-04-03T16:02:18.000Z</updated>
+      <published>2013-04-03T16:02:18.000Z</published>
+      <summary>On a d&#39;abord connu les animations avec Flash, puis les animations sans Flash grâce aux frameworks JavaScript. Aujourd&#39;hui, ce sont les animations CSS3 qui occupent le devant de la scène et, a priori, ça va durer.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/xinetd_super_server.html</id>
+      <title>Gestion de flotte X1 Intellitrac avec xinetd sur Debian GNU Linux</title>
+      <link href="https://insertafter.com/fr/blog/xinetd_super_server.html" rel="alternate" type="text/html" />
+      <updated>2013-04-01T14:35:58.000Z</updated>
+      <published>2013-04-01T14:35:58.000Z</published>
+      <summary>Le super server xinetd est vraiment très pratique pour des petits projets ne dépassant pas un certain nombre de clients. Voici une petite illustration de son utilité pour la localisation de flotte de véhicules.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/capskiller_stop_aux_majuscules.html</id>
+      <title>CapsKiller : Stop aux majuscules</title>
+      <link href="https://insertafter.com/fr/blog/capskiller_stop_aux_majuscules.html" rel="alternate" type="text/html" />
+      <updated>2013-02-23T11:05:23.000Z</updated>
+      <published>2013-02-23T11:05:23.000Z</published>
+      <summary>Les digital natives supportent mal les majuscules dans les courriels. En effet, cela est assimilé à des cris. Malheureusement, tout le monde n&#39;en fait pas grand cas. CapsKiller pour Thunderbird est là pour vous en protéger.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/application_desktop_avec_chrome.html</id>
+      <title>Une application desktop avec Chrome</title>
+      <link href="https://insertafter.com/fr/blog/application_desktop_avec_chrome.html" rel="alternate" type="text/html" />
+      <updated>2013-02-08T15:54:30.000Z</updated>
+      <published>2013-02-08T15:54:30.000Z</published>
+      <summary>Bien que HTML5 progresse de jour en jour, on aimerait parfois pouvoir accéder à n&#39;importe quoi dans son navigateur. C&#39;est déjà possible, grâce à un nouveau petit projet NodeJS.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/subtilites_de_regexp.html</id>
+      <title>Les subtilités de RegExp en Javascript</title>
+      <link href="https://insertafter.com/fr/blog/subtilites_de_regexp.html" rel="alternate" type="text/html" />
+      <updated>2013-02-02T09:41:13.000Z</updated>
+      <published>2013-02-02T09:41:13.000Z</published>
+      <summary>Les expressions régulières sont très peu populaires, elles sont pourtant surpuissantes. Néanmoins, il y a quelques subtilités à connaître, dont une que j&#39;ai récemment apprise.</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/jeux_html5_sympas.html</id>
+      <title>Quelques jeux HTML5 sympas</title>
+      <link href="https://insertafter.com/fr/blog/jeux_html5_sympas.html" rel="alternate" type="text/html" />
+      <updated>2013-01-27T12:03:52.000Z</updated>
+      <published>2013-01-27T12:03:52.000Z</published>
+      <summary>Dans mes recherches pour tenter de trouver la meilleure formule pour créer des jeux HTML5 addictifs et de bonne qualité, j&#39;ai trouvé plusieurs jeux aux finitions plus qu&#39;acceptables. Découvrez-les !</summary>
+    </entry>
+
+
+
+    <entry>
+      <id>https://insertafter.com/fr/blog/performance_et_svg.html</id>
+      <title>Performance des sites web avec SVG</title>
+      <link href="https://insertafter.com/fr/blog/performance_et_svg.html" rel="alternate" type="text/html" />
+      <updated>2013-01-13T21:09:05.000Z</updated>
+      <published>2013-01-13T21:09:05.000Z</published>
+      <summary>SVG est de plus en plus supporté par les navigateurs. Cela peut nous amener à reconsidérer nos choix en ce qui concerne la performance du front-end. Petit tour d&#39;horizon des plus de ce format.</summary>
+    </entry>
+
+
+
+
+
+</feed>
